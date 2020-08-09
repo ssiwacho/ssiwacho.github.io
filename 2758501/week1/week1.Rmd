@@ -491,14 +491,12 @@ class: middle
 
 </small>
 ---
-class: middle
 
 ## Example
 
+<small>
 
-<section style="font-size:15px">
-
-นักวิจัยต้องการศึกษาสภาพการจัดการเรียนรู้ของห้องเรียน โดยที่กำหนดขอบเขตสภาพการจัดการเรียนรู้ในการศึกษาครั้งนี้จะศึกษาเฉพาะด้านวิธีการสอนของครู และการมีปฏิสัมพันธ์ของนักเรียนในห้องเรียน
+นักวิจัยต้องการศึกษาสภาพการจัดการเรียนรู้ของห้องเรียน โดยที่กำหนดขอบเขตสภาพการจัดการเรียนรู้ในการศึกษาครั้งนี้จะศึกษาเฉพาะด้าน**วิธีการสอนของครู** และ**การมีปฏิสัมพันธ์ของนักเรียนในห้องเรียน**
 
 .pull-left[
 
@@ -511,62 +509,6 @@ class: middle
 - แบบสืบเสาะ (INQ)
 
 - แบบบรรยาย (LEC)
-
-
-การวัดระดับปฏิสัมพันธ์ของนักเรียนในชั้นเรียนครั้งนี้ใช้ แบบสังเกตระดับการมีปฏิสัมพันธ์ของนักเรียนในชั้นเรียน โดยประกอบด้วยข้อรายการสังเกต ดังนี้ 
-
-- ร้อยละของกิจกรรมที่นักเรียนในห้องเรียนมีส่วนร่วม (item1)
-
-- ร้อยละของนักเรียนที่มีส่วนร่วมในการทำกิจกรรมในห้องเรียน (item2)
-
-- ร้อยละของนักเรียนที่แสดงหรือแลกเปลี่ยนความคิดเห็นในห้องเรียน (item3)
-]
-
-</section>
-
-
-
-.pull-right[
-
-</br>
-
-<small>
-$interaction_{classA}=(\frac{item1+item2+item3}{3}) \times \frac{5}{100} = 5.0$
-
-
-$interaction_{classB}=(\frac{item1+item2+item3}{3}) \times \frac{5}{100} = 2.5$
-
-
-$interaction_{classC}=(\frac{item1+item2+item3}{3}) \times \frac{5}{100} = 1.0$
-</small>
-
-<section style="font-size:14px">
-
-```{r echo=F ,message=F, fig.align="left"}
-library(dplyr)
-library(kableExtra)
-class<-c("A","B","C")
-method<-c("PBL","INQ","LEC")
-item1<-c(100,50,15)
-item2<-c(100,50,25)
-item3<-c(100,50,20)
-dat<-data.frame(class,method,item1,item2,item3)
-dat<-dat%>%mutate(iteraction=(item1+item2+item3)*5/300)
-names(dat)[1:2]<-c("ห้องเรียน","วิธีการสอน")
-names(dat)[6]<-c("ปฏิสัมพันธ์")
-kable(dat)%>% kable_styling(position="left",bootstrap_options = c("hover", "condensed", "responsive"))
-```
-
-</section>
-
-]
-
----
-layout: true
-class: middle, center
-
-
----
 
 
 
@@ -585,8 +527,59 @@ names(dat)[1:2]<-c("ห้องเรียน","วิธีการสอน
 kable(dat)%>% kable_styling(bootstrap_options = c("hover", "condensed", "responsive"))
 ```
 
+
+]
+
+
+.pull-right[
+
+การวัดระดับปฏิสัมพันธ์ของนักเรียนในชั้นเรียนครั้งนี้ใช้ แบบสังเกตระดับการมีปฏิสัมพันธ์ของนักเรียนในชั้นเรียน โดยประกอบด้วยข้อรายการสังเกต ดังนี้ 
+
+- ร้อยละของกิจกรรมที่นักเรียนในห้องเรียนมีส่วนร่วม (item1)
+
+- ร้อยละของนักเรียนที่มีส่วนร่วมในการทำกิจกรรมในห้องเรียน (item2)
+
+- ร้อยละของนักเรียนที่แสดงหรือแลกเปลี่ยนความคิดเห็นในห้องเรียน (item3)
+]
+
+</small>
+
 ---
-layout: false
+class: middle, center
+
+
+
+$interaction_{classA}=(\frac{item1+item2+item3}{3}) \times \frac{5}{100} = 5.0$
+
+
+$interaction_{classB}=(\frac{item1+item2+item3}{3}) \times \frac{5}{100} = 2.5$
+
+
+$interaction_{classC}=(\frac{item1+item2+item3}{3}) \times \frac{5}{100} = 1.0$
+
+
+
+
+
+
+```{r echo=F ,message=F, fig.align="left"}
+library(dplyr)
+library(kableExtra)
+class<-c("A","B","C")
+method<-c("PBL","INQ","LEC")
+item1<-c(100,50,15)
+item2<-c(100,50,25)
+item3<-c(100,50,20)
+dat<-data.frame(class,method,item1,item2,item3)
+dat<-dat%>%mutate(iteraction=(item1+item2+item3)*5/300)
+names(dat)[1:2]<-c("ห้องเรียน","วิธีการสอน")
+names(dat)[6]<-c("ปฏิสัมพันธ์")
+kable(dat)%>% kable_styling(position="left",bootstrap_options = c("hover", "condensed", "responsive"))
+```
+
+
+
+---
 class: middle
 
 # มาตรวัดของตัวแปร
