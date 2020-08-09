@@ -5,6 +5,7 @@ output:
   xaringan::moon_reader:
     css: xaringan-themer.css
     nature:
+      ratio: '4:3'
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -308,7 +309,7 @@ class: center
 ---
 class: middle, center, inverse
  
-# 1. มโนทัศน์พื้นฐานเกี่ยวกับการวิจัย
+# 1. พื้นฐานเกี่ยวกับการวิจัย
 
 
 ---
@@ -330,7 +331,7 @@ class: middle
 
 ---
 
-## การออกแบบการวิจัย (Research Design)
+## การออกแบบการวิจัย
 
 --
 
