@@ -209,18 +209,33 @@ class: center, middle
 
 
 ---
-
 class: center, middle
 
 
-[<img src="kruroo.png" width="800">](www.kruroo.com)
+<img src="kruroo.png" width="800">
 
 
 ---
 
+
 class: center, middle
 
 <img src="statinfoed.png" width="800">
+
+---
+class: middle, center
+
+
+<img src="library.png" width="800">
+
+
+---
+
+class: middle, center
+
+
+<img src="classlab.png" width="800">
+
 
 ---
 
