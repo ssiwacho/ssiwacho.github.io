@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ML: สัปดาห์ที่ 1</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="อ.ดร.สิวะโชติ ศรีสุทธิยากร" />
+    <script src="week1_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# ML: สัปดาห์ที่ 1
+### อ.ดร.สิวะโชติ ศรีสุทธิยากร
+
+---
+
+
+class: center, middle
+
+
+
+
+
+
+
+
+&lt;img src="Asset 1.png", width=30%&gt;
+
+
+
+
+---
+background-image: url("Asset 1.png")
+background-size: 100px
+background-position: 92% 99%
+
+class: middle
+
+
+
+### รหัสวิชา: 2758688
+
+หลักการเรียนรู้ของเครื่องและการประยุกต์
+
+2 หน่วยกิต (1-2-5)
+
+--
+
+
+### เนื้อหารายวิชา
+
+&lt;p style="text-indent:2.5em;"&gt;มโนทัศน์และหลักการของการเรียนรู้ของเครื่อง ประเภทของการเรียนรู้ของเครื่อง เทคนิคสำหรับจำแนกประเภทข้อมูล ได้แก่ การวิเคราะห์ความถดถอยโลจิสติก แรมดอมฟอร์เรสท์ ต้นไม้ตัดสินใจ ซัพพอร์ตเวกเตอร์แมทชีน เค-เนียร์เรสท์เนเบอร์ และ เนอีฟเบย์ เทคนิคสำหรับทำนายแนวโน้ม เช่น การวิเคราะห์ความถดถอยเชิงเส้น การวิเคราะห์ความถดถอยพหุนาม การวิเคราะห์ความถดถอยแบบลาสโซ่ การตัดสินใจแบบมาร์คอฟ และการทำนายแบบมอนติคาร์โล เทคนิคสำหรับจัดกลุ่มข้อมูล เช่น เค-มีน เค-เนียร์เรสท์เนเบอร์ การเรียนรู้ด้วยกฎของความสัมพันธ์ และดีบีสแกน เทคนิคสำหรับลดจำนวนมิติของข้อมูล เช่น การวิเคราะห์องค์ประกอบหลัก การแยกค่าแบบเดี่ยว และเทคนิคที-เอสเอ็นอี เทคนิคโครงข่ายใยประสาท เช่น โครงข่ายใยประสาทแบบคอนโวลูชัน โครงข่ายใยประสาทแบบวนซ้ำ โครงข่ายใยประสาทแบบแอลเอสทีเอ็ม และโครงข่ายใยประสาทแบบเกทรีเคอเรนยูนิต และเทคนิคเอ็นเซ็มเบิล การตรวจสอบ ประเมินความเหมาะสม และการปรับปรุงโมเดล การประมวลผลบนระบบคลาวด์ เน้นการประยุกต์ใช้การเรียนรู้ของเครื่องในการวิจัยและจิตวิทยาการศึกษา&lt;/p&gt;
+
+---
+class: middle
+
+
+### วัตถุประสงค์เชิงพฤติกรรม
+
+1. สามารถอธิบายหลักการของอัลกอริทึมการเรียนรู้ของเครื่อง
+
+2. เขียนโปรแกรม R หรือ Python เพื่อวิเคราะห์ข้อมูลโดยใช้อัลกอริทึมการเรียนรู้ของเครื่องได้
+
+3. เลือกและประยุกต์ใช้อัลกอริทึมการเรียนรู้ของเครื่องในการวิจัยและจิตวิทยาการศึกษา
+
+
+---
+class: middle, inverse
+
+# มโนทัศน์พื้นฐาน
+
+
+---
+background-image: url("Screen Shot 2563-08-16 at 09.16.03.png")
+background-position: center
+background-size: 800px
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+
+[https://www.visualcapitalist.com/wp-content/uploads/2019/04/data-generated-each-day-full.html](https://www.visualcapitalist.com/wp-content/uploads/2019/04/data-generated-each-day-full.html)
+
+
+---
+class: middle
+
+&lt;img src="Screen Shot 2563-08-16 at 09.25.11.png"&gt;
+
+
+---
+class: middle
+
+# ความหมายของ ML
+
+“A computer program is said to learn from .red[**experience E**] with respect to some .orange[**task T**] and some performance .green[**measure P**], if its performance on T, as measured by P, improves with experience E.”
+
+Tom Mitchell, 1997
+
+&lt;img src="Screen Shot 2563-08-16 at 10.21.31.png" width=50%&gt;
+---
+class: middle
+
+# traditional approach
+
+&lt;img src="Screen Shot 2563-08-16 at 10.23.24.png"&gt;
+
+
+---
+class: middle
+
+# ML approach
+
+&lt;img src="Screen Shot 2563-08-16 at 10.25.45.png" width=100%&gt;
+
+
+
+
+---
+class: middle
+
+# ลักษณะของ ML
+
+การเรียนรู้ของเครื่องเป็นวิธีการสำหรับศึกษาทำความเข้าใจข้อมูลที่มีด้วยอัลกอริทึม (algorithm) หรือโมเดลเชิงสถิติ (statistical model) โดยที่การเรียนรู้ดังกล่าวนั้น ผู้วิเคราะห์มีส่วนร่วมในการออกแบบเพียงอัลกอริทึมหรือโมเดลการเรียนรู้เท่านั้น ส่วนในขั้นการเรียนรู้อัลกอริทึมหรือโมเดลที่กำหนดจะทำการเรียนรู้ธรรมชาติของข้อมูลจากข้อมูลตัวอย่างที่มีจำนวนเพียงพอ และมีความเป็นตัวแทน ผลการเรียนรู้ที่ได้สามารถทำให้ผู้วิเคราะห์สกัดสารสนเทศที่เป็นหลักสำคัญและซ่อนอยู่ในข้อมูล ซึ่งทำให้
+
+- ทราบสภาพของข้อมูล (Descriptive analytic)
+- สำรวจ/วินิจฉัย/อธิบายความสัมพันธ์ระหว่างข้อมูล  (Diagnoctic analytics)
+- ทำนายข้อมูล (Predictive analytics)
+- สร้างข้อเสนอแนะหรือให้คำแนะนำจากข้อมูล (Prescriptive analytics)
+
+
+---
+class: middle
+
+# ประเภทของ ML
+
+- Supervised learning
+
+
+- Unsupervised learning
+
+---
+class: middle
+
+# Supervised Learning
+
+ผู้วิเคราะห์จะใช้เทคนิคการเรียนรู้แบบที่มีการชี้นำเมื่อสามารถจำแนกตัวแปรที่เกี่ยวข้องกับการวิเคราะห์ออกได้เป็น 2 กลุ่ม ได้แก่ ตัวแปรอิสระ (x)และตัวแปรตาม (y) ซึ่งทำให้ชุดข้อมูลฝึกหัดของการเรียนรู้แบบ supervised มีลักษณะ `\(\{(x_i,y_i)\}_{i=1}^{n}\)`
+
+วัตถุประสงค์ของ supervised learning คือการอธิบายความสัมพันธ์เชิงสาเหตุ (causal relationship) และทำนายแนวโน้มของตัวแปรตาม (prediction) โดยทั่วไปโมเดลเชิงทำนายสามารถเขียนให้อยู่ในรูปทั่วไปได้ดังนี้
+
+`$$Y=f(X)+\epsilon$$`
+เมื่อ `\(f(X)\)` คือส่วนความสัมพันธ์ที่เป็นระบบในข้อมูล และ `\(\epsilon\)` คือส่วนของความคลาดเคลื่อนในการเรียนรู้
+
+เทคนิค supervised learning อาจจำแนกได้อีกเป็นสองประเภทตามลักษณะของตัวแปรตาม ($Y$)
+
+- เทคนิคการวิเคราะห์ความถดถอย (regression techniques) 
+
+- เทคนิคการจำแนก (classification)
+
+
+---
+class: middle
+
+# Example 1
+
+สมมติว่าผู้บริหารทางการศึกษาต้องการยกระดับผลสัมฤทธิ์ทางการเรียนของนักเรียนภายในแต่ละโรงเรียน อย่างไรก็ตามในทางปฏิบัติผู้บริหารไม่สามารถเข้าไปเพิ่มผลสัมฤทธิ์ของนักเรียนได้โดยตรง โดยผู้บริหารเชื่อว่าวิธีการที่มีประสิทธิภาพในการยกระดับผลสัมฤทธิ์ทางการเรียนดังกล่าวคือการให้งบประมาณด้านการศึกษาที่เหมาะสม อย่างไรก็ตามยังมีประเด็นที่ผู้บริหารยังไม่แน่ใจคือลักษณะการจัดสรรงบประมาณที่เหมาะสมว่าควรมีลักษณะอย่างไร? 
+
+--
+
+&lt;img src="week1_files/figure-html/unnamed-chunk-1-1.png" width="720" /&gt;
+
+
+---
+class: middle
+
+### Statistical model and Output
+
+`\(Y=f(X)+\epsilon\)`
+
+`\(f(X)=-5.789+2.302Support+5.754Student+1.151Teacher\)`
+
+
+
+```
+## 
+## Call:
+## lm(formula = ach ~ support.budget + student.budget + teacher.budget)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.031024 -0.007609  0.000628  0.006601  0.032999 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    -5.789e+00  4.669e-03   -1240   &lt;2e-16 ***
+## support.budget  2.302e-01  1.698e-05   13556   &lt;2e-16 ***
+## student.budget  5.754e-02  1.618e-05    3556   &lt;2e-16 ***
+## teacher.budget  1.151e-01  1.633e-05    7050   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.01164 on 196 degrees of freedom
+## Multiple R-squared:      1,	Adjusted R-squared:      1 
+## F-statistic: 8.403e+07 on 3 and 196 DF,  p-value: &lt; 2.2e-16
+```
+
+
+---
+class: middle
+
+# Example 2: Non-linear relationship
+
+`\(Y=f(X)+\epsilon\)`
+
+`\(f(X)=?\)`
+
+&lt;img src="week1_files/figure-html/unnamed-chunk-3-1.png" width="720" /&gt;
+
+---
+class: middle
+
+# Unsupervised Learning
+
+ผู้วิเคราะห์จะเลือกใช้เทคนิคการเรียนรู้แบบที่ไม่มีการชี้นำ ไม่มีการจำแนกตัวแปรในชุดข้อมูลฝึกหัดออกเป็นตัวแปรอิสระกับตัวแปรตาม กล่าวคือ ชุดข้อมูลฝึกหัดสำหรับการเรียนรู้แบบที่ไม่มีการชี้นำจะมีลักษณะเป็น `\(\{x_i\}_{i=1}^n\)`
+
+
+--
+
+- Kmeans clustering
+
+- Hierarchucal clustering
+
+- DBSCAN
+
+--
+
+- PCA
+
+- t-SNE
+
+---
+class: middle
+
+# Example 3: Kmean clustering
+
+&lt;img src="Screen Shot 2563-08-16 at 10.56.05.png" width=50% aling='center'&gt;
+
+&lt;small&gt;
+
+- กลุ่มเขตพื้นที่ที่โรงเรียนมีแนวโน้มมีคุณภาพทางการศึกษาสูงและมีความเหลื่อมล้ำทางการศึกษาต่ำ 
+
+- กลุ่มเขตพื้นที่ที่โรงเรียนมีแนวโน้มมีคุณภาพทางการศึกษาสูง แต่มีความเหลื่อมล้ำทางการศึกษาสูง โดยที่ความเหลื่อมล้ำนี้มีแนวโน้มเกิดจากฐานะทางเศรษฐกิจของครอบครัวนักเรียน 
+
+- กลุ่มเขตพื้นที่ที่โรงเรียนมีแนวโน้มมีคุณภาพทางการศึกษาต่ำ มีระดับความเหลื่อมล้ำทางการศึกษาที่เกิดขึ้นจากฐานะทางเศรษฐกิจของครอบครัวนักเรียนอยู่ในระดับปานกลาง
+
+- กลุ่มเขตพื้นที่ที่โรงเรียนมีแนวโน้มมีคุณภาพทางการศึกษาและมีความเหลื่อมล้ำทางการศึกษาอยู่ในระดับต่ำ
+
+.pull-right[[(สิวะโชติ ศรีสุทธิยากร, 2562)](https://portal.edu.chula.ac.th/pub/jrm/index.php/jrm/article/view/651/pdf_495)]
+
+&lt;/small&gt;
+
+
+---
+
+# Semi-Supervised Learning
+
+- Semi-supervised learning is, for the most part, just what it sounds like: a training dataset with both labeled and unlabeled data. This method is particularly useful when extracting relevant features from the data is difficult, and labeling examples is a time-intensive task for experts.
+
+- Semi supervised learning builds a model with few labeled patterns as training data and treats the rest of the patterns as test data. Semi supervised learning models will draw proximity associations between unlabeled data records and groups of unlabeled data.
+
+
+&lt;center&gt;&lt;img src="semi.png" width=80% aling="center"&gt;&lt;/center&gt;
+
+&lt;small&gt;
+[https://medium.com/intotheblock/practical-machine-learning-for-blockchain-datasets-understanding-semi-and-omni-supervised-learning-2a2611695b2](https://medium.com/intotheblock/practical-machine-learning-for-blockchain-datasets-understanding-semi-and-omni-supervised-learning-2a2611695b2)
+&lt;/small&gt;
+
+---
+class: middle, inverse
+
+# Challenges of ML
+
+- Bad Data
+
+- Bad Algorithm
+
+
+
+---
+class: middle
+
+### Bad Data
+- Insufficient training data
+- Nonrepresentative training data
+- Poor-quality data
+- Irrelevant features
+- Zero or near-zero variance features
+
+---
+class: middle
+### Bad algorithm
+
+&lt;img src="week1_files/figure-html/unnamed-chunk-4-1.png" width="720" /&gt;
+
+---
+class: middle, inverse
+
+# Model Evaluation
+
+- `\(f_T(X)\)` คือความสัมพันธ์ระหว่างตัวแปรจริงภายในประชากร (true population function)
+
+- `\(f(X)\)` คือฟังก์ชันความสัมพันธ์ระหว่างตัวแปรที่ผู้วิเคราะห์กำหนดให้กับประชากร (assumed fit function)
+
+- `\(\hat{f}(X)\)` คือความสัมพันธ์ระหว่างตัวแปรที่ประมาณได้จากข้อมูลตัวอย่าง (estimated fit function)
+
+
+---
+class: middle
+
+# Theoretic Fit vs Empirical Fit
+
+
+### Theoretic Fit
+
+`\(f_T(X)-f(X)=0\)`
+
+### Empirical Fit
+
+`\(f_T(X)-\hat{f}(X)=0\)`
+
+
+
+---
+class: middle
+
+&lt;img src="Screen Shot 2563-08-16 at 11.43.18.png"&gt;
+
+[Olsson et al., 2000](https://www.researchgate.net/publication/238865142_The_Performance_of_ML_GLS_and_WLS_Estimation_in_Structural_Equation_Modeling_Under_Conditions_of_Misspecification_and_Nonnormality)
+
+
+
+
+---
+class: middle
+
+# Empirical fit measures
+
+โดยปกติการวัดความสอดคล้องเชิงประจักษ์ของโมเดลจะอยู่ในรูปของค่าสถิติที่เรียกว่า ดัชนีวัดความสอดคล้องของโมเดล ซึ่งอาจจำแนกได้เป็น 2 ประเภท ตามความหมายของดัชนี คือ ดัชนีวัดความสอดคล้องของโมเดล (goodness of fit indices) และ ดัชนีวัดความไม่สอดคล้องของโมเดล (badness of fit indices) นอกจากนี้ยังอาจจำแนกได้เป็น 2 ประเภท ตามปัญหาของการวิเคราะห์คือการวิเคราะห์ความถดถอย และการวิเคราะห์จำแนก
+
+
+- ในกรณีของการวิเคราะห์ความถดถอย ดัชนีวัดความสอดคล้องเชิงประจักษ์ที่นิยมใช้กันอย่างแพร่หลายคือ ค่าเฉลี่ยของความคลาดเคลื่อนกำลังสอง (mean squared error:  ) ซึ่งมีค่าเท่ากับ
+
+`$$MSE=\frac{\sum_{i=1}^n(y_i-\hat{f}(x_i))^2}{n}$$`
+---
+class: middle
+
+# โมเดลไหนดีที่สุด?
+
+&lt;img src="Screen Shot 2563-08-16 at 12.08.46.png"&gt;
+
+---
+class: middle
+
+# Train/Test Strategy
+
+.pull-left[
+&lt;img src="Screen Shot 2563-08-16 at 12.13.22.png"&gt;
+]
+
+.pull-right[
+&lt;img src="Screen Shot 2563-08-16 at 12.14.18.png"&gt;
+]
+
+
+- In-sample fit
+
+- Out-sample fit
+
+---
+class: middle
+
+# Cross validation
+
+&lt;img src="Screen Shot 2563-08-16 at 12.18.04.png"&gt;
+
+---
+class: middle
+
+# Biased and Variance
+
+`$$test MSE=Var(\hat{f}(x^*))+Bias(\hat{f}(x^*))^2+Var(\epsilon)$$`
+&lt;/br&gt;
+
+- `\(Var(\hat{f}(x^*))\)` 
+
+- `\(Bias(\hat{f}(x^*))\)`
+
+- `\(Var(\epsilon)\)`
+
+
+---
+class: middle
+
+&lt;img src="Screen Shot 2563-08-16 at 12.24.20.png"&gt;
+
+
+---
+class: middle
+
+# Required Basic Skill
+
+1. Importing data
+2. Merging and Splitting dataset
+3. Tidy data &amp; Manipulating data
+4. Analysis and impute missing data
+
+&lt;center&gt;&lt;img src="Screen Shot 2563-08-16 at 12.27.44.png" width=70%&gt;&lt;/center&gt;
+
+&lt;small&gt;
+[https://colab.research.google.com/drive/1rUPZJbAuC8JCJXyYyUeL0GDbXY9g9jjh](https://colab.research.google.com/drive/1rUPZJbAuC8JCJXyYyUeL0GDbXY9g9jjh)
+
+[https://tidyr.tidyverse.org/](https://tidyr.tidyverse.org/)
+
+[https://dplyr.tidyverse.org/](https://dplyr.tidyverse.org/)
+
+[https://stringr.tidyverse.org/](https://stringr.tidyverse.org/)
+
+&lt;/small&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "4:3",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
