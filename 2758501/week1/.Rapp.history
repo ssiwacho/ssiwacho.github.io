@@ -1,0 +1,266 @@
+58189+2853
+28588+58189
+25735+2853
+install.packages("ggplot2")
+install.packages("highcharter")
+c(rep(c(2562,2563),5))
+total.pass<-c(86777,78094,73675,66599,66480,70839,52315,46518,21207,16511)#
+total.confirm<-c(58189,60759,51183,43829,41649,47277,38489,35812,16402,12954)#
+year<-c(rep(c(2562,2563),5))#
+round<-c(1,1,2,2,3,3,4,4,5,5)#
+#
+dat<-data.frame(year,round,total.pass,total.confirm)
+dat
+install.packages("dplyr")
+library(dplyr)
+dat<-dat%>%mutate(percent.study=total.confirm*100/total.pass)
+dat
+dat<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756305/2756305_2_2019/finalexam/data/data_for_exam_id_1.csv")
+dat
+summary(dat)
+sd(dat$Ach)
+2/5
+4/10
+4.35/9.61
+2.26/5.40
+2.26/5.30
+hist(dat$Ach)
+boxplot(dat$ach)
+boxplot(dat$Ach)
+library(dplyr)
+dat%>%mutate(eff=(eff1+eff2+eff3+eff4+eff5)/5)
+dat%>%mutate(eff=(eff1+eff2+eff3+eff4+eff5)/5)->dat
+dat
+dat%>%group_by(method)%>%summarise(mean=mean(eff),sd=sd(eff))
+plot(dat$competency,dat$Ach)
+plot(dat$competency,dat$eff)
+plot(dat$competency,dat$Ach)
+library(ggplot2)
+dat%>%ggplot(aes(x=factor(method),y=Ach)+geom_boxplot()
+)
+dat%>%ggplot(aes(x=factor(method),y=Ach))+geom_boxplot()
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()
+dat%>%ggplot(aes(x=factor(method),y=competency))+geom_boxplot()
+dat%>%ggplot(aes(x=factor(method),y=competency))+geom_boxplot()+xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+
+xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+#
+			xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme(family="ChulaCharasNew")
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+
+xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")+
+ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+
+theme(text=element_text(family="ChulaCharasNew"))
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+#
+			xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme(text=element_text(family="ChulaCharasNew"))+#
+			theme_minimal()
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+#
+			xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"))
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+#
+			xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"),#
+					plot.margin=c(5,5,5,5))
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+#
+			xlab("รูปแบบการจัดการเรียนการสอนออนไลน์")+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"),#
+					plot.margin=margin(5,5,5,5))
+dat%>%ggplot(aes(x=factor(method),y=eff))+geom_boxplot()+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"),#
+					plot.margin=margin(10,10,10,10))
+dat%>%ggplot(aes(x=factor(method),y=eff,fill=factor(method)))+geom_boxplot()+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"),#
+					plot.margin=margin(10,10,10,10))
+dat%>%ggplot(aes(x=factor(method),y=eff,fill=factor(method)))+geom_boxplot()+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"),#
+					plot.margin=margin(10,10,10,10))+#
+			labs(fill="รูปแบบการสอนออนไลน์")
+dat%>%ggplot(aes(x=factor(method),y=eff,fill=factor(method)))+geom_boxplot()+xlab("")+#
+			ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"),#
+					plot.margin=margin(10,10,10,10),#
+					legend.position="none")+#
+			labs(fill="รูปแบบการสอนออนไลน์")
+dat%>%ggplot(aes(x=factor(method),y=Ach,fill=factor(method)))+geom_boxplot()+xlab("")+
+ylab("ประสิทธิภาพการเรียนการสอนออนไลน์")+
+theme_minimal()+
+theme(text=element_text(family="ChulaCharasNew"),
+plot.margin=margin(10,10,10,10),
+legend.position="none")+
+labs(fill="รูปแบบการสอนออนไลน์")
+dat%>%ggplot(aes(x=factor(method),y=Ach,fill=factor(method)))+geom_boxplot()+xlab("")+#
+			ylab("ผลการเรียนรู้หลังการเรียนการสอนออนไลน์ (Ach)")+#
+			theme_minimal()+#
+			theme(text=element_text(family="ChulaCharasNew"),#
+					plot.margin=margin(10,10,10,10),#
+					legend.position="none")+#
+			labs(fill="รูปแบบการสอนออนไลน์")
+dat%>%group_by(method)%>%summarise(mean=mean(ach))
+dat%>%group_by(method)%>%summarise(mean=mean(Ach))
+dat%>%group_by(method)%>%summarise(mean=mean(Ach),med=median(Ach))
+-4.3+9.5
+-4.3496+9.5201
+dat<-iris
+dat
+library(dplyr)
+head(dat)
+dat%>%group_by(Species)%>%summarise(x1=mean(Sepal.Length),
+x2=mean(Sepal.Width),
+x3=mean(Petal.Length),
+x4=mean(Petal.Width))
+dat%>%filter(Species=="setosa")
+dat%>%filter(Species=="setosa")%>%head()
+dat%>%filter(Species=="viginica")%>%head()
+table(dat$Species)
+dat%>%filter(Species=="versicolor")%>%head()
+dat%>%filter(Species=="virginica")%>%head()
+dat%>%filter(Species=="setosa")%>%tail()
+dat%>%filter(Species=="versicolor")%>%tail()
+dat%>%filter(Species=="virginica")%>%tail()
+old.packages()
+version()
+versions()
+version
+sessioninfo()
+sessionInfo()
+library(readxl)
+dat<-read_excel("/Users/siwachoat/Downloads/IQ2.xlsx")
+dat
+dat2<-separate(dat,col="gender.age",
+into=c("gender","age"),
+sep="(?<=[ก-ฮ])(?=[0-9])")
+library(tidyr)
+dat2<-separate(dat,col="gender.age",#
+		into=c("gender","age"),#
+	     sep="(?<=[ก-ฮ])(?=[0-9])")
+dat2
+dat2$age<-as.numeric(dat2$age)
+dat2
+province<-c(rep("กรุงเทพ",4),rep("เชียงใหม่",3),rep("ขอนแก่น",2))
+income<-c(rep(240804,4),rep(73729,3),rep(29978,2))
+school<-c("เตรียมอุดม","สวนกุหลาบ","สาธิตจุฬา","อัสสัมชัญ","สาธิต มช.","ปรินส์รอยแยล","เรยีนาเชลีวิทยาลัย","สาธิต มข.","ขอนแก่นวิทยายน")
+rank<-c(2,20,8,54,17,26,50,39,120)
+dat<-data.frame(prov.id, province, income, school, rank)
+aggregate.dat<-aggregate(dat$rank,
+by=list(dat$province),
+FUN=mean)
+dat
+dat<-data.frame(prov.id,province,income,school,rank)
+prov.id<-c(1,1,1,1,2,2,2,3,3)#
+province<-c(rep("กรุงเทพ",4),rep("เชียงใหม่",3),rep("ขอนแก่น",2))#
+income<-c(rep(240804,4),rep(73729,3),rep(29978,2))#
+school<-c("เตรียมอุดม","สวนกุหลาบ","สาธิตจุฬา","อัสสัมชัญ","สาธิต มช.","ปรินส์รอยแยล","เรยีนาเชลีวิทยาลัย","สาธิต มข.","ขอนแก่นวิทยายน")#
+rank<-c(2,20,8,54,17,26,50,39,120)#
+dat<-data.frame(prov.id,province,income,school,rank)
+dat
+aggregate.dat<-aggregate(dat$rank,#
+                           by=list(dat$province),#
+                           FUN=mean)
+aggregate.dat
+aggregate
+?aggregate
+names(aggregate.dat)[1]
+names(aggregate.dat)<-c("province","mean rank")
+aggregate.dat
+aggregate.dat<- merge(prov.dat,aggregate.dat, by ="province")
+dat
+prov.dat<-dat[,1:3]
+aggregate.dat<- merge(prov.dat,aggregate.dat, by ="province")
+aggregate.dat
+aggregate.dat<-aggregate(dat$rank,#
+                           by=list(dat$province),#
+                           FUN=mean)
+names(aggregate.dat)<-c("province","mean rank")
+aggregate.dat
+merge(prov.dat,aggregate.dat, by ="province",all.x=F,all.y=T)
+?merge
+merge(prov.dat,aggregate.dat, by ="province",all.x=F,all.y=F)
+prov.dat
+aggregate.dat<-aggregate(dat$rank,#
+                           by=list(dat$province,dat$prov.id,dat$income),#
+                           FUN=mean)
+aggregate.dat
+names(aggregate.dat)<-c("province","prov.id",#
+                          "income","mean.rank")
+aggregate.dat
+sort(aggregate.dat)
+?sort
+aggregate.dat[sort(aggregate.dat$prov.id),]
+aggregate.dat[sort(aggregate.dat$prov.id,TRUE),]
+aggregate.dat[sort(aggregate.dat$prov.id,decreasing=TRUE),]
+dat<-read.csv("/Users/siwachoat/Downloads/math.csv")
+dat
+0.25*7+0.25*7+0.2*8+0.1*7+0.1*7+0.1*8
+0.25*7+0.25*6+0.2*6+0.1*7+0.1*6+0.1*7
+dat3<-read_excel("/Users/siwachoat/Desktop/ข้อมูลให้ pop/M6_STD_SCR_WITH_DATAPARENTS60.xlsx")
+library(readxl)
+library(dplyr)
+dat3<-read_excel("/Users/siwachoat/Desktop/ข้อมูลให้ pop/M6_STD_SCR_WITH_DATAPARENTS60.xlsx")
+dat3
+dat3<-dat3%>%select(-citizen_id,-name)
+dat3
+write.csv(dat3,file="M6.csv")
+install.packages(c("pagedown", "xaringan"))
+setwd("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1")
+pagedown::chrome_print("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.Rmd")
+pagedown::chrome_print("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.Rmd")
+install.packages("webshot")
+install.packages("webshot")
+library(webshot)
+install_phantomjs()
+pagedown::chrome_print("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html")
+file_name <- paste0("file://", normalizePath("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html"))
+webshot(file_name, "mypdf.pdf")
+pagedown::chrome_print("file:///Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html#1")
+pagedown::chrome_print("https://ssiwacho.github.io/2758501/week1/week1.html")
+remotes::install_github('rstudio/pagedown')
+library(pagedown)
+?chrome_print
+pagedown::chrome_print("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html")
+pagedown::chrome_print("https://github.com/sje30/2018-12-07-rmd")
+pagedown::chrome_print("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html#2")
+pagedown::chrome_print("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html")
+pagedown::chrome_print("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html",output="terst.pdf")
+decktape(#
+  file="/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html",#
+  output="test.pdf",#
+  args = "--chrome-arg=--allow-file-access-from-files",#
+  docker = Sys.which("decktape") == "",#
+  version = "",#
+  open = FALSE#
+)
+library(xaringan)
+decktape(#
+  file="/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html",#
+  output="test.pdf",#
+  args = "--chrome-arg=--allow-file-access-from-files",#
+  docker = Sys.which("decktape") == "",#
+  version = "",#
+  open = FALSE#
+)
+decktape(#
+  file="/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758501/week1/week1.html",#
+  output="test.pdf")
+?decktape
+decktape(#
+  file="https://ssiwacho.github.io/2758501/week1/week1.html",#
+  output="test.pdf")
+decktape(#
+  file="https://161.200.152.253/2758604/2756305/2756305.html",#
+  output="test.pdf")
