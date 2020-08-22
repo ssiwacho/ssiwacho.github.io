@@ -376,6 +376,8 @@ class: middle
 &lt;/br&gt;
 &lt;/br&gt;
 &lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
 
 &lt;small&gt;
 **Note:** ภาษา ML เรียก `\(SSE=\sum_{i=1}^n(y_i-\hat{y}_i)^2\)` ว่า ฟังก์ชันความสูญเสีย (Loss function)
@@ -618,7 +620,7 @@ class: middle
 
 * **Evaluating Models**
 
-&lt;p style="text-indent:3em;"&gt;- In-sample fit&lt;/p&gt;
+**&lt;p style="text-indent:3em;"&gt;- In-sample fit&lt;/p&gt;**
 &lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
 
 ]
@@ -673,7 +675,7 @@ class: middle
 
 * **Evaluating Models**
 
-&lt;p style="text-indent:3em;"&gt;- In-sample fit&lt;/p&gt;
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
 &lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
 
 ]
@@ -706,7 +708,9 @@ class: middle
 
 &lt;/small&gt;
 
+**Residual**
 
+`\(e_i=y_i-\hat{y_i} \approx \epsilon_i\)` 
 
 
 ]
@@ -714,9 +718,7 @@ class: middle
 .pull-right[
 
 
-**Residual**
 
-`\(e_i=y_i-\hat{y_i} \approx \epsilon_i\)` 
 
 &lt;img src="week2_files/figure-html/unnamed-chunk-13-1.png" width="504" /&gt;
 ]
@@ -739,25 +741,348 @@ class: middle
 
 * **Evaluating Models**
 
-&lt;p style="text-indent:3em;"&gt;- In-sample fit&lt;/p&gt;
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
 &lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
 
 ]
 
 .right-column[
 
+### Types of residuals
+
+
+.pull-left[
+&lt;small&gt;
+
+**raw residual:** 
+
+`$$e_i=y_i-\hat{y}_i$$` 
+&lt;small&gt;
+
+การคำนวณเศษเหลือดังกล่าวใน R สามารถทำได้โดยใช้ฟังก์ชัน `residuals(lm.model)` เมื่อ `lm.model` คือ lm object
+
+&lt;/small&gt;
+
+**standardized residuals:**  
+
+`$$e_i^*=\frac{e_i}{\sqrt{MSE(1-h_i)}}$$`
+&lt;small&gt;
+
+เมื่อ `\(h_i\)` คือค่า leverage ของ observation ที่ `\(i\)`
+
+การคำนวณ standardized residuals ใน R สามารถทำได้โดยใช้ฟังก์ชัน `rstandard(lm.model)`
+
+&lt;/small&gt;
+]
+
+.pull-right[
+**deleted studentized residuals**
+
+`$$d_i=\frac{y_i-\hat{y}_{(-i)}}{\sqrt{MSE_{-i}(1-h_i)}}$$`
+
+&lt;small&gt;
+เมื่อ `\(h_i\)` คือค่า leverage ของ observation ที่ `\(i\)`
+
+การคำนวณ studentized residuals ใน R สามารถทำได้โดยใช้ฟังก์ชัน `rstudent(lm.model)`
+
+&lt;/small&gt;
+
+]
+
+]
+
+
+
+---
+name: insample
+class: middle
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+.right-column[
+
+
 ### In-sample fit: Residual plot
 
-&lt;img src="residualplot.png"&gt;
+
+.pull-left[
+
+
+
+```r
+par(mfrow=c(2,2), mar=c(5,5,2,1))
+plot(fit)
+```
+
+&lt;small&gt;
+
+- [**residuals vs fitted**](#resfit) for checking `\(E[\epsilon|X]=0\)`
+
+- **QQ plot: ordered residuals vs normal quantiles** for checking `\(\epsilon \sim Normal\)`
+
+- [**Scale-location plot**](#hetero) for checking `\(Var[\epsilon|X]=\sigma^2\)`
+
+- **residuals vs leverage** for detecting and evaluating influential outlier
+
+&lt;/small&gt;
+
+
+]
+
+.pull.right[
+&lt;img src="week2_files/figure-html/unnamed-chunk-15-1.png" width="360" /&gt;
+]
+]
+
+---
+class: middle
+name: resfit
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+
+
+
+.right-column[
+
+### residuals vs fitted (1)
+
+
+
+```r
+par(mar=c(5,5,1,1))
+plot(fit,1) #residuals vs fitted plot
+```
+
+&lt;img src="week2_files/figure-html/unnamed-chunk-16-1.png" width="360" /&gt;
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+.right-column[
+
+.pull-left[
+### residuals vs fitted (2)
+
+&lt;small&gt;
+
+**Misspecification model** residuals vs fitted plot สามารถใช้เพื่อวินิจฉัยการวิเคราะห์ระบุโมเดลทำนายผิดพลาดของผู้วิเคราะห์ได้ เช่น
+
+* **True (unknown) population model** คือ `\(y=\beta_0+\beta_1x+\beta_2x^2+\epsilon\)`
+
+* **Hypothetical model** ของผู้วิเคราะห์กลับเป็น `\(y=\beta_0+\beta_2x+u\)` `\(\rightarrow \hat{y}=b_0+b_1x\)` 
+
+* จะเห็นว่า true population model กับ hypothetical model มีความแตกต่างกัน ซึ่งเกิดเป็นปัญหาการระบุโมเดลผิดพลาด (misspecification errors) ปัญหาดังกล่าวสามารถสะท้อนได้จากการวิเคราะห์เศษเหลือดังนี้ `\(e=y-\hat{y} \approx u = \beta_2x^2+\epsilon\)`
+
+&lt;/small&gt;
+]
+
+
+.pull-right[
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+&lt;img src="week2_files/figure-html/unnamed-chunk-17-1.png" width="504" /&gt;
+
+]
+]
+
+---
+class: middle
+name: hetero
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+.right-column[
+
+### Scale-location plot
+
+&lt;small&gt;
+
+* ใช้แสดงการกระจายของ residuals บนแต่ละระดับของตัวแปรอิสระ
+
+* Homoscedasticity assumption `\(\rightarrow Var[\epsilon|X]=\sigma^2\)` ดังนั้นภายในข้อตกลงนี้การกระจายของ residuals ควรต้องมีขนาดที่ใกล้เคียงกันในแต่ละระดับของตัวแปรอิสระ
+
+&lt;/small&gt;
+
+
+&lt;img src="week2_files/figure-html/unnamed-chunk-18-1.png" width="864" /&gt;
+]
+
+
+---
+class: middle
+name: hetero
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+.right-column[
+
+### White's Test
+
+&lt;small&gt;
+
+อีกวิธีการหนึ่งที่สามารถใช้สำรวจปัญหา heteroscedasticity คือการใช้สถิติทดสอบ White's test ที่ใช้เศษเหลือของโมเดลการวิเคราะห์เป็นข้อมูลสำหรับคำนวณสถิติทดสอบ มีขั้นตอนดังนี้
+
+1. คำนวณค่าเศษเหลือกำลังสองของโมเดล `\(e^2_i=y_i-\hat{y}_i\)`
+
+2. ประมาณค่าสมการถดถอย `\(e_i^2=\alpha_0+\alpha_1\hat{y}_i+\alpha_2\hat{y}^2_i\)`
+
+3. ทดสอบนัยสำคัญของ heteroscadasticity `\(H_0: \alpha_1=\alpha_2=0\)` โดยตัวสถิติทดสอบคือ Lagrange multiplier (LM test) คำนวณดังนี้
+
+`$$LM = nR^2 \sim \chi^2_{df=จำนวนพารามิเตอร์}$$`
+&lt;/small&gt;
+
+]
+
+---
+name: outlier
+class: middle
+
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**&lt;p style="text-indent:3em;"&gt;[- In-sample fit](#insample)&lt;/p&gt;**
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+.right-column[
+
+
+&lt;small&gt;
+
+### Outlier
+
+หน่วยข้อมูลหรือค่าสังเกตที่ตำแหน่งอยู่ห่างไกลจากค่าสังเกตส่วนใหญ่ชุดข้อมูล เรียกว่าค่าผิดปกติ (outlier)
+
+
+
+### Influential observation
+
+หน่วยข้อมูลหรือค่าสังเกตที่เมื่อถูกลบออกจากโมเดลการวิเคราะห์แล้วทำให้ค่าประมาณของพารามิเตอร์หรือค่าทำนายเปลี่ยนแปลงไปอย่างมีนัยสำคัญ จะเรียกว่าค่าสังเกตที่มีอิทธิพล (influential observations)
+
+&lt;/small&gt;
+
+
+
+
 
 ]
 
 
 ---
-name: yourturn1
-template: yourturn
+name: yourturn
+template: section
+
+.left-column[
+# .fancy[Your turn]
+&lt;/br&gt;
+
+&lt;small&gt;
+[- normal probability plot](https://en.wikipedia.org/wiki/Normal_probability_plot)
+
+[- white's test](https://rdrr.io/cran/het.test/man/whites.htest.html)
+
+
+
+&lt;/small&gt;
+]
+
+
 
 .right-column[
+
+
 
 &lt;small&gt;
 จาก training model ใน `fit` สามารถสร้าง residual plot เพื่อ validate  training model ได้โดยใช้คำสั่ง
@@ -769,7 +1094,7 @@ par(mfrow=c(2,2), mar=c(5,5,3,1))
 plot(fit)
 ```
 
-&lt;img src="week2_files/figure-html/unnamed-chunk-14-1.png" width="576" /&gt;
+&lt;img src="week2_files/figure-html/unnamed-chunk-20-1.png" width="576" /&gt;
 
 ]
 

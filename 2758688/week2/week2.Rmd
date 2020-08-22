@@ -398,6 +398,8 @@ class: middle
 </br>
 </br>
 </br>
+</br>
+</br>
 
 <small>
 **Note:** ภาษา ML เรียก $SSE=\sum_{i=1}^n(y_i-\hat{y}_i)^2$ ว่า ฟังก์ชันความสูญเสีย (Loss function)
@@ -591,7 +593,7 @@ class: middle
 
 * **Evaluating Models**
 
-<p style="text-indent:3em;">- In-sample fit</p>
+**<p style="text-indent:3em;">- In-sample fit</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
 ]
@@ -646,7 +648,7 @@ class: middle
 
 * **Evaluating Models**
 
-<p style="text-indent:3em;">- In-sample fit</p>
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
 ]
@@ -679,7 +681,9 @@ $\hat{y_i}=\hat{f}(x_i)$
 
 </small>
 
+**Residual**
 
+$e_i=y_i-\hat{y_i} \approx \epsilon_i$ 
 
 
 ]
@@ -687,9 +691,7 @@ $\hat{y_i}=\hat{f}(x_i)$
 .pull-right[
 
 
-**Residual**
 
-$e_i=y_i-\hat{y_i} \approx \epsilon_i$ 
 
 ```{r echo=F, message=F, warning=F, fig.retina=3}
 train.dat$predicted <- predict(fit)   # Save the predicted values
@@ -726,31 +728,374 @@ class: middle
 
 * **Evaluating Models**
 
-<p style="text-indent:3em;">- In-sample fit</p>
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
 ]
 
 .right-column[
 
+### Types of residuals
+
+
+.pull-left[
+<small>
+
+**raw residual:** 
+
+$$e_i=y_i-\hat{y}_i$$ 
+<small>
+
+การคำนวณเศษเหลือดังกล่าวใน R สามารถทำได้โดยใช้ฟังก์ชัน `residuals(lm.model)` เมื่อ `lm.model` คือ lm object
+
+</small>
+
+**standardized residuals:**  
+
+$$e_i^*=\frac{e_i}{\sqrt{MSE(1-h_i)}}$$
+<small>
+
+เมื่อ $h_i$ คือค่า leverage ของ observation ที่ $i$
+
+การคำนวณ standardized residuals ใน R สามารถทำได้โดยใช้ฟังก์ชัน `rstandard(lm.model)`
+
+</small>
+]
+
+.pull-right[
+**deleted studentized residuals**
+
+$$d_i=\frac{y_i-\hat{y}_{(-i)}}{\sqrt{MSE_{-i}(1-h_i)}}$$
+
+<small>
+เมื่อ $h_i$ คือค่า leverage ของ observation ที่ $i$
+
+การคำนวณ studentized residuals ใน R สามารถทำได้โดยใช้ฟังก์ชัน `rstudent(lm.model)`
+
+</small>
+
+]
+
+]
+
+
+
+---
+name: insample
+class: middle
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+.right-column[
+
+
 ### In-sample fit: Residual plot
 
-<img src="residualplot.png">
+
+.pull-left[
+
+
+```{r, eval=F,fig.retina=3, fig.height=4, fig.width=8}
+par(mfrow=c(2,2), mar=c(5,5,2,1))
+plot(fit)
+```
+
+<small>
+
+- [**residuals vs fitted**](#resfit) for checking $E[\epsilon|X]=0$
+
+- **QQ plot: ordered residuals vs normal quantiles** for checking $\epsilon \sim Normal$
+
+- [**Scale-location plot**](#hetero) for checking $Var[\epsilon|X]=\sigma^2$
+
+- **residuals vs leverage** for detecting and evaluating influential outlier
+
+</small>
+
+
+]
+
+.pull.right[
+```{r, echo=F,fig.retina=3, fig.height=5, fig.width=5}
+par(mfrow=c(2,2), mar=c(5,5,2,1))
+plot(fit)
+```
+]
+]
+
+---
+class: middle
+name: resfit
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+
+
+
+.right-column[
+
+### residuals vs fitted (1)
+
+
+```{r, echo=T,fig.retina=3, fig.height=5, fig.width=5}
+par(mar=c(5,5,1,1))
+plot(fit,1) #residuals vs fitted plot
+```
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+.right-column[
+
+.pull-left[
+### residuals vs fitted (2)
+
+<small>
+
+**Misspecification model** residuals vs fitted plot สามารถใช้เพื่อวินิจฉัยการวิเคราะห์ระบุโมเดลทำนายผิดพลาดของผู้วิเคราะห์ได้ เช่น
+
+* **True (unknown) population model** คือ $y=\beta_0+\beta_1x+\beta_2x^2+\epsilon$
+
+* **Hypothetical model** ของผู้วิเคราะห์กลับเป็น $y=\beta_0+\beta_2x+u$ $\rightarrow \hat{y}=b_0+b_1x$ 
+
+* จะเห็นว่า true population model กับ hypothetical model มีความแตกต่างกัน ซึ่งเกิดเป็นปัญหาการระบุโมเดลผิดพลาด (misspecification errors) ปัญหาดังกล่าวสามารถสะท้อนได้จากการวิเคราะห์เศษเหลือดังนี้ $e=y-\hat{y} \approx u = \beta_2x^2+\epsilon$
+
+</small>
+]
+
+
+.pull-right[
+
+</br>
+</br>
+
+```{r echo=F, fig.retina=3, fit.height=6, mar=c(5,5,1,1)}
+# simulating dataset
+x<-rnorm(100,50,15)
+y<-(1500-(x-50)^2)/10+rnorm(100,0,10)
+dat.sim<-data.frame(x,y)
+# estimate regression equation
+linear_fit<-lm(y~x,data=dat.sim)
+plot(linear_fit,1)
+```
+
+]
+]
+
+---
+class: middle
+name: hetero
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+.right-column[
+
+### Scale-location plot
+
+<small>
+
+* ใช้แสดงการกระจายของ residuals บนแต่ละระดับของตัวแปรอิสระ
+
+* Homoscedasticity assumption $\rightarrow Var[\epsilon|X]=\sigma^2$ ดังนั้นภายในข้อตกลงนี้การกระจายของ residuals ควรต้องมีขนาดที่ใกล้เคียงกันในแต่ละระดับของตัวแปรอิสระ
+
+</small>
+
+
+```{r echo=F, fig.retina=3, fig.width=12,fig.height=5}
+# simulating heteroscedasticity data
+x<-rnorm(100,50,15)
+y<-30+1.5*x+rnorm(100,0,0.5+0.5*(x-min(x)))
+het.dat<-data.frame(x,y)
+het_fit<-lm(y~x,data=het.dat)
+
+par(mfrow=c(1,2), mar=c(5,5,1,1))
+plot(het_fit,1)
+plot(het_fit,3)
+```
+]
+
+
+---
+class: middle
+name: hetero
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+.right-column[
+
+### White's Test
+
+<small>
+
+อีกวิธีการหนึ่งที่สามารถใช้สำรวจปัญหา heteroscedasticity คือการใช้สถิติทดสอบ White's test ที่ใช้เศษเหลือของโมเดลการวิเคราะห์เป็นข้อมูลสำหรับคำนวณสถิติทดสอบ มีขั้นตอนดังนี้
+
+1. คำนวณค่าเศษเหลือกำลังสองของโมเดล $e^2_i=y_i-\hat{y}_i$
+
+2. ประมาณค่าสมการถดถอย $e_i^2=\alpha_0+\alpha_1\hat{y}_i+\alpha_2\hat{y}^2_i$
+
+3. ทดสอบนัยสำคัญของ heteroscadasticity $H_0: \alpha_1=\alpha_2=0$ โดยตัวสถิติทดสอบคือ Lagrange multiplier (LM test) คำนวณดังนี้
+
+$$LM = nR^2 \sim \chi^2_{df=จำนวนพารามิเตอร์}$$
+</small>
+
+]
+
+---
+name: outlier
+class: middle
+
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+.right-column[
+
+
+<small>
+
+### Outlier
+
+หน่วยข้อมูลหรือค่าสังเกตที่ตำแหน่งอยู่ห่างไกลจากค่าสังเกตส่วนใหญ่ชุดข้อมูล เรียกว่าค่าผิดปกติ (outlier)
+
+
+
+### Influential observation
+
+หน่วยข้อมูลหรือค่าสังเกตที่เมื่อถูกลบออกจากโมเดลการวิเคราะห์แล้วทำให้ค่าประมาณของพารามิเตอร์หรือค่าทำนายเปลี่ยนแปลงไปอย่างมีนัยสำคัญ จะเรียกว่าค่าสังเกตที่มีอิทธิพล (influential observations)
+
+</small>
+
+
+```{r}
+
+
+```
+
 
 ]
 
 
 ---
-name: yourturn1
-template: yourturn
+name: yourturn
+template: section
+
+.left-column[
+# .fancy[Your turn]
+</br>
+
+<small>
+[- normal probability plot](https://en.wikipedia.org/wiki/Normal_probability_plot)
+
+[- white's test](https://rdrr.io/cran/het.test/man/whites.htest.html)
+
+
+
+</small>
+]
+
+
 
 .right-column[
+
+
 
 <small>
 จาก training model ใน `fit` สามารถสร้าง residual plot เพื่อ validate  training model ได้โดยใช้คำสั่ง
 </small>
 
-```{r, fig.retina=3, fig.height=6, fig.width=8}
+```{r, fig.retina=3, fig.height=6.5, fig.width=8}
 par(mfrow=c(2,2), mar=c(5,5,3,1))
 plot(fit)
 ```
