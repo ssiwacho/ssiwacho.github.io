@@ -526,8 +526,8 @@ template: yourturn
 set.seed(123)# specify the initial seed
 dat$id<-1:30 # create ID
 train.id<-sample(dat$id,0.8*30) #random sampling 80% of data
-train.dat<-dat[train.id,]
-test.dat<-dat[-train.id,]
+train.dat<-dat[train.id,] # training data
+test.dat<-dat[-train.id,] # test data
 ```
 
 
@@ -626,9 +626,138 @@ Model validation is defined within regulatory guidance as “the set of processe
 ]
 
 <small>
-- ในทางปฏิบัติผู้วิเคราะห์สามารถใช้การวิเคราะห์เศษเหลือ (residual analysis) เพื่อ validate training model ดังกล่าว
+**Note:** ในทางปฏิบัติผู้วิเคราะห์สามารถใช้การวิเคราะห์เศษเหลือ (residual analysis) เพื่อ validate training model
 </small>
 ]
+
+
+---
+class: middle
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+.right-column[
+
+### In-sample fit: Residuals
+
+.pull-left[
+
+
+**Hypothetical (population) model**
+
+$y_i=f(x_i)+\epsilon_i$ 
+
+<small>
+
+
+เมื่อ $y_i$ คือค่าสังเกตของตัวแปรตามใน training data และค่าคลาดเคลื่อนสุ่มมีข้อตกลงเบื้องต้นคือ $\epsilon_i \stackrel{i.i.d.}{\sim} Normal(0,\sigma^2)$
+
+</small>
+
+**Estimated hypothetical model** 
+
+$\hat{y_i}=\hat{f}(x_i)$ 
+
+<small>
+
+เรียก $\hat{y_i}$ ว่าค่าทำนาย (predicted value) ของตัวแปรตาม โดยค่าทำนายนี้คำนวณจาก linear combination ของตัวแปรอิสระ
+
+</small>
+
+
+
+
+]
+
+.pull-right[
+
+
+**Residual**
+
+$e_i=y_i-\hat{y_i} \approx \epsilon_i$ 
+
+```{r echo=F, message=F, warning=F, fig.retina=3}
+train.dat$predicted <- predict(fit)   # Save the predicted values
+train.dat$residuals <- residuals(fit) # Save the residual values
+ggplot(train.dat, aes(x = YearsExperience, y = Salary)) +
+  geom_smooth(method = "lm", se = FALSE, color = "lightgrey") +     # regression line  
+ geom_segment(aes(xend = YearsExperience, yend = predicted), alpha = .2) +      # draw line from point to line
+  geom_point(aes(color = abs(residuals), size = abs(residuals))) +  # size of the points
+  scale_color_continuous(low = "green", high = "red") +             # colour of the points mapped to residual size - green smaller, red larger
+  guides(color = FALSE, size = FALSE) +                             # Size legend removed
+  geom_point(aes(y = predicted), shape = 1) +
+  theme_bw()+
+  geom_text(aes(x=7.3,y=75000),label=expression(hat(y)==b[0]+b[1]*x),size=8,col="black")+
+  geom_text(aes(x=6,y=100000),label=expression(y),size=8,col="red")+
+  geom_text(aes(x=5.75,y=88000),label=expression(e[i]),size=7)
+```
+]
+
+
+]
+
+---
+class: middle
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+]
+
+.right-column[
+
+### In-sample fit: Residual plot
+
+<img src="residualplot.png">
+
+]
+
+
+---
+name: yourturn1
+template: yourturn
+
+.right-column[
+
+<small>
+จาก training model ใน `fit` สามารถสร้าง residual plot เพื่อ validate  training model ได้โดยใช้คำสั่ง
+</small>
+
+```{r, fig.retina=3, fig.height=6, fig.width=8}
+par(mfrow=c(2,2), mar=c(5,5,3,1))
+plot(fit)
+```
+
+]
+
+
 
 
 

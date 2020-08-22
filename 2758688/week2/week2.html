@@ -515,8 +515,8 @@ template: yourturn
 set.seed(123)# specify the initial seed
 dat$id&lt;-1:30 # create ID
 train.id&lt;-sample(dat$id,0.8*30) #random sampling 80% of data
-train.dat&lt;-dat[train.id,]
-test.dat&lt;-dat[-train.id,]
+train.dat&lt;-dat[train.id,] # training data
+test.dat&lt;-dat[-train.id,] # test data
 ```
 
 
@@ -653,9 +653,127 @@ Model validation is defined within regulatory guidance as “the set of processe
 ]
 
 &lt;small&gt;
-- ในทางปฏิบัติผู้วิเคราะห์สามารถใช้การวิเคราะห์เศษเหลือ (residual analysis) เพื่อ validate training model ดังกล่าว
+**Note:** ในทางปฏิบัติผู้วิเคราะห์สามารถใช้การวิเคราะห์เศษเหลือ (residual analysis) เพื่อ validate training model
 &lt;/small&gt;
 ]
+
+
+---
+class: middle
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+&lt;p style="text-indent:3em;"&gt;- In-sample fit&lt;/p&gt;
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+.right-column[
+
+### In-sample fit: Residuals
+
+.pull-left[
+
+
+**Hypothetical (population) model**
+
+`\(y_i=f(x_i)+\epsilon_i\)` 
+
+&lt;small&gt;
+
+
+เมื่อ `\(y_i\)` คือค่าสังเกตของตัวแปรตามใน training data และค่าคลาดเคลื่อนสุ่มมีข้อตกลงเบื้องต้นคือ `\(\epsilon_i \stackrel{i.i.d.}{\sim} Normal(0,\sigma^2)\)`
+
+&lt;/small&gt;
+
+**Estimated hypothetical model** 
+
+`\(\hat{y_i}=\hat{f}(x_i)\)` 
+
+&lt;small&gt;
+
+เรียก `\(\hat{y_i}\)` ว่าค่าทำนาย (predicted value) ของตัวแปรตาม โดยค่าทำนายนี้คำนวณจาก linear combination ของตัวแปรอิสระ
+
+&lt;/small&gt;
+
+
+
+
+]
+
+.pull-right[
+
+
+**Residual**
+
+`\(e_i=y_i-\hat{y_i} \approx \epsilon_i\)` 
+
+&lt;img src="week2_files/figure-html/unnamed-chunk-13-1.png" width="504" /&gt;
+]
+
+
+]
+
+---
+class: middle
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+&lt;p style="text-indent:3em;"&gt;- In-sample fit&lt;/p&gt;
+&lt;p style="text-indent:3em;"&gt;- Out-sample fit&lt;/p&gt;
+
+]
+
+.right-column[
+
+### In-sample fit: Residual plot
+
+&lt;img src="residualplot.png"&gt;
+
+]
+
+
+---
+name: yourturn1
+template: yourturn
+
+.right-column[
+
+&lt;small&gt;
+จาก training model ใน `fit` สามารถสร้าง residual plot เพื่อ validate  training model ได้โดยใช้คำสั่ง
+&lt;/small&gt;
+
+
+```r
+par(mfrow=c(2,2), mar=c(5,5,3,1))
+plot(fit)
+```
+
+&lt;img src="week2_files/figure-html/unnamed-chunk-14-1.png" width="576" /&gt;
+
+]
+
+
 
 
 
