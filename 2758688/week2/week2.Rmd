@@ -182,6 +182,9 @@ class: middle
 * Training Models
 
 * Evaluating Models
+
+* Multiple Regression
+
 ]
 
 ---
@@ -198,6 +201,9 @@ class: middle
 * Training Models
 
 * Evaluating Models
+
+* Multiple Regression
+
 ]
 
 
@@ -260,6 +266,9 @@ class: middle
 * Training Models
 
 * Evaluating Models
+
+* Multiple Regression
+
 ]
 
 
@@ -333,6 +342,9 @@ class: middle
 * Training Models
 
 * Evaluating Models
+
+* Multiple Regression
+
 ]
 
 
@@ -393,8 +405,9 @@ class: middle
 
 * Evaluating Models
 
-</br>
-</br>
+* Multiple Regression
+
+
 </br>
 </br>
 </br>
@@ -596,6 +609,8 @@ class: middle
 **<p style="text-indent:3em;">- In-sample fit</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
+* Multiple Regression
+
 ]
 
 
@@ -651,11 +666,16 @@ class: middle
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
+* Multiple Regression
+
 ]
 
 .right-column[
 
-### In-sample fit: Residuals
+### In-sample fit: Residuals 
+
+$$e_i=y_i-\hat{y_i} \approx \epsilon_i$$
+
 
 .pull-left[
 
@@ -673,17 +693,13 @@ $y_i=f(x_i)+\epsilon_i$
 
 **Estimated hypothetical model** 
 
-$\hat{y_i}=\hat{f}(x_i)$ 
+$\hat{y_i}=\hat{f}(x_i) \approx f(x_i)$ 
 
 <small>
 
 เรียก $\hat{y_i}$ ว่าค่าทำนาย (predicted value) ของตัวแปรตาม โดยค่าทำนายนี้คำนวณจาก linear combination ของตัวแปรอิสระ
 
 </small>
-
-**Residual**
-
-$e_i=y_i-\hat{y_i} \approx \epsilon_i$ 
 
 
 ]
@@ -730,6 +746,8 @@ class: middle
 
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
 
 ]
 
@@ -799,6 +817,8 @@ class: middle
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
+* Multiple Regression
+
 ]
 
 .right-column[
@@ -823,7 +843,7 @@ plot(fit)
 
 - [**Scale-location plot**](#hetero) for checking $Var[\epsilon|X]=\sigma^2$
 
-- **residuals vs leverage** for detecting and evaluating influential outlier
+- [**residuals vs leverage**](#resvslev) for detecting and evaluating influential outlier
 
 </small>
 
@@ -855,6 +875,8 @@ name: resfit
 
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
 
 ]
 
@@ -890,6 +912,8 @@ class: middle
 
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
 
 ]
 
@@ -949,11 +973,13 @@ name: hetero
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
+* Multiple Regression
+
 ]
 
 .right-column[
 
-### Scale-location plot
+### Scale-location plot (1)
 
 <small>
 
@@ -963,20 +989,11 @@ name: hetero
 
 </small>
 
-
-```{r echo=F, fig.retina=3, fig.width=12,fig.height=5}
-# simulating heteroscedasticity data
-x<-rnorm(100,50,15)
-y<-30+1.5*x+rnorm(100,0,0.5+0.5*(x-min(x)))
-het.dat<-data.frame(x,y)
-het_fit<-lm(y~x,data=het.dat)
-
-par(mfrow=c(1,2), mar=c(5,5,1,1))
-plot(het_fit,1)
-plot(het_fit,3)
+```{r echo=F, fig.retina=3, fig.width=7,fig.height=5}
+par(mar=c(5,5,2,1))
+plot(fit,3)
 ```
 ]
-
 
 ---
 class: middle
@@ -996,6 +1013,115 @@ name: hetero
 
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+]
+
+.right-column[
+
+### Scale-location plot (2)
+
+<small>
+กรณีที่เกิดปัญหา heteroscedasticity การกระจายของ residuals จะไม่เท่ากันในแต่ละระดับของตัวแปรอิสระ และอาจเป็นฟังก์ชันที่ขึ้นกับตัวแปรอิสระด้วย ดังตัวอย่าง
+
+</small>
+
+```{r echo=F, fig.retina=3, fig.width=12,fig.height=6}
+# simulating heteroscedasticity data
+x<-rnorm(100,50,15)
+y<-30+1.5*x+rnorm(100,0,0.5+0.5*(x-min(x)))
+het.dat<-data.frame(x,y)
+het_fit<-lm(y~x,data=het.dat)
+
+par(mfrow=c(1,2), mar=c(5,5,3,1))
+plot(het_fit,1)
+plot(het_fit,3)
+```
+]
+
+---
+class: middle
+name: hetero
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+]
+
+.right-column[
+
+### Breusch-Pagan Test
+
+.pull-left[
+<small>
+
+The Breusch-Pagan test fits a linear regression model to the residuals of a linear regression model (by default the same explanatory variables are taken as in the main regression model) and rejects if too much of the variance is explained by the additional explanatory variables. ([Hotthorn et al.(2019)](https://cran.r-project.org/web/packages/lmtest/lmtest.pdf))
+
+- คำนวณค่าเศษเหลือกำลังสองของโมเดล
+
+$$e^2_i=y_i-\hat{y}_i$$
+
+
+- ประมาณค่าสมการถดถอยของเศษเหลือกำลังสองกับตัวแปรอิสระหรือ linear combination ของตัวแปรอิสระ 
+
+$$e_i^2=\alpha_0+\alpha_1\hat{y}_i+\nu_i$$
+</small>
+]
+
+.pull-right[
+
+<small>
+
+- ทดสอบนัยสำคัญของ heteroscadasticity $H_0: \alpha_1=0$ โดยตัวสถิติทดสอบคือ Lagrange multiplier (LM test) คำนวณดังนี้
+
+$$LM = nR^2 \sim \chi^2_{df=จำนวนพารามิเตอร์}$$
+
+</small>
+
+```{r message=F}
+#install.packages("lmtest")
+library(lmtest)
+bptest(Salary~YearsExperience, data=train.dat)
+
+```
+]
+
+]
+---
+class: middle
+name: hetero
+
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
 
 ]
 
@@ -1038,71 +1164,716 @@ class: middle
 **<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
 <p style="text-indent:3em;">- Out-sample fit</p>
 
+* Multiple Regression
+
 ]
+
 
 .right-column[
 
 
+.pull-left[
 <small>
 
-### Outlier
+### Outliers
 
-หน่วยข้อมูลหรือค่าสังเกตที่ตำแหน่งอยู่ห่างไกลจากค่าสังเกตส่วนใหญ่ชุดข้อมูล เรียกว่าค่าผิดปกติ (outlier)
-
-
-
-### Influential observation
-
-หน่วยข้อมูลหรือค่าสังเกตที่เมื่อถูกลบออกจากโมเดลการวิเคราะห์แล้วทำให้ค่าประมาณของพารามิเตอร์หรือค่าทำนายเปลี่ยนแปลงไปอย่างมีนัยสำคัญ จะเรียกว่าค่าสังเกตที่มีอิทธิพล (influential observations)
+หน่วยข้อมูลที่มีค่าสังเกตของตัวแปรอยู่ในตำแหน่งที่ห่างไกลจากค่าสังเกตส่วนใหญ่ชุดข้อมูล เรียกว่าค่าผิดปกติ (outlier)
 
 </small>
 
-
-```{r}
-
-
+```{r fig.retina=3, fig.width=5,fig.height=3, echo=F}
+out1<-rnorm(100,30,5)
+out2<-rnorm(5,40,10)
+out<-c(out1,out2)
+par(mar=c(5,1,1,1))
+boxplot(out,horizontal = T,xlab="Salary")
 ```
+]
 
+
+
+
+
+.pull-right[
+
+### Influential observation
+
+<small>
+
+- ค่าผิดปกติบางค่าอาจไม่ได้ส่งผลกระทบอะไรต่อการประมาณค่าพารามิเตอร์ในโมเดล แต่บางค่าก็อาจส่งผลกระทบอย่างมาก
+
+- ค่าผิดปกติที่เมื่อถูกนำออกจากการประมาณค่าพารามิเตอร์ของโมเดลแล้วทำให้ค่าประมาณหรือค่าทำนายของโมเดลมีการเปลี่ยนแปลงไปอย่างมีนัยสำคัญ จะเรียกว่า [**ค่าสังเกตที่มีอิทธิพล (influential observations)**](https://shiny.rit.albany.edu/stat/outliers/)
+
+
+</small>
+
+<center><img src="influential.png" width=80%></center>
+
+]
 
 ]
 
 
 ---
-name: yourturn
-template: section
+class: middle
 
 .left-column[
-# .fancy[Your turn]
-</br>
 
-<small>
-[- normal probability plot](https://en.wikipedia.org/wiki/Normal_probability_plot)
-
-[- white's test](https://rdrr.io/cran/het.test/man/whites.htest.html)
+## Linear Regression
 
 
+* Basic Concepts
 
-</small>
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
 ]
 
+
+.right-column[
+
+.pull-left[
+
+### Leverage measure
+
+$h_i=\frac{1}{n}+\frac{(x_i-\overline{x})^2}{\sum_j(x_j-\overline{x})^2}$
+
+<small>
+
+ค่า leverage value มีคุณสมบัติคือ
+
+- $\sum_{i=1}^nh_i=p+1$ เมื่อ $p$ คือจำนวนตัวแปรอิสระของโมเดล ซึ่งจะได้ว่า $\overline{h}=\frac{p+1}{n}$
+
+- เกณฑ์การพิจารณาระดับ leverage ของหน่วยข้อมูลจึงอาจพิจารณาจากจำนวนของค่าเฉลี่ยข้างต้น เช่น $h_i>2\overline{h}$
+ หรือ $h_i>3\overline{h}$ เป็นต้น
+ 
+</small>
+
+]
+
+.pull-right[
+
+
+```{r fig.retina=3,fig.width=4, fig.height=3}
+leverage<-hatvalues(fit)
+par(mar=c(5,1,1,1))
+boxplot(leverage,horizontal = T)
+```
+
+
+```{r}
+summary(leverage)
+```
+
+]
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+]
 
 
 .right-column[
 
 
+.pull-left[
+### Influence measure: Cook's Distance
 
 <small>
-จาก training model ใน `fit` สามารถสร้าง residual plot เพื่อ validate  training model ได้โดยใช้คำสั่ง
-</small>
 
-```{r, fig.retina=3, fig.height=6.5, fig.width=8}
-par(mfrow=c(2,2), mar=c(5,5,3,1))
-plot(fit)
+Cook's distance วัดปริมาณการเปลี่ยนแปลงของค่าพารามิเตอร์ในโมเดล เมื่อตัดค่าสังเกตที่ $i$ ออกจากโมเดลการวิเคราะห์
+
+$D_i=\frac{y_i-\hat{y}_i}{MSE(1-h_i)}\times\frac{h_i}{1-h_i}\times\frac{1}{p+1}$
+
+เมื่อ $p$ คือจำนวนตัวแปรอิสระภายในโมเดล โดยเกณฑ์การพิจารณาค่าสังเกตที่มีอิทธิพลเช่น $D_i>0.5$ หรือ $D_i>1$
+
+</small>
+]
+
+.pull-right[
+
+```{r fig.retina=3,fig.width=4, fig.height=3}
+cook<-cooks.distance(fit)
+summary(cook)
 ```
+
+```{r fig.retina=3,fig.width=6, fig.height=5}
+par(mar=c(5,5,1,1))
+plot(leverage,cook,xlim=c(0,0.2),pch=16)
+```
+
+
+]
+
+]
+
+
+---
+name: resvslev
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+]
+
+
+.right-column[
+
+### Residuals vs Leverage
+
+```{r fig.retina=3,fig.width=8, fig.height=6}
+par(mar=c(5,5,1,1))
+plot(fit,5)
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+
+]
+
+.right-column[
+
+.pull-left[
+### DFFITs
+
+- use to indicate the influential observation
+
+- standardized function of difference between the predicted value for the observation when it is included in the dataset and when (only) it is excluded from the dataset.
+
+$$DFFITs=\frac{\hat{y}_i-\hat{y}_{i(-i)}}{\sqrt{MSE_{-i}h_i}}$$
+]
+
+.pull-right[
+```{r fig.retina=3,fig.width=6, fig.height=5}
+dffits<-dffits(fit)
+summary(dffits)
+par(mar=c(5,5,1,1))
+plot(leverage,dffits)
+```
+]
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+]
+
+
+.right-column[
+
+### In-sample fit (Goodness of fit: R-square)
+
+<center><img src="partitionSS.png" width=100%></center>
 
 ]
 
 
 
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
 
 
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+]
+
+.right-column[
+
+### Badness of fit
+
+
+
+
+
+- **RMSE (root mean squared error): ** $RMSE = \sqrt{\frac{SSError}{df}}=\sqrt{\frac{SSError}{n-k}}$
+
+
+- **MAE (mean absolute error): ** $MAE = \sum_{i=1}^n \frac{|y_i-\hat{y}_i|}{(n-p-1)}$ 
+
+<small>
+
+<p style="text-indent:2.7em;">เมื่อ $p$ คือจำนวนตัวแปรอิสระ</p>
+
+</small>
+
+- **-2LL (deviance): ** $-2LL=-2ln(\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i-\hat{y}_i)^2})$
+
+
+<small>
+
+<p style="text-indent:2.7em;">Note: normality assumption must be assumed.</p>
+
+</small>
+
+- **BIC (bayesian information criterion): ** $BIC = ln(n)(p+1)-2LL$
+
+
+
+
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+**<p style="text-indent:3em;">[- In-sample fit](#insample)</p>**
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* Multiple Regression
+
+]
+
+
+.right-column[
+
+### In-sample fit: Biased or Underfitting Model
+
+<img src="biasedmodel.png">
+
+
+
+- เปลี่ยนหรือเพิ่มตัวแปรอิสระในโมเดล
+
+- ลดการกำหนดข้อจำกัด (contraints) ของโมเดล
+
+- เปลี่ยน algorithm ที่ใช้ในการเรียนรู้ เช่น regularization, bagging หรือ boosting เป็นต้น
+
+]
+
+---
+name: outsample
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* **Evaluating Models**
+
+<p style="text-indent:3em;">[- In-sample fit](#insample)</p>
+**<p style="text-indent:3em;">- Out-sample fit</p>**
+
+* Multiple Regression
+
+]
+
+
+.right-column[
+
+### Out-sample fit (Model Evaluation)
+
+<img src="outsample.png">
+
+
+```{r}
+test<-test.dat$Salary # Salary in test data
+predict<-predict(fit,test.dat) # predicted value in test data
+RMSE<-sqrt(sum(test-predict)^2/length(test)) # calculate test data RMSE
+R2<-cor(test,predict)^2 # calculate test data R-square
+```
+
+.pull-left[
+
+```{r}
+RMSE
+```
+
+]
+
+.pull-right[
+
+```{r}
+R2
+```
+
+]
+
+]
+
+---
+class: middle
+name: MRA
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* Evaluating Models
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* **Multiple Regression**
+
+]
+
+.right-column[
+
+### Multiple Regression
+
+<img src="MRA.png" width=80%>
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* Evaluating Models
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* [**Multiple Regression**](#MRA)
+
+]
+
+.right-column[
+
+### Multiple Regression
+
+
+**Hypothetical model**
+
+$y_i=f(x_i)+\epsilon_i$
+
+**Fitted function**
+
+$\hat{y}_i=b_0+b_1x_1+b_2x_2+...+b_px_p=\sum_{j=0}^p b_jx_j$
+
+
+<img src="MRA2.png" width=50%>
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* Evaluating Models
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* [**Multiple Regression**](#MRA)
+
+]
+
+.right-column[
+
+### Multiple Regression
+
+ปัจจัยทางเศรษฐกิจและสังคม สภาพภูมิอากาศ และภูมิศาสตร์ มีผลอย่างไรต่ออัตราการฆาตกรรม? และสามารถใช้ทำนายอัตราการฆาตกรรมได้หรือไม่?
+
+
+
+
+```{r}
+head(state.x77)
+
+```
+
+
+```{r}
+class(state.x77)
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* Evaluating Models
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* [**Multiple Regression**](#MRA)
+
+]
+
+.right-column[
+
+
+```{r}
+dat2<-data.frame(state.x77) # convert matrix "state.x77" into data.frame
+round(cor(dat2),2)
+```
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* Evaluating Models
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* [**Multiple Regression**](#MRA)
+
+
+</br>
+</br>
+</br>
+</br>
+
+<small>
+
+- **Note:** [correlation matrix visualization](https://briatte.github.io/ggcorr/)
+
+</small>
+]
+
+.right-column[
+
+
+```{r message=F, warning=F, fig.retina=3, fig.height=5}
+#install.packages(c("GGally","ggplot2"))
+library(ggplot2)
+library(GGally)
+
+ggcorr(dat2, geom = "blank", label = TRUE, hjust = 0.75) +
+  geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
+  scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
+  guides(color = FALSE, alpha = FALSE)+
+  theme(plot.margin = margin(1,1,1,1))
+
+```
+]
+
+]
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* Evaluating Models
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* [**Multiple Regression**](#MRA)
+
+]
+
+.right-column[
+
+### Splitting Data
+
+```{r}
+dat2$id<-1:dim(state.x77)[1] 
+train.id<-sample(dat2$id,0.8*dim(state.x77)[1])
+train.dat<-dat2[train.id,]
+test.dat<-dat2[-train.id,]
+```
+
+```{r}
+dim(train.dat)
+dim(test.dat)
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+## Linear Regression
+
+
+* Basic Concepts
+
+* Training Models
+
+* Evaluating Models
+
+<p style="text-indent:3em;">- In-sample fit</p>
+<p style="text-indent:3em;">- Out-sample fit</p>
+
+* [**Multiple Regression**](#MRA)
+
+]
+
+.right-column[
+
+### Fitting MRA to the Training data (All in)
+
+```{r}
+fit.mra<-lm(Murder~., data=train.dat)
+summary(fit.mra)
+```
+
+]
+
+---
+name: yourturn1
+template: yourturn
+
+.right-column[
+
+### Model validation and Evaluvation
+
+
+<small>
+
+- ขอให้นิสิตวิเคราะห์ in-sample fit และ out-sample fit ของโมเดล All in ในข้างต้น
+
+- assumption เฉพาะของ MRA คือ no multicollinearity ผู้วิเคราะห์สามารถใช้ค่า variance inflation factor (VIF) เพื่อตรวจสอบ assumption ดังกล่าวได้ ฟังก์ชันใน R สำหรับคำนวณค่าสถิติ VIF คือ `vif(lm.model)`
+
+</small>
+
+]
