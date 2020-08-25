@@ -1,0 +1,65 @@
+---
+title: "การบ้านครั้งที่ 1: Linear Regression"
+author: "รายวิชา 2758688 หลักการเรียนรู้ของเครื่องและการประยุกต์"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: vignette
+    font-family: 'Sarabun'
+---
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pridi:wght@200&family=Sarabun:wght@200;300&family=Taviraj:wght@200&family=Trirong:wght@300&display=swap');
+
+body{
+    font-family: 'Taviraj', serif;
+    font-size: 13pt;
+    color: black;
+    line-height:1.9em;
+}
+/* Headers */
+h1,h2,h3,h4,h5,h6{
+  font-size: 16pt;
+    font-family: 'Trirong', serif;
+    }
+</style> 
+
+
+```{r setup, include=FALSE}
+library(showtext)
+## Needed for the location of Candara on my system
+font_paths("/Users/siwachoat/Downloads/Chula-Fonts")
+
+font_add("ChulaCharasNew", regular="ChulaCharasNewReg.ttf")
+```
+
+## คำสั่ง
+
+จงพัฒนา Linear regression model สำหรับทำนายมัธยฐานของราคาบ้าน (median_house_value) ในแต่ละพื้นที่โดยใช้ชุดข้อมูลที่กำหนดให้ และทำการตรวจสอบคุณภาพของโมเดลที่พัฒนาขึ้นทั้ง in-sample fit และ out-sample fit โดยให้นิสิตสรุปผลการพัฒนาโมเดลดังกล่าวเป็นรายงานผลการวิเคราะห์ข้อมูลไม่เกิน 3 หน้า
+
+## รายละเอียดของชุดข้อมูล
+
+ชุดข้อมูลที่กำหนดให้คือ housing.csv (สามารถดาวน์โหลดได้จากระบบ KruRoo) ภายในชุดข้อมูลประกอบด้วยข้อมูลมัธยฐานของราคาบ้านในแต่ละพื้นที่ (median_house_value) กับตัวแปรอิสระที่คาดว่าจะเกี่ยวข้องกับการกำหนดหรือประมาณการณ์ราคาบ้าน หน่วยข้อมูลในข้อมูลชุดนี้เป็นพื้นที่ที่ประกอบด้วยกลุ่มครัวเรือนย่อย ๆ ของรัฐ California รายละเอียดของตัวแปรแต่ละตัวเป็นดังนี้
+
+- **housing_median_age** คือมัธยฐานของอายุบ้านในกลุ่มครัวเรือน
+
+- **total_room** คือจำนวนห้องรวมของบ้านทุกหลังภายในกลุ่มครัวเรือน
+
+- **total_bedrooms** คือจำนวนห้องนอนรวมทั้งหมดของบ้านทุกหลังภายในกลุ่มครัวเรือน
+
+- **population** คือจำนวนประชากรทั้งหมดที่อาศัยอยู่ภายในกลุ่มครัวเรือน
+
+- **household** คือจำนวนบ้านในแต่ละกลุ่มครัวเรือน
+
+- **median_income** คือมัธยฐานของรายได้ประชากรภายในแต่ละกลุ่มครัวเรือน
+
+- **median_house_value** คือมัธยฐานราคาบ้านในแต่ละกลุ่มครัวเรือน (outcome variable)
+
+- **ocean_proximity** คือระยะห่างจากทะลของแต่ละกลุ่มครัวเรือน
+
+
+### การส่งงาน
+
+[กดตรงนี้](https://docs.google.com/forms/d/e/1FAIpQLSedhuCJJ4UZkBWbKuunuZx3CgM20xy5VB4HSOIcBm_VgHN1hg/viewform?usp=sf_link) เพื่อส่งงานของนิสิต โดยให้ส่งการบ้าน**ภายในวันเสาร์ที่ 29 สิงหาคม 2563**
+
