@@ -1,0 +1,802 @@
+---
+title: "ML: สัปดาห์ที่ 3: </br> Linear Regression (2)"
+author: "อ.ดร.สิวะโชติ ศรีสุทธิยากร"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer1.css
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      beforeInit: "https://platform.twitter.com/widgets.js"
+      countIncrementalSlides: false
+---
+
+class: center, middle
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+
+
+style_mono_accent(
+  base_color = "#1c5253",
+  header_font_google = google_font("Maitree"),
+  text_font_google   = google_font("Sarabun"),
+  code_font_google   = google_font("Fira Mono")
+)
+  
+
+#style_duo_accent(header_font_google = google_font("Maitree"),
+#  text_font_google   = google_font("Sarabun"),
+#  code_font_google   = google_font("Fira Mono"),
+#  primary_color = "#4d3e3e",
+#  secondary_color="#fff3cd",
+ 
+#text_color="#382933",
+
+#  colors = c(
+#  red = "#f34213",
+#  purple = "#3e2f5b",
+#  orange = "#ff8811",
+#  green = "#136f63",
+#  white = "#FFFFFF")
+
+#)
+
+```
+
+
+# housing.csv
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- **Importing Data**
+
+- Data Preprocessing
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+.right-column[
+
+### Importing Data
+
+```{r eval=F}
+#setwd() # <--- setting working directory
+#getwd() # <--- checking working directory
+#dir() # <--- List the Files in a Directory/Folder
+dat<-read.csv("housing.csv")
+head(dat)
+```
+
+```{r echo=F}
+dat<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/2758688/week3/housing.csv")
+head(dat)
+```
+
+
+
+]
+
+
+---
+class: middle, center
+
+# Any Problem?
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+
+.right-column[
+
+
+### Data Preprocessing
+
+- Exploring data
+
+- Features Scaling
+
+- Handling missing data
+
+- Anomaly data detecting
+
+```{r}
+str(dat)
+```
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+
+.right-column[
+
+```{r}
+summary(dat)
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+
+.right-column[
+
+
+### Exploring data: Frequency Distribution
+
+```{r fig.retina=3,fig.height=3,fig.width=7}
+#convert character data into factor
+dat$ocean_proximity<-factor(dat$ocean_proximity) 
+#generate frequency distribution of ocean_proximity
+table(dat$ocean_proximity) 
+par(mar=c(3,3,1,1))
+barplot(table(dat$ocean_proximity))
+```
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+.right-column[
+
+### Exploring data: Frequency Distribution
+
+
+```{r eval=T,fig.retina=3, fig.height=5, fig.width=12, warning=F, message=F}
+library(tidyr) # tidying datatable tools
+library(dplyr) # manipulating data tools
+par(mfrow=c(2,4),mar=c(5,4,0.5,0.5))
+for(i in 1:7)
+{
+  hist(dat[,i+2],main="",xlab=names(dat)[i+2])
+}
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+.right-column[
+
+### Frequency Distribution (`nclass=30`)
+
+```{r echo=F,fig.retina=3, fig.height=7, fig.width=12, warning=F, message=F}
+library(tidyr) # tidying datatable tools
+library(dplyr) # manipulating data tools
+par(mfrow=c(2,4))
+for(i in 1:7)
+{
+  hist(dat[,i+2],main="",xlab=names(dat)[i+2],nclass=50)
+}
+```
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<small>
+**Note:** [California Map](https://www.google.com/maps/place/%E0%B9%81%E0%B8%84%E0%B8%A5%E0%B8%B4%E0%B8%9F%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%99%E0%B8%B5%E0%B8%A2+%E0%B8%AA%E0%B8%AB%E0%B8%A3%E0%B8%B1%E0%B8%90%E0%B8%AD%E0%B9%80%E0%B8%A1%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2/data=!4m2!3m1!1s0x808fb9fe5f285e3d:0x8b5109a227086f55?sa=X&ved=2ahUKEwjT98DtnrvrAhUjyzgGHbdiAnUQ8gEwHHoECBkQBg)
+</small>
+
+]
+
+.right-column[
+
+### Visualizing geographical data: ocean_proximity
+
+.pull-left[
+```{r eval=F,fig.retina=3, fig.height=6,fig.width=6}
+library(ggplot2)
+
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude,
+                  col=ocean_proximity),
+              alpha=0.7)+
+        theme_minimal()+
+        coord_fixed(1.3)
+```
+
+]
+
+.pull-right[
+```{r echo=F,eval=T,fig.retina=3, fig.height=7,fig.width=7, message=F, warning=F}
+library(ggplot2)
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude,
+                  col=ocean_proximity),
+              alpha=0.7)+
+        theme_minimal()+
+        theme(plot.margin=margin(1,1,1,10))+
+        coord_fixed(1.3)
+```
+
+
+]
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+.right-column[
+
+### Visualizing geographical data: median_house_value
+
+.pull-left[
+```{r eval=F,fig.retina=3, fig.height=6,fig.width=6}
+library(ggplot2)
+library(viridis)
+
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude,
+                  col=median_house_value),
+                  alpha=0.7)+
+        theme_minimal()+
+        coord_fixed(1.3)
+```
+
+]
+
+.pull-right[
+
+```{r echo=F,eval=T,fig.retina=3, fig.height=6, message=F, warning=F}
+library(ggplot2)
+library(viridis)
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude,
+                  col=median_house_value),
+                  alpha=0.7)+
+        theme_minimal()+
+        theme(plot.margin=margin(1,1,1,10))+
+        scale_color_viridis()+
+        coord_fixed(1.3)
+```
+
+]
+]
+---
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+.right-column[
+
+### Manipulating Data
+
+```{r fig.retina=3, fig.height=3, fig.width=12}
+# manipulating data
+dat<-dat%>%mutate(room.per.household=total_rooms/households,
+                  bedroom.per.room=total_bedrooms/total_rooms,
+                  household.size=population/households)
+
+summary(dat[,11:13])
+```
+
+]
+
+---
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+.right-column[
+
+### Anomaly Detecting
+
+```{r}
+dat%>%filter(household.size>1000)%>%select(longitude,latitude,room.per.household,household.size,population,households)
+dat%>%filter(room.per.household>100)
+```
+
+
+
+]
+
+---
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<small>
+
+**Note:** [reference](https://www.google.co.th/maps/place/38°19'12.0%22N+121°58'48.0%22W/@38.320686,-121.9783531,919m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d38.32!4d-121.98)
+
+</small>
+
+]
+
+.right-column[
+
+
+.pull-left[
+
+
+```{r eval=F,fig.retina=3, fig.height=8,fig.width=6}
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude),
+                  col="grey",
+                  alpha=0.5)+
+         geom_point(aes(x=-121.98,
+                        y=38.32),
+                     col="red",
+                     size=5)+
+         geom_point(aes(x=-120.10,
+                        y=38.91),
+                     col="red",
+                     size=5)        +
+
+         geom_point(aes(x=-120.08,
+                        y=38.80),
+                     col="red",
+                     size=5)  +
+        theme_minimal()+
+        scale_color_viridis()+
+        coord_fixed(1.3)
+```
+
+]
+
+.pull-right[
+```{r echo=F,eval=T,fig.retina=3, fig.height=8, message=F, warning=F}
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude),
+                  col="grey",
+                  alpha=0.5)+
+          geom_point(aes(x=-121.98,y=38.32),
+                     col="red",size=5)+
+          
+         geom_point(aes(x=-120.10,
+                        y=38.91),
+                     col="red",
+                     size=5)    +    
+
+         geom_point(aes(x=-120.08,
+                        y=38.80),
+                     col="red",
+                     size=5)  +
+        theme_minimal()+
+        scale_color_viridis()+
+        coord_fixed(1.3)
+```
+]
+
+]
+
+---
+class: middle
+
+
+
+```{r}
+library(DT)
+dat%>%filter(room.per.household>10)%>%
+      select(longitude,latitude,room.per.household,household.size,population,households)%>%
+      datatable(rownames=F, 
+                options = list(pageLength=5,
+                lengthMenu=c(5,10)))%>%
+      formatRound(columns=c('room.per.household', 'household.size'), digits=2)
+```
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+
+.pull-left[
+
+### Outliers ???
+
+```{r eval=F,fig.retina=3, fig.height=8,fig.width=6}
+ggplot()+
+  geom_point(data=dat,
+          aes(x=longitude,
+              y=latitude),
+              col="grey",
+              alpha=0.5)+
+  geom_point(data=dat%>%
+             filter(room.per.household>10),
+             aes(x=longitude,
+             y=latitude),
+             col="red",
+             size=5)+
+  theme_minimal()+
+  scale_color_viridis()+
+  coord_fixed(1.3)
+```
+
+]
+
+.pull-right[
+
+```{r echo=F,eval=T,fig.retina=3, fig.height=8, message=F, warning=F}
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude),
+                  col="grey",
+                  alpha=0.5)+
+         geom_point(data=dat%>%
+                    filter(room.per.household>10),
+                    aes(x=longitude,
+                        y=latitude),
+                     col="red",
+                     size=3)+
+        theme_minimal()+
+        scale_color_viridis()+
+        coord_fixed(1.3)
+```
+
+
+]
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Missing value analysis
+
+```{r eval=F, message=F, warning=F, fig.retina=3, fig.width=12}
+# install.packages("naniar")
+library(naniar)
+library(gridExtra)
+p1<-gg_miss_var(dat)
+p2<-vis_miss(dat, sort_miss=T)
+p3<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()
+p4<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()+facet_wrap(~ocean_proximity)
+grid.arrange(p1,p2, nrow=1)
+grid.arrange(p3,p4, nrow=1)
+```
+]
+
+---
+class: middle
+
+
+```{r echo=F,eval=T, message=F, warning=F, fig.retina=3, fig.width=16, fig.height=8}
+# install.packages("naniar")
+library(naniar)
+library(gridExtra)
+p1<-gg_miss_var(dat)
+p2<-vis_miss(dat, sort_miss=T)
+p3<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()
+p4<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()+facet_wrap(~ocean_proximity)
+grid.arrange(p1,p2,p3,p4, nrow=2)
+```
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Remove missing values and some outliers
+
+```{r}
+dat2<-dat%>%filter(is.na(total_bedrooms)==F , room.per.household<10)
+str(dat2)
+```
+
+]
+
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+```{r message=F, warning=F, fig.retina=3, fig.width=14, fig.height=8}
+library(GGally)
+ggpairs(dat2%>%select(-longitude,-latitude)%>%select(1:6,8,7),switch="y")
+```
+
+
+]
+
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r fig.retina=3, fig.width=8}
+ggplot(data=dat2,aes(x=median_income,y=median_house_value))+
+  geom_point(alpha=0.5,col="darkblue")+
+  theme_minimal()
+```
+
+]
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r fig.retina=3, fit,width=12, fig.height=6}
+ggplot(dat2%>%filter(median_house_value<500000),
+       aes(x=ocean_proximity,y=median_house_value))+
+  geom_boxplot()
+```
+
+]
+
+

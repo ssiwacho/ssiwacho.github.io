@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ML: สัปดาห์ที่ 3:  Linear Regression (2)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="อ.ดร.สิวะโชติ ศรีสุทธิยากร" />
+    <script src="week3-copy_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer1.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# ML: สัปดาห์ที่ 3: </br> Linear Regression (2)
+### อ.ดร.สิวะโชติ ศรีสุทธิยากร
+
+---
+
+
+class: center, middle, inverse
+
+
+
+
+
+
+# housing.csv
+
+
+
+---
+name: outline1
+class: middle
+
+.left-column[
+
+### Multiple Regression
+
+- **housing.csv**
+
+- Feature Selection
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+### housing.csv
+
+
+```r
+library(dplyr)
+dat&lt;-data.frame(state.x77)
+dat&lt;-dat%&gt;%select(5,1,2,3,4,6,7,8) # reorder variables
+summary(dat)
+```
+
+```
+##      Murder         Population        Income       Illiteracy   
+##  Min.   : 1.400   Min.   :  365   Min.   :3098   Min.   :0.500  
+##  1st Qu.: 4.350   1st Qu.: 1080   1st Qu.:3993   1st Qu.:0.625  
+##  Median : 6.850   Median : 2838   Median :4519   Median :0.950  
+##  Mean   : 7.378   Mean   : 4246   Mean   :4436   Mean   :1.170  
+##  3rd Qu.:10.675   3rd Qu.: 4968   3rd Qu.:4814   3rd Qu.:1.575  
+##  Max.   :15.100   Max.   :21198   Max.   :6315   Max.   :2.800  
+##     Life.Exp        HS.Grad          Frost             Area       
+##  Min.   :67.96   Min.   :37.80   Min.   :  0.00   Min.   :  1049  
+##  1st Qu.:70.12   1st Qu.:48.05   1st Qu.: 66.25   1st Qu.: 36985  
+##  Median :70.67   Median :53.25   Median :114.50   Median : 54277  
+##  Mean   :70.88   Mean   :53.11   Mean   :104.46   Mean   : 70736  
+##  3rd Qu.:71.89   3rd Qu.:59.15   3rd Qu.:139.75   3rd Qu.: 81162  
+##  Max.   :73.60   Max.   :67.30   Max.   :188.00   Max.   :566432
+```
+
+]
+
+---
+.left-column[
+
+### Multiple Regression
+
+- **state.x77**
+
+- Feature Selection
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+
+
+```r
+round(cor(dat),2)
+```
+
+```
+##            Murder Population Income Illiteracy Life.Exp HS.Grad Frost  Area
+## Murder       1.00       0.34  -0.23       0.70    -0.78   -0.49 -0.54  0.23
+## Population   0.34       1.00   0.21       0.11    -0.07   -0.10 -0.33  0.02
+## Income      -0.23       0.21   1.00      -0.44     0.34    0.62  0.23  0.36
+## Illiteracy   0.70       0.11  -0.44       1.00    -0.59   -0.66 -0.67  0.08
+## Life.Exp    -0.78      -0.07   0.34      -0.59     1.00    0.58  0.26 -0.11
+## HS.Grad     -0.49      -0.10   0.62      -0.66     0.58    1.00  0.37  0.33
+## Frost       -0.54      -0.33   0.23      -0.67     0.26    0.37  1.00  0.06
+## Area         0.23       0.02   0.36       0.08    -0.11    0.33  0.06  1.00
+```
+
+
+]
+
+---
+.left-column[
+
+### Multiple Regression
+
+- **state.x77**
+
+- Feature Selection
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+
+
+```r
+library(GGally)
+ggpairs(dat, lower=list(continuous=wrap("smooth",method="loess")),switch="y")
+```
+
+&lt;img src="week3-copy_files/figure-html/unnamed-chunk-3-1.png" width="720" /&gt;
+
+]
+
+
+---
+.left-column[
+
+### Multiple Regression
+
+- **state.x77**
+
+- Feature Selection
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+.pull-left[
+
+### All-in
+
+
+```r
+## feature scaling
+dat[,2:dim(dat)[2]]&lt;-scale(dat[,2:dim(dat)[2]],
+                           center=T,scale=T) 
+dat$id&lt;-1:length(dat$Murder)
+
+# splitting data
+set.seed(1234)
+train.id&lt;-sample(dat$id,0.8*length(dat$Murder))
+train.dat&lt;-dat[train.id,]
+test.dat&lt;-dat[-train.id,]
+
+### All-in regression
+fit.all&lt;-lm(Murder~.,data=train.dat%&gt;%select(-id))
+```
+
+**Extract the output**
+
+
+```r
+summary(fit.all) # extract the regression output
+par(mfrow=c(2,2))
+plot(fit.all) # extract the residual's plot
+```
+]
+
+
+.pull-right[
+
+
+```
+## 
+## Call:
+## lm(formula = Murder ~ ., data = train.dat %&gt;% select(-id))
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.482 -1.189 -0.233  1.132  3.365 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   7.0251     0.2855  24.610  &lt; 2e-16 ***
+## Population    0.9358     0.3193   2.931  0.00619 ** 
+## Income       -0.1632     0.3739  -0.436  0.66543    
+## Illiteracy    0.8909     0.6256   1.424  0.16406    
+## Life.Exp     -2.2732     0.3982  -5.709 2.53e-06 ***
+## HS.Grad       0.6259     0.5482   1.142  0.26197    
+## Frost        -0.3954     0.3999  -0.989  0.33015    
+## Area          0.4394     0.3913   1.123  0.26986    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.74 on 32 degrees of freedom
+## Multiple R-squared:  0.7728,	Adjusted R-squared:  0.7231 
+## F-statistic: 15.55 on 7 and 32 DF,  p-value: 1.102e-08
+```
+
+]
+]
+
+
+---
+.left-column[
+
+### Multiple Regression
+
+- **state.x77**
+
+- Feature Selection
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+
+.right-column[
+
+
+**Variance Inflation factor (VIF)**
+
+
+```
+## Population     Income Illiteracy   Life.Exp    HS.Grad      Frost       Area 
+##   1.419169   1.847389   3.707745   1.743199   3.191463   1.821684   2.174335
+```
+
+**Residual plot**
+
+&lt;img src="week3-copy_files/figure-html/unnamed-chunk-8-1.png" width="576" /&gt;
+
+]
+
+
+
+---
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+&lt;small&gt;
+
+### Feature Selection
+
+**Filter Methods**
+
+วิธีการในกลุ่มนี้ไม่ได้ใช้ ML algorithm มาช่วยในการเลือกตัวแปรอิสระ แต่เป็นวิธีการเลือกตัวแปรอิสระเข้าสู่โมเดลโดยใช้ความสัมพันธ์ระหว่างตัวแปรตามกับตัวแปรอิสระเป็นเกณฑ์ ความสัมพันธ์ดังกล่าวพิจารณาจากสถิติต่าง ๆ เช่น correlation matrix (Pearson, Spearman, Distance), Chi-squared test, ANOVA etc.
+
+
+**Wrapper Methods**
+
+เลือกตัวแปรอิสระด้วยการเปรียบเทียบประสิทธิภาพของโมเดลที่มีการใส่/ถอดตัวแปรอิสระต่าง ๆ กัน  วิธีการในกลุ่มนี้ เช่น Backward, Forward, Bidirectional, Best Subset regression 
+
+
+&lt;center&gt;&lt;img src="wrapper.png" width=60%&gt;&lt;/center&gt;
+
+
+
+**Models with build-in feature selection**
+
+เป็น ML algorithm ที่สามารถลดทอนอิทธิพลหรือเลือกตัวแปรอิสระภายในโมเดลได้โดยตัวอัลกอริทึมเอง เช่น LASSO regression, ridge regression, AdaBoost เป็นต้น
+
+&lt;/small&gt;
+
+]
+
+
+---
+
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+**Regression model using filter method**
+
+
+```r
+fit.filter&lt;-lm(Murder~Illiteracy+Life.Exp+Frost, data=train.dat%&gt;%select(-id))
+summary(fit.filter)
+```
+
+```
+## 
+## Call:
+## lm(formula = Murder ~ Illiteracy + Life.Exp + Frost, data = train.dat %&gt;% 
+##     select(-id))
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.942 -1.589 -0.001  1.325  4.140 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   7.0576     0.3268  21.596  &lt; 2e-16 ***
+## Illiteracy    0.4114     0.5540   0.743   0.4625    
+## Life.Exp     -2.2723     0.4476  -5.077 1.19e-05 ***
+## Frost        -0.8507     0.4080  -2.085   0.0442 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.002 on 36 degrees of freedom
+## Multiple R-squared:  0.6618,	Adjusted R-squared:  0.6336 
+## F-statistic: 23.48 on 3 and 36 DF,  p-value: 1.353e-08
+```
+
+
+]
+
+---
+
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+
+.right-column[
+
+
+```r
+par(mfrow=c(2,2))
+plot(fit.filter)
+```
+
+&lt;img src="week3-copy_files/figure-html/unnamed-chunk-10-1.png" width="720" /&gt;
+
+]
+
+---
+
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+### Comparing Models: Partial F-test
+
+.pull-left[
+
+&lt;small&gt;
+
+**Hypotheses**
+
+
+`\(H_0:\)` Reduced model = Full model
+
+
+`\(H_1:\)` Reduced model worse than Full model
+
+&lt;/small&gt;
+
+
+&lt;small&gt;
+
+**test statistics**
+
+
+
+`$$F=\frac{\frac{SSE_{reduce}-SSE_{full}}{p^*}}{\frac{SSE_{full}}{n-p_{full}-1}} \sim F_{p^*,n-p_{full}-1}$$`
+&lt;/small&gt;
+
+
+&lt;small&gt;
+
+`\(p\)` คือจำนวนตัวแปรอิสระภายในโมเดลทำนาย
+
+`\(p^*=p_{full}-p_{reduce}\)`
+
+`\(n\)` คือจำนวนหน่วยข้อมูล
+
+&lt;/small&gt;
+
+]
+
+
+.pull-right[
+
+
+```r
+# fit.all &lt;--full model (All-in)
+# fil.filter &lt;-- reduced model
+anova(fit.filter,fit.all)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Model 1: Murder ~ Illiteracy + Life.Exp + Frost
+## Model 2: Murder ~ Population + Income + Illiteracy + Life.Exp + HS.Grad + 
+##     Frost + Area
+##   Res.Df     RSS Df Sum of Sq      F  Pr(&gt;F)  
+## 1     36 144.252                              
+## 2     32  96.892  4     47.36 3.9103 0.01073 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
+]
+
+]
+
+---
+
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+### Comparing Models: Likelihood ratio test
+
+
+.pull-left[
+
+&lt;small&gt;
+
+**Hypotheses**
+
+`\(H_0:\)` Reduced model = Full model
+
+
+`\(H_1:\)` Reduced model worse than Full model
+
+&lt;/small&gt;
+
+&lt;small&gt;
+
+**test statistics**
+
+`$$deviance=-2LL_{reduce}-(-2LL_{full})\sim \chi^2_{p^*}$$`
+
+&lt;/small&gt;
+
+&lt;small&gt;
+
+`\(p\)` คือจำนวนตัวแปรอิสระภายในโมเดลทำนาย
+
+`\(p^*=p_{full}-p_{reduce}\)`
+
+`\(n\)` คือจำนวนหน่วยข้อมูล
+
+**Note:** normality assumption must be assumed.
+&lt;/small&gt;
+
+]
+
+
+.pull-right[
+
+
+```r
+# install.packages("lmtest")
+library(lmtest)
+lrtest(fit.filter,fit.all)
+```
+
+```
+## Likelihood ratio test
+## 
+## Model 1: Murder ~ Illiteracy + Life.Exp + Frost
+## Model 2: Murder ~ Population + Income + Illiteracy + Life.Exp + HS.Grad + 
+##     Frost + Area
+##   #Df  LogLik Df  Chisq Pr(&gt;Chisq)   
+## 1   5 -82.411                        
+## 2   9 -74.452  4 15.919    0.00313 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
+]
+
+]
+
+---
+
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+### Wrapper methods
+
+&lt;small&gt;
+
+- Backward elemination (`backward`)
+
+- Forward selection (`forward`)
+
+- Bidirectional (`seqrep`)
+
+- All possible (`exhaustive`)
+
+&lt;/small&gt;
+
+&lt;small&gt;
+
+`regsubsets()` [leaps package], which has the tuning parameter nvmax specifying the maximal number of predictors to incorporate in the model. It returns multiple models with different size up to nvmax. You need to compare the performance of the different models for choosing the best one. regsubsets() has the option method, which can take the values “backward”, “forward” and “seqrep” (seqrep = sequential replacement, combination of forward and backward selections).
+
+&lt;/small&gt;
+
+
+```r
+#install.packages("leaps")
+library(leaps)
+reg&lt;-regsubsets(Murder~., data = train.dat%&gt;%select(-id), nvmax = 8,
+                     method = "backward")
+summary(reg)
+```
+
+]
+่
+---
+
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+
+```
+## Subset selection object
+## Call: regsubsets.formula(Murder ~ ., data = train.dat %&gt;% select(-id), 
+##     nvmax = 7, method = "backward")
+## 7 Variables  (and intercept)
+##            Forced in Forced out
+## Population     FALSE      FALSE
+## Income         FALSE      FALSE
+## Illiteracy     FALSE      FALSE
+## Life.Exp       FALSE      FALSE
+## HS.Grad        FALSE      FALSE
+## Frost          FALSE      FALSE
+## Area           FALSE      FALSE
+## 1 subsets of each size up to 7
+## Selection Algorithm: backward
+##          Population Income Illiteracy Life.Exp HS.Grad Frost Area
+## 1  ( 1 ) " "        " "    " "        "*"      " "     " "   " " 
+## 2  ( 1 ) "*"        " "    " "        "*"      " "     " "   " " 
+## 3  ( 1 ) "*"        " "    "*"        "*"      " "     " "   " " 
+## 4  ( 1 ) "*"        " "    "*"        "*"      "*"     " "   " " 
+## 5  ( 1 ) "*"        " "    "*"        "*"      "*"     " "   "*" 
+## 6  ( 1 ) "*"        " "    "*"        "*"      "*"     "*"   "*" 
+## 7  ( 1 ) "*"        "*"    "*"        "*"      "*"     "*"   "*"
+```
+
+]
+
+---
+
+.left-column[
+
+### Multiple Regression
+
+- state.x77
+
+- **Feature Selection**
+
+- Dummy variables
+
+- Interaction effects
+
+- CARET package
+
+
+]
+
+.right-column[
+
+
+```r
+temp&lt;-summary(reg)
+objects(temp)
+```
+
+```
+## [1] "adjr2"  "bic"    "cp"     "obj"    "outmat" "rsq"    "rss"    "which"
+```
+
+&lt;img src="week3-copy_files/figure-html/unnamed-chunk-16-1.png" width="720" /&gt;
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
