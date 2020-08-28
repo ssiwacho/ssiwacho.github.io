@@ -127,17 +127,55 @@ class: middle
 
 ### Data Preprocessing
 
-- Exploring data
+Data preprocessing techniques generally refer to addition, deletion, or transformation of data.
 
-- Features Scaling
+- Exploring data
 
 - Handling missing data
 
-- Anomaly data detecting
+- Outlier detection
+
+- Transforming data
+
+- Feature Extraction
+
+- Features Scaling
+
+The need for data preprocessing is depended on the type of model being used.
+
+
+- Learning algorithm of linear regression is relied on $(X^TX)^{-1}$ matrix, hence it is sensitive to characteristics of theand predictor data.
+
+- Tree-based model are insensitive to chracteristics of the variables.
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+]
+
+.right-column[
 
 ```{r}
 str(dat)
 ```
+]
 
 
 ]
@@ -451,7 +489,7 @@ summary(dat[,11:13])
 
 .right-column[
 
-### Anomaly Detecting
+### Outlier Detecting
 
 ```{r}
 dat%>%filter(household.size>1000)%>%select(longitude,latitude,room.per.household,household.size,population,households)
@@ -714,7 +752,6 @@ str(dat2)
 
 ]
 
-
 ---
 
 class: middle
@@ -734,17 +771,146 @@ class: middle
 ]
 
 .right-column[
-```{r message=F, warning=F, fig.retina=3, fig.width=14, fig.height=8}
-library(GGally)
-ggpairs(dat2%>%select(-longitude,-latitude)%>%select(1:6,8,7),switch="y")
+
+### Splitting data
+
+- using `sample()` function from base package.
+
+- using `createDataPartition()` function from caret package.
+
+```{r eval=F, fig.retina=3, fig.width=8,fig.height=4, message=F, warning=F}
+set.seed(1234)
+train.id<-sample(rownames(dat2),0.6*dim(dat2)[1])
+train.dat<-dat2[train.id,]
+test.dat<-dat2[-as.numeric(train.id),]
+p1<-ggplot()+
+  geom_histogram(data=train.dat,aes(x=median_house_value),fill="orange",alpha=0.5)+
+  geom_histogram(data=test.dat,aes(x=median_house_value),fill="darkgreen",alpha=0.5)
+#### ------------------------------------------------------------------------- ####
+#install.packages("caret")
+library(caret)
+set.seed(1234)
+train.id.caret<-createDataPartition(dat2$median_house_value,p=0.6,list=F)
+train.dat.caret<-dat2[train.id.caret,]
+test.dat.caret<-dat2[-train.id.caret,]
+
+p2<-ggplot()+
+  geom_histogram(data=train.dat.caret,aes(x=median_house_value),fill="red",alpha=0.5)+
+  geom_histogram(data=test.dat.caret,aes(x=median_house_value),fill="darkblue",alpha=0.5)
 ```
 
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r echo=F, fig.retina=3, fig.width=8,fig.height=4, message=F, warning=F}
+set.seed(1234)
+train.id<-sample(rownames(dat2),0.6*dim(dat2)[1])
+train.dat<-dat2[train.id,]
+test.dat<-dat2[-as.numeric(train.id),]
+p1<-ggplot()+
+  geom_histogram(data=train.dat,aes(x=median_house_value),fill="orange",alpha=0.5)+
+  geom_histogram(data=test.dat,aes(x=median_house_value),fill="darkgreen",alpha=0.5)
+#### ------------------------------------------------------------------------- ####
+#install.packages("caret")
+library(caret)
+set.seed(1234)
+train.id.caret<-createDataPartition(dat2$median_house_value,p=0.6,list=F)
+train.dat.caret<-dat2[train.id.caret,]
+test.dat.caret<-dat2[-train.id.caret,]
+
+p2<-ggplot()+
+  geom_histogram(data=train.dat.caret,aes(x=median_house_value),fill="red",alpha=0.5)+
+  geom_histogram(data=test.dat.caret,aes(x=median_house_value),fill="darkblue",alpha=0.5)
+```
+
+
+```{r fig.retina=3, fig.width=12,fig.height=6, message=F, warning=F}
+grid.arrange(p1,p2,nrow=1)
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Exploring correlations in training data
+
+```{r}
+train.dat.caret<-train.dat.caret%>%
+                    select(-total_rooms,-total_bedrooms,-population,-households)%>%
+                        select(5,1:4,5:9)
+# correlation between numeric variables.
+round(cor(train.dat.caret%>%select(-ocean_proximity)),2)[1,]
+#correlation between continuous outcome and categorical predictor.
+lm<-lm(median_house_value~ocean_proximity,data=train.dat.caret)
+summary(lm)$r.squared%>%sqrt() 
+```
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Scatter plot matrix
+
+```{r message=F, warning=F, fig.retina=3, fig.width=14, fig.height=7.5}
+library(GGally)
+ggpairs(train.dat.caret,switch="y")
+```
 
 ]
 
 
 ---
-
 class: middle
 
 .left-column[
@@ -772,7 +938,6 @@ ggplot(data=dat2,aes(x=median_income,y=median_house_value))+
 ]
 
 ---
-
 class: middle
 
 .left-column[
@@ -791,12 +956,186 @@ class: middle
 
 .right-column[
 
-```{r fig.retina=3, fit,width=12, fig.height=6}
-ggplot(dat2%>%filter(median_house_value<500000),
+### Exploring correlation in training data
+
+```{r fig.retina=3, fit,width=12, fig.height=5.5}
+ggplot(train.dat.caret,
        aes(x=ocean_proximity,y=median_house_value))+
   geom_boxplot()
 ```
 
 ]
 
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+
+.right-column[
+
+### Near-Zero Variance Predictors
+
+```{r}
+#install.packages("caret")
+library(caret)
+nearZeroVar(train.dat.caret)
+```
+
+### filtering data
+
+```{r}
+train<-train.dat.caret%>%filter(median_house_value<500000)%>%
+          select(median_house_value,
+                 median_income,
+                 ocean_proximity,
+                 room.per.household,
+                 bedroom.per.room)
+```
+
+
+]
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+
+.right-column[
+
+### Feature Scaling
+
+- Normalization: $x^* = \frac{x-min(x)}{max(x)-min(x)} \in [0,1]$
+
+- Standardization: $x^*=\frac{x-\overline{x}}{SD} \in [-\inf,\inf]$
+
+
+```{r}
+###----  standardized using scale function
+# scale(train[,c(1,2,4,5)],center=T,scale=T)
+
+###----- using caret package
+# preProcess(train,method=c("range")) #normalized
+preprocess<-preProcess(train,method=c("center","scale")) #standardized
+preprocess
+```
+
+
+]
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+
+.right-column[
+
+### Feature Scaling
+
+```{r}
+train.scale<-predict(preprocess,train)
+summary(train.scale)
+```
+
+]
+
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+
+
+```{r}
+fit.train<-lm(median_house_value~.,data=train.scale)
+summary(fit.train)
+```
+
+
+]
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+
+```{r fig.retina=3, fig.width=8}
+par(mfrow=c(2,2))
+plot(fit.train)
+```
+
+]
 
