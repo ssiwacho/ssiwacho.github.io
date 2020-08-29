@@ -675,6 +675,7 @@ ggplot()+geom_point(data=dat,
 ]
 
 
+
 ---
 class: middle
 
@@ -694,12 +695,137 @@ class: middle
 
 .right-column[
 
+### Outliers???
+
+```{r}
+dat%>%filter(room.per.household>10)%>%
+          mutate(bedroom.per.household=total_bedrooms/households, bedroom.per.pop=total_bedrooms/population)%>%
+            summarise(mean.bed=mean(bedroom.per.pop,na.rm=T),
+                      min.bed=min(bedroom.per.pop,na.rm=T),
+                      max.bed=max(bedroom.per.pop,na.rm=T),
+                      mean.room=mean(room.per.household),
+                      min.room=min(room.per.household),
+                      max.room=max(room.per.household))
+```
+
+
+
+]
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Outliers??? (K-means clustering)
+
+```{r}
+dat$id<-1:dim(dat)[1]
+temp<-dat%>%filter(room.per.household>10, is.na(total_bedrooms)==F)%>%
+          mutate(bedroom.per.household=total_bedrooms/households, 
+                 bedroom.per.pop=total_bedrooms/population)
+#Kmeans clustering
+km<-kmeans(temp%>%select(bedroom.per.household,
+                         bedroom.per.pop,
+                         room.per.household),
+           center=3) 
+#print the output
+km
+temp$cluster<-km$cluster
+```
+
+```{r echo=F}
+x<-ifelse(km$size>100,1,0)*c(1,2,3)
+x<-x%>%sum()
+```
+
+
+]
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Remove the outliers
+
+```{r}
+# specify outliers
+dat$cluster<-0
+dat$cluster[temp$id]<-temp$cluster
+dat$cluster<-ifelse(dat$cluster==x,0,ifelse(dat$cluster==0,0,1))
+dat<-dat%>%filter(cluster==0)
+table(dat$cluster)
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+
+<small>
+* [naniar package](https://cran.r-project.org/web/packages/naniar/index.html)
+* [mice package](https://cran.r-project.org/web/packages/mice/index.html)
+* [flexible imputation of missing data](https://stefvanbuuren.name/fimd/)
+</small>
+
+]
+
+.right-column[
+
 ### Missing value analysis (1)
 
 ```{r eval=T, message=F, warning=F, fig.retina=3, fig.width=10, fig.height=4}
 # install.packages("naniar")
 library(naniar)
 library(gridExtra)
+#any_na(dat)
 p1<-gg_miss_var(dat)
 p2<-vis_miss(dat, sort_miss=T)
 grid.arrange(p1,p2, nrow=1)
@@ -720,6 +846,8 @@ class: middle
 - Modelling
 
 - Models Evaluating
+
+
 
 ]
 
@@ -797,6 +925,8 @@ p3<-ggplot(dat,aes(x=bedroom.per.room,y=median_house_value))+geom_miss_point()
 p4<-ggplot(dat,aes(x=bedroom.per.room,y=median_house_value))+geom_miss_point()+facet_wrap(~ocean_proximity)
 grid.arrange(p3,p4, nrow=1)
 ```
+
+
 
 ---
 
@@ -934,10 +1064,15 @@ class: middle
 </br>
 </br>
 </br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 
 * [missRanger](https://cran.r-project.org/web/packages/missRanger/index.html)
-
-
 
 ]
 
@@ -946,19 +1081,17 @@ class: middle
 ### Imputation using Random forest
 
 
-
+<img src="randomforest.png" width=50%>
 
 
 ```{r}
 #install.packages("missRanger")
 library(missRanger)
 impute.dat.rf<-missRanger(dat,.~.-id.missing,seed=1234,num.trees=500)
-summary(impute.dat.rf)
 ```
 
 
 ]
-
 
 ---
 class: middle
@@ -979,15 +1112,12 @@ class: middle
 
 .right-column[
 
-### Remove missing values and some outliers
-
 ```{r}
-dat2<-dat%>%filter(is.na(total_bedrooms)==F , room.per.household<10)
-str(dat2)
+summary(impute.dat.rf)
 ```
 
-]
 
+]
 ---
 
 class: middle
@@ -1010,30 +1140,32 @@ class: middle
 
 ### Splitting data
 
+
+
+
+
 - using `sample()` function from base package.
+
+```{r eval=F}
+set.seed(1234)
+train.id<-sample(rownames(impute.dat.rf),0.6*dim(impute.dat.rf)[1])
+train.dat<-impute.dat.rf[train.id,]
+test.dat<-impute.dat.rf[-as.numeric(train.id),]
+```
 
 - using `createDataPartition()` function from caret package.
 
-```{r eval=F, fig.retina=3, fig.width=8,fig.height=4, message=F, warning=F}
-set.seed(1234)
-train.id<-sample(rownames(dat2),0.6*dim(dat2)[1])
-train.dat<-dat2[train.id,]
-test.dat<-dat2[-as.numeric(train.id),]
-p1<-ggplot()+
-  geom_histogram(data=train.dat,aes(x=median_house_value),fill="orange",alpha=0.5)+
-  geom_histogram(data=test.dat,aes(x=median_house_value),fill="darkgreen",alpha=0.5)
-#### ------------------------------------------------------------------------- ####
+```{r eval=F}
 #install.packages("caret")
 library(caret)
 set.seed(1234)
-train.id.caret<-createDataPartition(dat2$median_house_value,p=0.6,list=F)
-train.dat.caret<-dat2[train.id.caret,]
-test.dat.caret<-dat2[-train.id.caret,]
-
-p2<-ggplot()+
-  geom_histogram(data=train.dat.caret,aes(x=median_house_value),fill="red",alpha=0.5)+
-  geom_histogram(data=test.dat.caret,aes(x=median_house_value),fill="darkblue",alpha=0.5)
+train.id.caret<-createDataPartition(impute.dat.rf$median_house_value,
+                                    p=0.6,
+                                    list=F)
+train.dat.caret<-impute.dat.rf[train.id.caret,]
+test.dat.caret<-impute.dat.rf[-train.id.caret,]
 ```
+
 
 ]
 
@@ -1058,23 +1190,27 @@ class: middle
 
 ```{r echo=F, fig.retina=3, fig.width=8,fig.height=4, message=F, warning=F}
 set.seed(1234)
-train.id<-sample(rownames(dat2),0.6*dim(dat2)[1])
-train.dat<-dat2[train.id,]
-test.dat<-dat2[-as.numeric(train.id),]
+train.id<-sample(rownames(impute.dat.rf),0.6*dim(impute.dat.rf)[1])
+train.dat<-impute.dat.rf[train.id,]
+test.dat<-impute.dat.rf[-as.numeric(train.id),]
 p1<-ggplot()+
   geom_histogram(data=train.dat,aes(x=median_house_value),fill="orange",alpha=0.5)+
-  geom_histogram(data=test.dat,aes(x=median_house_value),fill="darkgreen",alpha=0.5)
+  geom_histogram(data=test.dat,aes(x=median_house_value),fill="darkgreen",alpha=0.5)+
+  theme_minimal()+
+  labs(title="Using sample() function")
 #### ------------------------------------------------------------------------- ####
 #install.packages("caret")
 library(caret)
 set.seed(1234)
-train.id.caret<-createDataPartition(dat2$median_house_value,p=0.6,list=F)
-train.dat.caret<-dat2[train.id.caret,]
-test.dat.caret<-dat2[-train.id.caret,]
+train.id.caret<-createDataPartition(impute.dat.rf$median_house_value,p=0.6,list=F)
+train.dat.caret<-impute.dat.rf[train.id.caret,]
+test.dat.caret<-impute.dat.rf[-train.id.caret,]
 
 p2<-ggplot()+
   geom_histogram(data=train.dat.caret,aes(x=median_house_value),fill="red",alpha=0.5)+
-  geom_histogram(data=test.dat.caret,aes(x=median_house_value),fill="darkblue",alpha=0.5)
+  geom_histogram(data=test.dat.caret,aes(x=median_house_value),fill="darkblue",alpha=0.5)+
+  theme_minimal()+
+  labs(title="Using createDataPartition() function")
 ```
 
 
@@ -1166,7 +1302,7 @@ class: middle
 .right-column[
 
 ```{r fig.retina=3, fig.width=8}
-ggplot(data=dat2,aes(x=median_income,y=median_house_value))+
+ggplot(data=dat,aes(x=median_income,y=median_house_value))+
   geom_point(alpha=0.5,col="darkblue")+
   theme_minimal()
 ```
