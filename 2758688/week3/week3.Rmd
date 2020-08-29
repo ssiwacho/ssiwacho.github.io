@@ -141,12 +141,12 @@ Data preprocessing techniques generally refer to addition, deletion, or transfor
 
 - Features Scaling
 
-The need for data preprocessing is depended on the type of model being used.
+The need for data preprocessing is depended on data in hand and the type of model being used.
 
 
-- Learning algorithm of linear regression is relied on $(X^TX)^{-1}$ matrix, hence it is sensitive to characteristics of theand predictor data.
+- Learning algorithm of linear regression is relied on $(X^TX)^{-1}$ matrix, hence it is sensitive to characteristics of predictor data.
 
-- Tree-based model are insensitive to chracteristics of the variables.
+- Tree-based model are insensitive to characteristics of the variables.
 
 
 ]
@@ -178,7 +178,7 @@ str(dat)
 ]
 
 
-]
+
 
 ---
 class: middle
@@ -694,35 +694,271 @@ class: middle
 
 .right-column[
 
-### Missing value analysis
+### Missing value analysis (1)
 
-```{r eval=F, message=F, warning=F, fig.retina=3, fig.width=12}
+```{r eval=T, message=F, warning=F, fig.retina=3, fig.width=10, fig.height=4}
 # install.packages("naniar")
 library(naniar)
 library(gridExtra)
 p1<-gg_miss_var(dat)
 p2<-vis_miss(dat, sort_miss=T)
-p3<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()
-p4<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()+facet_wrap(~ocean_proximity)
 grid.arrange(p1,p2, nrow=1)
-grid.arrange(p3,p4, nrow=1)
 ```
 ]
 
 ---
 class: middle
 
+.left-column[
 
-```{r echo=F,eval=T, message=F, warning=F, fig.retina=3, fig.width=16, fig.height=8}
-# install.packages("naniar")
-library(naniar)
-library(gridExtra)
-p1<-gg_miss_var(dat)
-p2<-vis_miss(dat, sort_miss=T)
-p3<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()
-p4<-ggplot(dat,aes(x=total_bedrooms,y=median_house_value))+geom_miss_point()+facet_wrap(~ocean_proximity)
-grid.arrange(p1,p2,p3,p4, nrow=2)
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+
+### Type of Missing value
+
+**Missing completely at random (MCAR): ** $p_{ij}=\pi$
+
+**Missing at random (MAR): ** $p_{ij}=p(Missing|Y_{obs})$
+
+**Missing not at rondom (MNAR): ** $p_{ij}=p(Missing|Y_{obs},Y_{miss})$
+]
+
+<center><img src="typemiss.png" width=60%></center>
+
+
+---
+
+.pull-left[
+
+### Missing value analysis (2)
+
+```{r echo=T,eval=F,fig.retina=3, fig.height=8, message=F, warning=F}
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude,
+                  col=total_bedrooms),
+                  alpha=0.5)+
+         geom_point(data=dat%>%
+                    filter(is.na(total_bedrooms)==T),
+                    aes(x=longitude,
+                        y=latitude),
+                     col="red",
+                     alpha=0.2,
+                     size=3)+
+        theme_minimal()+
+        scale_color_viridis()+
+        coord_fixed(1.3)
 ```
+
+
+
+]
+
+.pull-right[
+```{r echo=F,eval=T,fig.retina=3, fig.height=9, message=F, warning=F}
+ggplot()+geom_point(data=dat,
+              aes(x=longitude,
+                  y=latitude,col=total_bedrooms),
+                  #col="grey",
+                  alpha=0.5)+
+         geom_point(data=dat%>%
+                    filter(is.na(total_bedrooms)==T),
+                    aes(x=longitude,
+                        y=latitude),
+                     col="red",alpha=0.2,
+                     size=3)+
+        theme_minimal()+
+        scale_color_viridis()+
+        coord_fixed(1.3)
+```
+]
+
+
+---
+class: middle
+
+### Missing value analysis (3)
+
+
+```{r echo=T,eval=T, message=F, warning=F, fig.retina=3, fig.width=16, fig.height=4}
+p3<-ggplot(dat,aes(x=bedroom.per.room,y=median_house_value))+geom_miss_point()
+p4<-ggplot(dat,aes(x=bedroom.per.room,y=median_house_value))+geom_miss_point()+facet_wrap(~ocean_proximity)
+grid.arrange(p3,p4, nrow=1)
+```
+
+---
+
+class: middle
+
+
+### Missing value analysis (4)
+
+```{r echo=T,eval=T, message=F, warning=F, fig.retina=3, fig.width=16, fig.height=4}
+p5<-ggplot(dat,aes(x=bedroom.per.room,y=room.per.household))+geom_miss_point()
+p6<-ggplot(dat,aes(x=bedroom.per.room,y=room.per.household))+geom_miss_point()+facet_wrap(~ocean_proximity)
+grid.arrange(p5,p6,nrow=1)
+```
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+[**Kokla et al.(2019)**](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-019-3110-0)
+
+]
+
+.right-column[
+
+### Imputation
+
+<img src="missing.png">
+
+
+
+]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Imputation using K-NN algorithm
+
+- CARET package offers `preProcess` function that can predict missing values. 
+
+- To impute missing values, we need to set argument `method=knnImpute` for K-Nearest Neighbors imputation and set the argument `method=bagImpute` for bagged tree imputation.
+
+
+<img src="knn.png" width=80%>
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r message=F, warning=F}
+library(caret)
+#install.packages("RANN")
+library(RANN)
+dat$id.missing<-ifelse(is.na(dat$total_bedrooms)==T,1,0)
+impute.knn<-preProcess(dat%>%select(-id.missing),method="knnImpute",k=5,knnSummary = mean)
+impute.dat.knn<-predict(impute.knn,dat)
+summary(impute.dat.knn)
+```
+
+]
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- **Data Preprocessing**
+
+- Modelling
+
+- Models Evaluating
+
+
+</br>
+</br>
+</br>
+</br>
+
+* [missRanger](https://cran.r-project.org/web/packages/missRanger/index.html)
+
+
+
+]
+
+.right-column[
+
+### Imputation using Random forest
+
+
+
+
+
+```{r}
+#install.packages("missRanger")
+library(missRanger)
+impute.dat.rf<-missRanger(dat,.~.-id.missing,seed=1234,num.trees=500)
+summary(impute.dat.rf)
+```
+
+
+]
+
 
 ---
 class: middle
