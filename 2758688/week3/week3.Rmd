@@ -1243,13 +1243,14 @@ class: middle
 
 ```{r}
 train.dat.caret<-train.dat.caret%>%
-                    select(-total_rooms,-total_bedrooms,-population,-households)%>%
-                        select(5,1:4,5:9)
+                    select(-total_rooms,-total_bedrooms,-cluster)%>%
+                        select(7,1:6,8:12)
 # correlation between numeric variables.
 round(cor(train.dat.caret%>%select(-ocean_proximity)),2)[1,]
 #correlation between continuous outcome and categorical predictor.
 lm<-lm(median_house_value~ocean_proximity,data=train.dat.caret)
 summary(lm)$r.squared%>%sqrt() 
+
 ```
 ]
 
@@ -1370,12 +1371,7 @@ nearZeroVar(train.dat.caret)
 ### filtering data
 
 ```{r}
-train<-train.dat.caret%>%filter(median_house_value<500000)%>%
-          select(median_house_value,
-                 median_income,
-                 ocean_proximity,
-                 room.per.household,
-                 bedroom.per.room)
+train<-train.dat.caret%>%filter(median_house_value<500000)
 ```
 
 
@@ -1454,7 +1450,6 @@ summary(train.scale)
 
 
 ---
-
 class: middle
 
 .left-column[
@@ -1473,13 +1468,22 @@ class: middle
 
 .right-column[
 
-
+### All-in (Full model)
 
 ```{r}
-fit.train<-lm(median_house_value~.,data=train.scale)
-summary(fit.train)
+fit.train.full<-lm(median_house_value~.,data=train.scale%>%select(-id))
+summary(fit.train.full)$adj.r.squared
+summary(fit.train.full)$sigma # training RMSE
 ```
 
+
+### Filter (Reduce model)
+
+```{r}
+fit.train.reduce<-lm(median_house_value~median_income+ocean_proximity,data=train.scale)
+summary(fit.train.reduce)$adj.r.squared
+summary(fit.train.reduce)$sigma # training RMSE
+```
 
 ]
 
@@ -1506,8 +1510,298 @@ class: middle
 
 ```{r fig.retina=3, fig.width=8}
 par(mfrow=c(2,2))
-plot(fit.train)
+plot(fit.train.full)
+```
+
+
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r fig.retina=3, fig.width=8}
+par(mfrow=c(2,2))
+plot(fit.train.reduce)
 ```
 
 ]
 
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Comparing Models: Partial F-test
+
+.pull-left[
+
+<small>
+
+**Hypotheses**
+
+
+$H_0:$ Reduced model = Full model
+
+
+$H_1:$ Reduced model worse than Full model
+
+</small>
+
+
+<small>
+
+**test statistics**
+
+
+
+$$F=\frac{\frac{SSE_{reduce}-SSE_{full}}{p^*}}{\frac{SSE_{full}}{n-p_{full}-1}} \sim F_{p^*,n-p_{full}-1}$$
+</small>
+
+
+<small>
+
+$p$ คือจำนวนตัวแปรอิสระภายในโมเดลทำนาย
+
+$p^*=p_{full}-p_{reduce}$
+
+$n$ คือจำนวนหน่วยข้อมูล
+
+</small>
+
+]
+
+
+.pull-right[
+
+```{r eval=F}
+# fit.all <--full model (All-in)
+# fil.filter <-- reduced model
+anova(fit.train.reduce,fit.train.full)
+```
+
+
+]
+
+]
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Comparing Models: Likelihood ratio test
+
+
+.pull-left[
+
+<small>
+
+**Hypotheses**
+
+$H_0:$ Reduced model = Full model
+
+
+$H_1:$ Reduced model worse than Full model
+
+</small>
+
+<small>
+
+**test statistics**
+
+$$deviance=-2LL_{reduce}-(-2LL_{full})\sim \chi^2_{p^*}$$
+
+</small>
+
+<small>
+
+$p$ คือจำนวนตัวแปรอิสระภายในโมเดลทำนาย
+
+$p^*=p_{full}-p_{reduce}$
+
+$n$ คือจำนวนหน่วยข้อมูล
+
+**Note:** normality assumption must be assumed.
+</small>
+
+]
+
+
+.pull-right[
+
+```{r eval=F, message=F, warning=F}
+# install.packages("lmtest")
+library(lmtest)
+lrtest(fit.train.reduce,fit.train.full)
+```
+
+
+]
+
+]
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+### Feature Selection (Wrapper methods)
+
+<small>
+
+- Backward elemination (`backward`)
+
+- Forward selection (`forward`)
+
+- Bidirectional (`seqrep`)
+
+- All possible (`exhaustive`)
+
+</small>
+
+<small>
+
+`regsubsets()` [leaps package], which has the tuning parameter nvmax specifying the maximal number of predictors to incorporate in the model. It returns multiple models with different size up to nvmax. You need to compare the performance of the different models for choosing the best one. regsubsets() has the option method, which can take the values “backward”, “forward” and “seqrep” (seqrep = sequential replacement, combination of forward and backward selections).
+
+</small>
+
+```{r eval=F}
+#install.packages("leaps")
+library(leaps)
+regsubsets<-regsubsets(median_house_value~., data = train.scale%>%select(-id), nvmax = 11,
+                     method = "backward")
+summary(regsubsets)
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r echo=F, message=F, warning=F}
+library(leaps)
+regsubsets<-regsubsets(median_house_value~., data = train.scale%>%select(-id), nvmax = 11,
+                     method = "backward")
+summary(regsubsets)
+```
+
+]
+
+
+---
+
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r echo=T, fig.retina=3, fig.height=6, fig.width=10}
+temp<-summary(regsubsets)
+objects(temp)
+```
+
+```{r echo=F, fig.retina=3, fig.height=6, fig.width=10}
+model<-1:11
+fit.measures<-data.frame(model,temp$rss,temp$adjr2,temp$cp,temp$bic)
+names(fit.measures)[2:5]<-c("SSE","adjR2","CP","BIC")
+par(mfrow=c(2,2))
+plot(fit.measures$model,fit.measures$SSE,type="b",pch=16,ylab="SSE",xlab="Model")
+plot(fit.measures$model,fit.measures$adjR2,type="b",pch=16,ylab="adjR2",xlab="Model")
+plot(fit.measures$model,fit.measures$CP,type="b",pch=16,ylab="CP",xlab="Model")
+plot(fit.measures$model,fit.measures$BIC,type="b",pch=16,ylab="BIC",xlab="Model")
+
+```
+
+]
