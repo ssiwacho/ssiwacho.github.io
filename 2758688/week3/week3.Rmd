@@ -1543,6 +1543,69 @@ plot(fit.train.reduce)
 ```
 
 ]
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r }
+# finding mean and sd of original median_house_value variable.
+train%>%filter(median_house_value<500000)%>%
+                    summarise(house_value.mean=mean(median_house_value),
+                              house_value.sd=sd(median_house_value))
+
+# transform standardise "median_house_value variable" to original scale.
+train.scale<-train.scale%>%mutate(median_house_value2=median_house_value*97643.68+192705.9)
+
+# refit the model with log transformation.
+fit.train.reduce.log<-lm(log(median_house_value2)~median_income+ocean_proximity,data=train.scale)
+summary(fit.train.reduce.log)$adj.r.squared
+
+
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### housing.csv
+
+- Importing Data
+
+- Data Preprocessing
+
+- **Modelling**
+
+- Models Evaluating
+
+]
+
+.right-column[
+
+```{r fig.retina=3, fig.width=12, fig.height=7}
+par(mfrow=c(2,2))
+plot(fit.train.reduce.log)
+```
+
+]
+
 
 ---
 class: middle
