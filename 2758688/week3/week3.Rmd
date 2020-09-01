@@ -1574,8 +1574,6 @@ train.scale<-train.scale%>%mutate(median_house_value2=median_house_value*97643.6
 # refit the model with log transformation.
 fit.train.reduce.log<-lm(log(median_house_value2)~median_income+ocean_proximity,data=train.scale)
 summary(fit.train.reduce.log)$adj.r.squared
-
-
 ```
 
 ]
