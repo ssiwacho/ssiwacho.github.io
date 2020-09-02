@@ -1,0 +1,152 @@
+---
+title: "ML: สัปดาห์ที่ 4: </br> Logistic Regression"
+author: "อ.ดร.สิวะโชติ ศรีสุทธิยากร"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer1.css
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      beforeInit: "https://platform.twitter.com/widgets.js"
+      countIncrementalSlides: false
+---
+
+class: center, middle
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+
+
+style_mono_accent(
+  base_color = "#1c5253",
+  header_font_google = google_font("Maitree"),
+  text_font_google   = google_font("Sarabun"),
+  code_font_google   = google_font("Fira Mono")
+)
+  
+
+#style_duo_accent(header_font_google = google_font("Maitree"),
+#  text_font_google   = google_font("Sarabun"),
+#  code_font_google   = google_font("Fira Mono"),
+#  primary_color = "#4d3e3e",
+#  secondary_color="#fff3cd",
+ 
+#text_color="#382933",
+
+#  colors = c(
+#  red = "#f34213",
+#  purple = "#3e2f5b",
+#  orange = "#ff8811",
+#  green = "#136f63",
+#  white = "#FFFFFF")
+
+#)
+
+```
+
+
+<img src="linear-regression-vs-logistic-regression.png" width=120%>
+
+<small>
+[https://www.javatpoint.com/linear-regression-vs-logistic-regression-in-machine-learning](https://www.javatpoint.com/linear-regression-vs-logistic-regression-in-machine-learning)
+</small>
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Use case
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+### Regression
+
+<small>
+
+การวิเคราะห์ความถดถอยเป็นเทคนิคการเรียนรู้ที่ใช้สร้างโมเดลทางคณิตศาสตร์ที่สามารถเรียนรู้ความสัมพันธ์ระหว่างตัวแปรตามกับตัวแปรอิสระที่เกิดขึ้นในชุดข้อมูลได้ วัตถุประสงค์ของการวิเคราะห์ความถดถอยอาจจำแนกเป็น 2 ข้อ ได้แก่
+
+1. เพื่ออธิบายความสัมพันธ์ระหว่างตัวแปรตามกับตัวแปรอิสระ
+
+2. เพื่อทำนายแนวโน้มการเกิดค่าสังเกตของตัวแปรตามโดยใข้ข้อมูลของตัวแปรอิสระ
+
+
+
+</small>
+
+```{r fig.retina=3, echo=F, fig.height=5, fig.width=6, fig.align="left"}
+x<-rnorm(50,50,10)
+y<-2+1.5*x+rnorm(50,0,5)
+par(mar=c(5,5,0.5,0.5))
+plot(x,y,pch=16, xlab="Performance", ylab="Achievement", cex.lab=1.5,cex=1.5,col="darkblue")
+abline(lm(y~x),col="orange")
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Use case
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+
+
+.right-column[
+
+### Logistic Regression
+
+<small>
+
+
+
+</small>
+
+
+]
+
+
+
