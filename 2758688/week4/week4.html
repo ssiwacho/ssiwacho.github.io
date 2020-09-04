@@ -55,21 +55,28 @@ class: middle
 
 .right-column[
 
-### Regression?
+### Linear Regression
 
+.pull-left[
 &lt;small&gt;
 
-การวิเคราะห์ความถดถอยเป็นเทคนิคการเรียนรู้ที่ใช้สร้างโมเดลทางคณิตศาสตร์ที่สามารถเรียนรู้ความสัมพันธ์ระหว่างตัวแปรตามกับตัวแปรอิสระที่เกิดขึ้นในชุดข้อมูลได้ วัตถุประสงค์ของการวิเคราะห์ความถดถอยอาจจำแนกเป็น 2 ข้อ ได้แก่
+การวิเคราะห์ความถดถอยเชิงเส้นเป็นเทคนิคการเรียนรู้ที่ใช้สร้างโมเดลทางคณิตศาสตร์เพื่อเรียนรู้ความสัมพันธ์ระหว่างตัวแปรตามแบบต่อเนื่องกับตัวแปรอิสระใด ๆ ภายในชุดข้อมูล โดยมีวัตถุประสงค์การวิเคราะห์ที่อาจจำแนกได้เป็น 2 ข้อ ได้แก่
 
-1. เพื่ออธิบายความสัมพันธ์ระหว่างตัวแปรตามกับตัวแปรอิสระ
+1. เพื่อวิเคราะห์อิทธิพลของตัวแปรอิสระที่มีต่อตัวแปรตาม
 
-2. เพื่อทำนายแนวโน้มการเกิดค่าสังเกตของตัวแปรตามโดยใข้ข้อมูลของตัวแปรอิสระ
+2. เพื่อทำนายแนวโน้มของค่าสังเกตของตัวแปรตามโดยใช้ข้อมูลของตัวแปรอิสระ
 
+ทั้งนี้การวิเคราะห์ความถดถอยเชิงเส้นจะเรียนรู้ความสัมพันธ์ระหว่างตัวแปรจากชุดข้อมูลดังกล่าว แล้วนำความสัมพันธ์ที่เรียนรู้ได้นี้มาสร้างเป็นสมการทำนาย `\(\hat{y}\)` ที่อยู่ในรูปผลรวมเชิงเส้นของตัวแปรอิสระดังนี้
 
-
+`$$\hat{y}_i=b_0+b_1x_{1i}+b_2x_{2i}+...+b_px_{pi}$$`
 &lt;/small&gt;
 
+]
+
+.pull-right[
+
 &lt;img src="week4_files/figure-html/unnamed-chunk-1-1.png" width="432" style="display: block; margin: auto auto auto 0;" /&gt;
+]
 
 ]
 
@@ -105,7 +112,13 @@ class: middle
 
 &lt;small&gt;
 
+Linear regression  เป็นการวิเคราะห์ความสัมพันธ์เชิงสาเหตุระหว่างตัวแปรตามแบบต่อเนื่องกับตัวแปรอิสระ ส่วน logistic regression ใช้สำหรับวิเคราะห์ความสัมพันธ์เชิงสาเหตุระหว่างตัวแปรตามแบบจัดประเภทกับตัวแปรอิสระ โดยจำแนกได้เป็นหลายประเภท ได้แก่
 
+- **Binary logistic regression** ใช้ในกรณีที่ตัวแปรตามเป็นตัวแปรแบบจัดประเภทและมีค่าสังเกตที่เป็นไปได้ 2 ค่า (binary response)
+
+- **Multinomial logistic regression** ใช้ในกรณีที่ตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่ค่าสังเกตมีค่าที่เป็นไปได้มากกว่า 2 ค่า และมีระดับการวัดแบบนามบัญญัติ
+
+- **Ordinal logistic regression** ใช้ในกรณีตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่ค่าสังเกตมีค่าที่เป็นไปได้มากกว่า 2 ค่า และมีระดับการวัดแบบเรียงอันดับ
 
 &lt;/small&gt;
 
@@ -113,7 +126,39 @@ class: middle
 ]
 
 
+---
+class: middle
 
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Use case
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+### Why's Logistic Regression?
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-2-1.png" width="504" /&gt;
+
+
+
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

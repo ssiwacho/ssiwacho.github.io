@@ -2,7 +2,10 @@
 title: 'Model Evaluation: Regression'
 author: "อ.ดร.สิวะโชติ ศรีสุทธิยากร"
 date: "9/1/2020"
-output: html_document
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
 ---
 
 
