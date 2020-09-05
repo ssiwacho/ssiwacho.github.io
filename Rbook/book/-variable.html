@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>บทที่ 4 ตัวแปร (Variable) | R สำหรับวิทยาการข้อมูลทางการศึกษา</title>
+  <meta name="description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="บทที่ 4 ตัวแปร (Variable) | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="บทที่ 4 ตัวแปร (Variable) | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  
+  <meta name="twitter:description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  
+
+<meta name="author" content="สิวะโชติ ศรีสุทธิยากร" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="-function.html"/>
+<link rel="next" href="-vectors.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style1.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R สำหรับวิทยาการข้อมูลทางการศึกษา</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> บทนำ</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html"><i class="fa fa-check"></i>ส่วนที่ 1 ความรู้พื้นฐาน</a></li>
+<li class="chapter" data-level="2" data-path="-r.html"><a href="-r.html"><i class="fa fa-check"></i><b>2</b> เริ่มต้นใช้ R</a>
+<ul>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#การดาวน์โหลดและติดตั้ง-r"><i class="fa fa-check"></i>การดาวน์โหลดและติดตั้ง R</a></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#สภาพแวดล้อมของ-r"><i class="fa fa-check"></i>สภาพแวดล้อมของ R</a>
+<ul>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#r-console"><i class="fa fa-check"></i>R Console</a></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#r-editor"><i class="fa fa-check"></i>R Editor</a></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#r-graphic"><i class="fa fa-check"></i>R Graphic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#การคำนวณทางคณิตศาสตร์พื้นฐาน"><i class="fa fa-check"></i>การคำนวณทางคณิตศาสตร์พื้นฐาน</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="-function.html"><a href="-function.html"><i class="fa fa-check"></i><b>3</b> ฟังก์ชัน (function)</a></li>
+<li class="chapter" data-level="4" data-path="-variable.html"><a href="-variable.html"><i class="fa fa-check"></i><b>4</b> ตัวแปร (Variable)</a></li>
+<li class="chapter" data-level="5" data-path="-vectors.html"><a href="-vectors.html"><i class="fa fa-check"></i><b>5</b> เวกเตอร์ (vectors)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การสร้างเวกเตอร์"><i class="fa fa-check"></i>การสร้างเวกเตอร์</a></li>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การดำเนินการของเวกเตอร์"><i class="fa fa-check"></i>การดำเนินการของเวกเตอร์</a>
+<ul>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การดำเนินการระหว่างเวกเตอร์กับสเกลาร์"><i class="fa fa-check"></i>การดำเนินการระหว่างเวกเตอร์กับสเกลาร์</a></li>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์"><i class="fa fa-check"></i>การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>6</b> Literature</a></li>
+<li class="chapter" data-level="7" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>7</b> Methods</a></li>
+<li class="chapter" data-level="8" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>8</b> Applications</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>8.1</b> Example one</a></li>
+<li class="chapter" data-level="8.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>8.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>9</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="www.kruroo.com" target="blank">KruRoo</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R สำหรับวิทยาการข้อมูลทางการศึกษา</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ตัวแปร-variable" class="section level1" number="4">
+<h1><span class="header-section-number">บทที่ 4</span> ตัวแปร (Variable)</h1>
+<p style="text-indent:3em;">
+ตัวแปรใน R มีความหมายที่แตกต่างไปจากตัวแปรในเชิงการวิจัยหรือการวิเคราะห์ข้อมูลทางสถิติ กล่าวคือ ตัวแปรใน R เป็นวัตถุประเภทหนึ่งภายใต้สภาพแวดล้อมของ R มีหน้าที่เก็บข้อมูลหรือผลลัพธ์ที่ได้จากการประมวลผลเอาไว้ในหน่วยความจำของคอมพิวเตอร์ ซึ่งทำให้ผู้ใช้สามารถเรียกดูค่าที่เก็บไว้ในภายหลัง หรือนำผลลัพธ์ที่เก็บไว้ไปใช้ในการดำเนินการขั้นตอนอื่น ๆ ต่อไปได้โดยไม่จำเป็นต้องป้อนข้อมูลหรือประมวลผลใหม่ซ้ำ ๆ
+</p>
+<p style="text-indent:3em;">
+ตัวแปรใน R สามารถจำแนกได้หลากหลายประเภทซึ่งทำให้การสร้างตัวแปรแต่ละประเภทจะมีรายละเอียดที่แตกต่างกัน ในบางส่วน หัวข้อนี้จะกล่าวถึงการสร้างตัวแปรพื้นฐานที่เรียกว่า<strong>ตัวแปรสเกลาร์ (scalar)</strong>
+ซึ่งใช้เก็บข้อมูลได้หนึ่งค่าต่อตัวแปร การสร้างตัวแปรแบบสเกลาร์ใน R สามารถทำได้โดยใช้คำสั่ง <code>&lt;-</code> (อ่านว่า assign) เช่น <code>x&lt;-10</code> หมายถึงกำหนดให้ R เก็บค่าคือ 10 ที่อยู่ทางส่วนปลายของลูกศรไว้ในตัวแปรชื่อ x ที่อยู่ทางส่วนหัวของลูกศร ดังตัวอย่าง
+</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="-variable.html#cb7-1" aria-hidden="true"></a>x&lt;-<span class="dv">10</span>  <span class="co">#assign 10 to x</span></span></code></pre></div>
+<p>เมื่อสร้างตัวแปร <code>x</code> ในข้างต้นแล้ว ผู้ใช้สามารถเรียกดูหรือใช้ค่าที่เก็บไว้ในตัวอย่างได้โดยการเรียกชื่อของตัวแปรดังกล่าว ดังนี้</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="-variable.html#cb8-1" aria-hidden="true"></a>x <span class="co"># print x</span></span>
+<span id="cb8-2"><a href="-variable.html#cb8-2" aria-hidden="true"></a><span class="co">## [1] 10</span></span></code></pre></div>
+<p>ตัวแปรที่ถูกนิยามและกำหนดค่าให้แล้วสามารถนำไปใช้การดำเนินในส่วนอื่นต่อไปได้ ดังตัวอย่างต่อไปนี้</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="-variable.html#cb9-1" aria-hidden="true"></a>x&lt;-<span class="dv">10</span></span>
+<span id="cb9-2"><a href="-variable.html#cb9-2" aria-hidden="true"></a>y&lt;-<span class="dv">5</span></span>
+<span id="cb9-3"><a href="-variable.html#cb9-3" aria-hidden="true"></a>z&lt;-x<span class="op">+</span>y</span>
+<span id="cb9-4"><a href="-variable.html#cb9-4" aria-hidden="true"></a>z</span>
+<span id="cb9-5"><a href="-variable.html#cb9-5" aria-hidden="true"></a><span class="co">## [1] 15</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="-variable.html#cb10-1" aria-hidden="true"></a>t&lt;-<span class="kw">exp</span>(x<span class="op">+</span>y)<span class="op">/</span>z</span>
+<span id="cb10-2"><a href="-variable.html#cb10-2" aria-hidden="true"></a><span class="kw">sqrt</span>(t)</span>
+<span id="cb10-3"><a href="-variable.html#cb10-3" aria-hidden="true"></a><span class="co">## [1] 466.8345</span></span></code></pre></div>
+<p><strong>หมายเหตุ</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>สัญลักษณ์ <code>#</code> ในตัวอย่างข้างต้นเรียกว่า hashtag เป็นสัญลักษณ์ที่ใช้สำหรับการจดบันทึกเพื่อเตือนความจำเกี่ยวกับคำสั่งที่ใช้ในการทำงาน ข้อความทั้งหมดที่อยู่ภายหลัง <code>#</code> จะไม่ถูกนำไปประมวลผล</p></li>
+<li><p>การตั้งชื่อตัวแปรสามารถตั้งชื่อได้อย่างอิสระ ชื่อของตัวแปรสามารถประกอบไปได้ทั้งตัวอักษรและตัวเลข แต่มีข้อจำกัดในการตั้งชื่อคือห้ามขึ้นต้นชื่อตัวแปรด้วยตัวเลขและอักขระพิเศษ เช่น <code>!, @, #, $, %, ^, &amp;, *</code> เป็นต้น นอกจากนี้อักษรตัวเล็กและตัวใหญ่โปรแกรม R จะถือว่ามีความแตกต่างกัน (case-sensitive) ยกตัวอย่างเช่น</p></li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="-variable.html#cb11-1" aria-hidden="true"></a>y&lt;-<span class="dv">5</span>   <span class="co">#assign 5 to x</span></span>
+<span id="cb11-2"><a href="-variable.html#cb11-2" aria-hidden="true"></a>Y&lt;-<span class="dv">100</span> <span class="co">#assign 100 to x</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="-variable.html#cb12-1" aria-hidden="true"></a>y <span class="co">#print y</span></span>
+<span id="cb12-2"><a href="-variable.html#cb12-2" aria-hidden="true"></a><span class="co">## [1] 5</span></span>
+<span id="cb12-3"><a href="-variable.html#cb12-3" aria-hidden="true"></a>Y <span class="co">#print Y</span></span>
+<span id="cb12-4"><a href="-variable.html#cb12-4" aria-hidden="true"></a><span class="co">## [1] 100</span></span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>การกำหนดค่าให้กับตัวแปรนอกจากจะใช้ฟังก์ชัน assign (<code>&lt;-</code>) ดังในตัวอย่างข้างต้นแล้ว ยังสามารถใช้ฟังก์ชัน <code>=</code> ซึ่งให้ผลลัพธ์เหมือนกัน ข้อสังเกตที่น่าสนใจคือการกำหนดค่าให้กับตัวแปรด้วยฟังก์ชัน <code>=</code> ตัวแปรจะต้องอยู่ด้านซ้ายของฟังก์ชัน และค่าหรือข้อมูลที่ต้องการกำหนดให้กับตัวแปรจะต้องอยู่ทางด้านขวา ในขณะที่การกำหนดค่าให้กับตัวแปรด้วยฟังก์ชัน <code>&lt;-</code> สามารถทำในลักษณะใดก็ได้เพียงแต่กลับหัวลูกศรตามตำแหน่งของตัวแปร เช่น <code>x&lt;-4</code> หรือ <code>4-&gt;x</code> ซึ่งจะให้ผลลัพธ์ที่เหมือนกัน</li>
+</ol>
+<hr />
+<p><strong>ประเภทของตัวแปรจำแนกตามลักษณะข้อมูล</strong></p>
+<p style="text-indent:3em;">
+ตัวแปรแบบสเกลาร์สามารถจำแนกได้เป็น 3 ประเภท ตามลักษณะของข้อมูลที่จัดเก็บไว้ในตัวแปร ได้แก่ ตัวแปรตัวเลข (numeric variables) ตัวแปรตัวอักษร (character variable) และตัวแปรตรรกะ (logical variables) รายละเอียดมีดังนี้
+</p>
+<p><strong>1. ตัวแปรตัวเลข (numeric variables)</strong> ตัวแปรประเภทนี้ใช้จัดเก็บข้อมูลที่มีค่าเป็นจำนวนจริง (real number) และสามารถนำไปดำเนินการทางคณิตศาสตร์ได้ การสร้างตัวแปรที่เก็บข้อมูลตัวเลขสามารถดำเนินการได้โดยใช้ฟังก์ชัน <code>&lt;-</code> ผู้ใช้สามารถเรียกดูผลลัพธ์ที่เก็บไว้ในตัวแปรรวมทั้งนำค่าที่เก็บไว้ในตัวแปรไปดำเนินการในขั้นตอนอื่น ๆ ต่อไป ดังตัวอย่างในข้างต้น</p>
+<p><strong>2. ตัวแปรตัวอักษร (character variables)</strong> ตัวแปรประเภทนี้ใช้จัดเก็บข้อมูลที่เป็นตัวอักษรหรือข้อความที่ไม่มีค่าในเชิงปริมาณ และไม่สามารถนำมาดำเนินการใด ๆ ทางคณิตศาสตร์ได้ การสร้างตัวแปรประเภทนี้สามารถทำได้ในทำนองเดียวกับการสร้างตัวแปรตัวเลขโดยใช้ฟังก์ชัน <code>&lt;-</code> เหมือนกัน แต่จำเป็นต้องเขียนเครื่องหมาย quotation (<code>" "</code>) คร่อมตัวอักษรหรือข้อความที่ต้องการจัดเก็บไว้ในตัวแปร ยกตัวอย่างเช่น หากต้องการสร้างตัวแปร <code>gender1</code> เพื่อเก็บข้อมูล <code>Male</code> และตัวแปร <code>gender2</code> เพื่อเก็บข้อมูล <code>Female</code> สามารถทำได้ดังนี้</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="-variable.html#cb13-1" aria-hidden="true"></a>gender1&lt;-<span class="st">&quot;Male&quot;</span></span>
+<span id="cb13-2"><a href="-variable.html#cb13-2" aria-hidden="true"></a>gender2&lt;-<span class="st">&quot;Female&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="-variable.html#cb14-1" aria-hidden="true"></a>gender1</span>
+<span id="cb14-2"><a href="-variable.html#cb14-2" aria-hidden="true"></a><span class="co">## [1] &quot;Male&quot;</span></span>
+<span id="cb14-3"><a href="-variable.html#cb14-3" aria-hidden="true"></a>gender2</span>
+<span id="cb14-4"><a href="-variable.html#cb14-4" aria-hidden="true"></a><span class="co">## [1] &quot;Female&quot;</span></span></code></pre></div>
+<p>ผู้อ่านจะเห็นว่าการนำตัวแปรตัวอักษรมาดำเนินการทางคณิตศาสตร์ ไม่สามารถทำได้เนื่องจากตัวแปรดังกล่าวไม่ได้มีความหมายในเชิงปริมาณ ถึงแม้ว่าข้อมูลที่เก็บอยู่ในตัวแปรตัวอักษรจะมีลักษณะที่เหมือนกับตัวเลขก็ตาม เช่น</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="-variable.html#cb15-1" aria-hidden="true"></a>a&lt;-<span class="st">&quot;1&quot;</span></span>
+<span id="cb15-2"><a href="-variable.html#cb15-2" aria-hidden="true"></a>b&lt;-<span class="st">&quot;3&quot;</span></span>
+<span id="cb15-3"><a href="-variable.html#cb15-3" aria-hidden="true"></a>a<span class="op">+</span>b</span>
+<span id="cb15-4"><a href="-variable.html#cb15-4" aria-hidden="true"></a><span class="co">## Error in a + b : non-numeric argument to binary operator</span></span></code></pre></div>
+<p><strong>3. ตัวแปรตรรกะ (logical variables)</strong> ตัวแปรประเภทนี้ใช้จัดเก็บข้อมูลที่เป็นค่าความจริงของประพจน์ (statement) โดยในทางคณิตศาสตร์ประพจน์คือข้อความที่สามารถระบุค่าความจริงของข้อความได้ว่าเป็นจริง (<code>TRUE</code>) หรือเป็นเท็จ (<code>FALSE</code>) การสร้างตัวแปรเพื่อเก็บข้อมูลตรรกะสามารถอาจทำได้ 2 วิธีการ <strong>วิธีการแรก</strong>คือการสร้างตัวแปรตรรกะโดยตรงด้วยการป้อนข้อมูลค่าความจริงทีละค่าในทำนองเดียวกับข้อมูลตัวเลขและตัวอักษรโดยใช้คำสั่ง <code>&lt;-</code> โดยข้อมูลค่าความจริงที่เป็นจริงกำหนดโดยค่า <code>TRUE</code> หรือ <code>T</code> ส่วนค่าความจริงที่เป็นเท็จกำหนดโดยค่า <code>FALSE</code> หรือ <code>F</code> ดังนี้</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="-variable.html#cb16-1" aria-hidden="true"></a>x&lt;-<span class="ot">TRUE</span></span>
+<span id="cb16-2"><a href="-variable.html#cb16-2" aria-hidden="true"></a>x</span>
+<span id="cb16-3"><a href="-variable.html#cb16-3" aria-hidden="true"></a><span class="co">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="-variable.html#cb17-1" aria-hidden="true"></a>y&lt;-F</span>
+<span id="cb17-2"><a href="-variable.html#cb17-2" aria-hidden="true"></a>y</span>
+<span id="cb17-3"><a href="-variable.html#cb17-3" aria-hidden="true"></a><span class="co">## [1] FALSE</span></span></code></pre></div>
+<p><strong>วิธีการที่สอง</strong>ในการสร้างตัวแปรสำหรับเก็บข้อมูลตรรกะคือจากผลการตรวจสอบเงื่อนไขด้วยตัวดำเนินการเชิงตรรกะ (logical operator) ได้แก่ &lt; (น้อยกว่า), &gt; (มากกว่า), &lt;= (น้อยกว่าหรือเท่ากับ), &gt;= (มากกว่าหรือเท่ากับ), == (เท่ากับ) และ != (ไม่เท่ากับ) ดังตัวอย่างต่อไปนี้</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="-variable.html#cb18-1" aria-hidden="true"></a>student1&lt;-<span class="dv">65</span> <span class="co">#assign 65 to student</span></span>
+<span id="cb18-2"><a href="-variable.html#cb18-2" aria-hidden="true"></a>student1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">50</span> <span class="co">#Is student1 greater than 50?</span></span>
+<span id="cb18-3"><a href="-variable.html#cb18-3" aria-hidden="true"></a><span class="co">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="-variable.html#cb19-1" aria-hidden="true"></a>student1 <span class="op">==</span><span class="st"> </span><span class="dv">70</span> <span class="co">#Is student1 equal to 50?</span></span>
+<span id="cb19-2"><a href="-variable.html#cb19-2" aria-hidden="true"></a><span class="co">## [1] FALSE</span></span></code></pre></div>
+<p>จากตัวอย่างข้างต้นจะเห็นว่ามีการสร้างตัวแปร <code>student1</code> เพื่อเก็บคะแนนซึ่งมีค่าเท่ากับ 65 คะแนน จากนั้นมีการตรวจสอบเงื่อนไขด้วยตัวดำเนินการเชิงตรรกะ 2 เงื่อนไข เงื่อนไขแรกคือการตรวจสอบว่า คะแนนที่เก็บไว้ในตัวแปร <code>student1</code> มีค่ามากกว่า 50 คะแนนหรือไม่ และมีค่าเท่ากับ 70 คะแนนหรือไม่ ซึ่งจะเห็นว่าผลลัพธ์ที่ได้คือข้อมูลใหม่ที่เป็นค่าความจริงของการตรวจสอบทั้งสอง โดยมีค่าเท่ากับ <code>TRUE</code> และ <code>FALSE</code> ตามลำดับ นอกจากนี้ผู้ใช้ยังสามารถเก็บค่าของข้อมูลดังกล่าวไว้ในตัวแปรใหม่ได้ เช่น</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="-variable.html#cb20-1" aria-hidden="true"></a>result1&lt;-student1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">50</span></span>
+<span id="cb20-2"><a href="-variable.html#cb20-2" aria-hidden="true"></a>result2&lt;-student1 <span class="op">==</span><span class="st"> </span><span class="dv">70</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="-variable.html#cb21-1" aria-hidden="true"></a>result1</span>
+<span id="cb21-2"><a href="-variable.html#cb21-2" aria-hidden="true"></a><span class="co">## [1] TRUE</span></span>
+<span id="cb21-3"><a href="-variable.html#cb21-3" aria-hidden="true"></a>result2</span>
+<span id="cb21-4"><a href="-variable.html#cb21-4" aria-hidden="true"></a><span class="co">## [1] FALSE</span></span></code></pre></div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="-function.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="-vectors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["myRbook.pdf", "myRbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
