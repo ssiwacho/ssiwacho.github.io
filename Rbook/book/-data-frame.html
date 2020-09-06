@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>บทที่ 7 ชุดข้อมูล (data frame) | R สำหรับวิทยาการข้อมูลทางการศึกษา</title>
+  <meta name="description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="บทที่ 7 ชุดข้อมูล (data frame) | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="บทที่ 7 ชุดข้อมูล (data frame) | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  
+  <meta name="twitter:description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  
+
+<meta name="author" content="สิวะโชติ ศรีสุทธิยากร" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="-matrices.html"/>
+<link rel="next" href="-2-.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style1.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R สำหรับวิทยาการข้อมูลทางการศึกษา</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> บทนำ</a></li>
+<li><a href="-1-.html#ส่วนที่-1-ความรู้พื้นฐาน"><strong>ส่วนที่ 1 ความรู้พื้นฐาน</strong></a></li>
+<li class="chapter" data-level="2" data-path="-r.html"><a href="-r.html"><i class="fa fa-check"></i><b>2</b> เริ่มต้นใช้ R</a>
+<ul>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#การดาวน์โหลดและติดตั้ง-r"><i class="fa fa-check"></i>การดาวน์โหลดและติดตั้ง R</a></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#สภาพแวดล้อมของ-r"><i class="fa fa-check"></i>สภาพแวดล้อมของ R</a>
+<ul>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#r-console"><i class="fa fa-check"></i>R Console</a></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#r-editor"><i class="fa fa-check"></i>R Editor</a></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#r-graphic"><i class="fa fa-check"></i>R Graphic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-r.html"><a href="-r.html#การคำนวณทางคณิตศาสตร์พื้นฐาน"><i class="fa fa-check"></i>การคำนวณทางคณิตศาสตร์พื้นฐาน</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="-function.html"><a href="-function.html"><i class="fa fa-check"></i><b>3</b> ฟังก์ชัน (function)</a></li>
+<li class="chapter" data-level="4" data-path="-variable.html"><a href="-variable.html"><i class="fa fa-check"></i><b>4</b> ตัวแปร (Variable)</a></li>
+<li class="chapter" data-level="5" data-path="-vectors.html"><a href="-vectors.html"><i class="fa fa-check"></i><b>5</b> เวกเตอร์ (vectors)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การสร้างเวกเตอร์"><i class="fa fa-check"></i>การสร้างเวกเตอร์</a></li>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การดำเนินการของเวกเตอร์"><i class="fa fa-check"></i>การดำเนินการของเวกเตอร์</a>
+<ul>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การดำเนินการระหว่างเวกเตอร์กับสเกลาร์"><i class="fa fa-check"></i>การดำเนินการระหว่างเวกเตอร์กับสเกลาร์</a></li>
+<li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์"><i class="fa fa-check"></i>การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="-matrices.html"><a href="-matrices.html"><i class="fa fa-check"></i><b>6</b> เมทริกซ์ (matrices)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-matrices.html"><a href="-matrices.html#การอ้างอิงสมาชิกภายในเมทริกซ์"><i class="fa fa-check"></i>การอ้างอิงสมาชิกภายในเมทริกซ์</a></li>
+<li class="chapter" data-level="" data-path="-matrices.html"><a href="-matrices.html#ประเภทของเมทริกซ์"><i class="fa fa-check"></i>ประเภทของเมทริกซ์</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="-data-frame.html"><a href="-data-frame.html"><i class="fa fa-check"></i><b>7</b> ชุดข้อมูล (data frame)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-data-frame.html"><a href="-data-frame.html#การอ้างอิงสมาชิกในชุดข้อมูล"><i class="fa fa-check"></i>การอ้างอิงสมาชิกในชุดข้อมูล</a></li>
+<li class="chapter" data-level="" data-path="-data-frame.html"><a href="-data-frame.html#ตัวแปรแบบจัดประเภท-catergorical-variables"><i class="fa fa-check"></i>ตัวแปรแบบจัดประเภท (catergorical variables)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-data-frame.html"><a href="-data-frame.html#ifelse-function"><i class="fa fa-check"></i>if/else function</a></li>
+<li class="chapter" data-level="7.0.1" data-path="-data-frame.html"><a href="-data-frame.html#ตัวแปร-factor"><i class="fa fa-check"></i><b>7.0.1</b> ตัวแปร factor</a></li>
+</ul></li>
+</ul></li>
+<li><a href="-2-.html#ส่วนที่-2-การนำเข้าและจัดกระทำข้อมูล"><strong>ส่วนที่ 2 การนำเข้าและจัดกระทำข้อมูล</strong></a></li>
+<li class="chapter" data-level="8" data-path="-importing-data.html"><a href="-importing-data.html"><i class="fa fa-check"></i><b>8</b> การนำเข้าข้อมูล (importing data)</a></li>
+<li class="chapter" data-level="9" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>9</b> Methods</a></li>
+<li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>10.1</b> Example one</a></li>
+<li class="chapter" data-level="10.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>10.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>11</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="www.kruroo.com" target="blank">KruRoo</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R สำหรับวิทยาการข้อมูลทางการศึกษา</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ชุดข้อมูล-data-frame" class="section level1" number="7">
+<h1><span class="header-section-number">บทที่ 7</span> ชุดข้อมูล (data frame)</h1>
+<p style="text-indent:3em;">
+จากข้อจำกัดของเมทริกซ์ในข้างต้นจึงทำให้การใช้เมทริกซ์ในการทำงานที่ประกอบด้วยข้อมูลหลากหลายประเภทไม่ค่อยสะดวกนัก อีกทั้งไม่ได้มีการกำหนดรูปแบบมาตรฐานในการนำเข้าข้อมูลและจัดเก็บไว้ภายในเมทริกซ์ จึงทำให้ในทางปฏิบัติผู้วิเคราะห์สามารถการเก็บข้อมูลภายในเมทริกซ์ได้อย่างหลากหลายลักษณะ ซึ่งหลายลักษณะอาจไม่เหมาะที่จะนำไปวิเคราะห์ข้อมูลได้อย่างมีประสิทธิภาพ
+</p>
+<p style="text-indent:3em;">
+ชุดข้อมูล (data frame) เป็นวัตถุอีกชนิดหนึ่งภายใต้สภาพแวดล้อมของ R ที่ถูกพัฒนาขึ้นให้สามารถเก็บข้อมูลหลากหลายประเภทภายใต้ชุดข้อมูลเดียวกันโดยไม่สูญเสียคุณสมบัติเดิมเหมือนในตัวอย่างที่ผ่านมา ชุดข้อมูลยังมีการกำหนดรูปแบบของตารางจัดเก็บข้อมูลให้อยู่ในรูปแบบข้อมูลจัดระเบียบ (tidy data) ที่เหมาะสำหรับการดำเนินงานด้านการวิเคราะห์ข้อมูล โดยตารางข้อมูลดังกล่าวจำเป็นต้องมีคุณสมบัติ 3 ประการ ประการแรกคือ แต่ละคอลัมน์ของตารางต้องใช้เก็บข้อมูลเพียงตัวแปรเดียวเท่านั้น ประการที่สองคือ แต่ละแถวของตารางต้องใช้เก็บข้อมูลขได้เพียงหน่วยเดียวเท่านั้น และประการที่สามคือ แต่ละเซลล์ของตารางข้อมูลต้องจัดเก็บค่าสังเกตได้เพียงค่าเดียวเท่านั้น (Wickham, 2014) ดังตัวอย่างในรูปด้านล่าง
+</p>
+<p><img src="006_tidydata.png" style="width:70.0%" /></p>
+<p style="text-indent:3em;">
+นอกจากนี้ชุดข้อมูลของ R ยังมีการเก็บรายละเอียดเกี่ยวกับคุณสมบัติของตัวแปรในแต่ละคอลัมน์เป็นข้อมูลเบื้องหลังที่สามารถเรียกดูได้ ประกอบด้วย จำนวนค่าสังเกต จำนวนตัวแปร ชื่อของตัวแปร และประเภทข้อมูลในแต่ละคอลัมน์ ซึ่งคล้ายคลึงกับลักษณะของ spreadsheet ในโปรแกรม SPSS, Minitab, Jamovi หรือโปรแกรมวิเคราะห์ข้อมูลสำเร็จรูปอื่น ๆ การสร้างชุดข้อมูลใน R สามารถทำได้โดยใช้ฟังก์ชัน
+</p>
+<center>
+<code>data.frame(var1, var2, var3 ,..., varp)</code>
+</center>
+<p>เมื่อ <code>varj</code> คือเวกเตอร์ของตัวแปรตัวที่ j ภายในชุดข้อมูล ยกตัวอย่างเช่น</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="-data-frame.html#cb39-1" aria-hidden="true"></a>gender&lt;-<span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>)</span>
+<span id="cb39-2"><a href="-data-frame.html#cb39-2" aria-hidden="true"></a>age&lt;-<span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">10</span>,<span class="dv">14</span>)</span>
+<span id="cb39-3"><a href="-data-frame.html#cb39-3" aria-hidden="true"></a>weight&lt;-<span class="kw">c</span>(<span class="dv">59</span>,<span class="dv">35</span>,<span class="dv">75</span>,<span class="dv">20</span>,<span class="dv">63</span>,<span class="dv">23</span>,<span class="dv">47</span>,<span class="dv">59</span>)</span>
+<span id="cb39-4"><a href="-data-frame.html#cb39-4" aria-hidden="true"></a>height&lt;-<span class="kw">c</span>(<span class="dv">142</span>,<span class="dv">135</span>,<span class="dv">150</span>,<span class="dv">95</span>,<span class="dv">141</span>,<span class="dv">108</span>,<span class="dv">142</span>,<span class="dv">155</span>)</span>
+<span id="cb39-5"><a href="-data-frame.html#cb39-5" aria-hidden="true"></a>dat&lt;-<span class="kw">data.frame</span>(gender, age, weight, height)</span>
+<span id="cb39-6"><a href="-data-frame.html#cb39-6" aria-hidden="true"></a>dat</span>
+<span id="cb39-7"><a href="-data-frame.html#cb39-7" aria-hidden="true"></a><span class="co">##   gender age weight height</span></span>
+<span id="cb39-8"><a href="-data-frame.html#cb39-8" aria-hidden="true"></a><span class="co">## 1   Male  10     59    142</span></span>
+<span id="cb39-9"><a href="-data-frame.html#cb39-9" aria-hidden="true"></a><span class="co">## 2 Female  10     35    135</span></span>
+<span id="cb39-10"><a href="-data-frame.html#cb39-10" aria-hidden="true"></a><span class="co">## 3   Male  11     75    150</span></span>
+<span id="cb39-11"><a href="-data-frame.html#cb39-11" aria-hidden="true"></a><span class="co">## 4   Male   2     20     95</span></span>
+<span id="cb39-12"><a href="-data-frame.html#cb39-12" aria-hidden="true"></a><span class="co">## 5 Female   9     63    141</span></span>
+<span id="cb39-13"><a href="-data-frame.html#cb39-13" aria-hidden="true"></a><span class="co">## 6   Male   4     23    108</span></span>
+<span id="cb39-14"><a href="-data-frame.html#cb39-14" aria-hidden="true"></a><span class="co">## 7   Male  10     47    142</span></span>
+<span id="cb39-15"><a href="-data-frame.html#cb39-15" aria-hidden="true"></a><span class="co">## 8 Female  14     59    155</span></span></code></pre></div>
+<p>สังเกตว่าชุดข้อมูล <code>dat</code> ในข้างต้นมีความแตกต่างจากเมทริกซ์ <code>mat3</code> ที่ผ่านมา โดยในเบื้องต้นจะเห็นได้ชัดว่าสมาชิกใน dat ไม่ได้อยู่ภายใต้เครื่องหมาย <code>" "</code> ซึ่งแสดงว่า ข้อมูลอายุ น้ำหนัก และส่วนสูงของนักเรียนในชุดข้อมูลดังกล่าวไม่ใช่ตัวอักษร ซึ่งเมื่อนำมาดำเนินการทางคณิตศาสตร์ เช่น นำมาคำนวณค่า bmi จะเห็นว่าสามารถคำนวณได้และมีผลลัพธ์ดังนี้</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="-data-frame.html#cb40-1" aria-hidden="true"></a>bmi&lt;-dat[,<span class="dv">3</span>]<span class="op">/</span>(dat[,<span class="dv">4</span>]<span class="op">/</span><span class="dv">100</span>)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb40-2"><a href="-data-frame.html#cb40-2" aria-hidden="true"></a>bmi</span>
+<span id="cb40-3"><a href="-data-frame.html#cb40-3" aria-hidden="true"></a><span class="co">## [1] 29.26007 19.20439 33.33333 22.16066 31.68855 19.71879 23.30887 24.55775</span></span></code></pre></div>
+<p>เมื่อสร้างตัวแปร <code>bmi</code> แล้วยังสามารถนำตัวแปร <code>bmi</code> กลับไปจัดเก็บในชุดข้อมูลได้โดยใช้คำสั่งต่อไปนี้</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="-data-frame.html#cb41-1" aria-hidden="true"></a>dat<span class="op">$</span>bmi&lt;-bmi</span>
+<span id="cb41-2"><a href="-data-frame.html#cb41-2" aria-hidden="true"></a>dat</span>
+<span id="cb41-3"><a href="-data-frame.html#cb41-3" aria-hidden="true"></a><span class="co">##   gender age weight height      bmi</span></span>
+<span id="cb41-4"><a href="-data-frame.html#cb41-4" aria-hidden="true"></a><span class="co">## 1   Male  10     59    142 29.26007</span></span>
+<span id="cb41-5"><a href="-data-frame.html#cb41-5" aria-hidden="true"></a><span class="co">## 2 Female  10     35    135 19.20439</span></span>
+<span id="cb41-6"><a href="-data-frame.html#cb41-6" aria-hidden="true"></a><span class="co">## 3   Male  11     75    150 33.33333</span></span>
+<span id="cb41-7"><a href="-data-frame.html#cb41-7" aria-hidden="true"></a><span class="co">## 4   Male   2     20     95 22.16066</span></span>
+<span id="cb41-8"><a href="-data-frame.html#cb41-8" aria-hidden="true"></a><span class="co">## 5 Female   9     63    141 31.68855</span></span>
+<span id="cb41-9"><a href="-data-frame.html#cb41-9" aria-hidden="true"></a><span class="co">## 6   Male   4     23    108 19.71879</span></span>
+<span id="cb41-10"><a href="-data-frame.html#cb41-10" aria-hidden="true"></a><span class="co">## 7   Male  10     47    142 23.30887</span></span>
+<span id="cb41-11"><a href="-data-frame.html#cb41-11" aria-hidden="true"></a><span class="co">## 8 Female  14     59    155 24.55775</span></span></code></pre></div>
+<p>นอกจากนี้ยังสามารถเรียกดูรายละเอียดของชุดข้อมูลเพื่อตรวจสอบลักษณะโครงสร้างของชุดข้อมูลที่สร้างขึ้นได้ด้วยฟังก์ชัน <code>str()</code> ฟังก์ชันดังกล่าวจะแสดงรายละเอียดเกี่ยวกับ จำนวนค่าสังเกต จำนวนตัวแปร รายชื่อของตัวแปรที่เก็บอยู่ในแต่ละคอลัมน์ของชุดข้อมูล และประเภทของข้อมูลในแต่ละคอลัมน์ ดังตัวอย่างต่อไปนี้</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="-data-frame.html#cb42-1" aria-hidden="true"></a><span class="kw">str</span>(dat)</span>
+<span id="cb42-2"><a href="-data-frame.html#cb42-2" aria-hidden="true"></a><span class="co">## &#39;data.frame&#39;:	8 obs. of  5 variables:</span></span>
+<span id="cb42-3"><a href="-data-frame.html#cb42-3" aria-hidden="true"></a><span class="co">##  $ gender: chr  &quot;Male&quot; &quot;Female&quot; &quot;Male&quot; &quot;Male&quot; ...</span></span>
+<span id="cb42-4"><a href="-data-frame.html#cb42-4" aria-hidden="true"></a><span class="co">##  $ age   : num  10 10 11 2 9 4 10 14</span></span>
+<span id="cb42-5"><a href="-data-frame.html#cb42-5" aria-hidden="true"></a><span class="co">##  $ weight: num  59 35 75 20 63 23 47 59</span></span>
+<span id="cb42-6"><a href="-data-frame.html#cb42-6" aria-hidden="true"></a><span class="co">##  $ height: num  142 135 150 95 141 108 142 155</span></span>
+<span id="cb42-7"><a href="-data-frame.html#cb42-7" aria-hidden="true"></a><span class="co">##  $ bmi   : num  29.3 19.2 33.3 22.2 31.7 ...</span></span></code></pre></div>
+<div id="การอ้างอิงสมาชิกในชุดข้อมูล" class="section level2 unnumbered">
+<h2>การอ้างอิงสมาชิกในชุดข้อมูล</h2>
+<p style="text-indent:3em;">
+การอ้างอิงหรือคัดกรองสมาชิกภายในชุดข้อมูลามารถทำได้หลายวิธี ;วิธีการหนึ่งคือการอ้างอิงแบบเมทริกซ์เหมือนกับที่ได้กล่าวไว้ในหัวข้อของเมทริกซ์ เช่น
+</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="-data-frame.html#cb43-1" aria-hidden="true"></a>dat[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">1</span>]</span>
+<span id="cb43-2"><a href="-data-frame.html#cb43-2" aria-hidden="true"></a><span class="co">## [1] &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;</span></span>
+<span id="cb43-3"><a href="-data-frame.html#cb43-3" aria-hidden="true"></a>dat[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">2</span>]</span>
+<span id="cb43-4"><a href="-data-frame.html#cb43-4" aria-hidden="true"></a><span class="co">## [1] 10 10 11</span></span>
+<span id="cb43-5"><a href="-data-frame.html#cb43-5" aria-hidden="true"></a>dat[<span class="dv">4</span><span class="op">:</span><span class="dv">8</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]</span>
+<span id="cb43-6"><a href="-data-frame.html#cb43-6" aria-hidden="true"></a><span class="co">##   weight height</span></span>
+<span id="cb43-7"><a href="-data-frame.html#cb43-7" aria-hidden="true"></a><span class="co">## 4     20     95</span></span>
+<span id="cb43-8"><a href="-data-frame.html#cb43-8" aria-hidden="true"></a><span class="co">## 5     63    141</span></span>
+<span id="cb43-9"><a href="-data-frame.html#cb43-9" aria-hidden="true"></a><span class="co">## 6     23    108</span></span>
+<span id="cb43-10"><a href="-data-frame.html#cb43-10" aria-hidden="true"></a><span class="co">## 7     47    142</span></span>
+<span id="cb43-11"><a href="-data-frame.html#cb43-11" aria-hidden="true"></a><span class="co">## 8     59    155</span></span>
+<span id="cb43-12"><a href="-data-frame.html#cb43-12" aria-hidden="true"></a>dat[<span class="dv">4</span><span class="op">:</span><span class="dv">8</span>,]</span>
+<span id="cb43-13"><a href="-data-frame.html#cb43-13" aria-hidden="true"></a><span class="co">##   gender age weight height      bmi</span></span>
+<span id="cb43-14"><a href="-data-frame.html#cb43-14" aria-hidden="true"></a><span class="co">## 4   Male   2     20     95 22.16066</span></span>
+<span id="cb43-15"><a href="-data-frame.html#cb43-15" aria-hidden="true"></a><span class="co">## 5 Female   9     63    141 31.68855</span></span>
+<span id="cb43-16"><a href="-data-frame.html#cb43-16" aria-hidden="true"></a><span class="co">## 6   Male   4     23    108 19.71879</span></span>
+<span id="cb43-17"><a href="-data-frame.html#cb43-17" aria-hidden="true"></a><span class="co">## 7   Male  10     47    142 23.30887</span></span>
+<span id="cb43-18"><a href="-data-frame.html#cb43-18" aria-hidden="true"></a><span class="co">## 8 Female  14     59    155 24.55775</span></span></code></pre></div>
+<p style="text-indent:3em;">
+อีกวิธีการหนึ่งคือการอ้างอิงข้อมูลจากชื่อคอลัมน์หรือชื่อของตัวแปร โดยการพิมพ์คำสั่งที่มีรูปแแบบดังนี้ <code>dataframe$var_name</code> เมื่อ <code>dataframe</code> คือชุดข้อมูล และ <code>var_name</code> คือชื่อของตัวแปรในชุดข้อมูล เช่น
+</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="-data-frame.html#cb44-1" aria-hidden="true"></a>dat<span class="op">$</span>age</span>
+<span id="cb44-2"><a href="-data-frame.html#cb44-2" aria-hidden="true"></a><span class="co">## [1] 10 10 11  2  9  4 10 14</span></span>
+<span id="cb44-3"><a href="-data-frame.html#cb44-3" aria-hidden="true"></a>dat<span class="op">$</span>weight</span>
+<span id="cb44-4"><a href="-data-frame.html#cb44-4" aria-hidden="true"></a><span class="co">## [1] 59 35 75 20 63 23 47 59</span></span>
+<span id="cb44-5"><a href="-data-frame.html#cb44-5" aria-hidden="true"></a>dat<span class="op">$</span>gender[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
+<span id="cb44-6"><a href="-data-frame.html#cb44-6" aria-hidden="true"></a><span class="co">## [1] &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot;</span></span></code></pre></div>
+</div>
+<div id="ตัวแปรแบบจัดประเภท-catergorical-variables" class="section level2 unnumbered">
+<h2>ตัวแปรแบบจัดประเภท (catergorical variables)</h2>
+<p style="text-indent:3em;">
+ในเชิงสถิติอาจจำแนกตัวแปรออกเป็น 2 ประเภทใหญ่ ตามลักษณะของค่าสังเกตในตัวแปร ได้แก่ ตัวแปรเชิงปริมาณ (quantitative variables) และตัวแปรจัดประเภท (categorical variables) การเก็บค่าสังเกตของตัวแปรเชิงปริมาณในโปรแกรม R จะเก็บอยู่ในรูปของตัวแปรตัวเลข (numeric variables) ส่วนการเก็บข้อมูลค่าสังเกตของตัวแปรจัดประเภทใน R สามารถทำได้หลายรูปแบบมากกว่า วิธีการที่ง่ายที่สุดคือการเก็บข้อมูลจัดประเภทในตัวแปรตัวอักษร เช่น การเก็บข้อมูลเพศของนักเรียนจำนวน 8 คน สามารถเขียนคำสั่งให้จัดเก็บในเวกเตอร์ตัวอักษรได้ดังนี้
+</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="-data-frame.html#cb45-1" aria-hidden="true"></a>gender&lt;-<span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>)</span></code></pre></div>
+<p style="text-indent:3em;">
+อย่างไรก็ตามการเก็บข้อมูลตัวแปรจัดประเภทใน R ในรูปแบบของตัวแปรตัวอักษรข้างต้น ยังมีข้อจำกัดในการนำไปวิเคราะห์ข้อมูล ทั้งนี้เป็นเพราะผู้วิเคราะห์ไม่สามารถป้อนข้อมูลตัวอักษรเข้าไปวิเคราะห์ในโมเดลเชิงสถิติได้โดยตรง ซึ่งทำให้ก่อนการวิเคราะห์ผู้วิเคราะห์จำเป็นต้องแปลงค่าสังเกตของตัวแปรจัดประเภทดังกล่าวให้อยู่ในรูปแบบของตัวแปรตัวเลข เช่น ตัวแปรแบบ dummy ที่มีการให้คะแนนแบบ 0, 1 ดังนี้
+</p>
+<p>กำหนดให้ <span class="math inline">\(X\)</span> เป็นตัวแปรจัดประเภทที่ค่าสังเกตมีความเป็นไปได้ <span class="math inline">\(k\)</span> ระดับ แล้วจะได้ว่าตัวแปร dummy สำหรับเป็นตัวแทนของตัวแปรจัดประเภทดังกล่าว จะมีจำนวนทั้งสิ้น <span class="math inline">\(k-1\)</span> ตัวแปร ยกตัวอย่างเช่น จากตัวแปร gender ข้างต้น หากกำหนดให้ d.male&lt;-1 เมื่อ <code>gender == "Male"</code> และ <code>d.male&lt;-0</code> เมื่อ <code>gender == "Female"</code> จะสามารถสร้างตัวแปร <code>d.male</code> เพื่อเก็บข้อมูลเพศใน R ได้ดังนี้</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="-data-frame.html#cb46-1" aria-hidden="true"></a>d.male&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb46-2"><a href="-data-frame.html#cb46-2" aria-hidden="true"></a>d.male</span></code></pre></div>
+<pre><code>## [1] 1 0 1 1 0 1 1 0</code></pre>
+<div id="ifelse-function" class="section level3 unnumbered">
+<h3>if/else function</h3>
+<p style="text-indent:3em;">
+นอกจากการป้อนข้อมูลรหัสของตัวแปร dummy เข้าสู่โปรแกรม R โดยตรงดังในตัวอย่างข้างต้นแล้ว หากผู้ใช้สามารถแปลงข้อมูลจากตัวแปรตัวอักษรที่มีอยู่แล้วให้เป็นตัวแปร dummy ด้วยการใช้ฟังก์ชันการตัดสินใจแบบกำหนดเงื่อนไข (if/else) ฟังก์ชันดังกล่าวมี pseudo-algorithm แสดงดังรูปด้านล่าง ซึ่งจะเห็นว่าขั้นตอนการทำงานของฟังก์ชันดังกล่าว เริ่มจากการกำหนดเงื่อนไขการทดสอบ (test condition) สำหรับตรวจสอบข้อมูลที่นำเข้ามาว่าเป็นไปตามเงื่อนไขที่กำหนดไว้หรือไม่ หากเป็นจริงตามเงื่อนไขให้ดำเนินการประมวลผลตามคำสั่งที่กำหนดไว้ใน statement 1 ในทางกลับกันหากไม่เป็นจริงตามเงื่อนไข ให้ดำเนินการประมวลผลตามคำสั่งใน statement 2
+</p>
+<center>
+<img src="007_ifelse.png" style="width:70.0%" />
+</center>
+<p>ในโปรแกรม R สามารถดำเนินการ algorithm ข้างต้นได้โดยใช้ฟังก์ชัน ifelse() ที่มีรูปแบบการเขียนคำสั่งดังนี้</p>
+<center>
+<code>ifelse(condition, statement1, statement2)</code>
+</center>
+<p>ตัวอย่างต่อไปนี้แสดงการใช้คำสั่ง <code>ifelse()</code> ข้างต้น เพิื่อแปลงข้อมูล ตัวแปร <code>gender</code> ที่จัดเก็บในรูปแบบตัวแปรตัวอักษรให้เป็นตัวแปรตัวเลขแบบ dummy</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="-data-frame.html#cb48-1" aria-hidden="true"></a>d.male&lt;-<span class="kw">ifelse</span>(gender<span class="op">==</span><span class="st">&quot;Male&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb48-2"><a href="-data-frame.html#cb48-2" aria-hidden="true"></a>d.male</span>
+<span id="cb48-3"><a href="-data-frame.html#cb48-3" aria-hidden="true"></a><span class="co">## [1] 1 0 1 1 0 1 1 0</span></span></code></pre></div>
+<p style="text-indent:3em;">
+อีกตัวอย่างหนึ่ง หากกำหนดให้ method เป็นตัวแปรใน R สำหรับเก็บข้อมูลวิธีการสอนที่นักเรียนจำนวน 12 คนได้รับ ดังนี้
+</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="-data-frame.html#cb49-1" aria-hidden="true"></a>method&lt;-<span class="kw">c</span>(<span class="st">&quot;LEC&quot;</span>,<span class="st">&quot;LEC&quot;</span>,<span class="st">&quot;LEC&quot;</span>, <span class="st">&quot;PBL&quot;</span>, <span class="st">&quot;PBL&quot;</span>, <span class="st">&quot;PBL&quot;</span>, <span class="st">&quot;COP&quot;</span>, <span class="st">&quot;COP&quot;</span>, <span class="st">&quot;COP&quot;</span>, <span class="st">&quot;DEM&quot;</span>, <span class="st">&quot;DEM&quot;</span>, <span class="st">&quot;DEM&quot;</span>)</span></code></pre></div>
+<p>โดยที่ วิธีการสอนดังกล่าวมีทั้งหมด 4 วิธีการได้แก่ วิธีการสอนแบบบรรยาย (LEC) โครงงาน (PBL) ร่วมมือ (COP) และสาธิต (DEM) และ หากกำหนดให้้วิธีการสอนแบบบรรยายเป็นระดับอ้างอิง (reference level) ในการสร้างตัวแปร dummy จะได้ว่า ตัวแปร dummy สำหรับวิธีการสอนข้างต้น จำเป็นต้องม่ีทั้งสิ้น 3 ตัวแปร ได้แก่ <code>d.PBL, d.COP</code> และ <code>d.DEM</code> โดยการสร้างตัวแปร dummy ข้างต้นใน R อาจเขียนคำสั่งเป็นดังนี้</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="-data-frame.html#cb50-1" aria-hidden="true"></a>d.PBL&lt;-<span class="kw">ifelse</span>(method<span class="op">==</span><span class="st">&quot;PBL&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb50-2"><a href="-data-frame.html#cb50-2" aria-hidden="true"></a>d.COP&lt;-<span class="kw">ifelse</span>(method<span class="op">==</span><span class="st">&quot;COP&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb50-3"><a href="-data-frame.html#cb50-3" aria-hidden="true"></a>d.DEM&lt;-<span class="kw">ifelse</span>(method<span class="op">==</span><span class="st">&quot;DEM&quot;</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb50-4"><a href="-data-frame.html#cb50-4" aria-hidden="true"></a><span class="kw">data.frame</span>(d.PBL,d.COP,d.DEM)</span>
+<span id="cb50-5"><a href="-data-frame.html#cb50-5" aria-hidden="true"></a><span class="co">##    d.PBL d.COP d.DEM</span></span>
+<span id="cb50-6"><a href="-data-frame.html#cb50-6" aria-hidden="true"></a><span class="co">## 1      0     0     0</span></span>
+<span id="cb50-7"><a href="-data-frame.html#cb50-7" aria-hidden="true"></a><span class="co">## 2      0     0     0</span></span>
+<span id="cb50-8"><a href="-data-frame.html#cb50-8" aria-hidden="true"></a><span class="co">## 3      0     0     0</span></span>
+<span id="cb50-9"><a href="-data-frame.html#cb50-9" aria-hidden="true"></a><span class="co">## 4      1     0     0</span></span>
+<span id="cb50-10"><a href="-data-frame.html#cb50-10" aria-hidden="true"></a><span class="co">## 5      1     0     0</span></span>
+<span id="cb50-11"><a href="-data-frame.html#cb50-11" aria-hidden="true"></a><span class="co">## 6      1     0     0</span></span>
+<span id="cb50-12"><a href="-data-frame.html#cb50-12" aria-hidden="true"></a><span class="co">## 7      0     1     0</span></span>
+<span id="cb50-13"><a href="-data-frame.html#cb50-13" aria-hidden="true"></a><span class="co">## 8      0     1     0</span></span>
+<span id="cb50-14"><a href="-data-frame.html#cb50-14" aria-hidden="true"></a><span class="co">## 9      0     1     0</span></span>
+<span id="cb50-15"><a href="-data-frame.html#cb50-15" aria-hidden="true"></a><span class="co">## 10     0     0     1</span></span>
+<span id="cb50-16"><a href="-data-frame.html#cb50-16" aria-hidden="true"></a><span class="co">## 11     0     0     1</span></span>
+<span id="cb50-17"><a href="-data-frame.html#cb50-17" aria-hidden="true"></a><span class="co">## 12     0     0     1</span></span></code></pre></div>
+</div>
+<div id="ตัวแปร-factor" class="section level3" number="7.0.1">
+<h3><span class="header-section-number">7.0.1</span> ตัวแปร factor</h3>
+<p style="text-indent:3em;">
+การเก็บข้อมูลของตัวแปรจัดประเภทในลักษณะของตัวแปรตัวอักษร มักมีข้อจำกัดคือนำไปใช้ในการวิเคราะห์ข้อมูลต่อได้ยาก ซึ่งโดยปกติแล้วผู้วิเคราะห์จะแปลงข้อมูลของตัวแปรจัดประเภทดังกล่าวให้เป็นตัวแปรแบบ dummy ก่อนการวิเคราะห์ อย่างไรก็ตามการเก็บข้อมูลเป็นตัวเลขแบบ 0, 1 โดยที่ไม่มีรายละเอียดหรือ label กำกับค่าของตัวเลขดังกล่าวทำให้ในเชิงปฏิบัติที่ชุดข้อมูลประกอบด้วยตัวแปรจำนวนมาก อาจเกิดความไม่สะดวกและเป็นอุปสรรคของผู้วิเคราะห์ในการทำความเข้าใจข้อมูล นอกจากนี้ในกรณีของตัวแปรจัดประเภทที่ค่าสังเกตมีความเป็นไปได้มากกว่าสองค่า จำเป็นต้องสร้างตัวแปร dummy จำนวนมากขึ้น ทำให้การแปลงค่าสังเกตของตัวแปรจัดประเภทให้เป็นตัวแปร dummy ด้วยการใช้ฟังก์ชัน <code>ifelse()</code> แบบในข้างต้นไม่สะดวก
+</p>
+<p style="text-indent:3em;">
+มีอีกวิธีการหนึ่งใน R ที่มีประสิทธิภาพมากกว่าคือ การใช้ตัวแปร factor เพื่อจัดเก็บข้อมูลแบบจัดประเภท ตัวแปรประเภทนี้มีลักษณะเด่นคือ จัดเก็บค่าสังเกตของตัวแปรจัดประเภทในรูปแบบการใช้ตัวเลขจำนวนเต็ม 1, 2, 3, …, k โดยที่ตัวเลขดังกล่าวใช้แทนระดับของตัวแปรจัดประเภท และสามารถบันทึก label ของตัวเลขที่ให้แทนระดับของตัวแปรดังกล่าวซึ่งทำให้ง่ายในการทำความเข้าใจข้อมูลหรือผลการวิเคราะห์มากกว่าการใช้ตัวแปร dummy นอกจากนี้ฟังก์ชันส่วนใหญ่ที่ใช้ในการวิเคราะห์ข้อมูลของ R รองรับการวิเคราะห์ตัวแปรจัดประเภทที่เก็บอยู่ในรูปของตัวแปร factor ทำให้ในกระบวนการของการวิเคราะห์ฟังก์ชันส่วนใหญ่จะแปลงตัวแปร factor ดังกล่าวเป็นตัวแปร dummy ให้โดยอัตโนมัติ การสร้างตัวแปร factor ใน R สามารถทำได้โดยใช้ฟังก์ชัน <code>factor()</code> ที่มีรูปแบบการเขียนคำสั่งดังนี้
+</p>
+<center>
+<code>factor(x, levels, labels)</code>
+</center>
+<p>เมื่อ <code>x</code> คือเวกเตอร์ที่เก็บค่าสังเกตของตัวแปรจัดประเภท <code>levels</code> คืออาร์กิวเมนท์กำหนดการจัดเรียงระดับของตัวแปรจัดประเภท และ labels คืออาร์กิวเมนท์กำหนดความหมาย (label) ให้กับระดับของตัวแปร โดยอาร์กิวเมนท์ทั้งหมดเป็นไปได้ทั้งเวกเตอร์ตัวเลข และเวกเตอร์ตัวอักษร</p>
+<p style="text-indent:3em;">
+ในการใช้งานจริงผู้วิเคราะห์ไม่จำเป็นต้องระบุอาร์กิวเมนท์ทั้งสามตัวข้างต้นพร้อมกันเสมอไป ทั้งนี้ขึ้นอยู่กับความเหมาะสม ยกตัวอย่างเช่น หากต้องการแปลงเวกเตอร์ตัวอักษร method ให้เป็นตัวแปรแบบ factor สามารถทำได้ง่าย โดยการเขียนคำสั่งดังนี้
+</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="-data-frame.html#cb51-1" aria-hidden="true"></a>method.fac&lt;-<span class="kw">factor</span>(method)</span>
+<span id="cb51-2"><a href="-data-frame.html#cb51-2" aria-hidden="true"></a>method.fac</span></code></pre></div>
+<pre><code>##  [1] LEC LEC LEC PBL PBL PBL COP COP COP DEM DEM DEM
+## Levels: COP DEM LEC PBL</code></pre>
+<p style="text-indent:3em;">
+หากไม่ได้มีการกำหนดอาร์กิวเมนท์อื่น ๆ เพิ่มเติม ฟังก์ชัน factor() จะกำหนดลำดับของระดับตัวแปรจัดประเภทให้โดยอัตโนมัติ โดยเรียงลำดับตามลำดับของตัวอักษร ในกรณีที่ลำดับดังกล่าวไม่สอดคล้องกับธรรมชาติของตัวแปรผู้วิเคราะห์สามารถปรับเปลี่ยนลำดับดังกล่าวได้โดยการระบุอาร์กิวเมนท์ levels เพิ่มเติม เช่นหากต้องการกำหนดให้วิธีสอนแบบบรรยาย (LEC) อยู่ในลำดับแรกของระดับค่าสังเกตของตัวแปร สามารถเขียนคำสั่งได้ดังนี้
+</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="-data-frame.html#cb53-1" aria-hidden="true"></a>method.fac&lt;-<span class="kw">factor</span>(method.fac, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;LEC&quot;</span>,<span class="st">&quot;PBL&quot;</span>, <span class="st">&quot;COP&quot;</span>,<span class="st">&quot;DEM&quot;</span>))</span>
+<span id="cb53-2"><a href="-data-frame.html#cb53-2" aria-hidden="true"></a>method.fac</span></code></pre></div>
+<pre><code>##  [1] LEC LEC LEC PBL PBL PBL COP COP COP DEM DEM DEM
+## Levels: LEC PBL COP DEM</code></pre>
+<p>นอกจากนี้ยังสามารถเปลี่ยนแปลง label ของระดับตัวแปรได้ด้วยการระบุอาร์กิวเมนท์ <code>labels</code> เพิ่มเติม เช่น</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="-data-frame.html#cb55-1" aria-hidden="true"></a>method.fac&lt;-<span class="kw">factor</span>(method.fac,</span>
+<span id="cb55-2"><a href="-data-frame.html#cb55-2" aria-hidden="true"></a>              <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;LECTURE&quot;</span>,</span>
+<span id="cb55-3"><a href="-data-frame.html#cb55-3" aria-hidden="true"></a>                       <span class="st">&quot;PROJECT&quot;</span>,</span>
+<span id="cb55-4"><a href="-data-frame.html#cb55-4" aria-hidden="true"></a>                       <span class="st">&quot;COOPERATE&quot;</span>,</span>
+<span id="cb55-5"><a href="-data-frame.html#cb55-5" aria-hidden="true"></a>                       <span class="st">&quot;DEMONSTRATE&quot;</span>))</span>
+<span id="cb55-6"><a href="-data-frame.html#cb55-6" aria-hidden="true"></a>method.fac</span></code></pre></div>
+<pre><code>##  [1] LECTURE     LECTURE     LECTURE     PROJECT     PROJECT     PROJECT    
+##  [7] COOPERATE   COOPERATE   COOPERATE   DEMONSTRATE DEMONSTRATE DEMONSTRATE
+## Levels: LECTURE PROJECT COOPERATE DEMONSTRATE</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="-matrices.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="-2-.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["myRbook.pdf", "myRbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
