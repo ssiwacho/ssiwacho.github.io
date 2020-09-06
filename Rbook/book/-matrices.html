@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>บทที่ 9 Applications | R สำหรับวิทยาการข้อมูลทางการศึกษา</title>
+  <title>บทที่ 6 เมทริกซ์ (matrices) | R สำหรับวิทยาการข้อมูลทางการศึกษา</title>
   <meta name="description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="บทที่ 9 Applications | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  <meta property="og:title" content="บทที่ 6 เมทริกซ์ (matrices) | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="บทที่ 9 Applications | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  <meta name="twitter:title" content="บทที่ 6 เมทริกซ์ (matrices) | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
   
   <meta name="twitter:description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="methods.html"/>
-<link rel="next" href="final-words.html"/>
+<link rel="prev" href="-vectors.html"/>
+<link rel="next" href="literature.html"/>
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -191,14 +191,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="applications" class="section level1" number="9">
-<h1><span class="header-section-number">บทที่ 9</span> Applications</h1>
-<p>Some <em>significant</em> applications are demonstrated in this chapter.</p>
-<div id="example-one" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Example one</h2>
-</div>
-<div id="example-two" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Example two</h2>
+<div id="เมทริกซ์-matrices" class="section level1" number="6">
+<h1><span class="header-section-number">บทที่ 6</span> เมทริกซ์ (matrices)</h1>
+<p style="text-indent:3em;">
+เมทริกซ์เป็นกรณีทั่วไปของเวกเตอร์ กล่าวคือเมทริกซ์เป็นกลุ่มของเวกเตอร์ที่นำมาจัดเรียงต่อกันเป็นลักษณะตารางสี่เหลี่ยมจัตุรัสหรือสี่เหลี่ยมผืนผ้า ลักษณะดังกล่าวเมทริกซ์จึงเป็นวัตถุที่ใช้สำหรับเก็บข้อมูลที่มี 2 มิติ ได้แก่ แถว (row) และคอลัมน์ (column) การระบุมิติของเมทริกซ์ใด ๆ จะใช้ตัวเลข 2 ตัวได้แก่ จำนวนแถว (m) และจำนวนคอลัมน์ (n) โดยในทางคณิตศาสตร์เขียนสัญลักษณ์แทนดังนี้
+</p>
+<p><span class="math display">\[A=(a_{ij})_{m \times n}=\begin{pmatrix}
+a_{11} &amp; a_{12} &amp; ... &amp; a_{1n} \\ 
+ a_{21} &amp; a_{22} &amp; ... &amp; a_{2n}\\ 
+ ...&amp; ... &amp; ... &amp; ...\\ 
+ a_{m1}&amp;a{m2}  &amp;...  &amp; a_{mn} 
+\end{pmatrix}\]</span></p>
+<p>จากลักษณะของเมทริกซ์ข้างต้น การอ้างอิงสมาชิกภายในเมทริกซ์จะใช้ตำแหน่งของสมาชิกในแนวแถวและคอลัมน์เป็นจุดอ้างอิง ยกตัวอย่างเช่น หากกำหนดให้ <span class="math inline">\(A\)</span> เป็นเมทริกซ์ดังนี้</p>
+<p><span class="math display">\[A=\begin{pmatrix}
+1 &amp; -2 &amp; 10 &amp; 5 \\ 
+ 2 &amp; 3 &amp; 0 &amp; 7\\ 
+ -4 &amp; 9 &amp; 6 &amp; 7\\ 
+ 4 &amp; 3  &amp; -1  &amp; -2 
+\end{pmatrix}
+\]</span></p>
+<p>จะได้ว่าสมาชิกแถวที่ 2 คอลัมน์ที่ 1 ของเมทริกซ์ <span class="math inline">\(A\)</span> คือ <span class="math inline">\(a_{21}\)</span> ซึ่งมีค่าเท่ากับ 2 หรือสมาชิกในแถวที่ 4 คอลัมน์ที่ 3 ของเมทริกซ์คือ ซึ่งมีค่าเท่ากับ -1 เป็นต้น</p>
+<p style="text-indent:3em;">
+การสร้างเมทริกซ์ใน R สามารถทำได้หลายวิธี วิธีการแรกคือการสร้างเมทริกซ์โดยใช้ฟังก์ชัน <code>matrix()</code> ที่มีรูปแบบของคำสั่งดังนี้
+</p>
+<center>
+<code>matrix(x,nrow,ncol,byrow = FALSE)</code>
+</center>
+<p>เมื่อ <code>x</code> คือเวกเตอร์ที่จะนำมาจัดเรียงลงในเมทริกซ์ ที่มีจำนวนแถวเท่ากับ <code>nrow</code> และมีจำนวนคอลัมน์เท่ากับ <code>ncol</code> ส่วนอาร์กิวเมนท์ <code>byrow = FALSE</code> ใช้ระบุการจัดลำดับสมาชิกของเวกเตอร์ ลงในเมทริกซ์ว่าให้จัดลำดับตามแถว (จากซ้ายไปขวา) หรือให้จัดลำดับตามคอลัมน์ (จากบนลงล่าง) เช่น กำหนดให้ <code>x&lt;-c(1,2,3,4,5,6,7,8)</code> เป็นเวกเตอร์ขนาด 8 x 1 หากต้องการสร้างเมทริกซ์ <span class="math inline">\(A\)</span> ที่มีขนาด <span class="math inline">\(4 \times 2\)</span> ใน R สามารถทำได้ดังนี้</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="-matrices.html#cb30-1" aria-hidden="true"></a>A&lt;-<span class="kw">matrix</span>(x,<span class="dt">nrow=</span><span class="dv">4</span>,<span class="dt">ncol=</span><span class="dv">2</span>,<span class="dt">byrow=</span>F)</span>
+<span id="cb30-2"><a href="-matrices.html#cb30-2" aria-hidden="true"></a>A</span>
+<span id="cb30-3"><a href="-matrices.html#cb30-3" aria-hidden="true"></a><span class="co">##      [,1] [,2]</span></span>
+<span id="cb30-4"><a href="-matrices.html#cb30-4" aria-hidden="true"></a><span class="co">## [1,]    1    5</span></span>
+<span id="cb30-5"><a href="-matrices.html#cb30-5" aria-hidden="true"></a><span class="co">## [2,]    2    6</span></span>
+<span id="cb30-6"><a href="-matrices.html#cb30-6" aria-hidden="true"></a><span class="co">## [3,]    3    7</span></span>
+<span id="cb30-7"><a href="-matrices.html#cb30-7" aria-hidden="true"></a><span class="co">## [4,]    4    8</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="-matrices.html#cb31-1" aria-hidden="true"></a>B&lt;-<span class="kw">matrix</span>(x,<span class="dt">nrow=</span><span class="dv">4</span>,<span class="dt">ncol=</span><span class="dv">2</span>,<span class="dt">byrow=</span>T)</span>
+<span id="cb31-2"><a href="-matrices.html#cb31-2" aria-hidden="true"></a>B</span>
+<span id="cb31-3"><a href="-matrices.html#cb31-3" aria-hidden="true"></a><span class="co">##      [,1] [,2]</span></span>
+<span id="cb31-4"><a href="-matrices.html#cb31-4" aria-hidden="true"></a><span class="co">## [1,]    1    2</span></span>
+<span id="cb31-5"><a href="-matrices.html#cb31-5" aria-hidden="true"></a><span class="co">## [2,]    3    4</span></span>
+<span id="cb31-6"><a href="-matrices.html#cb31-6" aria-hidden="true"></a><span class="co">## [3,]    5    6</span></span>
+<span id="cb31-7"><a href="-matrices.html#cb31-7" aria-hidden="true"></a><span class="co">## [4,]    7    8</span></span></code></pre></div>
+<p>จากตัวอย่างข้างต้นจะเห็นว่าการกำหนดอาร์กิวเมนท์ <code>byrow</code> ทำให้ผลลัพธ์ที่ได้เป็นเมทริกซ์ที่มีการจัดเรียงสมาชิกที่แตกต่างกัน โดยเมทริกซ์ <span class="math inline">\(A\)</span> ที่กำหนดให้ <code>byrow=F</code> พบว่ามีการจัดเรียงลำดับของสมาชิกภายในเมทริกซ์จากบนลงล่าง ส่วนเมทริกซ์ <span class="math inline">\(B\)</span> ที่กำหนดให้ <code>byrow=T</code> พบว่ามีการจัดเรียงลำดับของสมาชิกภายในเมทริกซ์จากซ้ายไปขวา</p>
+<div id="การอ้างอิงสมาชิกภายในเมทริกซ์" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> การอ้างอิงสมาชิกภายในเมทริกซ์</h2>
+<p style="text-indent:3em;">
+นอกจากนี้จะเห็นว่าการแสดงผลลัพธ์ที่เป็นเมทริกซ์ใน R จะมีตัวเลขอ้างอิงสำหรับบ่งชี้แถวและคอลัมน์ของสมาชิกแต่ละตัว โดยที่ [i,] หมายถึงสมาชิกในแถวที่ i และ [,j] หมายถึงสมาชิกในคอลัมน์ที่ j เมื่ออ่านร่วมกันจะสามารถระบุสมาชิกในตำแหน่งที่ต้องการของเมทริกซ์ได้ การเรียกดูบางส่วนของสมาชิกภายในเมทริกซ์ สามาถอ้างอิงโดยใช้ตัวเลขบ่งชี้แถวและคอลัมน์ดังกล่าว ยกตัวอย่าง เช่น การเรียกดูสมาชิกแถวที่ 3 คอลัมน์ที่ 2 ของเมทริกซ์ และการเรียกดูสมาชิกตั้งแต่แถวที่ 2 ถึง 4 ของเมทริกซ์ A ดังนี้
+</p>
 
 </div>
 </div>
@@ -207,8 +246,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="-vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="literature.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

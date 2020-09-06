@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="-variable.html"/>
-<link rel="next" href="literature.html"/>
+<link rel="next" href="-matrices.html"/>
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -158,14 +158,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="-vectors.html"><a href="-vectors.html#การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์"><i class="fa fa-check"></i>การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>6</b> Literature</a></li>
-<li class="chapter" data-level="7" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>7</b> Methods</a></li>
-<li class="chapter" data-level="8" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>8</b> Applications</a>
+<li class="chapter" data-level="6" data-path="-matrices.html"><a href="-matrices.html"><i class="fa fa-check"></i><b>6</b> เมทริกซ์ (matrices)</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>8.1</b> Example one</a></li>
-<li class="chapter" data-level="8.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>8.2</b> Example two</a></li>
+<li class="chapter" data-level="6.1" data-path="-matrices.html"><a href="-matrices.html#การอ้างอิงสมาชิกภายในเมทริกซ์"><i class="fa fa-check"></i><b>6.1</b> การอ้างอิงสมาชิกภายในเมทริกซ์</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>9</b> Final Words</a></li>
+<li class="chapter" data-level="7" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>7</b> Literature</a></li>
+<li class="chapter" data-level="8" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>8</b> Methods</a></li>
+<li class="chapter" data-level="9" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>9</b> Applications</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>9.1</b> Example one</a></li>
+<li class="chapter" data-level="9.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>9.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>10</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="www.kruroo.com" target="blank">KruRoo</a></li>
@@ -339,7 +343,20 @@ student5
 (0.4)(64) + (0.6)(60)\\ 
 (0.4)(56) + (0.6)(62)
 \end{pmatrix}\]</span></p>
-
+<p style="text-indent:3em;">
+<p>ในทำนองเดียวกับตัวแปรสเกลาร์ เวกเตอร์สามารถเก็บข้อมูลได้ทั้งที่เป็นตัวเลข ตัวอักษร และค่าความจริง โดยแต่ละเวกเตอร์จะสามารถเก็บข้อมูลได้ทีละประเภทเท่านั้น ไม่สามารถเก็บข้อมูลหลายประเภทไว้ภายในเวกเตอร์เดียวกันได้ ซึ่งทำให้สามารถจำแนกประเภทของเวกเตอร์ได้เป็น 3 ประเภท ตามลักษณะของข้อมูลที่จัดเก็บไว้ในเวกเตอร์ ได้แก่ เวกเตอร์ตัวเลข (numeric vector) เวกเตอร์ตัวอักษร (character vector) และ เวกเตอร์​ตรรกะ (logical vector) ในตัวอย่างข้างต้นได้แสดงการสร้างเวกเตอร์ตัวเลขแล้ว ส่วนในกรณีของ<strong>การสร้างเวกเตอร์ตัวอักษร</strong>สามารถทำได้ในทำนองเดียวกับการสร้างตัวแปรตัวอักษร กล่าวคือใช้ฟังก์ชัน <code>&lt;-</code> ร่วมกับฟังก์ชัน <code>c()</code> โดยที่สมาชิกของเวกเตอร์แต่ละสมาชิกที่เป็นตัวอักษรหรือข้อความจะต้องอยู่ภายใต้เครื่องหมาย <code>" "</code> เช่นเดียวกับตัวแปรตัวอักษร ดังนี้</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="-vectors.html#cb28-1" aria-hidden="true"></a>gender&lt;-<span class="kw">c</span>(<span class="st">&quot;M&quot;</span>,<span class="st">&quot;F&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;F&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;F&quot;</span>,<span class="st">&quot;F&quot;</span>,<span class="st">&quot;M&quot;</span>)</span>
+<span id="cb28-2"><a href="-vectors.html#cb28-2" aria-hidden="true"></a>gender</span>
+<span id="cb28-3"><a href="-vectors.html#cb28-3" aria-hidden="true"></a><span class="co">##  [1] &quot;M&quot; &quot;F&quot; &quot;M&quot; &quot;M&quot; &quot;M&quot; &quot;F&quot; &quot;M&quot; &quot;F&quot; &quot;F&quot; &quot;M&quot;</span></span></code></pre></div>
+<p>เวกเตอร์ตัวอักษรไม่มีคุณสมบัติการดำเนินการทางคณิตศาสตร์ ดังนั้นการนำเวกเตอร์ตัวอักษรมาดำเนินการทางคณิตศาสตร์จึงไม่สามารถทำได้ ผู้อ่านลองทดลองเขียนคำสั่ง <code>gender+1</code> แล้วสังเกตผลลัพธ์ที่ได้</p>
+<p style="text-indent:3em;">
+ในทำนองเดียวกัน<strong>การสร้างเวกเตอร​์ตรรกะ</strong> สามารถทำได้โดยการฟังก์ชัน &lt;- ร่วมกับฟังก์ชัน concatenate c() และระบุสมาชิกภายในเวกเตอร์เป็นค่า TRUE หรือ FALSE เช่น <code>logic&lt;-c(T,T,F,F,T,F,T)</code> นอกจากนี้ยังสามารถสร้างเวกเตอร์ตรรกะจากการใช้ตัวดำเนินการเชิงตรรกะ เช่น จากเวกเตอร์ <code>score</code> ข้างต้น หากกำหนดเกณฑ์ว่านิสิตที่จะสอบผ่านได้ต้องมีคะแนนรวม (total) ไม่น้อยกว่า 60 คะแนน การสร้างเวกเตอร์ result สำหรับเก็บผลประเมินดังกล่าวสามารถสร้างได้ดังนี้
+</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="-vectors.html#cb29-1" aria-hidden="true"></a>score</span>
+<span id="cb29-2"><a href="-vectors.html#cb29-2" aria-hidden="true"></a><span class="co">##  [1] 53 69 52 62 57 60 55 67 53 58</span></span>
+<span id="cb29-3"><a href="-vectors.html#cb29-3" aria-hidden="true"></a>result&lt;-score<span class="op">&gt;=</span><span class="dv">60</span></span>
+<span id="cb29-4"><a href="-vectors.html#cb29-4" aria-hidden="true"></a>result</span>
+<span id="cb29-5"><a href="-vectors.html#cb29-5" aria-hidden="true"></a><span class="co">##  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -349,7 +366,7 @@ student5
         </div>
       </div>
 <a href="-variable.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="literature.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="-matrices.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
