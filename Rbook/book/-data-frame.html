@@ -172,9 +172,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.0.1" data-path="-data-frame.html"><a href="-data-frame.html#ตัวแปร-factor"><i class="fa fa-check"></i><b>7.0.1</b> ตัวแปร factor</a></li>
 </ul></li>
 </ul></li>
-<li><a href="-2-.html#ส่วนที่-2-การนำเข้าและจัดกระทำข้อมูล"><strong>ส่วนที่ 2 การนำเข้าและจัดกระทำข้อมูล</strong></a></li>
-<li class="chapter" data-level="8" data-path="-importing-data.html"><a href="-importing-data.html"><i class="fa fa-check"></i><b>8</b> การนำเข้าข้อมูล (importing data)</a></li>
-<li class="chapter" data-level="9" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>9</b> Methods</a></li>
+<li><a href="-2-.html#ส่วนที่-2-การนำเข้าและการเตรียมข้อมูล"><strong>ส่วนที่ 2 การนำเข้าและการเตรียมข้อมูล</strong></a></li>
+<li class="chapter" data-level="8" data-path="-importing-data.html"><a href="-importing-data.html"><i class="fa fa-check"></i><b>8</b> การนำเข้าข้อมูล (importing data)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การกำหนด-working-directory"><i class="fa fa-check"></i>การกำหนด working directory</a></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์ข้อมูลแบบ-flat-file"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลแบบ flat file</a>
+<ul>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์-csv"><i class="fa fa-check"></i>การนำเข้าไฟล์ CSV</a></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์-tsv"><i class="fa fa-check"></i>การนำเข้าไฟล์ TSV</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์ข้อมูลนามสกุล-.xlsx"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลนามสกุล .xlsx</a>
+<ul>
+<li><a href="-importing-data.html#อาร์กิวเมนท์-col_names">อาร์กิวเมนท์ <code>col_names</code></a></li>
+<li><a href="-importing-data.html#อาร์กิวเมนท์-skip">อาร์กิวเมนท์ <code>skip</code></a></li>
+<li><a href="-importing-data.html#ชุดข้อมูลแบบ-tibble">ชุดข้อมูลแบบ <code>tibble</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์ข้อมูลนามสกุล-.sav"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลนามสกุล .sav</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>9</b> Data-Preprocessing</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-preprocessing.html"><a href="data-preprocessing.html#การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น"><i class="fa fa-check"></i>การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น</a></li>
+<li class="chapter" data-level="" data-path="data-preprocessing.html"><a href="data-preprocessing.html#การสำรวจข้อมูลด้วยทัศนภาพข้อมูล"><i class="fa fa-check"></i>การสำรวจข้อมูลด้วยทัศนภาพข้อมูล</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-preprocessing.html"><a href="data-preprocessing.html#การสำรวจข้อมูลด้วยค่าสถิติ"><i class="fa fa-check"></i>การสำรวจข้อมูลด้วยค่าสถิติ</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>10.1</b> Example one</a></li>
@@ -208,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 จากข้อจำกัดของเมทริกซ์ในข้างต้นจึงทำให้การใช้เมทริกซ์ในการทำงานที่ประกอบด้วยข้อมูลหลากหลายประเภทไม่ค่อยสะดวกนัก อีกทั้งไม่ได้มีการกำหนดรูปแบบมาตรฐานในการนำเข้าข้อมูลและจัดเก็บไว้ภายในเมทริกซ์ จึงทำให้ในทางปฏิบัติผู้วิเคราะห์สามารถการเก็บข้อมูลภายในเมทริกซ์ได้อย่างหลากหลายลักษณะ ซึ่งหลายลักษณะอาจไม่เหมาะที่จะนำไปวิเคราะห์ข้อมูลได้อย่างมีประสิทธิภาพ
 </p>
 <p style="text-indent:3em;">
-ชุดข้อมูล (data frame) เป็นวัตถุอีกชนิดหนึ่งภายใต้สภาพแวดล้อมของ R ที่ถูกพัฒนาขึ้นให้สามารถเก็บข้อมูลหลากหลายประเภทภายใต้ชุดข้อมูลเดียวกันโดยไม่สูญเสียคุณสมบัติเดิมเหมือนในตัวอย่างที่ผ่านมา ชุดข้อมูลยังมีการกำหนดรูปแบบของตารางจัดเก็บข้อมูลให้อยู่ในรูปแบบข้อมูลจัดระเบียบ (tidy data) ที่เหมาะสำหรับการดำเนินงานด้านการวิเคราะห์ข้อมูล โดยตารางข้อมูลดังกล่าวจำเป็นต้องมีคุณสมบัติ 3 ประการ ประการแรกคือ แต่ละคอลัมน์ของตารางต้องใช้เก็บข้อมูลเพียงตัวแปรเดียวเท่านั้น ประการที่สองคือ แต่ละแถวของตารางต้องใช้เก็บข้อมูลขได้เพียงหน่วยเดียวเท่านั้น และประการที่สามคือ แต่ละเซลล์ของตารางข้อมูลต้องจัดเก็บค่าสังเกตได้เพียงค่าเดียวเท่านั้น (Wickham, 2014) ดังตัวอย่างในรูปด้านล่าง
+ชุดข้อมูล (data frame) เป็นวัตถุอีกชนิดหนึ่งภายใต้สภาพแวดล้อมของ R ที่ถูกพัฒนาขึ้นให้สามารถเก็บข้อมูลหลากหลายประเภทภายใต้ชุดข้อมูลเดียวกันโดยไม่สูญเสียคุณสมบัติเดิมเหมือนในตัวอย่างที่ผ่านมา ชุดข้อมูลยังมีการกำหนดรูปแบบของตารางจัดเก็บข้อมูลให้อยู่ในรูปแบบ<strong>ข้อมูลจัดระเบียบ (tidy data)</strong> ที่เหมาะสำหรับการดำเนินงานด้านการวิเคราะห์ข้อมูล โดยตารางข้อมูลดังกล่าวจำเป็นต้องมีคุณสมบัติ 3 ประการ ประการแรกคือ แต่ละคอลัมน์ของตารางต้องใช้เก็บข้อมูลเพียงตัวแปรเดียวเท่านั้น ประการที่สองคือ แต่ละแถวของตารางต้องใช้เก็บข้อมูลขได้เพียงหน่วยเดียวเท่านั้น และประการที่สามคือ แต่ละเซลล์ของตารางข้อมูลต้องจัดเก็บค่าสังเกตได้เพียงค่าเดียวเท่านั้น (Wickham, 2014) ดังตัวอย่างในรูปด้านล่าง
 </p>
 <p><img src="006_tidydata.png" style="width:70.0%" /></p>
 <p style="text-indent:3em;">

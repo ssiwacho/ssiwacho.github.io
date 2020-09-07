@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>บทที่ 2 การเตรียมข้อมูลก่อนการวิเคราะห์ | R สำหรับวิทยาการข้อมูลทางการศึกษา</title>
+  <meta name="description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="บทที่ 2 การเตรียมข้อมูลก่อนการวิเคราะห์ | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="บทที่ 2 การเตรียมข้อมูลก่อนการวิเคราะห์ | R สำหรับวิทยาการข้อมูลทางการศึกษา" />
+  
+  <meta name="twitter:description" content="การใช้ R สำหรับงานทางด้านวิทยาการข้อมูลทางการศึกษา" />
+  
+
+<meta name="author" content="สิวะโชติ ศรีสุทธิยากร" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="-2-.html"/>
+<link rel="next" href="applications.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style1.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R สำหรับวิทยาการข้อมูลทางการศึกษา</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> บทนำ</a></li>
+<li><a href="-1-.html#ส่วนที่-1-ความรู้พื้นฐาน"><strong>ส่วนที่ 1 ความรู้พื้นฐาน</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html"><i class="fa fa-check"></i>การดาวน์โหลดและติดตั้ง R</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#สภาพแวดล้อมของ-r"><i class="fa fa-check"></i>สภาพแวดล้อมของ R</a>
+<ul>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#r-console"><i class="fa fa-check"></i>R Console</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#r-editor"><i class="fa fa-check"></i>R Editor</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#r-graphic"><i class="fa fa-check"></i>R Graphic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#การคำนวณทางคณิตศาสตร์พื้นฐาน"><i class="fa fa-check"></i>การคำนวณทางคณิตศาสตร์พื้นฐาน</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#การสร้างเวกเตอร์"><i class="fa fa-check"></i>การสร้างเวกเตอร์</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#การดำเนินการของเวกเตอร์"><i class="fa fa-check"></i>การดำเนินการของเวกเตอร์</a>
+<ul>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#การดำเนินการระหว่างเวกเตอร์กับสเกลาร์"><i class="fa fa-check"></i>การดำเนินการระหว่างเวกเตอร์กับสเกลาร์</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์"><i class="fa fa-check"></i>การดำเนินการระหว่างเวกเตอร์กับเวกเตอร์</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#การอ้างอิงสมาชิกภายในเมทริกซ์"><i class="fa fa-check"></i>การอ้างอิงสมาชิกภายในเมทริกซ์</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#ประเภทของเมทริกซ์"><i class="fa fa-check"></i>ประเภทของเมทริกซ์</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#การอ้างอิงสมาชิกในชุดข้อมูล"><i class="fa fa-check"></i>การอ้างอิงสมาชิกในชุดข้อมูล</a></li>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#ตัวแปรแบบจัดประเภท-catergorical-variables"><i class="fa fa-check"></i>ตัวแปรแบบจัดประเภท (catergorical variables)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-1-.html"><a href="-1-.html#ifelse-function"><i class="fa fa-check"></i>if/else function</a></li>
+<li class="chapter" data-level="1.0.1" data-path="-1-.html"><a href="-1-.html#ตัวแปร-factor"><i class="fa fa-check"></i><b>1.0.1</b> ตัวแปร factor</a></li>
+</ul></li>
+</ul></li>
+<li><a href="-2-.html#ส่วนที่-2-การนำเข้าและการเตรียมข้อมูล"><strong>ส่วนที่ 2 การนำเข้าและการเตรียมข้อมูล</strong></a>
+<ul>
+<li class="chapter" data-level="" data-path="-2-.html"><a href="-2-.html"><i class="fa fa-check"></i>การกำหนด working directory</a></li>
+<li class="chapter" data-level="" data-path="-2-.html"><a href="-2-.html#การนำเข้าไฟล์ข้อมูลแบบ-flat-file"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลแบบ flat file</a>
+<ul>
+<li class="chapter" data-level="" data-path="-2-.html"><a href="-2-.html#การนำเข้าไฟล์-csv"><i class="fa fa-check"></i>การนำเข้าไฟล์ CSV</a></li>
+<li class="chapter" data-level="" data-path="-2-.html"><a href="-2-.html#การนำเข้าไฟล์-tsv"><i class="fa fa-check"></i>การนำเข้าไฟล์ TSV</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-2-.html"><a href="-2-.html#การนำเข้าไฟล์ข้อมูลนามสกุล-.xlsx"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลนามสกุล .xlsx</a>
+<ul>
+<li><a href="-2-.html#อาร์กิวเมนท์-col_name">อาร์กิวเมนท์ <code>col_name</code></a></li>
+<li><a href="-2-.html#อาร์กิวเมนท์-skip">อาร์กิวเมนท์ <code>skip</code></a></li>
+<li><a href="-2-.html#ชุดข้อมูลแบบ-tibble">ชุดข้อมูลแบบ <code>tibble</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-2-.html"><a href="-2-.html#การนำเข้าไฟล์ข้อมูลนามสกุล-.sav"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลนามสกุล .sav</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="-.html"><a href="-.html"><i class="fa fa-check"></i><b>2</b> การเตรียมข้อมูลก่อนการวิเคราะห์</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="-.html"><a href="-.html#การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น"><i class="fa fa-check"></i><b>2.1</b> การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>3</b> Applications</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>3.1</b> Example one</a></li>
+<li class="chapter" data-level="3.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>3.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>4</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="www.kruroo.com" target="blank">KruRoo</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R สำหรับวิทยาการข้อมูลทางการศึกษา</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="การเตรียมข้อมูลก่อนการวิเคราะห์" class="section level1" number="2">
+<h1><span class="header-section-number">บทที่ 2</span> การเตรียมข้อมูลก่อนการวิเคราะห์</h1>
+<p style="text-indent:3em;">
+ชุดข้อมูลที่เหมาะสำหรับการนำไปวิเคราะห์ควรอยู่ในรูปแบบชุดข้อมูลจัดระเบียบ (tidy data) ดังที่ได้กล่าวไว้ก่อนหน้า อย่างไรก็ตามข้อมูลส่วนใหญ่บนโลกมักเป็นข้อมูลที่ไม่มีโครงสร้างหรือยังไม่ถูกจัดระเบียบ การเตรียมข้อมูลก่อนการวิเคราะห์จึงเป็นขั้นตอนการทำงานที่มีความสำคัญและเป็นขั้นตอนที่ใช้เวลามากที่สุดในการทำงานด้านวิทยาการข้อมูล โดยทั่วไปการเตรียมข้อมูลดังกล่าวจำเป็นต้องใช้การสำรวจข้อมูลเพื่อวิเคราะห์สภาพและปัญหาของชุดข้อมูล ทั้งนี้เพื่อให้ทราบว่าจะดำเนินการจัดการกับชุดข้อมูลต่อไปอย่างไร การเตรียมข้อมูลอาจจำแนกเป็นสองส่วน ได้แก่ (1) การจัดรูปแบบของตารางข้อมูลให้อยู่ในรูปแบบข้อมูลจัดระเบียบ เช่น การกำหนดหรือเปลี่ยนแปลงชื่อของตัวแปร การยุบรวมหรือแยกตารางข้อมูล การยุบรวมหรือแยกคอลัมน์ในตารางข้อมูล เป็นต้น และ (2) การจัดกระทำข้อมูลเพื่อให้ได้ตัวแปรและข้อมูลที่มีความหมายและตรงกับวัตถุประสงค์ของการวิเคราะห์ เช่น การคัดเลือกตัวแปร การคัดกรองค่าสังเกต หรือการแปลงค่าสังเกต เป็นต้น รายละเอียดมีดังนี้
+</p>
+<div id="การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="-2-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="applications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["myRbook.pdf", "myRbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

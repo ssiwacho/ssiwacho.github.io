@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="-2-.html"/>
-<link rel="next" href="methods.html"/>
+<link rel="next" href="data-preprocessing.html"/>
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,9 +172,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.0.1" data-path="-data-frame.html"><a href="-data-frame.html#ตัวแปร-factor"><i class="fa fa-check"></i><b>7.0.1</b> ตัวแปร factor</a></li>
 </ul></li>
 </ul></li>
-<li><a href="-2-.html#ส่วนที่-2-การนำเข้าและจัดกระทำข้อมูล"><strong>ส่วนที่ 2 การนำเข้าและจัดกระทำข้อมูล</strong></a></li>
-<li class="chapter" data-level="8" data-path="-importing-data.html"><a href="-importing-data.html"><i class="fa fa-check"></i><b>8</b> การนำเข้าข้อมูล (importing data)</a></li>
-<li class="chapter" data-level="9" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>9</b> Methods</a></li>
+<li><a href="-2-.html#ส่วนที่-2-การนำเข้าและการเตรียมข้อมูล"><strong>ส่วนที่ 2 การนำเข้าและการเตรียมข้อมูล</strong></a></li>
+<li class="chapter" data-level="8" data-path="-importing-data.html"><a href="-importing-data.html"><i class="fa fa-check"></i><b>8</b> การนำเข้าข้อมูล (importing data)</a>
+<ul>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การกำหนด-working-directory"><i class="fa fa-check"></i>การกำหนด working directory</a></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์ข้อมูลแบบ-flat-file"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลแบบ flat file</a>
+<ul>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์-csv"><i class="fa fa-check"></i>การนำเข้าไฟล์ CSV</a></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์-tsv"><i class="fa fa-check"></i>การนำเข้าไฟล์ TSV</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์ข้อมูลนามสกุล-.xlsx"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลนามสกุล .xlsx</a>
+<ul>
+<li><a href="-importing-data.html#อาร์กิวเมนท์-col_names">อาร์กิวเมนท์ <code>col_names</code></a></li>
+<li><a href="-importing-data.html#อาร์กิวเมนท์-skip">อาร์กิวเมนท์ <code>skip</code></a></li>
+<li><a href="-importing-data.html#ชุดข้อมูลแบบ-tibble">ชุดข้อมูลแบบ <code>tibble</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="-importing-data.html"><a href="-importing-data.html#การนำเข้าไฟล์ข้อมูลนามสกุล-.sav"><i class="fa fa-check"></i>การนำเข้าไฟล์ข้อมูลนามสกุล .sav</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="data-preprocessing.html"><a href="data-preprocessing.html"><i class="fa fa-check"></i><b>9</b> Data-Preprocessing</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-preprocessing.html"><a href="data-preprocessing.html#การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น"><i class="fa fa-check"></i>การวิเคราะห์เพื่อสำรวจข้อมูลเบื้องต้น</a></li>
+<li class="chapter" data-level="" data-path="data-preprocessing.html"><a href="data-preprocessing.html#การสำรวจข้อมูลด้วยทัศนภาพข้อมูล"><i class="fa fa-check"></i>การสำรวจข้อมูลด้วยทัศนภาพข้อมูล</a>
+<ul>
+<li class="chapter" data-level="" data-path="data-preprocessing.html"><a href="data-preprocessing.html#การสำรวจข้อมูลด้วยค่าสถิติ"><i class="fa fa-check"></i>การสำรวจข้อมูลด้วยค่าสถิติ</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a>
 <ul>
 <li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>10.1</b> Example one</a></li>
@@ -205,9 +227,229 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="การนำเข้าข้อมูล-importing-data" class="section level1" number="8">
 <h1><span class="header-section-number">บทที่ 8</span> การนำเข้าข้อมูล (importing data)</h1>
 <p style="text-indent:3em;">
-การนำข้อมูลเข้าสู่ R ถือได้ว่าเป็นขั้นตอนแรกของการดำเนินงานวิเคราะห์ข้อมูล การนำข้อมูลเข้าสู่ R อาจจำแนกเป็นสองลักษณะ ได้แก่ การนำข้อมูลเข้าสู่ R โดยตรง ด้วยการใช้ฟังก์ชัน c() ร่วมกับฟังก์ชัน data.frame() ดังที่กล่าวไว้ในหัวข้อที่ผ่านมา และการนำข้อมูลข้อมูลจากไฟล์ข้อมูลภายนอกเข้าสู่ R ในหัวข้อนี้จะกล่าวถึงวิธีการในการนไฟล์ข้อมูลประเภทต่าง ๆ จากแหล่งข้อมูลที่แตกต่างกันเข้าสู่ R รายละเอียดมีดังนี้
+การนำข้อมูลเข้าสู่ R ถือได้ว่าเป็นขั้นตอนแรกของการดำเนินงานวิเคราะห์ข้อมูล การนำข้อมูลเข้าสู่ R อาจจำแนกเป็นสองลักษณะ ได้แก่ การนำข้อมูลเข้าสู่ R โดยตรง ด้วยการใช้ฟังก์ชัน <code>c()</code> ร่วมกับฟังก์ชัน <code>data.frame()</code> ดังที่กล่าวไว้ในหัวข้อที่ผ่านมา และการนำข้อมูลข้อมูลจากไฟล์ข้อมูลภายนอกเข้าสู่ R ในหัวข้อนี้จะกล่าวถึงวิธีการในการนำไฟล์ข้อมูลประเภทต่าง ๆ เข้าสู่ R จากแหล่งข้อมูลที่แตกต่างกันประกอบด้วย flat file, ไฟล์นามสกุล .xlsx จาก MS Excel, ไฟล์นามสกุล .sav จากโปรแกรม SPSS รายละเอียดมีดังนี้
 </p>
+<div id="การกำหนด-working-directory" class="section level2 unnumbered">
+<h2>การกำหนด working directory</h2>
+<p style="text-indent:3em;">
+สิ่งสำคัญประการแรกที่จำเป็นต้องทราบก่อนการข้อมูลเข้าสู่ R คือการระบุให้ R ทราบที่อยู่ของ directory ที่ใช้เก็บไฟล์ข้อมูลที่ต้องการนำเข้า โดยในโปรแกรม R เรียก directory นี้ว่า working directory ผู้ใช้ R สามารถใช้ฟังก์ชัน <code>getwd()</code> เพื่อเรียกดู working directory ปัจจุบัน ตัวอย่างต่อไปนี้
+</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="-importing-data.html#cb57-1" aria-hidden="true"></a><span class="kw">getwd</span>()</span>
+<span id="cb57-2"><a href="-importing-data.html#cb57-2" aria-hidden="true"></a><span class="co">## [1] &quot;/Users/Desktop&quot;</span></span></code></pre></div>
+<p>จากตัวอย่างข้างต้นจะเห็นว่า working directory ในขณะที่อยู่ที่ desktop หากผู้ใช้ต้องการเปลี่ยนแปลง working directory ข้างต้น เช่น ต้องการเปลี่ยนให้ไปอยู่ที่ <code>C:\Users\Documents</code> สามารถทำได้โดยใช้ฟังก์ชัน <code>setwd("path")</code> โดยที่ <code>“path"</code> คือที่อยู่ของ working directory</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="-importing-data.html#cb58-1" aria-hidden="true"></a><span class="kw">setwd</span>(<span class="st">&quot;C:\Users\Documents&quot;</span>)</span>
+<span id="cb58-2"><a href="-importing-data.html#cb58-2" aria-hidden="true"></a><span class="kw">getwd</span>()</span>
+<span id="cb58-3"><a href="-importing-data.html#cb58-3" aria-hidden="true"></a><span class="co">## [1] &quot;/Users/Documents&quot;</span></span></code></pre></div>
+<p>การเขียนที่อยู่ของ working directory หรือที่อยู่ของไฟล์ที่จะนำเข้าใน R จะเขียนในรูปแบบเรียงเป็นลำดับชั้นจาก folder ที่ใหญ่ที่สุดลงไปยัง subfolder และ file โดยมีการใช้สัญลักษณ์ <code>\</code> หรือ <code>//</code> อย่างใดอย่างหนึ่ง เป็นตัวคั่นระหว่าง folder, subfolder และ file ดังกล่าว เช่น <code>C:\Users\Documents</code> หรือ <code>C://Users//Documents</code> เป็นต้น</p>
+</div>
+<div id="การนำเข้าไฟล์ข้อมูลแบบ-flat-file" class="section level2 unnumbered">
+<h2>การนำเข้าไฟล์ข้อมูลแบบ flat file</h2>
+<p style="text-indent:3em;">
+Flat files คือไฟล์ข้อมูลที่อยู่ในรูปแบบข้อความทั่วไป (plain text file) ที่ไม่ได้อยู่ในรูปแบบตารางแบบ spreadsheet โดยมีโครงสร้างลักษณะดังตัวอย่างในรูป
+</p>
+<center>
+<img src="007_CSV_TSVfile.png" style="width:50.0%" />
+</center>
+<p>จากรูปจะเห็นว่า flat file ใช้บรรทัดเป็นตัวแบ่งข้อมูลของแต่ละหน่วยข้อมูล และเรียกข้อมูลในแต่ละบรรทัดนี้ว่า เรคคอร์ด (record) โดยปกติแล้วเรดคอร์ดจะใช้เก็บชื่อของตัวแปรในชุดข้อมูล และเรคคอร์ดที่สองเป็นต้นไปจะใช้เก็บของข้อมูลค่าสังเกตของแต่ละหน่วยข้อมูล</p>
+<p style="text-indent:3em;">
+เนื่องจากข้อมูลแบบ flat file ไม่ได้ใช้จัดเก็บอยู่ในรูปแบบตาราง จึงมีการใช้ตัวคั่น (delimiters) เพื่อแบ่งข้อมูลแต่ละตัวแทน ตัวคั่นดังกล่าวมักใช้อักขระพิเศษโดยสามารถใช้ได้หลายลักษณะ เช่น เครื่องหมายวรรคตอน (comma <code>,</code>) เว้นวรรค (tab) หรือ semi-colon (<code>;</code>) การใช้อักขระที่แตกต่างกันส่งผลต่อการเรียนชื่อ flat file ที่แตกต่างกัน กล่าวคือ หากในไฟล์ข้อมูลใช้ตัวคั่นเป็นเครื่องหมายวรรคตอน จะเรียกว่า comma-delimited หรือ comma separated values (CSV) หรือหากใช้ตัวคั่นเป็น tab จะเรียกว่า tab-delimited หรือ tab separated values (TSV) เป็นต้น
+</p>
+<div id="การนำเข้าไฟล์-csv" class="section level3 unnumbered">
+<h3>การนำเข้าไฟล์ CSV</h3>
+<p style="text-indent:3em;">
+การนำเข้าไฟล์ CSV ใน R สามารถทำได้หลายวิธีการ โดยวิธีการพื้นฐานที่นิยมใช้กันอย่างแพร่หลายคือการใช้ฟังก์ชัน <code>read.csv()</code> ที่มีรูปแบบคำสั่งดังนี้
+</p>
+<center>
+<code>read.csv("file.csv",header=FALSE,...)</code>
+</center>
+<p>เมื่อ <code>"file.csv"</code> คือชื่อของไฟล์ CSV ที่ต้องการนำเข้า และ <code>header</code> คืออาร์กิวเมนท์สำหรับระบุว่าบรรทัดแรกของไฟล์เป็นชื่อของตัวแปรหรือไม่ หากบรรทัดแรกของไฟล์ข้อมูลที่ต้องการนำเข้าเป็นชื่อของตัวแปร ให้ผู้ใช้กำหนด <code>header=T</code> (ค่าเริ่มต้นของอาร์กิวเมนท์นี้กำหนดให้ <code>header=F</code>)</p>
+<p style="text-indent:3em;">
+ไฟล์ข้อมูล <a href="https://goo.gl/mXZT5B">score.csv</a> ประกอบด้วยข้อมูลค่าสังเกตตัวแปร 3 ตัว ของนักเรียนจำนวน 5 คน ได้แก่ <code>gender, MathScore</code> และ <code>EngScore</code> การนำไฟล์ข้อมูลดังกล่าวเข้าสู่ R สามารถเขียนคำสั่งได้ดังตัวอย่างต่อไปนี้
+</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="-importing-data.html#cb59-1" aria-hidden="true"></a>dat.csv&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;score.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>)</span>
+<span id="cb59-2"><a href="-importing-data.html#cb59-2" aria-hidden="true"></a>dat.csv</span>
+<span id="cb59-3"><a href="-importing-data.html#cb59-3" aria-hidden="true"></a><span class="co">##   id gender MathScore EngScore</span></span>
+<span id="cb59-4"><a href="-importing-data.html#cb59-4" aria-hidden="true"></a><span class="co">## 1  1      M        33       80</span></span>
+<span id="cb59-5"><a href="-importing-data.html#cb59-5" aria-hidden="true"></a><span class="co">## 2  2      M        57       20</span></span>
+<span id="cb59-6"><a href="-importing-data.html#cb59-6" aria-hidden="true"></a><span class="co">## 3  3      F        76       80</span></span>
+<span id="cb59-7"><a href="-importing-data.html#cb59-7" aria-hidden="true"></a><span class="co">## 4  4      M        80       85</span></span>
+<span id="cb59-8"><a href="-importing-data.html#cb59-8" aria-hidden="true"></a><span class="co">## 5  5      F        92       95</span></span></code></pre></div>
+<p>เมื่อลองสำรวจชุดข้อมูล dat ด้วยฟังก์ชัน <code>str()</code> จะพบว่า ตัวแปร <code>gender</code> ถูกเก็บอยู่ในชุดข้อมูลแบบตัวแปรตัวอักษร ในขณะที่ตัวแปรอื่น ๆ เก็บอยู่ในชุดข้อมูลแบบตัวแปรตัวเลขจำนวนเต็ม</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="-importing-data.html#cb60-1" aria-hidden="true"></a><span class="kw">str</span>(dat.csv)</span>
+<span id="cb60-2"><a href="-importing-data.html#cb60-2" aria-hidden="true"></a><span class="co">## &#39;data.frame&#39;:	5 obs. of  4 variables:</span></span>
+<span id="cb60-3"><a href="-importing-data.html#cb60-3" aria-hidden="true"></a><span class="co">##  $ id       : int  1 2 3 4 5</span></span>
+<span id="cb60-4"><a href="-importing-data.html#cb60-4" aria-hidden="true"></a><span class="co">##  $ gender   : chr  &quot;M&quot; &quot;M&quot; &quot;F&quot; &quot;M&quot; ...</span></span>
+<span id="cb60-5"><a href="-importing-data.html#cb60-5" aria-hidden="true"></a><span class="co">##  $ MathScore: int  33 57 76 80 92</span></span>
+<span id="cb60-6"><a href="-importing-data.html#cb60-6" aria-hidden="true"></a><span class="co">##  $ EngScore : int  80 20 80 85 95</span></span></code></pre></div>
+<p>จากตัวอย่างข้างต้น หากต้องการเปลี่ยนสถานะของตัวแปร <code>gender</code> ให้เป็นตัวแปรแบบ factor อาจทำได้สองวิธีการ วิธีการแรกคือการใช้ฟังก์ชัน <code>factor()</code> เปลี่ยนสถานะของตัวแปร <code>gender</code> โดยเขียนคำสั่งเช่น <code>dat$gender&lt;-factor(gender)</code> (รายละเอียดอยู่ในบทที่ 7) อีกวิธีการคือการเปลี่ยนสถานะของตัวแปร <code>gender</code> ตั้งแต่ขั้นตอนการนำเข้า โดยกำหนด อาร์กิวเมนท์ <code>stringsAsFactors</code> ของฟังก์ชัน <code>read.csv()</code> ให้มีค่าเท่ากับ <code>TRUE</code> ดังนี้ <code>dat.csv&lt;-read.csv("score.csv", header=TRUE, stringsAsFactors=TRUE)</code></p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="-importing-data.html#cb61-1" aria-hidden="true"></a>dat.csv&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;score.csv&quot;</span>,<span class="dt">header=</span>T, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb61-2"><a href="-importing-data.html#cb61-2" aria-hidden="true"></a><span class="kw">str</span>(dat)</span>
+<span id="cb61-3"><a href="-importing-data.html#cb61-3" aria-hidden="true"></a><span class="co">## &#39;data.frame&#39;:	5 obs. of  4 variables:</span></span>
+<span id="cb61-4"><a href="-importing-data.html#cb61-4" aria-hidden="true"></a><span class="co">##  $ id       : int  1 2 3 4 5</span></span>
+<span id="cb61-5"><a href="-importing-data.html#cb61-5" aria-hidden="true"></a><span class="co">##  $ gender   : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: </span></span>
+<span id="cb61-6"><a href="-importing-data.html#cb61-6" aria-hidden="true"></a><span class="co">##  $ MathScore: int  33 57 76 80 92</span></span>
+<span id="cb61-7"><a href="-importing-data.html#cb61-7" aria-hidden="true"></a><span class="co">##  $ EngScore : int  80 20 80 85 95</span></span></code></pre></div>
+<p>จะเห็นว่าข้อมูล <code>gender</code> ถูกจัดเก็บอยู่ในชุดข้อมูล <code>dat</code> โดยมีสถานะเป็นตัวแปรแบบ factor ที่มี 2 ระดับ เรียงตามลำดับตัวอักษรคือ <code>"F"</code> และ <code>"M"</code></p>
+<p style="text-indent:3em;">
+นอกจากนี้ยังมีอีกหลายวิธีที่สามารถนำเข้าไฟล์ข้อมูลแบบ CSV ในโปรแกรม R การใช้ฟังก์ชัน <code>read_csv()</code> ใน <a href="https://cran.r-project.org/web/packages/readr/readr.pdf">package-readr</a> เป็นอีกวิธีการหนึ่งที่สามารถทำได้ โดยผู้ใช้จำเป็นต้องดาวน์โหลดและติดตั้ง package-readr ก่อนด้วยคำสั่ง <code>install.packages("readr")</code> จากนั้นทำการเรียกใช้ package ด้วยคำสั่ง <code>library(readr)</code> อีกวิธีการหนึ่งคือใช้ฟังก์ชัน <code>fread()</code> จาก <a href="https://cran.r-project.org/web/packages/data.table/data.table.pdf">package-data.table</a> ฟังก์ชันจาก package ทั้งสองมีประสิทธิภาพสูงในการนำเข้าไฟล์ข้อมูลขนาดใหญ่ผู้อ่านสามารถศึกษารายละเอียดเพิ่มเติมได้จากคู่มือการใช้งานที่แนบลิงค์ไว้ให้ข้างต้น
+</p>
+</div>
+<div id="การนำเข้าไฟล์-tsv" class="section level3 unnumbered">
+<h3>การนำเข้าไฟล์ TSV</h3>
+<p style="text-indent:3em;">
+การนำเข้าไฟล์ข้อมูลแบบ TSV ใน R สามารถทำได้โดยใช้ฟังก์ชัน <code>read.table()</code> ที่มีรูปแบบคำสั่งเหมือนกับฟังก์ชัน <code>read.csv()</code> อาร์กิวเมนท์หลักของฟังก์ชัน ได้แก่ <code>file = "..."</code> ที่ใช้ระบุชื่อของไฟล์ข้อมูลนามสกุล .txt ที่ต้องการนำเข้า และ <code>header</code> สำหรับระบุว่าบรรทัดแรกของไฟล์ข้อมูลเป็นชื่อของตัวแปรหรือไม่ ดังนี้
+</p>
+<center>
+<code>read.table("file.txt",header=F,...)</code>
+</center>
+<p>ไฟล์ข้อมูล <a href="https://goo.gl/qqpUxf">score.txt</a> ประกอบด้วยข้อมูลชุดเดียวกับ score.csv แต่ข้อมูลถูกจัดเก็บโดยใช้ตัวคั่นแบบเว้นวรรค ไฟล์ข้อมูลดังกล่าวสามารถนำเข้าสู่ R ได้โดยการเขียนคำสั่งดังนี้</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="-importing-data.html#cb62-1" aria-hidden="true"></a>dat.tsv&lt;-<span class="kw">read.table</span>(<span class="st">&quot;score.txt&quot;</span>,<span class="dt">header=</span>T)</span>
+<span id="cb62-2"><a href="-importing-data.html#cb62-2" aria-hidden="true"></a>dat.tsv</span>
+<span id="cb62-3"><a href="-importing-data.html#cb62-3" aria-hidden="true"></a><span class="co">##   id gender MathScore EngScore</span></span>
+<span id="cb62-4"><a href="-importing-data.html#cb62-4" aria-hidden="true"></a><span class="co">## 1  1      M        33       80</span></span>
+<span id="cb62-5"><a href="-importing-data.html#cb62-5" aria-hidden="true"></a><span class="co">## 2  2      M        57       20</span></span>
+<span id="cb62-6"><a href="-importing-data.html#cb62-6" aria-hidden="true"></a><span class="co">## 3  3      F        76       80</span></span>
+<span id="cb62-7"><a href="-importing-data.html#cb62-7" aria-hidden="true"></a><span class="co">## 4  4      M        80       85</span></span>
+<span id="cb62-8"><a href="-importing-data.html#cb62-8" aria-hidden="true"></a><span class="co">## 5  5      F        92       95</span></span></code></pre></div>
+<p style="text-indent:3em;">
+ฟังก์ชัน <code>read.table()</code> เป็นฟังก์ชันทั่วไปสำหรับนำเข้า flat file ได้หลายประเภท โดยนอกจากจะมีอาร์กิวเมนท์ที่ใช้ภายในฟังก์ชันจะเป็นอาร์กิวเมนท์ชุดเดียวกับฟังก์ชัน <code>read.csv()</code> แล้ว ยังมีอาร์กิวเมนท์อีกหลายตัวที่สามารถกำหนดเพิ่มเติมได้อีก อารกิวเมนท์ที่สำคัญคือ <code>sep  = " "</code> ที่ใช้ระบุลักษณะของตัวคั่นที่ใช้ในไฟล์ข้อมูล โดยค่าเริ่มต้นของอาร์กิวเมนท์กำหนดเป็นวรรคเว้น ดังนั้นการนำเข้าไฟล์ข้อมูล TSV จึงไม่จำเป็นต้องกำหนดอาร์กิวเมนท์นี้เพิ่มเติม ส่วนในกรณีที่เป็น flat file ที่ใช้ตัวคั่นแบบอื่น เช่น <code>/</code> ก็สามารถกำหนดอาร์กิวเมนท์ <code>sep = "/"</code> ดังตัวอย่างการนำเข้าไฟล์ <a href="https://goo.gl/xTh6ZY">score2.txt</a>
+</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="-importing-data.html#cb63-1" aria-hidden="true"></a>dat.slash&lt;-<span class="kw">read.table</span>(<span class="st">&quot;score2.txt&quot;</span>, <span class="dt">header=</span>T, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</span>
+<span id="cb63-2"><a href="-importing-data.html#cb63-2" aria-hidden="true"></a>dat.slash</span>
+<span id="cb63-3"><a href="-importing-data.html#cb63-3" aria-hidden="true"></a><span class="co">##   id gender MathScore EngScore</span></span>
+<span id="cb63-4"><a href="-importing-data.html#cb63-4" aria-hidden="true"></a><span class="co">## 1  1      M        33       80</span></span>
+<span id="cb63-5"><a href="-importing-data.html#cb63-5" aria-hidden="true"></a><span class="co">## 2  2      M        57       20</span></span>
+<span id="cb63-6"><a href="-importing-data.html#cb63-6" aria-hidden="true"></a><span class="co">## 3  3      F        76       80</span></span>
+<span id="cb63-7"><a href="-importing-data.html#cb63-7" aria-hidden="true"></a><span class="co">## 4  4      M        80       85</span></span>
+<span id="cb63-8"><a href="-importing-data.html#cb63-8" aria-hidden="true"></a><span class="co">## 5  5      F        92       95</span></span></code></pre></div>
+<p><strong>หมายเหตุ: </strong></p>
+<ol style="list-style-type: decimal">
+<li><p>ในกรณีที่ไฟล์ข้อมูลที่นำเข้ามีค่าสูญหาย ผู้ใช้สามารถระบุสัญลักษณ์ของค่าสูญหายที่ใช้ในไฟล์ข้อมูลได้ผ่านอาร์กิวเมนท์ <code>na.strings</code> โดยที่ค่าเริ่มต้นของฟังก์ชัน <code>read.csv()</code> และ <code>read.table()</code> กำหนดสัญลักษณ์ของค่าสูญหายไว้เป็น <code>NA</code></p></li>
+<li><p>ชุดข้อมูลที่นำเข้าด้วยฟังก์ชัน <code>read.csv()</code> หรือ <code>read.table()</code> จะถูกจัดเก็บใน R โดยมีสถานะเป็นชุดข้อมูล (<code>data.frame</code>) ผู้อ่านสามารถตรวจสอบสถานะของตัวแปรใน R สามารถทำได้โดยใช้ฟังก์ชัน <code>class()</code> ดังเช่น</p></li>
+</ol>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="-importing-data.html#cb64-1" aria-hidden="true"></a><span class="kw">class</span>(dat.csv)</span>
+<span id="cb64-2"><a href="-importing-data.html#cb64-2" aria-hidden="true"></a><span class="co">## [1] &quot;data.frame&quot;</span></span></code></pre></div>
+</div>
+</div>
+<div id="การนำเข้าไฟล์ข้อมูลนามสกุล-.xlsx" class="section level2 unnumbered">
+<h2>การนำเข้าไฟล์ข้อมูลนามสกุล .xlsx</h2>
+<p style="text-indent:3em;">
+Microsoft Excel (MS Excel) เป็นโปรแกรมพื้นฐานที่หน่วยงานต่าง ๆ ใช้เพื่อเก็บหรือสำรองข้อมูลที่เกี่ยวข้องกับการดำเนินงาน ภายในไฟล์ข้อมูล Excel ที่เรียกว่า workbook ประกอบด้วย พื้นที่การทำงาน/เก็บข้อมูลที่มีลักษณะเป็นตาราง เรียกพื้นที่นี้ว่า worksheet ไฟล์ข้อมูลจาก MS Excel มีนามสกุลเป็น .xlsx การนำไฟล์ข้อมูลดังกล่าวเข้าสู่ R สามารถทำได้โดยใช้ฟังก์ชัน <code>read_excel()</code> จาก package-readxl โดยผู้ใช้จำเป็นต้องดาวน์โหลดและติดตั้ง package ดังกล่าวก่อนโดยพิมพ์คำสั่งดังนี้
+</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="-importing-data.html#cb65-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)</span>
+<span id="cb65-2"><a href="-importing-data.html#cb65-2" aria-hidden="true"></a><span class="kw">library</span>(readxl)</span></code></pre></div>
+<p style="text-indent:3em;">
+ไฟล์ <a href="http://bit.ly/2EjFOnS">Score.xlsx</a> ประกอบด้วย worksheet จำนวน 2 worksheet โดยที่แต่ละ worksheet บันทึกข้อมูลจากชุดข้อมูลที่แตกต่างกัน การที่จะนำเข้าข้อมูลจากไฟล์ดังกล่าวได้อย่างถูกต้องจำเป็นต้องระบุ worksheet ที่ต้องการในฟังก์ชัน <code>read_excel()</code> การเรียกดู worksheet ในไฟล์ข้อมูล .xlsx สามารถทำได้โดยใช้ฟังก์ชัน <code>excel_sheets()</code> ซึ่งอยู่ภายใต้ package-readxl เช่นเดียวกัน ดังนี้
+</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="-importing-data.html#cb66-1" aria-hidden="true"></a><span class="kw">excel_sheets</span>(<span class="st">&quot;Score.xlsx&quot;</span>)</span>
+<span id="cb66-2"><a href="-importing-data.html#cb66-2" aria-hidden="true"></a>[<span class="dv">1</span>] <span class="st">&quot;Score&quot;</span>  <span class="st">&quot;Score3&quot;</span></span></code></pre></div>
+<p>จากผลลัพธ์ในข้างต้นจะเห็นว่าไฟล์ Score.xlsx ประกอบด้วย worksheet จำนวน 2 worksheet ได้แก่ Score และ Score3 การนำไฟล์ข้อมูลดังกล่าวเข้าสู่ R สามารถพิมพ์คำสั่งได้ดังนี้</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="-importing-data.html#cb67-1" aria-hidden="true"></a>dat.xlsx1&lt;-<span class="kw">read_excel</span>(<span class="st">&quot;Score.xlsx, worksheet=&quot;</span>Score<span class="st">&quot;)</span></span>
+<span id="cb67-2"><a href="-importing-data.html#cb67-2" aria-hidden="true"></a><span class="st">dat.xlsx1</span></span>
+<span id="cb67-3"><a href="-importing-data.html#cb67-3" aria-hidden="true"></a><span class="st">## # A tibble: 5 x 4                                                                                  </span></span>
+<span id="cb67-4"><a href="-importing-data.html#cb67-4" aria-hidden="true"></a><span class="st">##      id gender MathScore EngScore</span></span>
+<span id="cb67-5"><a href="-importing-data.html#cb67-5" aria-hidden="true"></a><span class="st">##   &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb67-6"><a href="-importing-data.html#cb67-6" aria-hidden="true"></a><span class="st">## 1     1 M             33       80</span></span>
+<span id="cb67-7"><a href="-importing-data.html#cb67-7" aria-hidden="true"></a><span class="st">## 2     2 M             57       20</span></span>
+<span id="cb67-8"><a href="-importing-data.html#cb67-8" aria-hidden="true"></a><span class="st">## 3     3 F             76       80</span></span>
+<span id="cb67-9"><a href="-importing-data.html#cb67-9" aria-hidden="true"></a><span class="st">## 4     4 M             80       85</span></span>
+<span id="cb67-10"><a href="-importing-data.html#cb67-10" aria-hidden="true"></a><span class="st">## 5     5 F             92       95</span></span></code></pre></div>
+<p>จากตัวอย่างข้างต้นจะเห็นว่ามีการระบุชื่อของ worksheet ที่ต้องการนำเข้าผ่านอาร์กิวเมนท์ <code>worksheet</code> โดยในตัวอย่างเป็นการระบุให้นำเข้า worksheet “Score” การระบุอาร์กิวเมนท์นี้สามารถระบุเป็นชื่อของ worksheet ดังตัวอย่างข้างต้น หรือจะระบุเป็นลำดับของ worksheet คือ <code>worksheet = 1</code> ก็ได้</p>
+<div id="อาร์กิวเมนท์-col_names" class="section level3 unnumbered">
+<h3>อาร์กิวเมนท์ <code>col_names</code></h3>
+<p style="text-indent:3em;">
+นอกจากนี้ฟังก์ชัน <code>read_excel()</code> ยังมีอาร์กิวเมนท์ที่สำคัญอีกหนึ่งตัวคือ <code>col_names</code> ที่ทำหน้าที่เหมือนกับอาร์กิวเมนท์ <code>header</code> ของฟังก์ชัน <code>read.csv()</code> และ <code>read.table()</code> กล่าวคือหากระบุ <code>col_names = TRUE</code> (ค่าเริ่มต้น) หมายถึงใช้ระบุว่าบรรทัดแรกของข้อมูลใน worksheet เป็นชื่อของตัวแปร หากพิจารณาไฟล์ข้อมูล score.xlsx จะเห็นว่า worksheet “Score3” ไม่ได้เริ่มต้นบรรทัดแรกด้วยชื่อของตัวแปร การนำไฟล์ข้อมูลใน worksheet นี้เข้าใน R ด้วยฟังก์ชัน <code>read_excel()</code> จำเป็นต้องกำหนดอาร์กิวเมนท์ <code>col_names = FALSE</code> ดังตัวอย่างคำสั่งด้านล่าง
+</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="-importing-data.html#cb68-1" aria-hidden="true"></a>dat.xlsx2&lt;-<span class="kw">read_excel</span>(<span class="st">&quot;Score.xlsx, worksheet=&quot;</span>Score3<span class="st">&quot;, col_names=FALSE)</span></span></code></pre></div>
+<p>หากผู้อ่านทดลองนำเข้าไฟล์ข้อมูลดังคำสั่งข้างต้น ผู้อ่านจะสังเกตเห็นว่าในกรณีนี้ฟังก์ชัน <code>read_excel()</code> จะสร้างชื่อให้กับตัวแปรในแต่ละคอลัมน์โดยอัตโนมัติ</p>
+</div>
+<div id="อาร์กิวเมนท์-skip" class="section level3 unnumbered">
+<h3>อาร์กิวเมนท์ <code>skip</code></h3>
+<p style="text-indent:3em;">
+<p>หลายครั้งที่ไฟล์ข้อมูล .xlsx มักมีชื่อตารางหรือรายละเอียดต่าง ๆ ในส่วนหัวของตารางซึ่งกินพื้นที่ใน worksheet ไปจำนวนหนึ่งทำให้บรรทัดแรกของไฟล์ข้อมูลไม่ใช่ตารางข้อมูลที่ต้องการนำเข้า ดังตัวอย่างไฟล์ข้อมูล <a href="https://bit.ly/2Au0B61">KAS.xlsx</a> ในรูปด้านล่าง</p>
+<center>
+<img src="008_skip.png" style="width:100.0%" />
+</center>
+<p>จากรูปจะเห็นว่าไฟล์ข้อมูลดังกล่าวไม่ได้มีแต่ตารางข้อมูลที่ใช้ในการวิเคราะห์เท่านั้น ยังมีรายละเอียดในส่วนอื่น ๆ ก่อนที่จะเริ่มต้น ณ แถวที่ 4 ของ worksheet การจะนำข้อมูลในตารางเข้าสู่โปรแกรม R ได้อย่างถูกต้องจำเป็นต้องข้าม 3 แถวแรกของ worksheet ไปก่อน การนำเข้าไฟล์ข้อมูลที่มีลักษณะดังกล่าวสามารถทำได้ด้วยการระบุอาร์กิวเมนท์ <code>skip</code> ในฟังก์ชัน <code>read_excel()</code> โดยกำหนดให้มีค่าเท่ากับจำนวนบรรทัดที่ต้องการให้ข้าม ดังนี้</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="-importing-data.html#cb69-1" aria-hidden="true"></a>dat.xlsx3&lt;-<span class="kw">read_excel</span>(<span class="st">&quot;KAS.xlsx&quot;</span>, <span class="dt">skip=</span><span class="dv">3</span>, <span class="dt">col_names=</span>T)</span>
+<span id="cb69-2"><a href="-importing-data.html#cb69-2" aria-hidden="true"></a>dat</span>
+<span id="cb69-3"><a href="-importing-data.html#cb69-3" aria-hidden="true"></a><span class="co">## # A tibble: 384 x 5</span></span>
+<span id="cb69-4"><a href="-importing-data.html#cb69-4" aria-hidden="true"></a><span class="co">##    gender location knowledge attitude skill</span></span>
+<span id="cb69-5"><a href="-importing-data.html#cb69-5" aria-hidden="true"></a><span class="co">##     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb69-6"><a href="-importing-data.html#cb69-6" aria-hidden="true"></a><span class="co">##  1      2        1      3.67     4.86   4  </span></span>
+<span id="cb69-7"><a href="-importing-data.html#cb69-7" aria-hidden="true"></a><span class="co">##  2      2        1      3.67     4.43   3.2</span></span>
+<span id="cb69-8"><a href="-importing-data.html#cb69-8" aria-hidden="true"></a><span class="co">##  3      2        1      2.92     3      3.6</span></span>
+<span id="cb69-9"><a href="-importing-data.html#cb69-9" aria-hidden="true"></a><span class="co">##  4      1        1      3.08     3      3.6</span></span>
+<span id="cb69-10"><a href="-importing-data.html#cb69-10" aria-hidden="true"></a><span class="co">##  5      1        1      3        3.14   2.8</span></span>
+<span id="cb69-11"><a href="-importing-data.html#cb69-11" aria-hidden="true"></a><span class="co">##  6      1        1      3.83     4      4  </span></span>
+<span id="cb69-12"><a href="-importing-data.html#cb69-12" aria-hidden="true"></a><span class="co">##  7      1        1      3.08     2.57   3.2</span></span>
+<span id="cb69-13"><a href="-importing-data.html#cb69-13" aria-hidden="true"></a><span class="co">##  8      1        1      3.42     3.5    3.8</span></span>
+<span id="cb69-14"><a href="-importing-data.html#cb69-14" aria-hidden="true"></a><span class="co">##  9      1        1      3.67     4.57   3.2</span></span>
+<span id="cb69-15"><a href="-importing-data.html#cb69-15" aria-hidden="true"></a><span class="co">## 10      2        1      2.5      3.57   4.2</span></span>
+<span id="cb69-16"><a href="-importing-data.html#cb69-16" aria-hidden="true"></a><span class="co">## # … with 374 more rows</span></span></code></pre></div>
+</div>
+<div id="ชุดข้อมูลแบบ-tibble" class="section level3 unnumbered">
+<h3>ชุดข้อมูลแบบ <code>tibble</code></h3>
+<p style="text-indent:3em;">
+ผู้อ่านจะสังเกตเห็นจากตัวอย่างข้างต้นว่า ไฟล์ข้อมูลที่นำเข้าและถูกจัดเก็บใน R โดยฟังก์ชัน <code>read_excel()</code> มีลักษณะที่แตกต่างไปจากไฟล์ข้อมูลที่ถูกนำเข้าด้วยฟังก์ชัน <code>read.csv()</code> และ <code>read.table()</code> ทั้งนี้เป็นเพราะฟังก์ชัน <code>read_excel()</code> ไม่ได้บันทึกไฟล์ข้อมูลในรูปแบบ <code>data.frame</code> เหมือนกับฟังก์ชัน <code>read.csv()</code> และ <code>read.table()</code> แต่บันทึกไว้ในรูปแบบชุดข้อมูลที่เรียกว่า <code>tibble</code>
+</p>
+<p style="text-indent:3em;">
+<a href="https://tibble.tidyverse.org">tibble</a> เป็นชุดข้อมูลอีกประเภทหนึ่งใน R ที่พัฒนาต่อยอดจากชุดข้อมูลแบบ data.frame โดยมีการปรับปรุงคุณสมบัติบางประการที่เป็นข้อจำกัดของชุดข้อมูลแบบ dataframe เช่น การนำเสนอข้อมูลที่มีความกระชับและให้สารสนเทศของชุด้มากกว่าชุดข้อมูลแบบ data.frame นอกจากนี้ยังมีการปรับปรุงอัลกอริทึมการทำงานเบื้องหลังที่ทำให้เหมาะกับการทำงานกับข้อมูลขนาดใหญ่มากกว่าชุดข้อมูล data.frame แบบดั้งเดิม ในทางปฏิบัติผู้อ่านแทบไม่ต้องเรียนรู้อะไรใหม่เพิ่มเติม เนื่องจากการดำเนินการทางสถิติต่าง ๆ ทั้งการเรียกดูข้อมูล การอ้างอิงสมาชิกในชุดข้อมูล ยังดำเนินการในลักษณะเหมือนกับดำเนินการบนชุดข้อมูลแบบ data.frame ทุกประการ
+</p>
+</div>
+</div>
+<div id="การนำเข้าไฟล์ข้อมูลนามสกุล-.sav" class="section level2 unnumbered">
+<h2>การนำเข้าไฟล์ข้อมูลนามสกุล .sav</h2>
+<p style="text-indent:3em;">
+SPSS เป็นโปรแกรมวิเคราะห์ข้อมูลสำเร็จรูปโปรแกรมหนึ่งที่นิยมใช้กันโดยเฉพาะนักวิจัยทางด้านสังคมศาสตร์ ไฟล์ข้อมูลของโปรแกรม SPSS มีนามสกุล .sav และสามารถนำเข้าใน R ได้หลายวิธีการ วิธีการหนึ่งคือการใช้ฟังก์ชัน <code>read.spss()</code> จาก package-foreign ทั้งนี้ผู้ใช้จำเป็นต้องดาวน์โหลดและติดตั้ง package-foreign ก่อน โดยพิมพ์คำสั่งดังนี้
+</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="-importing-data.html#cb70-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;foreign&quot;</span>)</span>
+<span id="cb70-2"><a href="-importing-data.html#cb70-2" aria-hidden="true"></a><span class="kw">library</span>(foreign)</span></code></pre></div>
+<p style="text-indent:3em;">
+การใช้งานฟังกชัน <code>read.spss()</code> ทำได้ในทำนองเดียวกับฟังก์ชันนำเข้าข้อมูลอื่น ๆ ที่กล่าวไว้ก่อนหน้านี้ โดยมีอาร์กิวเมนท์สำคัญ 3 ตัวได้แก่ <code>file = "..."</code> ที่ใช้ระบุชื่อไฟล์ที่ต้องการนำเข้า, <code>use.value.labels = TRUE</code> ใช้กำหนดให้ฟังก์ชันนำเข้า label ของตัวแปรแบบจัดประเภทที่ระบุในแถบ variable view ของโปรแกรม SPSS มาเป็น label ของ factor ใน R และ <code>to.data.frame = TRUE</code> .ใช้ระบุให้จัดเก็บตารางข้อมูลที่นำเข้ามาให้อยู่ในรูปแบบชุดข้อมูลแบบ <code>data.frame</code>
+</p>
+<p style="text-indent:3em;">
+ไฟล์ข้อมูล <a href="https://goo.gl/89GJ9A">AchSolve.sav</a> ประกอบด้วยค่าสังเกตของตัวแปร ผลสัมฤทธิ์ทางการเรียน (<code>Ach</code>) และทักษะการแก้ไขปัญหา (<code>Solve</code>) ของนักเรียนสองกลุ่มระหว่างกลุ่มที่ได้รับการจัดการเรียนรู้แบบบรรยาย (<code>Lecture</code>) กับกลุ่มที่ได้รับการจัดการเรียนรู้แบบใช้โครงงานเป็นฐาน (<code>PBL</code>) การนำเข้าไฟล์ข้อมูลดังกล่าวด้วยฟังก์ชัน <code>read.spss()</code> สามารถทำได้ดังนี้
+</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="-importing-data.html#cb71-1" aria-hidden="true"></a>dat.sav1&lt;-<span class="kw">read.spss</span>(<span class="st">&quot;AchSolve.sav&quot;</span>, <span class="dt">use.value.labels =</span> T, <span class="dt">to.data.frame =</span> T)</span>
+<span id="cb71-2"><a href="-importing-data.html#cb71-2" aria-hidden="true"></a>dat.sav1</span>
+<span id="cb71-3"><a href="-importing-data.html#cb71-3" aria-hidden="true"></a><span class="co">##     ach solve   group</span></span>
+<span id="cb71-4"><a href="-importing-data.html#cb71-4" aria-hidden="true"></a><span class="co">## 1  49.6   1.2 Lecture</span></span>
+<span id="cb71-5"><a href="-importing-data.html#cb71-5" aria-hidden="true"></a><span class="co">## 2  43.6   6.3 Lecture</span></span>
+<span id="cb71-6"><a href="-importing-data.html#cb71-6" aria-hidden="true"></a><span class="co">## 3  50.3   1.8 Lecture</span></span>
+<span id="cb71-7"><a href="-importing-data.html#cb71-7" aria-hidden="true"></a><span class="co">## 4  34.4   5.7 Lecture</span></span>
+<span id="cb71-8"><a href="-importing-data.html#cb71-8" aria-hidden="true"></a><span class="co">## 5  56.8   5.9 Lecture</span></span>
+<span id="cb71-9"><a href="-importing-data.html#cb71-9" aria-hidden="true"></a><span class="co">## 6  32.8   8.0 Lecture</span></span>
+<span id="cb71-10"><a href="-importing-data.html#cb71-10" aria-hidden="true"></a><span class="co">## 7  56.9   4.3 Lecture</span></span>
+<span id="cb71-11"><a href="-importing-data.html#cb71-11" aria-hidden="true"></a><span class="co">## 8  49.3   7.3 Lecture</span></span>
+<span id="cb71-12"><a href="-importing-data.html#cb71-12" aria-hidden="true"></a><span class="co">## 9  60.7   5.4 Lecture</span></span>
+<span id="cb71-13"><a href="-importing-data.html#cb71-13" aria-hidden="true"></a><span class="co">## 10 64.5   8.5 Lecture</span></span>
+<span id="cb71-14"><a href="-importing-data.html#cb71-14" aria-hidden="true"></a><span class="co">## ...</span></span></code></pre></div>
+<p style="text-indent:3em;">
+<a href="https://cran.r-project.org/web/packages/foreign/foreign.pdf">package-foreign</a> ยังสามารถใช้นำเข้าไฟล์ข้อมูลจากโปรแกรมวิเคราะห์ข้อมูลทางสถิติอื่น ๆ ได้อีกด้วย เช่น ไฟล์ข้อมูลจากโปรแกรม SAS สามารถนำเข้าได้ด้วยฟังก์ชัน <code>read.xport()</code> ไฟล์ข้อมูลจากโปรแกรม Minitab สามารถนำเข้าได้ด้วยฟังก์ชัน <code>read.mtp()</code> ไฟล์ข้อมูลจากโปรแกรม Systat สามารถนำเข้าได้ด้วยฟังก์ชัน <code>read.systat()</code> เป็นต้น
+</p>
+<p style="text-indent:3em;">
+อีกวิธีการหนึ่งที่สามารถใช้นำเข้าไฟล์ข้อมูลจากโปรแกรม SPSS และโปรแกรมวิเคราะห์ข้อมูลสำเร็จรูปทางสถิติอื่น ๆ คือการใช้ <a href="https://cran.r-project.org/web/packages/haven/haven.pdf">package-haven</a> ผู้ใช้จำเป็นต้องดาวน์โหลดและติดตั้ง package ดังกล่าวก่อนโดยพิมพ์คำสั่ง <code>install.packages("haven")</code> จากนั้นเรียก package ก่อนการใช้งานด้วยคำสั่ง <code>library(haven)</code> โดยในกรณีที่ต้องการนำเข้าไฟล์ .sav สามารถทำได้โดยใช้ฟังก์ชัน <code>read_sav()</code> หรือ <code>read_spss()</code> ที่มีอาร์กิวเมนท์สำคัญคือ <code>file="..."</code> ที่ใช้ระบุชื่อไฟล์นามสกุล .sav ที่ต้องการนำเข้า และ <code>col_select</code> ที่ใช้ระบุคอลัมน์ของไฟล์ .sav ที่ต้องการนำเข้า ดังตัวอย่างต่อไปนี้
+</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="-importing-data.html#cb72-1" aria-hidden="true"></a>dat.sav2&lt;-<span class="kw">read_sav</span>(<span class="st">&quot;AchSolve.sav&quot;</span>)</span>
+<span id="cb72-2"><a href="-importing-data.html#cb72-2" aria-hidden="true"></a>dat.sav2</span>
+<span id="cb72-3"><a href="-importing-data.html#cb72-3" aria-hidden="true"></a><span class="co">## # A tibble: 36 x 3</span></span>
+<span id="cb72-4"><a href="-importing-data.html#cb72-4" aria-hidden="true"></a><span class="co">##      ach solve group    </span></span>
+<span id="cb72-5"><a href="-importing-data.html#cb72-5" aria-hidden="true"></a><span class="co">##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl+lbl&gt;</span></span>
+<span id="cb72-6"><a href="-importing-data.html#cb72-6" aria-hidden="true"></a><span class="co">##  1  49.6   1.2 1        </span></span>
+<span id="cb72-7"><a href="-importing-data.html#cb72-7" aria-hidden="true"></a><span class="co">##  2  43.6   6.3 1        </span></span>
+<span id="cb72-8"><a href="-importing-data.html#cb72-8" aria-hidden="true"></a><span class="co">##  3  50.3   1.8 1        </span></span>
+<span id="cb72-9"><a href="-importing-data.html#cb72-9" aria-hidden="true"></a><span class="co">##  4  34.4   5.7 1        </span></span>
+<span id="cb72-10"><a href="-importing-data.html#cb72-10" aria-hidden="true"></a><span class="co">##  5  56.8   5.9 1        </span></span>
+<span id="cb72-11"><a href="-importing-data.html#cb72-11" aria-hidden="true"></a><span class="co">##  6  32.8   8   1        </span></span>
+<span id="cb72-12"><a href="-importing-data.html#cb72-12" aria-hidden="true"></a><span class="co">##  7  56.9   4.3 1        </span></span>
+<span id="cb72-13"><a href="-importing-data.html#cb72-13" aria-hidden="true"></a><span class="co">##  8  49.3   7.3 1        </span></span>
+<span id="cb72-14"><a href="-importing-data.html#cb72-14" aria-hidden="true"></a><span class="co">##  9  60.7   5.4 1        </span></span>
+<span id="cb72-15"><a href="-importing-data.html#cb72-15" aria-hidden="true"></a><span class="co">## 10  64.5   8.5 1        </span></span>
+<span id="cb72-16"><a href="-importing-data.html#cb72-16" aria-hidden="true"></a><span class="co">## # ... with 26 more rows</span></span></code></pre></div>
+<p>จะเห็นว่าการนำเข้าข้อมูลด้วย package-haven ไฟล์ข้อมูลที่นำเข้ามาจะถูกบันทึกไว้ในตัวแปรที่เป็นชุดข้อมูลแบบ <code>tibble</code> แตกต่างจาก package-foreign ที่บันทึกไว้ในตัวแปรแบบ <code>data.frame</code></p>
 
+</div>
 </div>
             </section>
 
@@ -215,7 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="-2-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-preprocessing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
