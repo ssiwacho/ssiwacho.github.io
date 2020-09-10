@@ -1,5 +1,5 @@
 ---
-title: "ML: สัปดาห์ที่ 4: </br> Logistic Regression"
+title: "ML: สัปดาห์ที่ 4: </br> Classification"
 author: "อ.ดร.สิวะโชติ ศรีสุทธิยากร"
 output:
   xaringan::moon_reader:
@@ -30,7 +30,15 @@ style_mono_accent(
   base_color = "#1c5253",
   header_font_google = google_font("Maitree"),
   text_font_google   = google_font("Sarabun"),
-  code_font_google   = google_font("Fira Mono")
+  code_font_google   = google_font("Fira Mono"),
+  text_color="#382933",
+
+  colors = c(
+  red = "#f34213",
+  purple = "#3e2f5b",
+  orange = "#ff8811",
+  green = "#136f63",
+  white = "#FFFFFF")
 )
   
 
@@ -54,11 +62,7 @@ style_mono_accent(
 ```
 
 
-<img src="linear-regression-vs-logistic-regression.png" width=120%>
 
-<small>
-[https://www.javatpoint.com/linear-regression-vs-logistic-regression-in-machine-learning](https://www.javatpoint.com/linear-regression-vs-logistic-regression-in-machine-learning)
-</small>
 ---
 class: middle
 
@@ -67,8 +71,6 @@ class: middle
 ### Classification: Logistic regression
 
 - **What's logistic regression?**
-
-- Use case
 
 - Fitting the model
 
@@ -127,7 +129,146 @@ class: middle
 
 - **What's logistic regression?**
 
-- Use case
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+```{r echo=F, message=F, warning=F}
+set.seed(1234)
+age<-runif(50,25,95)
+deposit<--10+0.2*age+rnorm(50,0,1)
+p<-exp(deposit)/(1+exp(deposit))
+deposit<-ifelse(p>0.7,1,0)
+temp<-data.frame(round(age,0),deposit)
+names(temp)<-c("Engagement","Success")
+#library(kableExtra)
+#temp%>%kbl()%>%
+#    kable_paper(full_width=F,
+ 
+#                 html_font = "Maitree", 
+ #                 position="left", 
+  
+#                font_size=13)
+logistic1<-temp
+```
+
+
+```{r}
+str(logistic1)
+```
+
+
+```{r eval=F}
+fit<-lm(Success~Engagement, data=logistic1)
+summary(fit)
+```
+
+
+
+```{r echo=F}
+fit<-lm(Success~Engagement, data=logistic1)
+summary(fit)
+```
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+```{r echo=F, fig.retina=3, fig.height=7, message=F, fig.width=8}
+library(ggpubr)
+formula <- y ~ x
+logistic1%>%ggplot(aes(x=Engagement,y=Success))+
+              geom_point(aes(col=factor(Success,labels=c("Fail","Pass"))),size=4,alpha=0.8)+
+              stat_smooth(method="lm", formula=formula, se=F, linetype="dashed",col="black")+
+              labs(col="")+
+              theme_minimal()+
+              theme(axis.title=element_text(margin=margin(10,10,10,10)))+
+              stat_regline_equation(label.x = 60,label.y = 0.4,
+                                    aes(label =  paste(..eq.label.., ..rr.label.., sep = "~~~~")),size=5)
+```
+
+]
+
+
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+```{r echo=F, fig.retina=3, message=F, warning=F, fig.width=12, fig.height=8}
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
 
 - Fitting the model
 
@@ -146,20 +287,262 @@ class: middle
 
 .right-column[
 
-### Logistic Regression
+
+### Logistic regression
+
+
+การวิเคราะห์ความถดถอยแบบ logistic ถูกพัฒนาขึ้นเพื่อ
+
+1. เพื่ออธิบายความสัมพันธ์หรือวิเคราะห์อิทธิพลของตัวแปรอิสระที่มีต่อตัวแปรตามแบบจัดประเภท
+
+2. เพื่อจัดประเภทหน่วยข้อมูล (ทำนายประเภทของหน่วยข้อมูล) ด้วยข้อมูลค่าสังเกตของตัวแปรอิสระ
+
+logistic regression อาจจำแนกได้ 3 ประเภท
+
+- **Binary logistic regression**
+
+- **Multinomial logistic regression**
+
+- **Ordinal logistic regression**
+
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+
+
+.right-column[
+
+
+### Binary Logistic regression
 
 <small>
 
-Linear regression  เป็นการวิเคราะห์ความสัมพันธ์เชิงสาเหตุระหว่างตัวแปรตามแบบต่อเนื่องกับตัวแปรอิสระ ส่วน logistic regression ใช้สำหรับวิเคราะห์ความสัมพันธ์เชิงสาเหตุระหว่างตัวแปรตามแบบจัดประเภทกับตัวแปรอิสระ โดยจำแนกได้เป็นหลายประเภท ได้แก่
+โมเดลที่แสดงความสัมพันธ์ระหว่างความน่าจะเป็นของการเกิดเหตุการณ์กับตัวแปรอิสระ 
 
-- **Binary logistic regression** ใช้ในกรณีที่ตัวแปรตามเป็นตัวแปรแบบจัดประเภทและมีค่าสังเกตที่เป็นไปได้ 2 ค่า (binary response)
+- $p = P(Success=1|Engagement)=f(X)$ มีรูปแบบความสัมพันธ์เป็นอย่างไร?
 
-- **Multinomial logistic regression** ใช้ในกรณีที่ตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่ค่าสังเกตมีค่าที่เป็นไปได้มากกว่า 2 ค่า และมีระดับการวัดแบบนามบัญญัติ
-
-- **Ordinal logistic regression** ใช้ในกรณีตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่ค่าสังเกตมีค่าที่เป็นไปได้มากกว่า 2 ค่า และมีระดับการวัดแบบเรียงอันดับ
+- เราสามารถสร้างสมการทำนาย $p$ ข้างต้นโดยใช้ least squares algorithm ได้อยู่มั้ย?
 
 </small>
 
+
+.pull-left[
+```{r echo=F, fig.retina=3, fig.height=4.5, message=F, fig.width=6}
+library(ggpmisc)
+logistic1$pred<-predict(fit)
+logistic1<-logistic1%>%mutate(pred=ifelse(pred>1,1,ifelse(pred<0,0,pred)))
+
+logistic1%>%ggplot()+
+              geom_point(aes(x=Engagement,y=Success,col=factor(Success,labels=c("Fail","Pass"))),size=4,alpha=0.8)+
+             # geom_point(aes(x=Engagement,y=pred))+
+              geom_line(aes(x=Engagement,y=pred),col="#2E2836",linetype="dashed",size=1)+
+              labs(col="")+
+              theme_minimal()+
+              theme(axis.title.x=element_text(margin=margin(8,8,8,8),vjust=-3,size=14),
+                    axis.title.y=element_text(margin=margin(8,8,8,8),vjust=3,size=14),
+                    plot.margin=margin(5,5,5,5))+
+              ylab("P(Success=1|Engagement) = p")
+```
+]
+
+.pull-right[
+
+```{r echo=F, fig.retina=3, fig.height=4, message=F, fig.width=6, warning=F}
+logistic1%>%ggplot()+
+              geom_point(aes(x=Engagement,y=Success,col=factor(Success,labels=c("Fail","Pass"))),size=4,alpha=0.8)+
+             # geom_point(aes(x=Engagement,y=pred))+
+              geom_smooth(aes(x=Engagement,y=pred),method="glm",se=F,
+                          method.args=list(family="binomial"),
+                          col="#2E2836",linetype="dashed",size=1)+
+              labs(col="")+
+              theme_minimal()+
+              theme(axis.title.x=element_text(margin=margin(8,8,8,8),vjust=-3,size=14),
+                    axis.title.y=element_text(margin=margin(8,8,8,8),vjust=3,size=14),
+                    plot.margin=margin(5,5,5,5))+
+              ylab("")
+
+```
+
+]
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+```{r echo=F, fig.retina=3, fig.height=4, message=F, fig.width=6, warning=F}
+logistic1%>%ggplot()+
+              geom_point(aes(x=Engagement,y=Success,col=factor(Success,labels=c("Fail","Pass"))),size=4,alpha=0.8)+
+             # geom_point(aes(x=Engagement,y=pred))+
+              geom_smooth(aes(x=Engagement,y=pred),method="glm",se=F,
+                          method.args=list(family="binomial"),
+                          col="#2E2836",linetype="dashed",size=1)+
+              labs(col="")+
+              theme_minimal()+
+              theme(axis.title.x=element_text(margin=margin(8,8,8,8),vjust=-3,size=14),
+                    axis.title.y=element_text(margin=margin(8,8,8,8),vjust=3,size=14),
+                    plot.margin=margin(5,5,5,5))+
+              ylab("P(Success=1|Engagement)")+
+              annotate(geom="text",x=78,y=0.4,label="P(Y=1|X)=F(X)",size=8)
+
+```
+
+<small>
+
+ถ้าผู้วิเคราะห์สามารถประมาณหรือทราบ $f(X)$ ก็จะสามารถใช้ $f(X)$ ดังกล่าวประมาณค่าความน่าจะเป็น $P(Success=1|X)$ จากนั้นยังสามารถใช้ค่าความน่าจะเป็นที่ประมาณได้นี้เพื่อทำนายกลุ่ม (จัดประเภท) ของหน่วยข้อมูลที่สนใจ
+
+การทำนายกลุ่มของหน่วยข้อมูลด้วยความน่าจะเป็นทำโดยการเปรียบเทียบค่าความน่าจะเป็นกับจุดตัด ดังนี้ ถ้า $P(Success_i=1|X)>c$ จะให้หน่วยข้อมูล $i$ อยู่ในกลุ่ม 1 แต่ถ้าไม่ใช่จะจัดให้อยู่ในกลุ่ม 0
+
+- $P(Success_i=1|X)=0.75 \implies$ จัดให้หน่วยข้อมูล $i$ อยู่ในกลุ่ม **"PASS"**.
+
+- $P(Success_j=1|X)=0.25 \implies$ จัดให้หน่วยข้อมูล $j$ อยู่ในกลุ่ม **"FAIL"**.
+
+*note:* เรียก $c$ ว่า **classification threshold**
+
+
+</small>
+
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- **Fitting the model**
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+## Fitting the Model
+
+### Odds and log-Odds
+
+Let $p = P(Y=1 | X)$ be a probability of success given independent variables $X$. The odds of Success event given the independent variable $X$ is: 
+
+$Odds=\frac{p}{1-p} \geq 0 \implies log(Odds) \in \mathbb{R}$
+
+```{r echo=F, fig.retina=3, fig.height=4, fig.width=12}
+p<-runif(1000,0,1)
+odds<-p/(1-p)
+log_odds<-log(odds)
+
+par(mfrow=c(1,3), mar=c(5,5,1,1))
+hist(p, main="", xlab="P(Y=1|X)",cex.lab=2,col="#DB7F8E")
+hist(odds, main="", xlab="Odds",cex.lab=2,col="#DB7F8E",ylab="")
+hist(log_odds, main="",xlab="log(Odds)",cex.lab=2,col="#DB7F8E",ylab="")
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Use case
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+### log-Odds model
+
+Since $log(Odds) \in \mathbb{R}$, then we can assume linear relationship between $log(Odds)$ and Xs...
+
+$$log(Odds_i)=log(\frac{p_i}{1-p_i})=\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_pX_{pi}$$
+### Odds model
+
+take expoenential both side of the log-Odds model
+
+$$\frac{p_i}{1-p_i}=\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_pX_{pi})$$
+
+
+### Probability model 
+
+
+$$p_i=P(y_i=1|X)=\frac{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}{1+\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}$$
 
 ]
 
@@ -190,20 +573,121 @@ class: middle
 
 .right-column[
 
-### Why's Logistic Regression?
+### Estimate the model parameter
 
-```{r echo=F, fig.retina=3, message=F, warning=F, fig.height=4}
-engagement<-rnorm(100,0,1)
-success<---3+4*engagement+rnorm(100,0,0.2)
-p<-exp(success)/(1+exp(success))
-success<-ifelse(success>0.5,1,0)
-temp<-data.frame(engagement,success)
-library(dplyr)
-library(ggplot2)
-temp%>%ggplot(aes(x=engagement,y=success))+geom_point()+geom_smooth(method="lm")
+<small>
 
-```
+การประมาณค่าพารามิเตอร์ใน logistic regression จำเป็นต้องมีการกำหนดข้อสมมุติที่แสดงความเชื่อมโยงระหว่างค่าสังเกตของตัวแปรตาม ($y$) กับฟังก์ชันความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ ($p=P(Y=1|X)$)
 
+**per-observation model**
+
+กำหนดให้ $Y$ เป็นตัวแปรแบบจัดประเภทที่มีค่าสังเกตคือ $y_i=0,1$ และ $p=P(y_i=1)$ คือความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ จากทฤษฎีความน่าจะเป็นจะได้ว่าโมเดลความน่าจะเป็นของค่าสังเกต (probability observation model) ในกรณีนี้คือ bernoulli model ดังนี้
+
+$y_i \sim Ber(p) \implies p(y_i)=p^{y_i}(1-p)^{1-y_i}\ \ \ \  ; y_i=0,1$
+
+**likelihood function**
+
+ภายใต้ข้อสมมุติว่าค่าสังเกต $y_i$ ได้มาจากตัวอย่างสุ่มขนาดเท่ากับ $n$ ที่เป็นอิสระซึ่งกันและกัน ดังนั้นจะได้ว่า โมเดลความน่าจะเป็นของตัวอย่างทั้งชุดมีค่าเท่ากับ
+
+$p(\bf{y})=\Pi_{i=1}^np(y_i)=p^{\sum_{i=1}^ny_i}(1-p)^{n-\sum_{i=1}^ny_i}$
+
+โดยทางการแล้วเรียกสมการนี้ว่า **ฟังก์ชันภาวะความควรจะเป็น (likelihood function)**  
+</small>
+]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Use case
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
 
 
 ]
+
+.right-column[
+
+### Maximum likelihood Estimation
+
+
+
+เนื่องจากในกรณีนี้ความน่าจะเป็น $p$ มีความสัมพันธ์กับตัวแปรอิสระ ค่าของความน่าจะเป็นจึงมีตวามแตกต่างไปตามคุณลักษณะของหน่วยตัวอย่างแต่ละหน่วย likelhood function ที่เหมาะสมจึงมีค่าเท่ากับ
+
+$$p(\bf{y})=\Pi_{i=1}^np_i(y_i)=p_i^{\sum_{i=1}^ny_i}(1-p_i)^{n-\sum_{i=1}^ny_i}\ ;i=1,2,...,n$$
+
+โดยที่ 
+$p_i=P(y_i=1|X)=\frac{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}{1+\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}$
+
+เนื่องจากข้อมูล $X$ และ $y$ เป็นสิ่งที่ทราบค่า และต้องการหาค่า $\beta$ ที่ดีที่สุดจึงเขียนสมการ likelihood ข้างต้นใหม่ดังนี้
+
+
+$L(\beta|X,y)=p_i^{\sum_{i=1}^ny_i}(1-p_i)^{n-\sum_{i=1}^ny_i}$
+
+
+$\implies log(L(\beta|X,y))=lnL=-\sum_{i=1}^n{y_ilog(p_i)+(1-y_i)log(1-p_i)}$
+
+เกณฑ์การพิจารณาค่า $\beta$ ที่ดีที่สุดคือ หาค่า $\beta$ ที่ทำให้ log-likelhood function มีค่าสูงที่สุด
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+```{r eval=F}
+fit.logistic<-glm(Success~Engagement,data=logistic1,family="binomial")
+summary(fit.logistic)
+```
+
+
+$P(Success=1|Engagement)=\frac{exp(-19.6652+0.3420Engagement)}{1+exp(-19.6652+0.3420Engagement)}$
+
+```{r echo=F}
+fit.logistic<-glm(Success~Engagement,data=logistic1,family="binomial")
+summary(fit.logistic)
+```
+
+
+]
+
+
+
+

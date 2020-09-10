@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>ML: สัปดาห์ที่ 4:  Logistic Regression</title>
+    <title>ML: สัปดาห์ที่ 4:  Classification</title>
     <meta charset="utf-8" />
     <meta name="author" content="อ.ดร.สิวะโชติ ศรีสุทธิยากร" />
     <script src="week4_files/header-attrs/header-attrs.js"></script>
@@ -11,7 +11,7 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# ML: สัปดาห์ที่ 4: </br> Logistic Regression
+# ML: สัปดาห์ที่ 4: </br> Classification
 ### อ.ดร.สิวะโชติ ศรีสุทธิยากร
 
 ---
@@ -24,11 +24,7 @@ class: center, middle
 
 
 
-&lt;img src="linear-regression-vs-logistic-regression.png" width=120%&gt;
 
-&lt;small&gt;
-[https://www.javatpoint.com/linear-regression-vs-logistic-regression-in-machine-learning](https://www.javatpoint.com/linear-regression-vs-logistic-regression-in-machine-learning)
-&lt;/small&gt;
 ---
 class: middle
 
@@ -37,8 +33,6 @@ class: middle
 ### Classification: Logistic regression
 
 - **What's logistic regression?**
-
-- Use case
 
 - Fitting the model
 
@@ -89,7 +83,140 @@ class: middle
 
 - **What's logistic regression?**
 
-- Use case
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+
+
+
+```r
+str(logistic1)
+```
+
+```
+## 'data.frame':	50 obs. of  2 variables:
+##  $ Engagement: num  33 69 68 69 85 70 26 41 72 61 ...
+##  $ Success   : num  0 1 1 1 1 1 0 0 1 0 ...
+```
+
+
+
+```r
+fit&lt;-lm(Success~Engagement, data=logistic1)
+summary(fit)
+```
+
+
+
+
+```
+## 
+## Call:
+## lm(formula = Success ~ Engagement, data = logistic1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.61907 -0.19131 -0.06047  0.21297  0.52156 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.857580   0.122212  -7.017 6.92e-09 ***
+## Engagement   0.023439   0.002012  11.652 1.35e-15 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2608 on 48 degrees of freedom
+## Multiple R-squared:  0.7388,	Adjusted R-squared:  0.7334 
+## F-statistic: 135.8 on 1 and 48 DF,  p-value: 1.347e-15
+```
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-6-1.png" width="576" /&gt;
+
+]
+
+
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-7-1.png" width="864" /&gt;
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
 
 - Fitting the model
 
@@ -108,20 +235,209 @@ class: middle
 
 .right-column[
 
-### Logistic Regression
+
+### Logistic regression
+
+
+การวิเคราะห์ความถดถอยแบบ logistic ถูกพัฒนาขึ้นเพื่อ
+
+1. เพื่ออธิบายความสัมพันธ์หรือวิเคราะห์อิทธิพลของตัวแปรอิสระที่มีต่อตัวแปรตามแบบจัดประเภท
+
+2. เพื่อจัดประเภทหน่วยข้อมูล (ทำนายประเภทของหน่วยข้อมูล) ด้วยข้อมูลค่าสังเกตของตัวแปรอิสระ
+
+logistic regression อาจจำแนกได้ 3 ประเภท
+
+- **Binary logistic regression**
+
+- **Multinomial logistic regression**
+
+- **Ordinal logistic regression**
+
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+
+
+.right-column[
+
+
+### Binary Logistic regression
 
 &lt;small&gt;
 
-Linear regression  เป็นการวิเคราะห์ความสัมพันธ์เชิงสาเหตุระหว่างตัวแปรตามแบบต่อเนื่องกับตัวแปรอิสระ ส่วน logistic regression ใช้สำหรับวิเคราะห์ความสัมพันธ์เชิงสาเหตุระหว่างตัวแปรตามแบบจัดประเภทกับตัวแปรอิสระ โดยจำแนกได้เป็นหลายประเภท ได้แก่
+โมเดลที่แสดงความสัมพันธ์ระหว่างความน่าจะเป็นของการเกิดเหตุการณ์กับตัวแปรอิสระ 
 
-- **Binary logistic regression** ใช้ในกรณีที่ตัวแปรตามเป็นตัวแปรแบบจัดประเภทและมีค่าสังเกตที่เป็นไปได้ 2 ค่า (binary response)
+- `\(p = P(Success=1|Engagement)=f(X)\)` มีรูปแบบความสัมพันธ์เป็นอย่างไร?
 
-- **Multinomial logistic regression** ใช้ในกรณีที่ตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่ค่าสังเกตมีค่าที่เป็นไปได้มากกว่า 2 ค่า และมีระดับการวัดแบบนามบัญญัติ
-
-- **Ordinal logistic regression** ใช้ในกรณีตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่ค่าสังเกตมีค่าที่เป็นไปได้มากกว่า 2 ค่า และมีระดับการวัดแบบเรียงอันดับ
+- เราสามารถสร้างสมการทำนาย `\(p\)` ข้างต้นโดยใช้ least squares algorithm ได้อยู่มั้ย?
 
 &lt;/small&gt;
 
+
+.pull-left[
+&lt;img src="week4_files/figure-html/unnamed-chunk-8-1.png" width="432" /&gt;
+]
+
+.pull-right[
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-9-1.png" width="432" /&gt;
+
+]
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-10-1.png" width="432" /&gt;
+
+&lt;small&gt;
+
+ถ้าผู้วิเคราะห์สามารถประมาณหรือทราบ `\(f(X)\)` ก็จะสามารถใช้ `\(f(X)\)` ดังกล่าวประมาณค่าความน่าจะเป็น `\(P(Success=1|X)\)` จากนั้นยังสามารถใช้ค่าความน่าจะเป็นที่ประมาณได้นี้เพื่อทำนายกลุ่ม (จัดประเภท) ของหน่วยข้อมูลที่สนใจ
+
+การทำนายกลุ่มของหน่วยข้อมูลด้วยความน่าจะเป็นทำโดยการเปรียบเทียบค่าความน่าจะเป็นกับจุดตัด ดังนี้ ถ้า `\(P(Success_i=1|X)&gt;c\)` จะให้หน่วยข้อมูล `\(i\)` อยู่ในกลุ่ม 1 แต่ถ้าไม่ใช่จะจัดให้อยู่ในกลุ่ม 0
+
+- `\(P(Success_i=1|X)=0.75 \implies\)` จัดให้หน่วยข้อมูล `\(i\)` อยู่ในกลุ่ม **"PASS"**.
+
+- `\(P(Success_j=1|X)=0.25 \implies\)` จัดให้หน่วยข้อมูล `\(j\)` อยู่ในกลุ่ม **"FAIL"**.
+
+*note:* เรียก `\(c\)` ว่า **classification threshold**
+
+
+&lt;/small&gt;
+
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- **Fitting the model**
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+## Fitting the Model
+
+### Odds and log-Odds
+
+Let `\(p = P(Y=1 | X)\)` be a probability of success given independent variables `\(X\)`. The odds of Success event given the independent variable `\(X\)` is: 
+
+`\(Odds=\frac{p}{1-p} \geq 0 \implies log(Odds) \in \mathbb{R}\)`
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-11-1.png" width="864" /&gt;
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Use case
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+### log-Odds model
+
+Since `\(log(Odds) \in \mathbb{R}\)`, then we can assume linear relationship between `\(log(Odds)\)` and Xs...
+
+`$$log(Odds_i)=log(\frac{p_i}{1-p_i})=\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_pX_{pi}$$`
+### Odds model
+
+take expoenential both side of the log-Odds model
+
+`$$\frac{p_i}{1-p_i}=\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_pX_{pi})$$`
+
+
+### Probability model 
+
+
+`$$p_i=P(y_i=1|X)=\frac{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}{1+\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}$$`
 
 ]
 
@@ -152,13 +468,146 @@ class: middle
 
 .right-column[
 
-### Why's Logistic Regression?
+### Estimate the model parameter
 
-&lt;img src="week4_files/figure-html/unnamed-chunk-2-1.png" width="504" /&gt;
+&lt;small&gt;
 
+การประมาณค่าพารามิเตอร์ใน logistic regression จำเป็นต้องมีการกำหนดข้อสมมุติที่แสดงความเชื่อมโยงระหว่างค่าสังเกตของตัวแปรตาม ($y$) กับฟังก์ชันความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ ($p=P(Y=1|X)$)
+
+**per-observation model**
+
+กำหนดให้ `\(Y\)` เป็นตัวแปรแบบจัดประเภทที่มีค่าสังเกตคือ `\(y_i=0,1\)` และ `\(p=P(y_i=1)\)` คือความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ จากทฤษฎีความน่าจะเป็นจะได้ว่าโมเดลความน่าจะเป็นของค่าสังเกต (probability observation model) ในกรณีนี้คือ bernoulli model ดังนี้
+
+`\(y_i \sim Ber(p) \implies p(y_i)=p^{y_i}(1-p)^{1-y_i}\ \ \ \  ; y_i=0,1\)`
+
+**likelihood function**
+
+ภายใต้ข้อสมมุติว่าค่าสังเกต `\(y_i\)` ได้มาจากตัวอย่างสุ่มขนาดเท่ากับ `\(n\)` ที่เป็นอิสระซึ่งกันและกัน ดังนั้นจะได้ว่า โมเดลความน่าจะเป็นของตัวอย่างทั้งชุดมีค่าเท่ากับ
+
+`\(p(\bf{y})=\Pi_{i=1}^np(y_i)=p^{\sum_{i=1}^ny_i}(1-p)^{n-\sum_{i=1}^ny_i}\)`
+
+โดยทางการแล้วเรียกสมการนี้ว่า **ฟังก์ชันภาวะความควรจะเป็น (likelihood function)**  
+&lt;/small&gt;
+]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- **What's logistic regression?**
+
+- Use case
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
 
 
 ]
+
+.right-column[
+
+### Maximum likelihood Estimation
+
+
+
+เนื่องจากในกรณีนี้ความน่าจะเป็น `\(p\)` มีความสัมพันธ์กับตัวแปรอิสระ ค่าของความน่าจะเป็นจึงมีตวามแตกต่างไปตามคุณลักษณะของหน่วยตัวอย่างแต่ละหน่วย likelhood function ที่เหมาะสมจึงมีค่าเท่ากับ
+
+`$$p(\bf{y})=\Pi_{i=1}^np_i(y_i)=p_i^{\sum_{i=1}^ny_i}(1-p_i)^{n-\sum_{i=1}^ny_i}\ ;i=1,2,...,n$$`
+
+โดยที่ 
+`\(p_i=P(y_i=1|X)=\frac{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}{1+\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}\)`
+
+เนื่องจากข้อมูล `\(X\)` และ `\(y\)` เป็นสิ่งที่ทราบค่า และต้องการหาค่า `\(\beta\)` ที่ดีที่สุดจึงเขียนสมการ likelihood ข้างต้นใหม่ดังนี้
+
+
+`\(L(\beta|X,y)=p_i^{\sum_{i=1}^ny_i}(1-p_i)^{n-\sum_{i=1}^ny_i}\)`
+
+
+`\(\implies log(L(\beta|X,y))=lnL=-\sum_{i=1}^n{y_ilog(p_i)+(1-y_i)log(1-p_i)}\)`
+
+เกณฑ์การพิจารณาค่า `\(\beta\)` ที่ดีที่สุดคือ หาค่า `\(\beta\)` ที่ทำให้ log-likelhood function มีค่าสูงที่สุด
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+
+```r
+fit.logistic&lt;-glm(Success~Engagement,data=logistic1,family="binomial")
+summary(fit.logistic)
+```
+
+
+`\(P(Success=1|Engagement)=\frac{exp(-19.6652+0.3420Engagement)}{1+exp(-19.6652+0.3420Engagement)}\)`
+
+
+```
+## 
+## Call:
+## glm(formula = Success ~ Engagement, family = "binomial", data = logistic1)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -2.01168  -0.11367  -0.00186   0.11824   1.25060  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept) -19.6652     7.5191  -2.615  0.00891 **
+## Engagement    0.3420     0.1264   2.705  0.00683 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 69.315  on 49  degrees of freedom
+## Residual deviance: 12.006  on 48  degrees of freedom
+## AIC: 16.006
+## 
+## Number of Fisher Scoring iterations: 8
+```
+
+
+]
+
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

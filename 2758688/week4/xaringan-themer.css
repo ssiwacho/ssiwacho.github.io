@@ -42,7 +42,7 @@
   --header-h3-font-size: 1.75rem;
 
   /* Colors */
-  --text-color: #272822;
+  --text-color: #382933;
   --header-color: #1c5253;
   --background-color: #FFFFFF;
   --link-color: #1c5253;
@@ -58,6 +58,11 @@
   --base: #1c5253;
   --white: #FFFFFF;
   --black: #272822;
+  --red: #f34213;
+  --purple: #3e2f5b;
+  --orange: #ff8811;
+  --green: #136f63;
+  --white: #FFFFFF;
 }
 
 html {
@@ -250,5 +255,35 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 }
 .bg-black {
   background-color: var(--black);
+}
+.red {
+  color: var(--red);
+}
+.bg-red {
+  background-color: var(--red);
+}
+.purple {
+  color: var(--purple);
+}
+.bg-purple {
+  background-color: var(--purple);
+}
+.orange {
+  color: var(--orange);
+}
+.bg-orange {
+  background-color: var(--orange);
+}
+.green {
+  color: var(--green);
+}
+.bg-green {
+  background-color: var(--green);
+}
+.white {
+  color: var(--white);
+}
+.bg-white {
+  background-color: var(--white);
 }
 
