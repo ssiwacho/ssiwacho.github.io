@@ -255,7 +255,7 @@ class: middle
 
 ```{r echo=F, fig.retina=3, message=F, warning=F, fig.width=12, fig.height=8}
 par(mfrow=c(2,2))
-plot(fit)
+plot(fit, pch=16)
 ```
 
 ]
@@ -507,11 +507,9 @@ class: middle
 
 ### Classification: Logistic regression
 
-- **What's logistic regression?**
+- What's logistic regression?
 
-- Use case
-
-- Fitting the model
+- **Fitting the model**
 
 - Interpreting the logistic regression
 
@@ -529,20 +527,31 @@ class: middle
 
 ### log-Odds model
 
-Since $log(Odds) \in \mathbb{R}$, then we can assume linear relationship between $log(Odds)$ and Xs...
+<small>
+
+เนื่องจาก $log(Odds) \in \mathbb{R}$ ดังนั้นจึงสามารถ fit linear regression ให้กับความสัมพันธ์ระหว่าง $log(Odds)$ กับตัวแปรอิสระ $X$ ได้ดังนี้
 
 $$log(Odds_i)=log(\frac{p_i}{1-p_i})=\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_pX_{pi}$$
+</small>
+
 ### Odds model
 
-take expoenential both side of the log-Odds model
+
+<small>
+
+take exponential ทั้งสองข้างของสมการจะได้สมการของ Odds ดังนี้
 
 $$\frac{p_i}{1-p_i}=\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_pX_{pi})$$
-
+</small>
 
 ### Probability model 
 
+<small>
+
+จากสมการ Odds จัดรูปใหม่ จะได้ฟังก์ชันของความน่าจะเป็นอยู่ในรูปของ logistic function ดังนี้
 
 $$p_i=P(y_i=1|X)=\frac{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}{1+\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}$$
+</small>
 
 ]
 
@@ -554,11 +563,10 @@ class: middle
 
 ### Classification: Logistic regression
 
-- **What's logistic regression?**
+- What's logistic regression?
 
-- Use case
 
-- Fitting the model
+- **Fitting the model**
 
 - Interpreting the logistic regression
 
@@ -579,13 +587,13 @@ class: middle
 
 การประมาณค่าพารามิเตอร์ใน logistic regression จำเป็นต้องมีการกำหนดข้อสมมุติที่แสดงความเชื่อมโยงระหว่างค่าสังเกตของตัวแปรตาม ($y$) กับฟังก์ชันความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ ($p=P(Y=1|X)$)
 
-**per-observation model**
+**Per-observation model**
 
 กำหนดให้ $Y$ เป็นตัวแปรแบบจัดประเภทที่มีค่าสังเกตคือ $y_i=0,1$ และ $p=P(y_i=1)$ คือความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ จากทฤษฎีความน่าจะเป็นจะได้ว่าโมเดลความน่าจะเป็นของค่าสังเกต (probability observation model) ในกรณีนี้คือ bernoulli model ดังนี้
 
 $y_i \sim Ber(p) \implies p(y_i)=p^{y_i}(1-p)^{1-y_i}\ \ \ \  ; y_i=0,1$
 
-**likelihood function**
+**Likelihood function**
 
 ภายใต้ข้อสมมุติว่าค่าสังเกต $y_i$ ได้มาจากตัวอย่างสุ่มขนาดเท่ากับ $n$ ที่เป็นอิสระซึ่งกันและกัน ดังนั้นจะได้ว่า โมเดลความน่าจะเป็นของตัวอย่างทั้งชุดมีค่าเท่ากับ
 
@@ -604,11 +612,10 @@ class: middle
 
 ### Classification: Logistic regression
 
-- **What's logistic regression?**
+- What's logistic regression?**
 
-- Use case
 
-- Fitting the model
+- **Fitting the model**
 
 - Interpreting the logistic regression
 
@@ -626,6 +633,7 @@ class: middle
 ### Maximum likelihood Estimation
 
 
+<small>
 
 เนื่องจากในกรณีนี้ความน่าจะเป็น $p$ มีความสัมพันธ์กับตัวแปรอิสระ ค่าของความน่าจะเป็นจึงมีตวามแตกต่างไปตามคุณลักษณะของหน่วยตัวอย่างแต่ละหน่วย likelhood function ที่เหมาะสมจึงมีค่าเท่ากับ
 
@@ -634,7 +642,9 @@ $$p(\bf{y})=\Pi_{i=1}^np_i(y_i)=p_i^{\sum_{i=1}^ny_i}(1-p_i)^{n-\sum_{i=1}^ny_i}
 โดยที่ 
 $p_i=P(y_i=1|X)=\frac{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}{1+\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_kX_{ki})}$
 
-เนื่องจากข้อมูล $X$ และ $y$ เป็นสิ่งที่ทราบค่า และต้องการหาค่า $\beta$ ที่ดีที่สุดจึงเขียนสมการ likelihood ข้างต้นใหม่ดังนี้
+</br>
+
+เนื่องจากข้อมูล $X$ และ $y$ เป็นสิ่งที่ทราบค่า และต้องการหาค่า $\beta$ ที่ดีที่สุดจึงมักเขียนสมการ likelihood ข้างต้นใหม่ดังนี้
 
 
 $L(\beta|X,y)=p_i^{\sum_{i=1}^ny_i}(1-p_i)^{n-\sum_{i=1}^ny_i}$
@@ -642,8 +652,14 @@ $L(\beta|X,y)=p_i^{\sum_{i=1}^ny_i}(1-p_i)^{n-\sum_{i=1}^ny_i}$
 
 $\implies log(L(\beta|X,y))=lnL=-\sum_{i=1}^n{y_ilog(p_i)+(1-y_i)log(1-p_i)}$
 
-เกณฑ์การพิจารณาค่า $\beta$ ที่ดีที่สุดคือ หาค่า $\beta$ ที่ทำให้ log-likelhood function มีค่าสูงที่สุด
+เกณฑ์การพิจารณาค่า $\beta$ ที่ดีที่สุดคือ หาค่า $\beta$ ที่ทำให้ log-likelhood function มีค่าสูงที่สุดหรือ
 
+$\max_{\beta}L(\beta|X,y)$
+
+เรียกวิธีการหาค่าประมาณพารามิเตอร์นี้ว่า  **maximum likelihood**
+
+
+</small>
 
 ]
 
@@ -657,7 +673,7 @@ class: middle
 
 - What's logistic regression?
 
-- Fitting the model
+- **Fitting the model**
 
 - Interpreting the logistic regression
 
@@ -689,5 +705,215 @@ summary(fit.logistic)
 ]
 
 
+---
+class: middle
 
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- **Interpreting the logistic regression**
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+
+.right-column[
+
+
+
+### Odd-ratio: OR
+
+เป็นค่าสถิติสำหรับบ่งชี้ขนาดอิทธิพลของตัวแปรอิสระที่มีต่อตัวแปรตาม (ทำนองเดียวกับค่า $R^2$)
+
+$OR=\frac{Odds_1}{Odds_2} \geq 0$
+
+- ถ้า OR=1 หมายถึง
+
+- ถ้า OR>1 หมายถึง
+
+- ถ้า OR<1 หมายถึง
+
+
+<small>
+
+**ความยึดมั่นผูกพันในการเรียนออนไลน์มีผลต่อความสำเร็จในการเรียนหรือไม่?**
+
+</small>
+
+```{r}
+engage<-ifelse(logistic1$Engagement>60,1,0)
+engage<-factor(engage,labels=c("low","high"))
+success<-factor(logistic1$Success, labels=c("no","yes"))
+table(engage,success)
+```
+
+
+]
+
+
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- **Interpreting the logistic regression**
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+
+.right-column[
+
+### Odd-ratio in logistic regression
+
+**กรณี X เป็นตัวแปรเชิงปริมาณ**
+
+$OR = \frac{Odd_{x_j+1}}{Odds_{x_j}} = \frac{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_j(X_{ji}+1)+...+\beta_pX_{pi})}{\exp(\beta_0+\beta_1X_{1i}+\beta_2X_{i2}+...+\beta_j(X_{ji})+...\beta_pX_{pi})} =exp(\beta_j)$
+
+
+**กรณี X เป็นตัวแปรจัดประเภท**
+
+$OR = \frac{Odd_{x_j=1}}{Odds_{x_j=0}} = \frac{exp(\beta_j)}{exp(0)} = exp{(\beta_j)}$
+
+
+```{r}
+## extract coefficient values from fit.logistic
+coef(fit.logistic)
+
+## -- Odds ratio
+exp(coef(fit.logistic)[2])
+```
+
+
+]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- **Interpreting the logistic regression**
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+
+.right-column[
+
+### OR: significant testing
+
+$H_0: OR=1$
+
+$H_1: OR \neq 1$
+
+
+การทดสอบนัยสำคัญของ OR อาจทำได้ 3 วิธีการได้แก่
+
+
+.pull-left[
+
+- [**Fisher's Exact test**](https://en.wikipedia.org/wiki/Fisher%27s_exact_test)
+
+
+````{r eval=F}
+tab<-table(engage,success)
+fisher.test(tab)
+```
+
+
+- **Chi-square test of independent**
+
+````{r eval=F}
+chisq.test(tab)
+```
+]
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- **Interpreting the logistic regression**
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+
+.right-column[
+
+- **Wald's test**
+
+```{r eval=F}
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept) -19.6652     7.5191  -2.615  0.00891 **
+Engagement    0.3420     0.1264   2.705  0.00683 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+
+
+]
+
+
+
+
+
+]
 
