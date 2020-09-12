@@ -1664,6 +1664,7 @@ class: middle
 &lt;/br&gt;
 &lt;/br&gt;
 &lt;/br&gt;
+&lt;/br&gt;
 
 &lt;img src="ROC.png"&gt;
 
@@ -1674,12 +1675,11 @@ class: middle
 &lt;/br&gt;
 &lt;/br&gt;
 &lt;/br&gt;
+&lt;/br&gt;
 
 &lt;img src="ROC2.png"&gt;
 
 ]
-
-
 
 ---
 class: middle
@@ -1737,6 +1737,167 @@ class: middle
 ### Area Under Curve: AUC
 
 &lt;img src="AUC2.png"&gt;
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+
+```r
+control&lt;-trainControl(method="cv",number=10,
+                      summaryFunction=twoClassSummary,
+                      classProbs=TRUE,
+                      savePredictions = "all")
+train.dat$deposit&lt;-factor(train.dat$deposit, levels=c("yes","no"))
+fit.full&lt;-train(deposit~., data=train.dat,
+                 method="glm",
+                 family="binomial",
+                 trControl=control)
+
+resampling_stat&lt;-thresholder(fit.full,
+                       threshold=seq(0.0,1.0,by=0.05),
+                       final=TRUE)
+
+fit.reduce&lt;-train(deposit~age+job, data=train.dat,
+                 method="glm",
+                 family="binomial",
+                 trControl=control)
+
+resampling_stat2&lt;-thresholder(fit.reduce,
+                       threshold=seq(0.0,1.0,by=0.05),
+                       final=TRUE)
+```
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+
+```r
+resampling_stat%&gt;%ggplot()+
+          geom_point(aes(x=1-Specificity, y=Sensitivity),col="orange",size=6)+
+          geom_line(aes(x=1-Specificity, y=Sensitivity),col="orange",size=2)+
+          geom_point(data=resampling_stat2,
+                     aes(x=1-Specificity, y=Sensitivity),
+                     col="darkblue",size=6)+
+          geom_line(data=resampling_stat2,
+                    aes(x=1-Specificity, y=Sensitivity),
+                    col="darkblue",size=2)+
+          theme_minimal()+
+          theme(text=element_text(size=22))+
+          ylim(0,1)+
+          xlim(0,1)+
+          annotate(geom="text",x=0.25,y=0.8,label="full model")+
+          annotate(geom="text",x=0.75,y=0.75,label="reduce model")
+```
+
+]
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-43-1.png" width="720" /&gt;
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+
+```r
+#install.packages(pROC)
+library(pROC)
+ROC&lt;-roc(test.dat$deposit,prob)
+
+par(pty="s")
+plot(ROC, col="orange", 
+     legacy.axes=T, 
+     axes=TRUE,
+     auc.polygon=TRUE,
+     print.auc=TRUE)
+```
+
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-45-1.png" width="504" /&gt;
+
 
 
 ]
