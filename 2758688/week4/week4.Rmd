@@ -1359,19 +1359,28 @@ class: middle
 ### Confusion matrix
 
 
-```{r eval=F}
+```{r results=F}
 ## calculate predicted probability of deposit given Xs.
 prob<-predict(fit, newdata=test.dat, type="prob")
 prob<-prob[,2]
-hist(prob, main="")
+#hist(prob, main="")
 
 ## convert probability into class (deposit = yes, no)
 pred.class<-factor(ifelse(prob>0.5, "yes", "no"))
-table(pred.class)
+#table(pred.class)
 
 ## create confusion matrix
 confusionMatrix(pred.class,test.dat$deposit, positive="yes")
 ```
+
+```{r eval=F}
+Confusion Matrix and Statistics
+          Reference
+Prediction   no  yes
+       no  7816  837
+       yes  168  220
+```
+
 
 ]
 
@@ -1395,10 +1404,12 @@ class: middle
 
 </br>
 </br>
-</br>
+
 <small>
-for more information
+
+
 `?confusionMatrix()`
+
 </small>
 ]
 
@@ -1464,6 +1475,213 @@ Prediction   no  yes
 
 </small>
 ]
+
+]
+
+
+---
+class: middle
+
+
+### Classification thresholds
+
+.pull-left[
+
+```{r eval=F}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  7816  837
+       yes  168  220
+                                          
+               Accuracy : 0.8888          
+    No Information Rate : 0.8831          
+
+                  Kappa : 0.2579          
+                                        
+            Sensitivity : 0.20814         
+            Specificity : 0.97896         
+      Balanced Accuracy : 0.59355         
+                                          
+       'Positive' Class : yes    
+```
+
+
+]
+
+
+.pull-right[
+
+
+```{r echo=F}
+temp<-test.dat
+temp$pred.prob<-prob
+log.odds<-log(prob/(1-prob))
+temp$log.odds<-log.odds
+```
+
+```{r fig.retina=3, echo=F, fig.width=10, fig.height=8}
+temp%>%ggplot(aes(x=log.odds,y=pred.prob,col=deposit))+
+          geom_point(size=2)+
+          geom_abline(intercept=0.5,slope=0,linetype="dashed")+
+          annotate("text",x=8,y=0.55,label="threshold=0.5",size=8)+
+          theme_minimal()+
+          theme(plot.margin = margin(1,1,10,20),
+                text=element_text(size=22))+
+          xlab("linear combination of Xs")+
+          ylab("predicted probability")
+```
+
+]
+
+
+---
+class: middle
+
+
+### Classification thresholds
+
+.pull-left[
+
+```{r eval=F, echo=F}
+pred.class0.7<-factor(ifelse(prob>0.7,"yes","no"))
+confusionMatrix(pred.class0.7,test.dat$deposit, positive="yes")
+```
+
+
+```{r eval=F}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  7915  943
+       yes   69  114
+                                          
+               Accuracy : 0.8881             
+    No Information Rate : 0.8831          
+
+                  Kappa : 0.1547          
+                                        
+            Sensitivity : 0.10785         
+            Specificity : 0.99136         
+      Balanced Accuracy : 0.54961         
+                                          
+       'Positive' Class : yes    
+```
+
+
+]
+
+
+.pull-right[
+
+
+
+```{r fig.retina=3, echo=F, fig.width=10, fig.height=8}
+temp%>%ggplot(aes(x=log.odds,y=pred.prob,col=deposit))+
+          geom_point(size=2)+
+          geom_abline(intercept=0.7,slope=0,linetype="dashed")+
+          annotate("text",x=8,y=0.75,label="threshold=0.7",size=8)+
+          theme_minimal()+
+          theme(plot.margin = margin(1,1,10,20),
+                text=element_text(size=22))+
+          xlab("linear combination of Xs")+
+          ylab("predicted probability")
+```
+
+
+]
+
+---
+class: middle
+
+
+### Classification thresholds
+
+.pull-left[
+
+```{r eval=F, echo=F}
+pred.class0.2<-factor(ifelse(prob>0.2,"yes","no"))
+confusionMatrix(pred.class0.2,test.dat$deposit, positive="yes")
+```
+
+
+```{r eval=F}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  7227  492
+       yes  757  565
+                                          
+               Accuracy : 0.8619             
+    No Information Rate : 0.8831          
+
+                  Kappa : 0.3966          
+                                        
+            Sensitivity : 0.53453         
+            Specificity : 0.90519         
+      Balanced Accuracy : 0.71986         
+                                          
+       'Positive' Class : yes    
+```
+
+]
+
+
+.pull-right[
+
+
+
+```{r fig.retina=3, echo=F, fig.width=10, fig.height=8}
+temp%>%ggplot(aes(x=log.odds,y=pred.prob,col=deposit))+
+          geom_point(size=2)+
+          geom_abline(intercept=0.2,slope=0,linetype="dashed")+
+          annotate("text",x=8,y=0.25,label="threshold=0.2",size=8)+
+          theme_minimal()+
+          theme(plot.margin = margin(1,1,10,20),
+                text=element_text(size=22))+
+          xlab("linear combination of Xs")+
+          ylab("predicted probability")
+```
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### ROC curve
+
+- ค่า thresholds ที่เหมาะสมมีความแตกต่างกันในแต่ละสถานการณ์
+
+- ROC ย่อมาจาก receiver operating chracteristic curve
+
+- ROC เป็นเครื่องมือหนึ่งที่สามารถใช้เพื่อพิจารณา thresholds ที่เหมาะสมได้ โดยมีลักษณะเป็นแผนภาพการกระจายที่แกน Y คือ sensitivity และแกน X คือ 1-specificity 
+
+
+<img src="ROC.png" width=60%>
+
 
 ]
 

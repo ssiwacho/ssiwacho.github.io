@@ -1370,15 +1370,25 @@ class: middle
 ## calculate predicted probability of deposit given Xs.
 prob&lt;-predict(fit, newdata=test.dat, type="prob")
 prob&lt;-prob[,2]
-hist(prob, main="")
+#hist(prob, main="")
 
 ## convert probability into class (deposit = yes, no)
 pred.class&lt;-factor(ifelse(prob&gt;0.5, "yes", "no"))
-table(pred.class)
+#table(pred.class)
 
 ## create confusion matrix
 confusionMatrix(pred.class,test.dat$deposit, positive="yes")
 ```
+
+
+```r
+Confusion Matrix and Statistics
+          Reference
+Prediction   no  yes
+       no  7816  837
+       yes  168  220
+```
+
 
 ]
 
@@ -1402,10 +1412,12 @@ class: middle
 
 &lt;/br&gt;
 &lt;/br&gt;
-&lt;/br&gt;
+
 &lt;small&gt;
-for more information
+
+
 `?confusionMatrix()`
+
 &lt;/small&gt;
 ]
 
@@ -1472,6 +1484,175 @@ Prediction   no  yes
 
 &lt;/small&gt;
 ]
+
+]
+
+
+---
+class: middle
+
+
+### Classification thresholds
+
+.pull-left[
+
+
+```r
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  7816  837
+       yes  168  220
+                                          
+               Accuracy : 0.8888          
+    No Information Rate : 0.8831          
+
+                  Kappa : 0.2579          
+                                        
+            Sensitivity : 0.20814         
+            Specificity : 0.97896         
+      Balanced Accuracy : 0.59355         
+                                          
+       'Positive' Class : yes    
+```
+
+
+]
+
+
+.pull-right[
+
+
+
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-34-1.png" width="720" /&gt;
+
+]
+
+
+---
+class: middle
+
+
+### Classification thresholds
+
+.pull-left[
+
+
+
+
+
+```r
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  7915  943
+       yes   69  114
+                                          
+               Accuracy : 0.8881             
+    No Information Rate : 0.8831          
+
+                  Kappa : 0.1547          
+                                        
+            Sensitivity : 0.10785         
+            Specificity : 0.99136         
+      Balanced Accuracy : 0.54961         
+                                          
+       'Positive' Class : yes    
+```
+
+
+]
+
+
+.pull-right[
+
+
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-37-1.png" width="720" /&gt;
+
+
+]
+
+---
+class: middle
+
+
+### Classification thresholds
+
+.pull-left[
+
+
+
+
+
+```r
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  7227  492
+       yes  757  565
+                                          
+               Accuracy : 0.8619             
+    No Information Rate : 0.8831          
+
+                  Kappa : 0.3966          
+                                        
+            Sensitivity : 0.53453         
+            Specificity : 0.90519         
+      Balanced Accuracy : 0.71986         
+                                          
+       'Positive' Class : yes    
+```
+
+]
+
+
+.pull-right[
+
+
+
+&lt;img src="week4_files/figure-html/unnamed-chunk-40-1.png" width="720" /&gt;
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### ROC curve
+
+- ค่า thresholds ที่เหมาะสมมีความแตกต่างกันในแต่ละสถานการณ์
+
+- ROC ย่อมาจาก receiver operating chracteristic curve
+
+- ROC เป็นเครื่องมือหนึ่งที่สามารถใช้เพื่อพิจารณา thresholds ที่เหมาะสมได้ โดยมีลักษณะเป็นแผนภาพการกระจายที่แกน Y คือ sensitivity และแกน X คือ 1-specificity 
+
+
+&lt;img src="ROC.png" width=60%&gt;
+
 
 ]
     </textarea>
