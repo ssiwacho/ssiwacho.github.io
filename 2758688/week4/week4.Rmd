@@ -1685,3 +1685,91 @@ class: middle
 
 ]
 
+
+---
+
+.pull-left[
+
+</br>
+</br>
+</br>
+
+<img src="ROC.png">
+
+]
+
+.pull-right[
+
+</br>
+</br>
+</br>
+
+<img src="ROC2.png">
+
+]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### Area Under Curve: AUC
+
+- Summarises performance (accuracy) across all thresholds.
+
+- We can compare the performance of different models within the same dataset.
+
+<img src="AUC.png">
+
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### Area Under Curve: AUC
+
+<img src="AUC2.png">
+
+
+]
+
+
+
+

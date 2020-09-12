@@ -165,11 +165,11 @@ a, a > code {
 }
 .pull-left {
   float: left;
-  width: 45%;
+  width: 50%;
 }
 .pull-right {
   float: right;
-  width: 55%;
+  width: 50%;
 }
 .pull-right ~ * {
   clear: both;
