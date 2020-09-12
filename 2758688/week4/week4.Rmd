@@ -1881,6 +1881,11 @@ class: middle
 
 - **Model's Evaluating**
 
+</br>
+</br>
+</br>
+
+
 ]
 
 .right-column[
@@ -1957,11 +1962,101 @@ plot(ROC, col="orange",
      print.auc=TRUE, size=2)
 ```
 
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+</br>
+</br>
+
+[Youden's J Statistic](https://en.wikipedia.org/wiki/Youden%27s_J_statistic)
+
+]
+
+.right-column[
+
+```{r fig.retina=3, fig.height=4, fig.width=8}
+resampling_stat%>%
+  select(prob_threshold,Sensitivity, Specificity)%>%
+  gather(2:3, key="stat", value="value")%>%
+  ggplot(aes(x=prob_threshold,y=value,col=stat))+
+  geom_point()+
+  geom_line()+
+  theme_minimal()
+              
+```
 
 
 ]
 
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
 
 
 
+]
+
+.right-column[
+
+
+
+```{r eval=F}
+pred.class0.15<-ifelse(prob>0.15,"yes","no")
+pred.class0.15<-factor(pred.class0.15)
+confusionMatrix(pred.class0.15, test.dat$deposit, positive="yes")
+```
+
+
+
+```{r eval=F}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  6781  346
+       yes 1203  711
+                                          
+               Accuracy : 0.8287          
+    No Information Rate : 0.8831          
+    
+            Sensitivity : 0.67266         
+            Specificity : 0.84932         
+      Balanced Accuracy : 0.76099         
+                                          
+       'Positive' Class : yes        
+```
+
+
+
+]
 
