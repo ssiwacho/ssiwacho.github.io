@@ -1393,6 +1393,13 @@ class: middle
 
 - **Model's Evaluating**
 
+</br>
+</br>
+</br>
+<small>
+for more information
+`?confusionMatrix()`
+</small>
 ]
 
 
