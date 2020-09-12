@@ -20,6 +20,7 @@ options(htmltools.dir.version = FALSE)
 library(tidyr)
 library(ggplot2)
 library(dplyr)
+library(e1071)
 ```
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
@@ -842,29 +843,103 @@ class: middle
 
 ### OR: significant testing
 
-$H_0: OR=1$
 
-$H_1: OR \neq 1$
-
-
-การทดสอบนัยสำคัญของ OR อาจทำได้ 3 วิธีการได้แก่
-
-
-
+การทดสอบนัยสำคัญของ OR อาจทำได้ 4 วิธีการได้แก่
 
 - [**Fisher's Exact test**](https://en.wikipedia.org/wiki/Fisher%27s_exact_test)
 
+- [**Chi-square test of independent**](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3900058/)
 
-````{r eval=F}
+- **Wald's test**
+
+- **Likelihood ratio test (LR)**
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- **Interpreting the logistic regression**
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+````{r}
 tab<-table(engage,success)
 fisher.test(tab)
 ```
 
 
-- **Chi-square test of independent**
 
-````{r eval=F}
+````{r}
 chisq.test(tab)
+```
+
+]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- **Interpreting the logistic regression**
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+### [Wald's test](https://en.wikipedia.org/wiki/Wald_test)
+
+เป็น test ที่มักใช้ทดสอบนัยสำคัญของ odds-ratio ใน logistic regression นอกจากนี้ยังสามารถใช้สร้าง confidence interval ของ odds-ratio ได้อีกด้วย
+
+$H_0: OR=\theta_0$
+
+$H_1: OR \neq \theta_0$
+
+**test statistics**
+
+$W=\frac{(\hat{OR}-\theta_0)^2}{var(\hat{OR})} \sim \chi^2_{df=1}$ $\implies \sqrt{W} \sim N(0,1)$
+
+```{r eval=F}
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept) -19.6652     7.5191  -2.615  0.00891 **
+Engagement    0.3420     0.1264   2.705  0.00683 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
 
@@ -893,27 +968,495 @@ class: middle
 
 ]
 
-
 .right-column[
 
-- **Wald's test**
+### Likelihood Ratio Test
 
-```{r eval=F}
-Coefficients:
-            Estimate Std. Error z value Pr(>|z|)   
-(Intercept) -19.6652     7.5191  -2.615  0.00891 **
-Engagement    0.3420     0.1264   2.705  0.00683 **
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-```
+Wald test uses two approximations (SE, and sampling distribution $\chi^2$), whereas the LR-test uses only one approximation (only sampling distribution $\chi^2$) [(Harrell, 2001)](https://link.springer.com/book/10.1007/978-3-319-19425-7),[(Paek, 2009)](https://files.eric.ed.gov/fulltext/EJ1110990.pdf)
+
+<small>
+
+**Hypotheses**
+
+$H_0:$ Reduced model = Full model
+
+$H_1:$ Reduced model worse than Full model
+
+</small>
+
+<small>
+
+**test statistics**
+
+$$deviance=-2LL_{reduce}-(-2LL_{full})\sim \chi^2_{p^*}$$
+
+</small>
+
+<small>
+
+$p$ คือจำนวนตัวแปรอิสระภายในโมเดลทำนาย
+
+$p^*=p_{full}-p_{reduce}$
+
+$n$ คือจำนวนหน่วยข้อมูล
+
+</small>
 
 
 
 ]
 
 
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- **Interpreting the logistic regression**
+
+- Predicting the outcome
+
+- Classification thresholds
+
+- Model's Evaluating
+
+
+]
+
+.right-column[
+
+### Likelihood ratio test
+
+$H_0: OR_{Engagement}=1 \ (or \  \beta_1=0)$  vs  $H_1: OR_{Engagement} \neq 1$
+
+```{r message=F, warning=F}
+# significanct test for OR of Engagement
+###1. full model
+fit.full<-glm(Success~Engagement,data=logistic1,family="binomial")
+###2. reduce model
+fit.reduce<-glm(Success~1,data=logistic1,family="binomial")
+
+### Likelihood ratio test
+library(lmtest)
+lrtest(fit.reduce,fit.full)
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- **Predicting the outcome**
+
+- Classification thresholds
+
+- Model's Evaluating
+
+]
+
+.right-column[
+
+### Predicting the outcome
+
+```{r fig.retina=3, fig.width=8, fig.height=4}
+#?predict.glm()
+pred.logOdds<-predict(fit.logistic) #log-odds scale
+pred.prob<-predict(fit.logistic, type="response") # probability scale
+
+par(mfrow=c(1,2), mar=c(5,5,0.5,0.5))
+hist(pred.logOdds, main="")
+hist(pred.prob, main="")
+```
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### Pseudo R-square
+
+- $R^2$ ใน linear model นิยามไว้เป็นอัตราส่วนระหว่างความผันแปรในตัวแปรตามที่อธิบายได้โดยโมเดลต่อความผันแปรทั้งหมดในตัวแปรตาม ดังนี้
+
+$$R^2=\frac{\sum_{i=1}^n(\hat{y}_i-\overline{y})^2}{\sum_{i=1}^n(y_i-\overline{y})^2}=\frac{SSR}{SST}$$
+
+ใน logistic regression ไม่สามารถคำนวณค่า $R^2$ โดยใช้แนวคิดเดียวกับ $R^2$ ข้างต้นได้ (ทำไม?)
+
+- Efron's $R^2$ $= 1- \frac{\sum_{i=1}^n(y_i-\hat{p}_i)^2}{\sum_{i=1}^n(y_i-\overline{y})^2}$
+
+- McFadden' $R^2$ $= 1-\frac{lnL_{full}}{lnL_{null}}$
+
+- McFadden's adjusted $R^2$ $= 1-\frac{lnL_{full}-k}{lnL_{null}}$
+
+- Cox & Snell $R^2=1-[\frac{L_{null}}{L_{full}}]^{2/N}$
+
+- Nagelkerke/ Cragg & Uhler $R^2=\frac{1-[\frac{L_{null}}{L_{full}}]^{2/N}}{1-[L_{null}]^{2/N}}$
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### Confusion matrix
+
+- confusion matrix เป็นเครื่องมือสำคัญสำหรับตรวจสอบประสิทธิภาพในการเรียนรู้ของ classification model ต่าง ๆ 
+
+- confusion matrix เป็นตารางแจกแจงความถี่สองทาง โดยปกติมักให้ด้านคอลัมน์เป็นค่าสังเกตจริงของตัวแปรตาม และด้านแถวเป็นค่าทำนายที่ได้จากการจำแนกของโมเดล classification
+
+<img src="confusion.png" width=50%>
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### Confusion matrix
+
+
+<img src="confusion2.png" width=80%>
+
+
+]
 
 
 
+---
+class: middle
 
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### logistic2.csv
+
+```{r eval=F}
+dat<-read.csv("logistic2.csv", header=T)
+str(dat)
+```
+
+```{r echo=F, message=F, warning=F}
+dat<-read.csv("/Users/siwachoatsrisuttiyakorn/Downloads/logistic2.csv", header=T, stringsAsFactors=T)
+names(dat)[1]<-"id"
+str(dat)
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+
+```{r message=F, warning=F}
+library(caret)
+
+#splitting data
+train.id<-createDataPartition(dat$deposit,p=0.8,list=F)
+train.dat<-dat[train.id,]
+test.dat<-dat[-train.id,]
+```
+
+.pull-left[
+
+**training data**
+
+```{r echo=F}
+table(train.dat$deposit)*100/dim(train.dat)[1]
+```
+
+```{r echo=F, fig.retina=3, fig.width=4, fig.height=2}
+par(mar=c(3,5,0.5,0.5))
+barplot(table(train.dat$deposit)*100/dim(train.dat)[1])
+```
+
+]
+
+.pull-right[
+
+**testing data**
+
+```{r echo=F}
+table(test.dat$deposit)*100/dim(test.dat)[1]
+```
+
+
+```{r echo=F, fig.retina=3, fig.width=4, fig.height=2}
+par(mar=c(3,5,0.5,0.5))
+barplot(table(test.dat$deposit)*100/dim(test.dat)[1])
+```
+
+]
+
+]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+```{r message=F, warning=F}
+### fit logistic regression using glm()
+# fit.glm<-glm(deposit~.,data=train.dat%>%select(-id),family="binomial")
+
+### install.packages("e1071")
+### fit logistic regression using glm engine via caret package
+train.Control<-trainControl(method ="cv", number = 5)
+fit<-train(form = deposit~.,data=train.dat%>%select(-id), method="glm", 
+          family="binomial", trControl=train.Control)
+fit
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+.right-column[
+
+### Confusion matrix
+
+
+```{r eval=F}
+## calculate predicted probability of deposit given Xs.
+prob<-predict(fit, newdata=test.dat, type="prob")
+prob<-prob[,2]
+hist(prob, main="")
+
+## convert probability into class (deposit = yes, no)
+pred.class<-factor(ifelse(prob>0.5, "yes", "no"))
+table(pred.class)
+
+## create confusion matrix
+confusionMatrix(pred.class,test.dat$deposit, positive="yes")
+```
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- **Model's Evaluating**
+
+]
+
+
+.right-column[
+
+
+.pull-left[
+
+```{r eval=F}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   no  yes
+       no  7816  837
+       yes  168  220
+                                          
+               Accuracy : 0.8888          
+                 95% CI : (0.8822, 0.8952)
+    No Information Rate : 0.8831          
+    P-Value [Acc > NIR] : 0.04517         
+                                          
+                  Kappa : 0.2579          
+                                          
+ Mcnemar's Test P-Value : < 2e-16   
+
+            Sensitivity : 0.20814         
+            Specificity : 0.97896         
+         Pos Pred Value : 0.56701         
+         Neg Pred Value : 0.90327         
+             Prevalence : 0.11691         
+         Detection Rate : 0.02433         
+   Detection Prevalence : 0.04292         
+      Balanced Accuracy : 0.59355         
+                                          
+       'Positive' Class : yes         
+```
+]
+
+.pull-right[
+
+<center><img src="confusion3.png" width=50%></center>
+
+<small>
+
+- Accuracy: $= \frac{A+D}{A+B+C+D}$
+
+- No Information Rate: $= \frac{major \ class}{total}$
+
+- [Kappa](https://en.wikipedia.org/wiki/Cohen%27s_kappa): $\kappa=\frac{p_0-p_e}{1-p_e}$
+
+- [Mcnemar's test](https://en.wikipedia.org/wiki/McNemar%27s_test)
+
+- Sensitivity: $= \frac{A}{A+C}$
+
+- Specificity: $= \frac{D}{B+D}$
+
+- Prevalence $= \frac{A+C}{A+B+C+D}$
+
+- [PPV](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values) $=\frac{true \ positives}{true \ positives + false \ positives}$
+
+- NPV $=\frac{false \ positives}{true \ positives + false \ positives}$
+
+</small>
+]
+
+]
 
