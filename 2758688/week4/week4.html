@@ -1923,6 +1923,8 @@ class: middle
 
 - **Model's Evaluating**
 
+- Model Concern
+
 &lt;/br&gt;
 &lt;/br&gt;
 
@@ -2004,6 +2006,310 @@ Prediction   no  yes
 
 
 ]
+
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- **Residual analysis**
+
+- PCR and PLS regression
+
+]
+
+.right-column[
+
+
+### Residual analysis
+
+- ในทำนองเดียวกับ linear regression model ที่ผู้วิเคราะห์จำเป็นต้องมีการตรวจสอบความเหมาะสมของโมเดลก่อนการนำไปใช้ 
+
+- โดยทั่วไปการตรวจสอบความเหมาะสมของโมเดลจะใช้การวิเคราะห์เศษเหลือ (residual analysis) อย่างไรก็ตามเศษเหลือใน logistic regression model นิยามได้หลากหลาย เช่นการใช้ pseudo residuals ([Harrell, 2015]()) หรือ surrogate residuals ([Liu and Zhang, 2018](https://www.tandfonline.com/doi/full/10.1080/01621459.2017.1292915))
+
+
+&lt;img src="LiuZhang.png" width=60%&gt;
+
+] 
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+### Multicollinearity Problem
+
+&lt;small&gt;
+
+- Two or more predictor variables are closely related to one another ---&gt; Multicollinearity
+
+- The presense of multicollinearity can pose problems in OLS regression (also MLE in logistic regression), since it can be difficult to separate out the individual effects of collinear variables on the response
+
+&lt;/small&gt;
+
+&lt;img src="collinearity.png" width=70%&gt;
+
+
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+### Principal Component Regression (PCR)
+
+&lt;small&gt;
+
+PCR (Massy, 1965) สามารถใช้แก้ปัญหา multicollinearity ได้ หลักการของวิธีการใช้เป็นการผสมกันระหว่างเทคนิค PCA กับ OLS regression
+
+&lt;/small&gt;
+
+&lt;img src="PCR.png" width=60%&gt;
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+
+```r
+dat2&lt;-read.csv("/Users/siwachoatsrisuttiyakorn/Documents/github/ssiwacho.github.io/2758688/week4/PCR_PLS.csv")
+set.seed(12345)
+train.id&lt;-createDataPartition(dat2$y, p=0.7, list=F)
+train.dat2&lt;-dat2[train.id,]
+test.dat2&lt;-dat2[-train.id,]
+```
+
+
+```r
+control&lt;-trainControl(method="cv", number=5)
+lm.fit&lt;-train(y~., data=train.dat2, method="lm",
+              trControl=control,
+              preProcess=c("zv","center","scale"))
+```
+
+
+
+```r
+control&lt;-trainControl(method="cv", number=5)
+pcr.fit&lt;-train(y~., data=train.dat2, method="pcr",
+              trControl=control,
+              preProcess=c("zv","center","scale"),
+              tuneLength=20)
+#pcr.fit
+#ggplot(pcr.fit)
+pred2&lt;-predict(pcr.fit, test.dat2)
+RMSE(pred2,test.dat2$y)
+R2(pred2,test.dat2$y)
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+&lt;img src="PLS.png" width=70%&gt;
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+&lt;img src="PLS2.png" width=80%&gt;
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+
+```r
+control&lt;-trainControl(method="cv", number=5)
+pls.fit&lt;-train(y~., data=train.dat2, method="pls",
+               trControl=control,
+               preProcess=c("zv","center","scale"),
+               tuneLength=20)
+pred2.pls&lt;-predict(pls.fit,test.dat2)
+RMSE(pred2.pls,test.dat2$y)
+```
+
+```
+## [1] 18.05488
+```
+
+```r
+R2(pred2.pls,test.dat2$y)
+```
+
+```
+## [1] 0.6161058
+```
+
+
+]
+
+
+---
+
+
+
+```r
+pls.fit.logistic&lt;-train(form = deposit~.,data=train.dat%&gt;%select(-id), method="pls", 
+          family="binomial", trControl=control,
+               preProcess=c("zv","center","scale"),
+               tuneLength=20)
+prob.pls&lt;-predict(pls.fit.logistic,test.dat,"prob")
+prob.pls&lt;-prob.pls[,1]
+pred.class.pls&lt;-ifelse(prob.pls&gt;0.5,"yes","no")
+confusionMatrix()
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

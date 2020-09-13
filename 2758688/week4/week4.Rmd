@@ -1982,6 +1982,8 @@ class: middle
 
 - **Model's Evaluating**
 
+- Model Concern
+
 </br>
 </br>
 
@@ -2060,3 +2062,290 @@ Prediction   no  yes
 
 ]
 
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- **Residual analysis**
+
+- PCR and PLS regression
+
+]
+
+.right-column[
+
+
+### Residual analysis
+
+- ในทำนองเดียวกับ linear regression model ที่ผู้วิเคราะห์จำเป็นต้องมีการตรวจสอบความเหมาะสมของโมเดลก่อนการนำไปใช้ 
+
+- โดยทั่วไปการตรวจสอบความเหมาะสมของโมเดลจะใช้การวิเคราะห์เศษเหลือ (residual analysis) อย่างไรก็ตามเศษเหลือใน logistic regression model นิยามได้หลากหลาย เช่นการใช้ pseudo residuals ([Harrell, 2015]()) หรือ surrogate residuals ([Liu and Zhang, 2018](https://www.tandfonline.com/doi/full/10.1080/01621459.2017.1292915))
+
+
+<img src="LiuZhang.png" width=60%>
+
+] 
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+### Multicollinearity Problem
+
+<small>
+
+- Two or more predictor variables are closely related to one another ---> Multicollinearity
+
+- The presense of multicollinearity can pose problems in OLS regression (also MLE in logistic regression), since it can be difficult to separate out the individual effects of collinear variables on the response
+
+</small>
+
+<img src="collinearity.png" width=70%>
+
+
+
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+### Principal Component Regression (PCR)
+
+<small>
+
+PCR (Massy, 1965) สามารถใช้แก้ปัญหา multicollinearity ได้ หลักการของวิธีการใช้เป็นการผสมกันระหว่างเทคนิค PCA กับ OLS regression
+
+</small>
+
+<img src="PCR.png" width=60%>
+
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+```{r}
+dat2<-read.csv("/Users/siwachoatsrisuttiyakorn/Documents/github/ssiwacho.github.io/2758688/week4/PCR_PLS.csv")
+set.seed(12345)
+train.id<-createDataPartition(dat2$y, p=0.7, list=F)
+train.dat2<-dat2[train.id,]
+test.dat2<-dat2[-train.id,]
+```
+
+```{r eval=F}
+control<-trainControl(method="cv", number=5)
+lm.fit<-train(y~., data=train.dat2, method="lm",
+              trControl=control,
+              preProcess=c("zv","center","scale"))
+```
+
+
+```{r eval=F}
+control<-trainControl(method="cv", number=5)
+pcr.fit<-train(y~., data=train.dat2, method="pcr",
+              trControl=control,
+              preProcess=c("zv","center","scale"),
+              tuneLength=20)
+#pcr.fit
+#ggplot(pcr.fit)
+pred2<-predict(pcr.fit, test.dat2)
+RMSE(pred2,test.dat2$y)
+R2(pred2,test.dat2$y)
+```
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+<img src="PLS.png" width=70%>
+]
+
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+<img src="PLS2.png" width=80%>
+
+]
+
+---
+class: middle
+
+.left-column[
+
+### Classification: Logistic regression
+
+- What's logistic regression?
+
+- Fitting the model
+
+- Interpreting the logistic regression
+
+- Predicting the outcome
+
+- Model's Evaluating
+
+- Residual analysis
+
+- **PCR and PLS regression**
+
+]
+
+.right-column[
+
+```{r}
+control<-trainControl(method="cv", number=5)
+pls.fit<-train(y~., data=train.dat2, method="pls",
+               trControl=control,
+               preProcess=c("zv","center","scale"),
+               tuneLength=20)
+pred2.pls<-predict(pls.fit,test.dat2)
+RMSE(pred2.pls,test.dat2$y)
+R2(pred2.pls,test.dat2$y)
+```
+
+
+]
+
+
+---
+
+
+```{r eval=F}
+pls.fit.logistic<-train(form = deposit~.,data=train.dat%>%select(-id), method="pls", 
+          family="binomial", trControl=control,
+               preProcess=c("zv","center","scale"),
+               tuneLength=20)
+prob.pls<-predict(pls.fit.logistic,test.dat,"prob")
+prob.pls<-prob.pls[,1]
+pred.class.pls<-ifelse(prob.pls>0.5,"yes","no")
+confusionMatrix()
+```
