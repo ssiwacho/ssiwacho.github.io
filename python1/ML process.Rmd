@@ -1,0 +1,238 @@
+---
+title: "Modelling Process"
+author: "Siwachoat Srisuttiyakorn"
+date: "2/15/2021"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: false
+    toc_depth: 2
+
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+
+```
+
+เอกสารนี้แสดงการเขียนคำสั่งใน python เพื่อพัฒนา ML model ทั้ง classification model และ regression model 
+
+
+
+# **การนำข้อมูลเข้าสู่ python**
+
+การนำข้อมูลเข้าสู่ python สามารถทำได้หลายวิธีการ วิธีการหนึ่งที่คล้ายกับการนำข้อมูลเข้าสู่ R คือการใช้ library-pandas ในตัวอย่างนี้มีข้อมูลตัวอย่าง 2 ไฟล์ ได้แก่ binary.csv และ housing_cleaned.csv การนำไฟล์ข้อมูลทั้งสองเข้าสู่โปรแกรม python สามารถทำได้โดยใช้ฟังก์ชัน read_csv() ซึ่งต้องเรียกผ่าน library pandas ดังตัวอย่างต่อไปนี้
+
+```{python}
+import numpy as np
+import pandas as pd
+dat_class = pd.read_csv("/Users/siwachoat/Documents/binary.csv") # data for classification
+dat_reg = pd.read_csv("/Users/siwachoat/Desktop/housing_cleaned.csv") # data for regression
+```
+
+ชุดข้อมูลที่นำเข้าด้วยวิธีการข้างต้นจะอยู่ในรูปแบบของ DataFrame เหมือนกับ data.frame ของโปรแกรม R ผู้วิเคราะห์สามารถตรวจสอบประเภทของตัวแปรที่เก็บไฟล์ข้อมูลดังกล่าวได้โดยใช้ฟังก์ชัน `print(type(dat_class))`
+
+```{python}
+print(type(dat_class))
+```
+
+นอกจากนี้ยังสามารถสำรวจสภาพทั่วไปของชุดข้อมูลโดยใช้ฟังก์ชัน `head()`, `info()` และ `describe()` ดังตัวอย่างต่อไปนี้
+
+```{python}
+dat_class.head()
+dat_class.info()
+dat_class.describe()
+```
+
+จากผลการวิเคราะห์ข้างต้นจะเห็นว่าชุดข้อมูล `dat_class` ประกอบด้วย ตัวแปร 4 ตัว ตัวแปรตามได้แก่ `admit` ที่มีการให้คะแนนสองค่าได้แก่ 0 คือสอบไม่ผ่าน และ 1 คือสอบผ่าน และตัวแปรอิสระที่จะใช้เป็ฯ feature สำหรับจำแนก class ของนักเรียนได้แก่ คะแนนสอบ GRE (`gre`) เกรดเฉลี่ยสะสม (`gpa`) และอันดับของมหาวิทยาลัยที่เลือก (`rank`)
+
+
+# **Classification Model: K-NN**
+
+หัวข้อนี้จะกล่าวถึงการพัฒนา classification model ด้วยอัลกอริทึม K-Nearest Neighbors (K-NN) อัลกอริทึมนี้เป็นอัลกอริทึมพื้นฐานที่ใช้สำหรับทำนายกลุ่มหรือจำแนกประเภทของหน่วยข้อมูล ซึ่งบ่อยครั้งสามารถทำได้อย่างมีประสิทธิภาพ แนวคิดพื้นฐานของอัลกอริทึม K-NN คือการบันทึกข้อมูล feature และ labels ของหน่วยข้อมูลใน training data เอาไว้ และใช้ข้อมูลที่บันทึกนี้สำหรับการทำนายหน่วยข้อมูลใหม่ โดยจะนำ feature ของหน่วยข้อมูลใหม่มาเปรียบเทียบกับ training data ที่บันทึกเอาไว้ จากนั้นหาหน่วยข้อมูลใน training data ที่มีลักษณะของ feature ใกล้เคียงกับหน่วยข้อมูลใหม่มากที่สุดขึ้นมาจำนวน K ค่า จากนั้นนำ labels ของหน่วยข้อมูลทั้ง K ค่า มาหาฉันทามติซึ่งจะใช้เป็นค่าทำนาย label ของหน่วยข้อมูลใหม่
+
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/ML process and basic supervised learning/KNN.png)
+
+อัลกอริทึม K-NN มี hyperparameter จำนวน 1 ตัว ได้แก่ K หรือจำนวนหน่วยข้อมูลที่มีคุณลักษณะใกล้เคียงกับหน่วยข้อมูลที่ต้องการทำนายมากที่สุด ในทางทฤษฎีค่า K เป็นพารามิเตอร์ที่ใช้กำหนดความซับซ้อนของโมเดล กล่าวคือยิ่ง K มีค่าน้อยโมเดลจะยิ่งมีความยืดหยุ่นหรือมีความไวต่อการเปลี่ยนแปลงในความสัมพันธ์ของข้อมูลมาก ในทางกลับกันหาก K มีค่ามาก อัลกอริทึมจะมีความไวต่อการเปลี่ยนแปลงหรือความสัมพันธ์ของข้อมูลลดลง ทำให้โมเดลมีความซับซ้อนลดลงไปด้วย
+
+การกำหนดค่า K ที่น้อยเกินไปอาจส่งผลให้โมเดลทำนายมีแนวโน้มเป็น overfitting model ในทางกลับกันการกำหนด K ที่มากเกินไปก็อาจส่งผลให้โมเดลทำนายมีแนวโน้มเป็น underfitting model อย่างไรก็ตามการกำหนดค่า K ดังกล่าวไม่สามารถประมาณได้โดยตรงจากข้อมูล ในทางปฏิบัติจะใช้เทคนิคการสุ่มซ้ำ (resampling technique) เช่น cross-validation หรือ bootstrap เพื่อค้นหาและระบุค่า K ที่เหมาะสมมากที่สุด
+
+<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/ML process and basic supervised learning/numberofK.png){width=70%}</center>
+
+
+## **Distance matrices**
+
+อัลกอริทึม K-NN จะเปรียบเทียบความต่างหรือความเหมือนของหน่วยข้อมูลใหม่ที่ต้องการทำนาย กับหน่วยข้อมูลในชุดข้อมูลฝึกหัดโดยใช้การวัดระยะทางระหว่างหน่วยข้อมูลบนระนาบของ features ที่ใช้เป็นตัวแทนทำนาย หน่วยข้อมูลที่มีคุณลักษณะหรือค่าของ feature ใกล้เคียงกันจะมีระยะทางบนระนาบดังกล่าวที่ใกล้เคียงกัน ในทางกลับกันหน่วยข้อมูลที่มีคุณลักษณะแตกต่างกันจะมีระยะทางบนระนาบที่ห่างกัน ดังตัวอย่างในรูปด้านล่าง
+
+
+<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/ML process and basic supervised learning/similar.png){width=60%}</center>
+
+
+ระยะทางที่ใช้ในอัลกริทึม K-NN มีหลายตัว สมมุติให้ $ x = (x_1, x_2, x_3, ..., x_p)$ และ $y=(y_1, y_2, y_3,...,y_p)$ เป็นเวกเตอร์ของ feature ของหน่วยข้อมูลสองหน่วย ได้แก่ หน่วยข้อมูล X และ หน่วยข้อมูล Y 
+
+หัวข้อนี้จะกล่าวถึงวิธีการคำนวณระยะทางระหว่างจุดทั้งสองที่สามารถเลือกใช้ได้ทั้งใน python และ R จำนวน 4 วิธีการได้แก่ ระยะทางแบบ Euclidean, Manhattan, Minkowski และ Hamming รายละเอียดมีดังนี้
+
+
+**ระยะทางแบบ [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance)**
+
+ระยะแบบ euclidean เป็นระยะที่วัดจากเส้นตรงที่สั้นที่สุดที่สามารถลากเชื่อมต่อระหว่างจุดสองจุดบนระนาบที่กำหนด จากกำหนดจุด X และ Y บนระนาบขนาด p มิติในข้างต้น จะได้ว่าระยะทางแบบ euclidean สามารถคำนวณได้โดยใช้สูตรดังนี้
+
+<center>$d(x,y) = \sqrt{\sum_{i=1}^p(x_i-y_i)^2} = [\sum_{i=1}^p(x_i-y_i)^2]^{\frac{1}{2}}$</center>
+
+รูปด้านล่างแสดงระยะทางแบบ Euclidean แบบ 2 มิติ
+
+<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/ML process and basic supervised learning/2560px-Euclidean_distance_2d.svg.png){width=40%}</center>
+
+</br>
+
+การคำนวณระยะทางแบบ euclidean บนโปรแกรม python สามารถทำได้ง่าย ๆ โดยใช้ library-Scipy โดยที่ library นี้มีฟังก์ชันสำเร็จรูปสำหรับคำนวณระยะทางแบบ euclidean สมมุติว่าต้องการคำนวณระยะห่างระหว่างจุด $x=(1,2,3)$ และ $y=(4,5,6)$ ซึ่งเป็นจุดบนระนาบแบบ 3 มิติสามารถเขียนคำสั่งได้ดังนี้
+
+```{python}
+# importing the library
+from scipy.spatial import distance
+
+# defining the points
+x = (1,2,3)
+y = (4,5,6)
+```
+
+```{python}
+x # print x
+y # print y
+
+euclidean_distance = distance.euclidean(x,y)
+print("euclidean distance between point x and y is:", round(euclidean_distance,4))
+```
+
+</br>
+
+**ระยะทางแบบ Manhattan** 
+
+ระยะทางแบบ Manhattan เป็นระยะทางที่คำนวณจากผลรวมของค่าสัมบูรณ์ของระยะห่างในแต่ละมิติของจุดที่ต้องการเปรียบเทียบ จากจุด X และ Y ในข้างต้นจะได้ว่า ระยะทางแบบ Manhattan สามารถคำนวณได้โดยใช้สูตรดังนี้
+
+<center>$d(x,y)=\sum_{i=1}^p|x_i-y_i|=|x_1-y_1|+|x_2-y_2|+...+|x_p-y_p|$</center>
+
+รูปต่อไปนี้แสดงตัวอย่างระยะทางแบบ Manhattan ในกรณีที่จุดที่ต้องการเปรียบเทียบอยู่บนระนาบแบบ 2 มิติ
+
+<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/ML process and basic supervised learning/man_dist.jpg){width=70%}</center>
+
+เมื่อเปรียบเทียบระยะทางแบบ Manhattan กับ Euclidean พบว่า ระยะทางแบบ Manhattan มีความแกร่งต่อปัจจัยด้านค่าผิดปกติ (outlier) มากกว่า ทั้งนี้เป็นเพราะไม่ได้มีเทอมยกกำลังสองในสูตรของการคำนวณระยะทาง นอกจากนี้ยังเป็นระยะทางที่เหมาะสำหรับการวิเคราะห์ที่มีจำนวนมิติหรือ feature ที่ใช้ในการวิเคราะห์จำนวนมาก ([Aggarwal, Hinneburg, and Keim, 2001](https://bib.dbvis.de/uploadedFiles/155.pdf))
+
+
+การคำนวณระยะทางแบบ Manhattan ใน python สามารถดำเนินการได้ดังนี้
+
+```{python}
+## note: Manhattan distance is also known as city clock distance
+manhattan_distance = distance.cityblock(x,y)
+print("manhattan distance between point x and y is:", round(manhattan_distance,4))
+```
+
+</br>
+
+
+**ระยะทาง Minkowski**
+
+ระยะทาง Minkowski เรียกอีกชื่อหนึ่งว่า generalized distance เป็นระยะทางที่เป็นสูตรทั่วไปของระยะทางหลายตัว โดยมีสูตรการคำนวณดังนี้ $d(x,y)=[\sum_{i=1}^p|x_i-y_i|^p]^{\frac{1}{p}}$
+
+จากสูตรข้างต้นเรียกระยะทาง Minkowski อีกชื่อหนึ่งได้ว่า $L_p$ norm distance
+
+- ถ้า $p=1$ ระยะทางแบบ Minkowski จะเทียบเท่ากับระยะทางแบบ Manhattan ซึ่งเรียกอีกชื่อหนึ่งว่า $L_1$ norm distance
+
+- ถ้า $p=2$ ระยะทางแบบ Minkowski จะเทียบเท่ากับระยะทางแบบ Euclidean ในทำนองเดียวกันสามารถเรียกอีกชื่อหนึ่งว่า $L_2$ norm distance
+
+- ถ้า $p \rightarrow \infty$ ระยะทางแบบ Minkowski จะเทียบเท่ากับระยะทางแบบ Chebechev
+
+
+</br>
+
+**ระยะทาง Hamming**
+
+ระยะทางแบบ Hamming ถูกออกแบบมาสำหรับคำนวณระยะทางระหว่างตัวอักษรสองตัวที่มีความยาวเท่ากัน ซึ่งสามารถนำไปประยุกต์ใช้สำหรับวัดระยะห่างระหว่างตัวแปรแบบจัดประเภทได้ สมมุติว่ามีตัวอักษร 2 คำได้่แก่ *datasciences* และ *dataanalysis*
+การเปรียบเทียบระยะทางหรือความแตกต่างระหว่างคำทั้งสองด้วยระยะทางแบบ Hamming จะทำการเปรียบเทียบตัวอักษรที่อยู่่ในตำแหน่งเดียวกันของทั้งสองคำ จะเห็นว่าตำแหน่งแรกเหมือนกัน จะกำหนดค่าเท่ากับ 0 ตำแหน่งที่สองก็เหมือนกันอีกจึงกำหนดค่าเท่ากับ 0 เช่นเดียวกัน เมื่อการเปรียบเทียบไปเรื่อย ๆ จะพบว่า มีตัวอักษรที่ตรงกันเพียงตำแหน่งเดียวคือตำแหน่งที่ 10  ซึ่งจะกำหนดค่าเท่ากับ 0 ดังนั้นระยะทางแบบ Hamming ในกรณีนี้จะมีค่าเท่ากับ
+
+$0+0+0+0+1+1+1+1+1+1+1 = 7.0$
+
+```{python}
+character1 = "datasciences"
+character2 = "dataanalysis"
+
+# compute the hamming distance
+hamming_distance = distance.hamming(list(character1), list(character2))*len(character1)
+
+print("hamming distance between point character1 and chatacter2 is:", round(hamming_distance,4))
+```
+
+รูปต่อไปนี้แสดงระยะทาง hamming แบบ 3 มิติ
+
+<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/ML process and basic supervised learning/1200px-Hamming_distance_3_bit_binary.svg.png){width=40%}</center>
+
+
+
+
+## **Fitting K-NN**
+
+Scikit-learn เป็น library สำคัญตัวหนึ่งของ python ที่มีเครื่องมือจำเป็นและเพียงพอสำหรับการพัฒนา ML model และได้รับความนิยมค่อนข้างมากในปัจจุบันทั้งในภาคการทำงาน และภาคการศึกษา รายละเอียดอื่น ๆ ของ library นี้นิสิตสามารถศึกษาได้จากคู่มือการใช้งานตามลิงค์ ---> https://scikit-learn.org/stable/getting_started.html 
+
+### splitting data 
+
+ขั้นแรกดำเนินการแบ่งชุดข้อมูลออกเป็นสองส่วนได้แก่ training data และ test data ก่อน โดยเขียนคำสั่งดังนี้
+
+```{python}
+from sklearn.model_selection import train_test_split
+X = dat_class.iloc[:,1:]
+y = dat_class['admit']
+
+# unpack X and y into X_train, X_test, y_train, and y_test
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2,  
+                                                    random_state=123, 
+                                                    stratify = y)
+```
+
+
+ลองตรวจสอบ dimension ของ training และ test data 
+
+```{python}
+X_train.shape
+X_test.shape
+```
+
+### **Training K-NN model**
+
+จากนั้นนำอัลกอริทึม K-NN มาเรียนรู้ข้อมูลใน training data ซึ่งมี 2 ขั้นตอน ขั้นแรกคือการระบุโมเดลหรือรายละเอียดของอัลกอริทึม K-NN ที่จะใช้เป็นตัวเรียนรู้ และขั้นที่สองคือการนำอัลกอริทึมที่ระบุมา fit เข้ากับข้อมูล 
+
+```{python}
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=6) #model specification
+knn.fit(X_train,y_train) # model fitting
+```
+
+
+### **Prediction**
+
+การนำอัลกอริทึมที่เรียนรู้แล้วมาทำนายหน่วยข้อมูลใหม่ สามารถทำได้โดยใช้ฟังก์ชัน .predict() ดังนี้
+
+```{python}
+predict_test = knn.predict(X_test)
+print("Test set predictions:", predict_test)
+```
+
+### **Measuring model performance**
+
+ในเบื้องต้นผู้วิเคราะห์สามารถคำนวณ metric เพื่อวัดประสิทธิภาพของโมเดลได้โดยเขียนคำสั่งดังนี้
+
+```{python}
+# Confusion Matrix
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test, predict_test)# Accuracy
+from sklearn.metrics import accuracy_score
+accuracy_score(y_test, predict_test)# Recall
+from sklearn.metrics import recall_score
+recall_score(y_test, predict_test, average=None)# Precision
+from sklearn.metrics import precision_score
+precision_score(y_test, predict_test, average=None)
+```
+
