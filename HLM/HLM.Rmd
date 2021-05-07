@@ -30,7 +30,7 @@ css: styles2.css
 <p style="text-indent:2.5em;">เนื้อหาในวันนี้จะเรียนผ่านการทำกิจกรรม โดยใช้ชุดข้อมูลตัวอย่างคือชุดข้อมูล High School & Beyond สำรวจโดยศูนย์สถิติการศึกษาแห่งชาติ (National Center for Educational Statistics: NCES) ของสหรัฐอเมริกาในปี ค.ศ. 1982 ประกอบด้วยข้อมูลของนักเรียนจำนวน 7,185 คน จากโรงเรียนจำนวน 160 โรงเรียน ประกอบด้วยชุดข้อมูลระดับนักเรียน [hsb1.sav](https://drive.google.com/file/d/1AvFYXVcLxh3QqtKDBlpSUciUShuItBlV/view?usp=sharing) และชุดข้อมูลระดับโรงเรียน [hsb2.sav](https://drive.google.com/file/d/1RwMRt7eRqTs2eZ7LMfJoPRubutttDWys/view?usp=sharing)</p>
 
 
-<p style="text-indent:2.5em;">ชุดข้อมูลในไฟล์ hsb2.sav ประกอบด้วยตัวแปรในระดับโรงเรียนได้แก่ (1) ขนาดโรงเรียน (size) ที่วัดจากจำนวนนักเรียนในโรงเรียน (2) ประเภทของโรงเรียน (sector) ที่มี 2 ประเภทได้แก่ 1 = โรงเรียนเครือคาทอริก และ 0 = โรงเรียนรัฐบาล (3) สัดส่วนนักเรียนที่เรียนอยู่ในสายวิชาการ (pracad) (4) บรรยากาศทางระเบียบวิจัย (disciplinary climate) (5) สัดส่วนของชนกลุ่มน้อย (himinty) โดย 1 = โรงเรียนที่มีชนกลุ่มน้อยมากกว่า 40% และ 0 = โรงเรียนที่มีชนกลุ่มน้อยน้อยกว่าหรือเท่ากับ 40% ของนักเรียนทั้งหมด และ (6) ค่าเฉลี่ยเศรษฐานะของนักเรียนในโรงเรียน (meanses)</p>
+<p style="text-indent:2.5em;">ชุดข้อมูลในไฟล์ hsb2.sav ประกอบด้วยตัวแปรในระดับโรงเรียนได้แก่ (1) ขนาดโรงเรียน (size) ที่วัดจากจำนวนนักเรียนในโรงเรียน (2) ประเภทของโรงเรียน (sector) ที่มี 2 ประเภทได้แก่ 1 = โรงเรียนเครือคาทอริก และ 0 = โรงเรียนรัฐบาล (3) สัดส่วนนักเรียนที่เรียนอยู่ในสายวิชาการ (pracad) (4) บรรยากาศทางระเบียบวินัย (disciplinary climate) (5) สัดส่วนของชนกลุ่มน้อย (himinty) โดย 1 = โรงเรียนที่มีชนกลุ่มน้อยมากกว่า 40% และ 0 = โรงเรียนที่มีชนกลุ่มน้อยน้อยกว่าหรือเท่ากับ 40% ของนักเรียนทั้งหมด และ (6) ค่าเฉลี่ยเศรษฐานะของนักเรียนในโรงเรียน (meanses)</p>
 
 
 ## ติดตั้ง package ที่จำเป็น
@@ -169,18 +169,26 @@ performance::icc(null.model)
 ranova(null.model)
 ```
 
+### **ประมาณค่าเฉลี่ยของกลุ่ม ($\beta_{0j}$)**
+
+จากโมเดลในระดับที่ 1 $mathach_{ij}=\beta_{0j}+r_{ij}$ จะเห็นว่าพารามิเตอร์ $\beta_{0j}$ คือพารามิเตอร์จุดตัดแกนซึ่งในกรณีนี้มีความหมายเป็นค่าเฉลี่ยผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของแต่ละโรงเรียน (group mean) เมื่อ $j=1,2,...,J$
+
+การประมาณค่าเฉลี่ยของกลุ่มดังกล่าวใน R สามารถเขียนคำสั่งได้ดังนี้
+
 ```{r}
 intercept<-coef(null.model)
 intercept<-intercept[1]
-names(intercept$schoolid)<-"u0j"
+summary(intercept$schoolid)
+names(intercept$schoolid)<-"group.mean"
 intercept$schoolid%>%
-      ggplot()+geom_histogram(aes(x=u0j))+
+      ggplot()+geom_histogram(aes(x=group.mean))+
          xlab(expression(beta[0[j]]==gamma[00]+u[0[j]]))+
         theme_minimal()
 ```
 
+จากผลการวิเคราะห์ข้างต้นจะเห็นว่าผลสัมฤทธิ์ทางการเรียนเฉลี่ยในระดับโรงเรียนมีค่าอยู่ในช่วง 5.234 ถึง 19.115 
 
-### การวินิจฉัยความเหมาะสมของโมเดลการวิเคราะห์
+### **การวินิจฉัยความเหมาะสมของโมเดลการวิเคราะห์**
 
 ```{r}
 #calculate level-1 residuals
@@ -349,6 +357,8 @@ coef%>%ggplot()+geom_point(aes(x=ineq, y=quality,col=sector))
 ```
 
 
+
+
 </br>
 
 
@@ -358,9 +368,6 @@ coef%>%ggplot()+geom_point(aes(x=ineq, y=quality,col=sector))
 ![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756714/Page/Screen Shot 2562-09-28 at 12.37.18.png){width=60%}
 
 
-
-
-<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2758501 STAT info ED/ภาคต้น 2562/page/edustat (1).png){width=20%}</center>
 
 </br>
 
@@ -373,3 +380,6 @@ coef%>%ggplot()+geom_point(aes(x=ineq, y=quality,col=sector))
 nonrandom.model<-lmer(mathach~ses+sector+ses*sector+(1|schoolid),data=dat)
 summary(nonrandom.model)
 ```
+
+
+<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2758501 STAT info ED/ภาคต้น 2562/page/edustat (1).png){width=20%}</center>
