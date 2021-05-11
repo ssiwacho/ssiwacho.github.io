@@ -1,10 +1,18 @@
 ---
-title: "โมเดลเชิงเส้นลดหลั่นพื้นฐาน (Introduction to HLMs)"
-date: "`r Sys.Date()`"
+title: "โมเดลเชิงเส้นระดับลดหลั่น"
 output:
   rmdformats::downcute:
-    self_contained: true
+    self_contained: FALSE
 ---
+
+
+<style type="text/css">
+.main-container {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 
 
 ```{r setup, include=FALSE}
@@ -12,17 +20,16 @@ library(knitr)
 library(rmdformats)
 
 ## Global options
-options(max.print="75")
-opts_chunk$set(echo=FALSE,
+options(max.print="150")
+opts_chunk$set(echo=TRUE,
 	             cache=TRUE,
-               prompt=FALSE,
-               tidy=TRUE,
+               prompt=TRUE,
+               tidy=FALSE,
                comment=NA,
                message=FALSE,
                warning=FALSE)
-opts_knit$set(width=75)
+opts_knit$set(width=100)
 ```
-
 
 
 
@@ -68,8 +75,6 @@ library(lme4)
 library(lmerTest)
 ```
 
-</br>
-</br>
 
 # **Hierarchical Linear Model (HLM)**
 
@@ -248,8 +253,7 @@ log(71.93)/log(12.54)
 ```
 
 
-</br>
-
+---
 
 ## **Means as Outcomes Regression Model**
 
@@ -297,8 +301,7 @@ summary(mean.model)
 
 ผลการวิเคราะห์ข้างต้นหมายความว่าอย่างไร??
 
-</br>
-
+---
 
 ## **One-Way ANCOVA with random effect**
 
@@ -335,7 +338,7 @@ summary(ancova.model)
 นิสิตคิดว่า assumption ดังกล่าวเป็นจริงในข้อมูลชุดนี้หรือไม่? จะตรวจสอบได้อย่างไร? และหากไม่เป็นจริงจะแก้ปัญหาอย่างไร?
 
 
-</br>
+---
 
 ## **Random-coefficient Regression model**
 
@@ -376,7 +379,7 @@ coef%>%ggplot()+geom_point(aes(x=ineq, y=quality,col=sector))
 
 
 
-</br>
+---
 
 
 
@@ -386,7 +389,7 @@ coef%>%ggplot()+geom_point(aes(x=ineq, y=quality,col=sector))
 
 
 
-</br>
+---
 
 
 ## **Non-randomly varying slopes**
