@@ -213,13 +213,6 @@
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div class="page-content has-page-title">
-<style type="text/css">
-.main-container {
-  max-width: 1800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
 <p style="line-height:1.3; font-size:16px; color: #353b48; text-align:right;">
 สิวะโชติ ศรีสุทธิยากร </br> กนิษฐ์ ศรีเคลือบ </br> </br> ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์ </br> จุฬาลงกรณ์มหาวิทยาลัย </br> </font> 6 May 2021 </font>
 </p>
@@ -316,7 +309,7 @@
 </div>
 <div id="โมเดลการวิเคราะห์" class="section level3">
 <h3><strong>โมเดลการวิเคราะห์</strong></h3>
-<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%AD%E0%B8%99/2756714/Page/Screen%20Shot%202562-09-28%20at%2010.20.46.png" style="width:60.0%" /></p>
+<p><img src="Screen%20Shot%202562-09-28%20at%2010.20.46.png" style="width:60.0%" /></p>
 <p>ในกรณีนี้โมเดลการวิเคราะห์มี 2 ระดับ ได้แก่โมเดลระดับนักเรียน และโมเดลระดับโรงเรียนดังนี้</p>
 <p><strong>โมเดลระดับนักเรียน (student-level model)</strong></p>
 <p><span class="math inline">\(mathach_{ij}=\beta_{0j}+r_{ij}\)</span></p>
@@ -491,7 +484,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>เมื่อยุบรวมชุดข้อมูลแล้ว สามารถประมาณค่าพารามิเตอร์ในโมเดลโดยกำหนดโมเดลในฟังก์ชัน <code>lmer()</code> ด้วยหลักภาษาเหมือนเดิมดังนี้</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> mean.model<span class="ot">&lt;-</span><span class="fu">lmer</span>(mathach<span class="sc">~</span>meanses<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>schoolid),<span class="at">data=</span>dat)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summary</span>(mean.model)</span></code></pre></div>
-<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+lmerModLmerTest]
 Formula: mathach ~ meanses + (1 | schoolid)
    Data: dat
 
@@ -530,7 +524,7 @@ meanses -0.004</code></pre>
 </div>
 <div id="โมเดลการวิเคราะห์-2" class="section level3">
 <h3><strong>โมเดลการวิเคราะห์</strong></h3>
-<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%AD%E0%B8%99/2756714/Page/Screen%20Shot%202562-09-28%20at%2011.29.31.png" style="width:60.0%" /></p>
+<p><img src="Screen%20Shot%202562-09-28%20at%2011.29.31.png" style="width:60.0%" /></p>
 <p>เพื่อให้ค่าจุดตัดแกนมีความหมายและสามารถแปลความได้อย่างสมบูรณ์ การวิเคราะห์ความแปรปรวนร่วมจึงมักมีการ centering ตัวแปรควบคุมก่อนการวิเคราะห์ ดังนี้</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co">#centering ses by groupmean</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> ses.cen<span class="ot">&lt;-</span>dat<span class="sc">$</span>ses<span class="sc">-</span>dat<span class="sc">$</span>meanses</span>
@@ -538,7 +532,8 @@ meanses -0.004</code></pre>
 <p>การประมาณค่าพารามิเตอร์ในโมเดลการวิเคราะห์สามารถทำได้ดังนี้</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> ancova.model<span class="ot">&lt;-</span><span class="fu">lmer</span>(mathach<span class="sc">~</span>ses.cen<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>schoolid),<span class="at">data=</span>dat,<span class="at">REML=</span>F)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summary</span>(ancova.model)</span></code></pre></div>
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite&#39;s
+  method [lmerModLmerTest]
 Formula: mathach ~ ses.cen + (1 | schoolid)
    Data: dat
 
@@ -583,11 +578,12 @@ ses.cen 0.003 </code></pre>
 </div>
 <div id="โมเดลการวิเคราะห์-3" class="section level3">
 <h3><strong>โมเดลการวิเคราะห์</strong></h3>
-<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%AD%E0%B8%99/2756714/Page/Screen%20Shot%202562-09-28%20at%2012.34.06.png" style="width:60.0%" /></p>
+<p><img src="Screen%20Shot%202562-09-28%20at%2012.34.06.png" style="width:60.0%" /></p>
 <p>การกำหนดโมเดลการวิเคราะห์ในฟังก์ชัน <code>lmer()</code> สามารถทำได้ในทำนองเดียวกัน ดังนี้</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> random.coef<span class="ot">&lt;-</span><span class="fu">lmer</span>(mathach<span class="sc">~</span>ses.cen<span class="sc">+</span>(<span class="dv">1</span><span class="sc">+</span>ses.cen<span class="sc">|</span>schoolid), <span class="at">data=</span>dat)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summary</span>(random.coef)</span></code></pre></div>
-<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+lmerModLmerTest]
 Formula: mathach ~ ses.cen + (1 + ses.cen | schoolid)
    Data: dat
 
@@ -628,15 +624,16 @@ ses.cen 0.012 </code></pre>
 </div>
 <div id="intercepts-and-slopes-as-outcomes-model" class="section level2">
 <h2><strong>Intercepts and slopes as outcomes model</strong></h2>
-<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%AD%E0%B8%99/2756714/Page/Screen%20Shot%202562-09-28%20at%2012.37.18.png" style="width:60.0%" /></p>
+<p><img src="Screen%20Shot%202562-09-28%20at%2012.37.18.png" style="width:60.0%" /></p>
 <hr />
 </div>
 <div id="non-randomly-varying-slopes" class="section level2">
 <h2><strong>Non-randomly varying slopes</strong></h2>
-<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%AD%E0%B8%99/2756714/Page/Screen%20Shot%202562-09-28%20at%2012.05.01.png" style="width:60.0%" /></p>
+<p><img src="Screen%20Shot%202562-09-28%20at%2012.05.01.png" style="width:60.0%" /></p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> nonrandom.model<span class="ot">&lt;-</span><span class="fu">lmer</span>(mathach<span class="sc">~</span>ses<span class="sc">+</span>sector<span class="sc">+</span>ses<span class="sc">*</span>sector<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>schoolid),<span class="at">data=</span>dat)</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">summary</span>(nonrandom.model)</span></code></pre></div>
-<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+lmerModLmerTest]
 Formula: mathach ~ ses + sector + ses * sector + (1 | schoolid)
    Data: dat
 
