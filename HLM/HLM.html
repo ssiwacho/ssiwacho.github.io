@@ -451,7 +451,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 </div>
 <div id="โมเดลการวิเคราะห์-1" class="section level3">
 <h3><strong>โมเดลการวิเคราะห์</strong></h3>
-<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%AD%E0%B8%99/2756714/Page/Screen%20Shot%202562-09-28%20at%2010.35.59.png" style="width:60.0%" /></p>
+<p><img src="Screen%20Shot%202562-09-28%20at%2010.35.59.png" style="width:60.0%" /></p>
 <p>เนื่องจากโมเดลการวิเคราะห์นี้จำเป็นต้องใช้ข้อมูลของตัวแปรอิสระในระดับโรงเรียน คือ <code>meanses</code> มาเป็นตัวแปรอธิบายความผันแปรที่เกิดขึ้นในค่าเฉลี่ยผลสัมฤทธิ์ในระดับโรงเรียน การวิเคราะห์จึงจำเป็นต้องมีการเตรียมชุดข้อมูลให้พร้อมก่อนการวิเคราะห์ด้วยการรวมชุดข้อมูล hsb1.sav และ hsb2.sav เข้าด้วยกัน ในโปรแกรม R อาจใช้ฟังก์ชัน <code>merge()</code> ดังนี้</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="co"># hsb1.sav</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> dat1<span class="ot">&lt;-</span><span class="fu">read.spss</span>(<span class="st">&quot;/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756714/dataset/week3/hsb1.sav&quot;</span>, <span class="at">to.data.frame=</span>T)</span>
