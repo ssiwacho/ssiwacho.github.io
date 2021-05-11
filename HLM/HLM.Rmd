@@ -1,0 +1,405 @@
+---
+title: "โมเดลเชิงเส้นระดับลดหลั่น"
+output:
+  rmdformats::downcute:
+    self_contained: FALSE
+---
+
+
+<style type="text/css">
+.main-container {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="150")
+opts_chunk$set(echo=TRUE,
+	             cache=TRUE,
+               prompt=TRUE,
+               tidy=FALSE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=100)
+```
+
+
+
+<p style="line-height:1.3; font-size:16px; color: #353b48; text-align:right;">
+สิวะโชติ ศรีสุทธิยากร
+</br>
+กนิษฐ์ ศรีเคลือบ
+</br>
+</br>
+ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์
+</br>
+จุฬาลงกรณ์มหาวิทยาลัย
+</br>
+</font> 6 May 2021 </font>
+</p>
+
+
+
+
+# เตรียมความพร้อมก่อนเรียน
+
+<p style="text-indent:2.5em;">เนื้อหาในวันนี้จะเรียนผ่านการทำกิจกรรม โดยใช้ชุดข้อมูลตัวอย่างคือชุดข้อมูล High School & Beyond สำรวจโดยศูนย์สถิติการศึกษาแห่งชาติ (National Center for Educational Statistics: NCES) ของสหรัฐอเมริกาในปี ค.ศ. 1982 ประกอบด้วยข้อมูลของนักเรียนจำนวน 7,185 คน จากโรงเรียนจำนวน 160 โรงเรียน ประกอบด้วยชุดข้อมูลระดับนักเรียน [hsb1.sav](https://drive.google.com/file/d/1AvFYXVcLxh3QqtKDBlpSUciUShuItBlV/view?usp=sharing) และชุดข้อมูลระดับโรงเรียน [hsb2.sav](https://drive.google.com/file/d/1RwMRt7eRqTs2eZ7LMfJoPRubutttDWys/view?usp=sharing)</p>
+
+
+<p style="text-indent:2.5em;">ชุดข้อมูลในไฟล์ hsb2.sav ประกอบด้วยตัวแปรในระดับโรงเรียนได้แก่ (1) ขนาดโรงเรียน (size) ที่วัดจากจำนวนนักเรียนในโรงเรียน (2) ประเภทของโรงเรียน (sector) ที่มี 2 ประเภทได้แก่ 1 = โรงเรียนเครือคาทอริก และ 0 = โรงเรียนรัฐบาล (3) สัดส่วนนักเรียนที่เรียนอยู่ในสายวิชาการ (pracad) (4) บรรยากาศทางระเบียบวินัย (disciplinary climate) (5) สัดส่วนของชนกลุ่มน้อย (himinty) โดย 1 = โรงเรียนที่มีชนกลุ่มน้อยมากกว่า 40% และ 0 = โรงเรียนที่มีชนกลุ่มน้อยน้อยกว่าหรือเท่ากับ 40% ของนักเรียนทั้งหมด และ (6) ค่าเฉลี่ยเศรษฐานะของนักเรียนในโรงเรียน (meanses)</p>
+
+
+## ติดตั้ง package ที่จำเป็น
+
+การวิเคราะห์ HLM ด้วยโปรแกรม R จำเป็นต้อง download packages เพิ่มเติมดังนี้
+
+```{r eval=F}
+install.packages("lme4")
+install.packages("lmerTest")
+
+library(lme4)
+library(lmerTest)
+
+```
+
+```{r echo=F}
+library(lme4)
+library(lmerTest)
+```
+
+
+# **Hierarchical Linear Model (HLM)**
+
+<p style="text-indent:2.5em;">สืบเนื่องจากเนื้อหาในสัปดาห์ที่ผ่านมา นิสิตได้ทราบมโนทัศน์ และประเภทของข้อมูลพหุระดับที่มีหลากหลายประเภท ในสัปดาห์นี้จะลงรายละเอียดเกี่ยวกับโมเดลทางสถิติต่าง ๆ สำหรับการวิเคราะห์ข้อมูลพหุระดับแบบระดับลดหลั่น (hierarchical data) ด้วย โมเดลที่เรียกว่า **โมเดลเชิงเส้นแบบลดหลั่น (hierarchical linear model: HLM)** สารสนเทศที่ได้จากโมเดลดังกล่าวจะช่่วยให้นักวิจัยสามารถวิเคราะห์และอธิบายความผันแปรที่เกิดขึ้นในตัวแปรตามที่เกิดขึ้นจากตัวแปรที่อยู่ในระดับสูงกว่าได้ </p>
+
+
+* [โมเดลพื้นฐานภายใต้กรอบ HLM](https://drive.google.com/file/d/1GpP-Pvc8QR17gIA4xAGGMug0d-q-DflN/view?usp=sharing)
+
+โมเดล HLM ประกอบด้วยโมเดลย่อยหลายโมเดล ซึ่งครอบคลุมการวิเคราะห์ส่วนประกอบความแปรปรวนของตัวแปรตาม และการวิเคราะห์ความสัมพันธ์พหุระดับระหว่างตัวแปรตามกับตัวแปรอิสระ รายละเอียดของแต่ละโมเดลจะอธิบายผ่านการทำกิจกรรม 6 กิจกรรม ในหัวข้อต่อไป
+
+
+## **One-Way ANOVA with random effect**
+
+โมเดลการวิเคราะห์ความแปรปรวนทางเดียวแบบอิทธิพลสุ่มใช้สำหรับวิเคราะห์เพื่อเปรียบเทียบค่าเฉลี่ยระหว่างกลุ่มหรือระดับของปัจจัยที่ได้มาจากการสุ่ม จากชุดข้อมูล hsb1.sav ขอให้นิสิตดำเนินการดังต่อไปนี้
+
+```{r}
+# 1. importing data
+library(foreign)
+dat1<-read.spss("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756714/dataset/week3/hsb1.sav", to.data.frame=T)
+head(dat1)
+```
+
+1. พิจารณาการแจกแจงของ `mathach`
+
+2. พิจารณาการแจกแจงของ `mathach` จำแนกตามโรงเรียน
+
+การแจกแจงของ `mathach` ในภาพรวมกับเมื่อจำแนกตามโรงเรียนมีความเหมือนหรือแตกต่างกันอย่างไร? 
+
+```{r fig.width=12}
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+dat1$schoolid<-factor(dat1$schoolid)
+p1<-ggplot(dat1)+geom_density(aes(x=mathach),alpha=0.2)+xlim(-10,40)+theme_minimal()
+p2<-ggplot(dat1)+geom_density(aes(x=mathach, fill=schoolid),alpha=0.2, show.legend = FALSE)+xlim(-10,40)+theme_minimal()
+grid.arrange(p1,p2, ncol=2)
+```
+
+ลองพิจารณาด้วยค่าสถิติ
+
+```{r message=F, fig.width=12}
+dat1%>%summarise(mean=mean(mathach), sd=sd(mathach))
+dat1%>%group_by(schoolid)%>%summarise(mean=mean(mathach), sd=sd(mathach))
+
+aggr<-dat1%>%group_by(schoolid)%>%summarise(mean=mean(mathach), sd=sd(mathach))
+summary(aggr)
+```
+
+```{r message=F, fig.width=12}
+p1<-aggr%>%ggplot()+geom_histogram(aes(x=mean))+xlab("School mathach")+theme_minimal()
+p2<-aggr%>%ggplot()+geom_boxplot(aes(y=mean))+ylab("School mathach")+theme_minimal()
+grid.arrange(p1,p2, ncol=2)
+
+```
+
+### **คำถามวิจัย**
+
+คะแนน mathach ของนักเรียนในแต่ละโรงเรียนมีความแตกต่างกันหรือไม่?
+
+
+### **โมเดลการวิเคราะห์**
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756714/Page/Screen Shot 2562-09-28 at 10.20.46.png){width=60%}
+
+ในกรณีนี้โมเดลการวิเคราะห์มี 2 ระดับ ได้แก่โมเดลระดับนักเรียน และโมเดลระดับโรงเรียนดังนี้
+
+**โมเดลระดับนักเรียน (student-level model)**
+
+$mathach_{ij}=\beta_{0j}+r_{ij}$
+
+**โมเดลระดับโรงเรียน (school-level model)**
+
+$\beta_{0j}=\gamma_{00}+u_{0j}$
+
+จากสมการทั้งสองสามารถนำมารวมกันเพื่อเขียนเป็น**โมเดลรวม (combined model)** ได้ดังนี้
+
+$mathach_{ij}=\gamma_{00}+u_{0j}+r_{ij}$
+
+เมื่อ $i = 1, 2, 3, ..., n_j$ และ $j = 1, 2, 3, ..., J$
+
+จากสมการในโมเดลรวมข้างต้นจะเห็นว่ามีการระบุอิทธิพลที่มีต่อ `mathach` ของนักเรียน 2 ตัวได้แก่ อิทธิพลคงที่ (fixed effect) คือ $\gamma_{00}$ ที่เป็นค่าเฉลี่ยผลสัมฤทธิ์รวม (grand mean) และอิทธิพลสุ่ม (random effect) คือ $u_{0j}$ กับ $r_{ij}$ ที่เป็นความแตกต่างระหว่างโรงเรียน และระหว่างนักเรียนภายในโรงเรียนตามลำดับ โดยที่ $u_{0j} \sim N(0, \tau_{00})$ และ $r_{ij} \sim N(0,\sigma^2)$
+
+**Note:** พารามิเตอร์ในโมเดลข้างต้นมีกี่ตัว อะไรบ้าง แต่ละตัวมีความหมายอย่างไร?
+
+การประมาณค่าพารามิเตอร์ในโมเดลข้างต้นด้วยโปรแกรม R สามารถทำได้โดยใช้ใช้ฟังก์ชัน `lmer()` ซึ่งจะระบุโมเดลโดยอิงจากโมเดลรวม (combined model) จากค่าพารามิเตอร์ของหน่วยข้อมูลในระดับที่ 2 เท่านั้น ในกรณีข้างต้นจึงระบุเพียงพารามิเตอร์ fixed-effect ($\gamma_{00}$) และพารามิเตอร์ random-effect ($u_{0j}$) ดังนี้ `lmer(math~1+(1|schoolid))` 
+
+
+```{r}
+#1. estimate the model parameters
+null.model<-lmer(mathach~1+(1|schoolid),data=dat1)
+
+#2. extract the output
+summary(null.model)
+```
+
+การวิเคราะห์ null model จะให้สารสนเทศที่สำคัญคือปริมาณความแปรปรวนในตัวแปรตามที่เกิดขึ้นอันเนื่องมาจากตัวแปร (ที่ไม่ได้สังเกตค่าในโมเดลนี้) ในแต่ละระดับ (ระดับนักเรียน/ระดับโรงเรียน) ผลการวิเคราะห์ข้างต้นจะเห็นว่า ความแปรปรวนระดับนักเรียนมีค่าเท่ากับ $\sigma^2 = 39.148$ และความแปรปรวนระดับโรงเรียนมีค่าเท่ากับ $\tau = 8.614$ ผลการวิเคราะห์นี้ทำให้สามารถประมาณค่าสถิติที่สำคัญตัวหนึ่งคือ สัมประสิทธิ์สหสัมพันธ์ภายในกลุ่ม (intraclass correlation: ICC) ดังนี้
+
+<centet>$ICC = \frac{8.614}{8.614+39.148} = .1804$</center>
+
+ปัจจุบันการคำนวณ ICC ในข้างต้นสามารถทำได้โดยใช้ package-sjstats ดังนี้
+
+```{r eval=F}
+install.packages("sjstats")
+```
+
+```{r}
+library(sjstats)
+performance::icc(null.model)
+```
+
+นอกจากนี้ผู้วิเคราะห์ยังสามารถเรียกผลทดสอบนัยสำคัญของอิทธิพลสุ่มในโมเดลได้ด้วยฟังก์ชัน package-ranova() ดังนี้
+
+```{r}
+ranova(null.model)
+```
+
+### **ประมาณค่าเฉลี่ยของกลุ่ม ($\beta_{0j}$)**
+
+จากโมเดลในระดับที่ 1 $mathach_{ij}=\beta_{0j}+r_{ij}$ จะเห็นว่าพารามิเตอร์ $\beta_{0j}$ คือพารามิเตอร์จุดตัดแกนซึ่งในกรณีนี้มีความหมายเป็นค่าเฉลี่ยผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของแต่ละโรงเรียน (group mean) เมื่อ $j=1,2,...,J$
+
+การประมาณค่าเฉลี่ยของกลุ่มดังกล่าวใน R สามารถเขียนคำสั่งได้ดังนี้
+
+```{r}
+intercept<-coef(null.model)
+intercept<-intercept[1]
+summary(intercept$schoolid)
+names(intercept$schoolid)<-"group.mean"
+intercept$schoolid%>%
+      ggplot()+geom_histogram(aes(x=group.mean))+
+         xlab(expression(beta[0[j]]==gamma[00]+u[0[j]]))+
+        theme_minimal()
+```
+
+จากผลการวิเคราะห์ข้างต้นจะเห็นว่าผลสัมฤทธิ์ทางการเรียนเฉลี่ยในระดับโรงเรียนมีค่าอยู่ในช่วง 5.234 ถึง 19.115 
+
+### **การวินิจฉัยความเหมาะสมของโมเดลการวิเคราะห์**
+
+```{r}
+#calculate level-1 residuals
+res1<-residuals(null.model)
+
+#calculae level-2 residuals
+res2<-dat1$mathach-12.6370-res1
+```
+
+**(1) normality**
+
+```{r fig.width=12}
+par(mfrow=c(1,2))
+hist(res1)
+hist(res2)
+
+library(ggpubr)
+p1<-ggqqplot(res1)
+p2<-ggqqplot(res2)
+grid.arrange(p1,p2, ncol=2)
+
+```
+
+**(2) homogeneity of variances**
+
+```{r fig.width=12}
+temp<-dat1
+temp$e2<-res1^2
+temp$res1<-res1
+temp$schoolid<-factor(temp$schoolid)
+temp%>%ggplot()+geom_boxplot(aes(y=res1,fill=schoolid),show.legend=F)+theme_minimal()
+
+temp%>%group_by(schoolid)%>%summarise(var=var(res1))%>%
+      ggplot()+geom_histogram(aes(x=var))+theme_minimal()
+
+temp%>%group_by(schoolid)%>%summarise(var=var(res1))%>%summary()
+
+#log-determinant criterion
+log(71.93)/log(12.54)
+```
+
+
+---
+
+## **Means as Outcomes Regression Model**
+
+จากผลการวิเคราะห์ใน nullmodel จะเห็นว่าสามารถแยกส่วนประกอบความแปรปรวนในผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ได้เป็นสองส่วนได้แก่ ความแปรปรวนระดับนักเรียน และความแปรปรวนในระดับโรงเรียน ซึ่งแสดงว่าผลสัมฤทธิ์ดังกล่าวมีความผันแปรไปตามโรงเรียนที่แตกต่างกันด้วย
+
+ในการวิจัยบางงานอาจสนใจอธิบายความผันแปรของผลสัมฤทธิ์ในระดับโรงเรียนดังกล่าว โดยอาจหาตัวแปรอิสระในระดับโรงเรียนมาอธิบาย โมเดลการวิเคราะห์ในกรณีนี้จึงจะมีการเพิ่มตัวแปรอิสระในโมเดลระดับโรงเรียนเพื่ออธิบายความผันแปรในพารามิเตอร์ intercept เรียกโมเดลการวิเคราะห์นี้ว่า mean as outcome regression model หรือ โมเดลสัมประสิทธิ์จุดตัดแกนสุ่ม (random intercept model)
+
+
+### **คำถามวิจัย**
+
+เศรษฐานะของนักเรียนในระดับโรงเรียนส่งผลต่อคะแนนเฉลี่ยผลสัมฤทธิ์ทางการเรียนคณิตศาสตร์ของนักเรียนในระดับโรงเรียนหรือไม่่?
+
+
+### **โมเดลการวิเคราะห์**
+
+![](Screen Shot 2562-09-28 at 10.35.59.png){width=60%}
+
+เนื่องจากโมเดลการวิเคราะห์นี้จำเป็นต้องใช้ข้อมูลของตัวแปรอิสระในระดับโรงเรียน คือ `meanses` มาเป็นตัวแปรอธิบายความผันแปรที่เกิดขึ้นในค่าเฉลี่ยผลสัมฤทธิ์ในระดับโรงเรียน การวิเคราะห์จึงจำเป็นต้องมีการเตรียมชุดข้อมูลให้พร้อมก่อนการวิเคราะห์ด้วยการรวมชุดข้อมูล hsb1.sav และ hsb2.sav เข้าด้วยกัน ในโปรแกรม R อาจใช้ฟังก์ชัน `merge()` ดังนี้
+
+```{r}
+# hsb1.sav
+dat1<-read.spss("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756714/dataset/week3/hsb1.sav", to.data.frame=T)
+head(dat1)
+
+# hsb2.sav
+dat2<-read.spss("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756714/dataset/week3/hsb2.sav", to.data.frame=T)
+head(dat2)
+
+# merge dataset
+dat<-merge(dat2,dat1,by="schoolid")
+str(dat)
+```
+
+เมื่อยุบรวมชุดข้อมูลแล้ว สามารถประมาณค่าพารามิเตอร์ในโมเดลโดยกำหนดโมเดลในฟังก์ชัน `lmer()` ด้วยหลักภาษาเหมือนเดิมดังนี้
+
+```{r eval=F}
+mean.model<-lmer(mathach~meanses+(1|schoolid),data=dat)
+summary(mean.model)
+```
+
+```{r echo=F}
+mean.model<-lmer(mathach~meanses+(1|schoolid),data=dat)
+summary(mean.model)
+```
+
+ผลการวิเคราะห์ข้างต้นหมายความว่าอย่างไร??
+
+---
+
+## **One-Way ANCOVA with random effect**
+
+
+ผลการวิเคราะห์ null model เราทราบแล้วว่าความแปรปรวนระหว่างกลุ่ม (ระหว่างโรงเรียน) มีนัยสำคัญทางสถิติ ซึ่งให้ข้อสรุปว่า ผลสัมฤทธิ์ทางการเรียนของนักเรียนในแต่ละโรงเรียนมีค่าเฉลี่ยที่แตกต่างกัน อย่างไรก็ตามอาจมีข้อสงสัยว่าความแตกต่างที่เกิดขึ้นนั้นไม่ได้เป็นเพราะการบริหารจัดการของโรงเรียนแต่เพียงอย่างเดียว แต่อาจะเป็นเพราะพื้นฐานทางบ้านของผู้เรียนในแต่ละโรงเรียนไม่เท่าเทียมกันด้วย เพื่อพิสูจน์ข้อสงสัยนี้ผู้วิจัยจึงนำตัวแปรเศรษฐานะ (ses) ของผู้เรียนมาเป็นตัวแปรควบคุมในโมเดล และทำการวิเคราะห์โดยใช้เทคนิคการวิเคราะห์ความแปรปรวนร่วม ดังนี้
+
+
+### **คำถามวิจัย**
+
+เมื่อมีการควบคุมปัจจัยด้านเศรษฐานะให้คงที่ ผลสัมฤทธิ์ของนักเรียนในระดับโรงเรียนมีความแตกต่างกันหรือไม่ อย่างไร?
+
+### **โมเดลการวิเคราะห์**
+
+![](Screen Shot 2562-09-28 at 11.29.31.png){width=60%}
+
+
+เพื่อให้ค่าจุดตัดแกนมีความหมายและสามารถแปลความได้อย่างสมบูรณ์ การวิเคราะห์ความแปรปรวนร่วมจึงมักมีการ centering ตัวแปรควบคุมก่อนการวิเคราะห์ ดังนี้
+
+```{r}
+#centering ses by groupmean
+ses.cen<-dat$ses-dat$meanses
+dat$ses.cen<-ses.cen
+```
+
+การประมาณค่าพารามิเตอร์ในโมเดลการวิเคราะห์สามารถทำได้ดังนี้
+
+```{r}
+ancova.model<-lmer(mathach~ses.cen+(1|schoolid),data=dat,REML=F)
+summary(ancova.model)
+```
+
+โมเดล random effect ANCOVA มีลักษณะเกือบเหมือนกับโมเดล ANCOVA แบบปกติ ต่างกันเพียงอิทธิพลของตัวแปรอิสระแบบจัดประเภทที่มีต่อตัวแปรตามเป็นอิทธิพลแบบสุ่ม ดังนั้นข้อตกลงเบื้องต้นของโมเดล random effect ANCOVA จึงเหมือนกับโมเดล ANCOVA แบบปกติทุกประการ ข้อตกลงเบื้องต้นที่สำคัญคือ homogeneity of regression slope ที่กำหนดให้สัมประสิทธิ์ความชันของตัวแปร covariate มีค่าเท่ากันในแต่ละกลุ่มหรือระดับของปัจจัย 
+
+นิสิตคิดว่า assumption ดังกล่าวเป็นจริงในข้อมูลชุดนี้หรือไม่? จะตรวจสอบได้อย่างไร? และหากไม่เป็นจริงจะแก้ปัญหาอย่างไร?
+
+
+---
+
+## **Random-coefficient Regression model**
+
+โมเดลนี้มีลักษณะเฉพาะคือมีการกำหนดให้สัมประสิทธิ์ความถดถอยทั้งหมดของโมเดลเป็นอิทธิพลแบบสุ่ม ซึ่งทำให้จุดตัดแกนและอิทธิพลของตัวแปรอิสระที่มีต่อตัวแปรตามมีความแตกต่างกันอย่างสุ่มระหว่างกลุ่ม
+
+### **คำถามวิจัย**
+
+- อิทธิพลของ ses ที่มีต่อ mathach มีความแตกต่างกันระหว่างโรงเรียนหรือไม่
+
+- เมื่อควบคุมอิทธิพลสุ่มของ ses ให้คงที่ แล้ว mathach ในระดับโรงเรียนมีความแตกต่างกันหรือไม่
+
+- คุณภาพและความเหลื่อมล้ำทางการศึกษาของแต่ละโรงเรียนเป็นอย่างไร
+
+### **โมเดลการวิเคราะห์**
+
+
+
+![](Screen Shot 2562-09-28 at 12.34.06.png){width=60%}
+
+การกำหนดโมเดลการวิเคราะห์ในฟังก์ชัน `lmer()` สามารถทำได้ในทำนองเดียวกัน ดังนี้
+
+```{r}
+random.coef<-lmer(mathach~ses.cen+(1+ses.cen|schoolid), data=dat)
+summary(random.coef)
+```
+
+```{r fig.width=10}
+coef<-coef(random.coef)
+coef<-coef$schoolid
+names(coef)<-c("quality","ineq")
+coef$schoolid<-rownames(coef)
+sector<-dat%>%select(schoolid, sector)
+coef<-merge(coef,sector, by="schoolid")
+coef$sector<-factor(coef$sector, labels=c("Public","Catholic"))
+coef%>%ggplot()+geom_point(aes(x=ineq, y=quality,col=sector))
+```
+
+
+
+
+---
+
+
+
+## **Intercepts and slopes as outcomes model**
+
+![](Screen Shot 2562-09-28 at 12.37.18.png){width=60%}
+
+
+
+---
+
+
+## **Non-randomly varying slopes**
+
+![](Screen Shot 2562-09-28 at 12.05.01.png){width=60%}
+
+```{r}
+nonrandom.model<-lmer(mathach~ses+sector+ses*sector+(1|schoolid),data=dat)
+summary(nonrandom.model)
+```
+
+
+<center>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2758501 STAT info ED/ภาคต้น 2562/page/edustat (1).png){width=20%}</center>
