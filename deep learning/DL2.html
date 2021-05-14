@@ -194,7 +194,6 @@
           <li><a href="#the-first-dl-model-slp-and-mlp-with-keras"><strong>The first DL model (SLP and MLP) with Keras</strong></a>
           <ul>
           <li><a href="#ติดตั้ง-package">ติดตั้ง package</a></li>
-          <li><a href="#regression-example">Regression example</a></li>
           <li><a href="#classification-example">Classification example</a></li>
           </ul></li>
           </ul>
@@ -318,131 +317,10 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;keras&quot;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install_keras</span>()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(keras)</span></code></pre></div>
-</div>
-</div>
-<div id="regression-example" class="section level2">
-<h2>Regression example</h2>
-<p>จากชุดข้อมูล crimm.csv</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/Machine Learning/เอกสาร/ep2_regression/_02_multiple regression/crimm.csv&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[, <span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code></pre></div>
-<pre><code>  householdSize pct.lao pct.thai pct.myanmar pct.cambodia numPop.urban
-1          3.10    1.37    91.78        6.50         1.88        11980
-2          2.82    0.80    95.57        3.44         0.85        23123
-3          2.43    0.74    94.33        3.43         2.35        29344
-4          2.40    1.70    97.35        0.50         0.70            0
-5          2.76    0.53    89.16        1.17         0.52            0
-6          2.45    2.51    95.65        0.90         0.95       140494
-  medIncome.household pctWPubAsst pctPop.poor pchLessM3 PctUnemployed
-1               75122        1.03        1.96      5.81          2.70
-2               47917        2.75        3.98      5.61          2.43
-3               35669        2.94        4.75      2.80          4.01
-4               20580       11.71       17.23     11.05          9.86
-5               17390       11.21       29.99     12.15          9.08
-6               21577        7.12       17.78      8.76          5.72
-  NumIlllegal.labor HousVacant Num.HomelessInShelters Num.HomelessInStreet
-1              1277         64                     11                    0
-2              1920        240                      0                    0
-3              1468        544                     16                    0
-4               339        669                      0                    0
-5               196        333                      2                    0
-6              2091       5119                    327                    4
-  PopDens TheifperPop
-1  1845.9      114.85
-2  2186.7      242.37
-3  2780.9      758.14
-4  3217.7     1301.78
-5   974.2      728.93
-6  1995.7     1386.46</code></pre>
-<p>สมมุติว่าต้องการสร้างโมเดลทำนายอัตราการเกิดคดีโจรกรรมในแต่ละพื้นที่โดยใช้ตัวแปรอิสระทั้งหมดที่มีในชุดข้อมูล</p>
-<div id="import-and-manipulating-data" class="section level3">
-<h3>1. Import and manipulating data</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>train.id <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(dat<span class="sc">$</span>TheifperPop, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> F)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>training <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat[train.id, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>])</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(training) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>training_outcome <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat[train.id, <span class="dv">17</span>])</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>testing <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat[<span class="sc">-</span>train.id, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>])</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(testing) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>testing_outcome <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat[<span class="sc">-</span>train.id, <span class="dv">17</span>])</span></code></pre></div>
-</div>
-<div id="create-the-model-in-python" class="section level3">
-<h3>2. Create the Model (in Python)</h3>
-<p>ระบุ DL model โดยกำหนดให้มี hidden layer 1 ชั้น จำนวน 5 neurons</p>
-<p>การสร้างโมเดล DL ข้างต้นด้วย Sequential API ของ Keras package สามารถทำได้โดยเขียนคำสั่งดังนี้</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#1. Create a Sequential model</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#2. Add an input layer and a hidden layer with 2 neurons.</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>model.add(Dense(units <span class="op">=</span> <span class="dv">5</span>, input_shape<span class="op">=</span>[<span class="dv">16</span>],</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                activation<span class="op">=</span><span class="st">&quot;relu&quot;</span>))</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>model.add(Dense(units <span class="op">=</span> <span class="dv">5</span>, activation<span class="op">=</span><span class="st">&quot;relu&quot;</span>))</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#3. Add 1-neuron output layer</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>model.add(Dense(units <span class="op">=</span> <span class="dv">1</span>))</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#4. model summary</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>model.summary()</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#5. compile and train the model</span></span></code></pre></div>
-<pre><code>Model: &quot;sequential_48&quot;
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #   
-=================================================================
-dense_138 (Dense)            (None, 5)                 85        
-_________________________________________________________________
-dense_139 (Dense)            (None, 5)                 30        
-_________________________________________________________________
-dense_140 (Dense)            (None, 1)                 6         
-=================================================================
-Total params: 121
-Trainable params: 121
-Non-trainable params: 0
-_________________________________________________________________</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer <span class="op">=</span> <span class="st">&quot;adam&quot;</span>, loss <span class="op">=</span> <span class="st">&quot;mse&quot;</span>)  <span class="co">#compiling</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># manipulating data</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> np.array(r.training)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>train_out <span class="op">=</span> np.array(r.training_outcome)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> np.array(r.testing)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>test_out<span class="op">=</span> np.array(r.testing_outcome)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(train, train_out, epochs<span class="op">=</span><span class="dv">500</span>, verbose<span class="op">=</span><span class="dv">0</span>) <span class="co">#training</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#7. calcualte the predicted value using training model</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># การคำนวณค่าทำนายของตัวแปรตามสามารถทำได้โดยใช้ method `predict()` ดังนี้</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>pred <span class="op">=</span> model.predict(test)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#8. Model Evaluation</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># ผู้วิเคราะห์ยังสามารถเรียกดู performance metric ของโมเดลได้โดยใช้ method `evaluate()` ดังตัวอย่างต่อไปนี้</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> model.evaluate(test, test_out)</span></code></pre></div>
-<pre><code>
- 1/14 [=&gt;............................] - ETA: 0s - loss: 174522.9844
-14/14 [==============================] - 0s 568us/step - loss: 259533.5312</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>math.sqrt(mse) <span class="co">#RMSE</span></span></code></pre></div>
-<pre><code>509.44433577182895</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(pred, test_out)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="DL2_files/figure-html/unnamed-chunk-9-1.png" width="768" /></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">&#39;loss&#39;</span>])</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;model loss&#39;</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;loss&#39;</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;epoch&#39;</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">&#39;train&#39;</span>, <span class="st">&#39;test&#39;</span>], loc<span class="op">=</span><span class="st">&#39;upper left&#39;</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="DL2_files/figure-html/unnamed-chunk-9-2.png" width="768" /></p>
+<ul>
+<li><p><a href="https://ssiwacho.github.io/deep%20learning/DL_reg_1.html">regression example</a></p></li>
+<li><p><a href="">classification example</a></p></li>
+</ul>
 </div>
 </div>
 <div id="classification-example" class="section level2">

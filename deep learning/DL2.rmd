@@ -226,96 +226,9 @@ install_keras()
 library(keras)
 ```
 
-## Regression example
+- [regression example](https://ssiwacho.github.io/deep%20learning/DL_reg_1.html)
 
-จากชุดข้อมูล crimm.csv 
-
-```{r}
-dat<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/Machine Learning/เอกสาร/ep2_regression/_02_multiple regression/crimm.csv")
-dat<-dat[,-1]
-head(dat)
-```
-
-สมมุติว่าต้องการสร้างโมเดลทำนายอัตราการเกิดคดีโจรกรรมในแต่ละพื้นที่โดยใช้ตัวแปรอิสระทั้งหมดที่มีในชุดข้อมูล 
-
-### 1. Import and manipulating data
-
-```{r}
-library(dplyr)
-library(caret)
-
-train.id<-createDataPartition(dat$TheifperPop, p=0.8, list=F)
-training<-as.matrix(dat[train.id,1:16])
-dimnames(training)<-NULL
-training_outcome<-as.numeric(dat[train.id,17])
-
-testing<-as.matrix(dat[-train.id, 1:16])
-dimnames(testing)<-NULL
-testing_outcome<-as.numeric(dat[-train.id,17])
-
-```
-
-### 2. Create the Model (in Python)
-
-ระบุ DL model โดยกำหนดให้มี hidden layer 1 ชั้น จำนวน 5 neurons 
-
-การสร้างโมเดล DL ข้างต้นด้วย Sequential API ของ Keras package สามารถทำได้โดยเขียนคำสั่งดังนี้
-
-```{python results=T, message=F, warnings=F}
-from keras.models import Sequential
-from keras.layers import Dense
-
-#1. Create a Sequential model
-model = Sequential()
-
-#2. Add an input layer and a hidden layer with 2 neurons.
-model.add(Dense(units = 5, input_shape=[16],
-                activation="relu"))
-
-model.add(Dense(units = 5, activation="relu"))
-
-#3. Add 1-neuron output layer
-model.add(Dense(units = 1))
-
-#4. model summary
-model.summary()
-
-#5. compile and train the model
-model.compile(optimizer = "adam", loss = "mse")  #compiling
-
-# manipulating data
-import numpy as np
-train = np.array(r.training)
-train_out = np.array(r.training_outcome)
-test = np.array(r.testing)
-test_out= np.array(r.testing_outcome)
-
-history = model.fit(train, train_out, epochs=500, verbose=0) #training
-
-
-#7. calcualte the predicted value using training model
-# การคำนวณค่าทำนายของตัวแปรตามสามารถทำได้โดยใช้ method `predict()` ดังนี้
-pred = model.predict(test)
-
-
-import math
-#8. Model Evaluation
-# ผู้วิเคราะห์ยังสามารถเรียกดู performance metric ของโมเดลได้โดยใช้ method `evaluate()` ดังตัวอย่างต่อไปนี้
-mse = model.evaluate(test, test_out)
-
-math.sqrt(mse) #RMSE
-
-import matplotlib.pyplot as plt
-plt.scatter(pred, test_out)
-plt.show()
-
-plt.plot(history.history['loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-```
+- [classification example]()
 
 
 
