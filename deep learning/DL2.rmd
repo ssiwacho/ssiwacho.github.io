@@ -290,7 +290,7 @@ train_out = np.array(r.training_outcome)
 test = np.array(r.testing)
 test_out= np.array(r.testing_outcome)
 
-history = model.fit(train, train_out, epochs=500) #training
+history = model.fit(train, train_out, epochs=500, verbose=0) #training
 
 
 #7. calcualte the predicted value using training model
