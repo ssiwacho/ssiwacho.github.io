@@ -1,0 +1,338 @@
+---
+title: "การเรียนรู้เชิงลึก"
+output:
+  rmdformats::robobook:
+    self_contained: FALSE
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+library(reticulate)
+
+## Global options
+options(max.print="150")
+opts_chunk$set(echo=TRUE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=100)
+```
+
+
+
+<p style="line-height:1.3; font-size:16px; color: #353b48; text-align:right;">
+สิวะโชติ ศรีสุทธิยากร
+</br>
+</br>
+ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์
+</br>
+จุฬาลงกรณ์มหาวิทยาลัย
+</br>
+</font> 13 May 2021 </font>
+</p>
+
+
+
+
+</body>
+</html>
+
+
+
+# **Introduction**
+
+## **Deep learning model**
+
+โมเดล deep learning พื้นฐานที่สุดจะประกอบด้วยส่วนประกอบหลักที่เรียกว่าชั้น (layer) จำนวน 3 ส่วนได้แก่ 
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-13 at 09.15.17.png){width=50%}</left>
+
+
+- input layer 
+
+- hidden layer
+
+- output layer
+
+จากรูปจะเห็นว่าโมเดลมี input layer ที่ประกอบด้วยหน่วยย่อยหรือที่เรียกว่า นิวรอน (neurons) จำนวน 2 หน่วย โดยนิวรอนใน input layer จะใช้แทนตัวแปรอิสระของโมเดล ในที่นี้จะได้ว่า $X = [x_1, x_2]$ 
+
+โมเดลจะนำข้อมูลนำเข้าใน input layer ที่กำหนดมาประมวลผลเป็น hidden layer และส่งผ่านค่าไปยัง output layer ในท้ายที่สุด
+
+การประมวลผลของ neuron ใน hidden layer จะนำข้อมูลของ neuron ที่อยู่ใน layer ก่อนหน้ามาคำนวณผลรวมเชิงเส้นแบบถ่วงน้ำหนัก จากตัวอย่างของ deep learning model ในข้างต้น จะได้ว่าผลรวมเชิงเส้นของแต่ละ neuron ใน hidden layer คำนวณได้ดังนี้
+
+$h_j=b+w_1x_1+w_2x_2$
+
+เรียก $w_k$ ว่าน้ำหนัก (weight) และ $b$ ว่าค่าความลำเอียง (bias) 
+
+โดยทั่วไปมีความเป็นไปได้ที่ค่าของผลรวมเชิงเส้นที่คำนวณได้ข้างต้นจะมีพิสัยที่ไม่สอดคล้องกับตัวแปรตามที่ต้องการทำนาย จึงมีการนำค่าผลรวมเชิงเส้นดังกล่าวมาแปลงค่าด้วยฟังก์ชันที่เรียกว่า activation function ก่อนที่จะส่งค่าไปยัง neuron ใน layer ถัดไป ดังตัวอย่างในรูปด้านล่าง
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-13 at 09.35.57.png){width=70%}</left>
+
+
+
+## **Activation function**
+
+activation function เป็นฟังก์ชันทางคณิตศาสตร์ ที่ผู้วิเคราะห์ใช้สำหรับแปลงค่าผลรวมเชิงเส้นของข้อมูลนำเข้า ให้มีพิสัยอยู่ในช่วงที่สมเหตุสมผลหรือสอดคล้องกับตัวแปรตามที่ต้องการทำนาย 
+
+activation function ที่ใช้ในการวิเคราะห์มีได้หลากหลาย โดยอาจจำแนกเป็น 2 ประเภทได้แก่ **linear activation function** ซึ่งเขียนในรูปทั่วไปดังนี้
+
+$\sigma(x)=m(x)+c$ 
+ 
+ฟังก์ชันประเภทนี้จะไม่ได้ทำให้พิสัยของข้อมูลนำเข้าเปลี่ยนแปลงไปจากเดิม กล่าวคือหาก $x \in [-\infty, \infty]$ แล้ว $\sigma(x) \in [-\infty, \infty]$ เช่นเดิม แต่อาจช่วยแปลงสเกลของข้อมูลนำเข้าให้เหมาะสมมากหรือใกล้เคียงกับช่วงที่เป็นไปได้ของตัวแปรตามมากขึ้น ดังตัวอย่างในรูปด้านล่าง
+
+```{r echo=F, fig.width=5, fig.height=4}
+x<-seq(-10,10,1)
+y<-1+0.2*x
+par(mar=c(4,4,1,1))
+plot(x,y, xlab="x", ylab=expression(sigma(x)),type="l")
+```
+
+และ **nonlinear activation function** ซึ่งมักใช้ใช้บ่อยกว่า linear activation function ทั้งนี้เป็นเพราะมีความสามารถที่จะแปลงพิสัยของข้อมูลนำเข้าให้อยู่ในช่วงที่เหมาะสมได้ เช่นแปลง $x \in [-\infty, \infty]$ ให้อยู่ในช่วง $[0,1]$ หรือ $[0, \infty]$ หรือ $[-1,1]$ 
+
+
+### ตัวอย่าง activation function
+
+**Sigmoid function:** $\sigma(x)=\frac{1}{1+exp(-x)}$
+
+เหมาะสำหรับใช้เป็น activation function ในปัญหา binary classification ฟังก์ชันนี้จะแปลงข้อมูลนำเข้าในอยู่ในพิสัย $[0,1]$ 
+
+**Hyperbolic Tangent function:** $\sigma(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}$
+
+ฟังก์ชันนี้มีลักษณะคล้ายกับ sigmoid function แต่พิสัยของฟังก์ชันจะอยู่ในช่วง $[-1,1]$ บางครั้งเรียกว่า sigmoidal funcion หรือ tanh function
+
+```{r echo=F, fig.width=4, fig.height=3, fig.align="left"}
+x<-seq(-10,10,1)
+y<-1/(1+exp(-x))
+z<-(exp(x)-exp(-x))/(exp(x)+exp(-x))
+par(mar=c(4,4,1,1))
+plot(x,y, xlab="x", ylab="Sigmoid function",type="l", ylim=c(-1,1))
+points(x,z, xlab="x", ylab="tanh function",type="l", lty=2)
+legend(3,-0.5, lty=c(1,2), legend=c("Sigmoid","tanh"),cex=0.6)
+abline(h=0, lty=3, col="grey")
+abline(h=-1, lty=3, col="grey")
+abline(h=1, lty=3, col="grey")
+```
+
+**Rectified Linear Unit:** $\sigma(x)=max(0,x)$
+
+เป็น activation function ที่มักใช้บ่อยใน hidden layer โดยพิสัยของฟังก์ชันจะอยู่ในช่วง $[0,\infty]$ ดังรูป
+
+```{r echo=F, fig.width=4, fig.height=3, fig.align="left"}
+x<-seq(-10,10,1)
+y<-ifelse(x>0,x,0)
+par(mar=c(4,4,1,1))
+plot(x,y, xlab="x", ylab="ReLU function",type="l")
+grid(5,5)
+```
+
+**Leaky Rectified Linear Unit:** $\sigma(x)= \begin{cases} x,& \text{if } x\geq 1\\ax, & \text{otherwise}\end{cases}$
+
+```{r echo=F, fig.width=4, fig.height=3, fig.align="left"}
+x<-seq(-10,10,1)
+y<-ifelse(x>0,x,0.05*x)
+par(mar=c(4,4,1,1))
+plot(x,y, xlab="x", ylab="ReLU function",type="l")
+grid(5,5)
+```
+
+**Softmax** 
+
+softmax activation function เป็น function ที่เหมาะสำหรับใช้ในปัญหา multi-class classification จากสูตรของฟังก์ชันจะเห็นว่าผลลัพธ์ที่ได้จะเป็นความน่าจะเป็นที่มีพิสัยอยู่ในช่วง $[0,1]$
+
+กำหนดให้ $x=(x_1, x_2, x_3, x_4)$ เป็นเวกเตอร์ของข้อมูลนำเข้า และตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่มี 3 ระดับได้แก่ $a, b, c$ 
+
+สมมุติว่าต้องการหาความน่าจะเป็นของการเกิดผลลัพธ์ $a, b, c$ เมื่อกำหนดข้อมูลนำเข้า $x$ จะสามารถหาได้โดยใช้ความน่าจะเป็นแบบมีเงื่อนไข (conditional probability) ดังนี้
+
+
+$P(a|x)=\frac{y_a}{y_a+y_b+y_c}$
+
+$P(b|x)=\frac{y_b}{y_a+y_b+y_c}$
+
+$P(c|x)=\frac{y_c}{y_a+y_b+y_c}$
+
+เมื่อ
+
+$y_a=w_{1,a}x_1+w_{2,a}x_2+w_{3,a}x_3+w_{4,a}x_4$
+
+$y_b=w_{1,b}x_1+w_{2,b}x_2+w_{3,b}x_3+w_{4,b}x_4$
+
+$y_c=w_{1,c}x_1+w_{2,c}x_2+w_{3,c}x_3+w_{4,c}x_4$
+
+จะสังเกตเห็นว่า $P(a|x)+P(b|x)+P(c|x)=1$
+
+เนื่องจากผลรวมเชิงเส้นในข้างต้นมีพิสัยเป็นจำนวนจริง จึงทำให้ผลรวมเชิงเส้นดังกล่าวสามารถมีค่าติดลบได้ ซึ่งอาจส่งผลให้ค่าความน่าจะเป็นแบบมีเงื่อนไขมีค่าอยู่นอกช่วง $[0,1]$ 
+
+เพื่อแก้ปัญหานี้จึงมีการใช้ฟังก์ชัน exponential แปลงพิสัยของผลรวมเชิงเส้นที่เป็นจำนวนจริงให้อยู่ในช่วง $[0, \infty]$ ซึ่งทำให้ sofmax activation function สามารถเขียนในรูปทั่วไปได้ดังนี้
+
+กำหนดให้ $x = (x_1, x_2, x_3, ..., x_p)^T$ เป็นเวกเตอร์ข้อมูลนำเข้าของตัวแปรอิสระจำนวน $p$ ตัว และ $y$ เป็นตัวแปรตามแบบจัดประเภทที่มีจำนวน $k$ ระดับ softmax activation function นิยามดังนี้
+
+
+$\sigma(x)=P(y=y_m|x)=\frac{exp(x_i)}{\sum_{j=1}^pexp(x_j)}$
+
+เมื่อ $i = 1,2,...,p$ และ $m = 1,2,...,k$
+
+
+์Note: สังเกตว่า DL model ทำนายตัวแปรตามที่ต้องการด้วยการแยกส่วนการประมวลผลออกเป็นส่วนย่อย ๆ หลาย ๆ ส่วน โดยที่แต่ละส่วนถูกบรรจุอยู่ใน neuron
+
+
+## **ประเภทของ ​DL model**
+
+- Multilayer Perceptron Model (MLP models)
+
+- Convolutional Neural Network (CNNs)
+
+- Recurrent Neural Network (RNNs)
+
+- Restricted Boltzmann Machines (RBMs)
+
+- Deep Belief Networks (DBNs)
+
+
+# **The first DL model (SLP and MLP) with Keras**
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/1200px-Keras_logo.png){width=30%}
+
+หนังสือบางเล่มเรียก DL ประเภทนี้ว่า Feedforward neural networks (FFNNs) เป็นโมเดล DL พื้นฐานที่ใช้กันทั่วไป ภายในโมเดลประกอบด้วย input, hidden และ output layers ดังที่กล่าวมาแล้ว โมเดลประเภทนี้สามารถประยุกต์ใช้ได้กับทั้งปัญหา classification และ regression
+
+หัวข้อนี้จะกล่าวถึงการสร้าง DL model พื้นฐานโดยใช้ package-keras 
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-14 at 10.04.28.png)
+
+นิสิตสามารถศึกษาภาพรวมของ package-keras ได้จากคลิปด้านล่าง
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/j_pJmXJwMLA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## ติดตั้ง package
+
+keras สามารถติดตั้งและเรียกใช้งานได้ทั้งบน python และ R  
+
+### สำหรับ python
+
+```{python eval=F}
+pip install --upgrade tensorflow
+pip install keras
+```
+
+### สำหรับ R
+
+```{r eval=F}
+install.packages("keras")
+install_keras()
+library(keras)
+```
+
+## Regression example
+
+จากชุดข้อมูล crimm.csv 
+
+```{r}
+dat<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/Machine Learning/เอกสาร/ep2_regression/_02_multiple regression/crimm.csv")
+dat<-dat[,-1]
+head(dat)
+```
+
+สมมุติว่าต้องการสร้างโมเดลทำนายอัตราการเกิดคดีโจรกรรมในแต่ละพื้นที่โดยใช้ตัวแปรอิสระทั้งหมดที่มีในชุดข้อมูล 
+
+### 1. Import and manipulating data
+
+```{r}
+library(dplyr)
+library(caret)
+
+train.id<-createDataPartition(dat$TheifperPop, p=0.8, list=F)
+training<-as.matrix(dat[train.id,1:16])
+dimnames(training)<-NULL
+training_outcome<-as.numeric(dat[train.id,17])
+
+testing<-as.matrix(dat[-train.id, 1:16])
+dimnames(testing)<-NULL
+testing_outcome<-as.numeric(dat[-train.id,17])
+
+```
+
+### 2. Create the Model (in Python)
+
+ระบุ DL model โดยกำหนดให้มี hidden layer 1 ชั้น จำนวน 5 neurons 
+
+การสร้างโมเดล DL ข้างต้นด้วย Sequential API ของ Keras package สามารถทำได้โดยเขียนคำสั่งดังนี้
+
+```{python results=T, message=F, warnings=F}
+from keras.models import Sequential
+from keras.layers import Dense
+
+#1. Create a Sequential model
+model = Sequential()
+
+#2. Add an input layer and a hidden layer with 2 neurons.
+model.add(Dense(units = 5, input_shape=[16],
+                activation="relu"))
+
+model.add(Dense(units = 5, activation="relu"))
+
+#3. Add 1-neuron output layer
+model.add(Dense(units = 1))
+
+#4. model summary
+model.summary()
+
+#5. compile and train the model
+model.compile(optimizer = "adam", loss = "mse")  #compiling
+
+# manipulating data
+import numpy as np
+train = np.array(r.training)
+train_out = np.array(r.training_outcome)
+test = np.array(r.testing)
+test_out= np.array(r.testing_outcome)
+
+history = model.fit(train, train_out, epochs=500) #training
+
+
+#7. calcualte the predicted value using training model
+# การคำนวณค่าทำนายของตัวแปรตามสามารถทำได้โดยใช้ method `predict()` ดังนี้
+pred = model.predict(test)
+
+
+import math
+#8. Model Evaluation
+# ผู้วิเคราะห์ยังสามารถเรียกดู performance metric ของโมเดลได้โดยใช้ method `evaluate()` ดังตัวอย่างต่อไปนี้
+mse = model.evaluate(test, test_out)
+
+math.sqrt(mse) #RMSE
+
+import matplotlib.pyplot as plt
+plt.scatter(pred, test_out)
+plt.show()
+
+plt.plot(history.history['loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+```
+
+
+
+
+
+
+
+
+
+## Classification example
+
+```
+
+
+
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-13 at 13.44.05.png){width=40%}</left>
+
+
+
