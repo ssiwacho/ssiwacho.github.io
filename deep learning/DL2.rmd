@@ -46,22 +46,45 @@ opts_knit$set(width=100)
 
 # **Introduction**
 
-## **Deep learning model**
+DL model กลุ่มของอัลกอริทึมการเรียนรู้ของเครื่องที่มีความสามารถสูงมากในปัจจุบัน โดยสามารถทำนายค่าของตัวแปรเป้าหมายได้อย่างมีประสิทธิภาพ และแม่นยำ DL ถูกนำไปประยุกต์ใช้ในหลากหลายวงการทั้งทางการแพทย์ เช่น การวินิจฉัยโรคจากภาพ X-ray หรือ CT Scan ทางการศึกษา เช่น การตรวจจับใบหน้าหรือเสียงของผู้เรียนเพื่อวินิจฉัยอารมณ์ความรู้สึกหรือความยึดมั่นผูกพันทางการเรียนของนักเรียน เป็นต้น
 
-โมเดล deep learning พื้นฐานที่สุดจะประกอบด้วยส่วนประกอบหลักที่เรียกว่าชั้น (layer) จำนวน 3 ส่วนได้แก่ 
+อัลกอริทึมหลักของ DL คือ Artificial neural network ซึ่งเป็นอัลกอริทึมที่มีจุดเด่นคือรองรับข้อมูลนำเข้าที่หลากหลายทั้งในรูปแบบข้อมูลที่มีโครงสร้าง และไม่มีโครงสร้าง แตกต่างจาก traditional ML algorithm ที่มักใช้ได้กับข้อมูลที่มีโครงสร้างเท่านั้น 
 
-<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-13 at 09.15.17.png){width=50%}</left>
+นอกจากนี้โครงสร้างการเรียนรู้ของ neural network ยังมีประสิทธิภาพและมีความยืดหยุ่น และมีลักษณะการเรียนรู้ที่สอดคล้องใกล้เคียงกับการเรียนรู้ของมนุษย์มากกว่า traditional ML รูปต่อไปนี้แสดงลักษณะการเรียนรู้แบบ traditional ML 
+
+<left>![tradition ML algorithm](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-15 at 02.08.01.png){width=60%}</left>
+
+*tradition ML algorithm*
+
+จากรูปจะเห็นว่า traditional ML algorithm ประกอบด้วย 3 ส่วนหลักได้แก่ 
+
+1. ส่วนข้อมูลนำเข้า (Input)
+
+2. ส่วน Model
+
+3. ส่วนการทำนาย
+
+ส่วน neural network model มีลักษณะการเรียนรู้ดังรูป
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-15 at 02.29.19.png){width=80%}</left>
 
 
-- input layer 
+จากรูปจะเห็นว่า neural network ประกอบด้วยส่วนประกอบหลักที่เรียกว่า layer จำนวน 3 ส่วนได้แก่ 
 
-- hidden layer
+1. input layer 
 
-- output layer
+2. hidden layer
 
-จากรูปจะเห็นว่าโมเดลมี input layer ที่ประกอบด้วยหน่วยย่อยหรือที่เรียกว่า นิวรอน (neurons) จำนวน 2 หน่วย โดยนิวรอนใน input layer จะใช้แทนตัวแปรอิสระของโมเดล ในที่นี้จะได้ว่า $X = [x_1, x_2]$ 
+3. output layer
 
-โมเดลจะนำข้อมูลนำเข้าใน input layer ที่กำหนดมาประมวลผลเป็น hidden layer และส่งผ่านค่าไปยัง output layer ในท้ายที่สุด
+จากรูปจะเห็นว่าโมเดลมี input layer ที่ประกอบด้วยหน่วยย่อยหรือที่เรียกว่า นิวรอน (neurons) จำนวน 3 หน่วย โดยนิวรอนใน input layer จะใช้แทนตัวแปรอิสระของโมเดล ในที่นี้จะได้ว่า $X = [x_1, x_2, x_3]$ 
+
+โมเดลจะนำข้อมูลนำเข้าใน input layer ที่กำหนดมาประมวลผลร่วมกับพารามิเตอร์ $w[1]$ และ $b[1]$ เพื่อนำส่งไปยัง neuron แต่ละตัวภายใน hidden layer ผู้อ่านจะเห็นว่าการประมวลผลเพื่อให้ได้ neuron ดังกล่าวสามารถเขียนเป็นแผนภาพได้ดังนี้
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-15 at 02.32.24.png){width=50%}</left>
+
+เมื่อได้ค่าของ neuron แต่ละตัวในชั้นของ hidden layer จึงทำการประมวลผลร่วมกับพารามิเตอร์ $w[2]$ และ $b[2]$ เพื่อคำนวณค่าทำนายใน output layer เรียกกระบวนการนี้ว่า **forward propagation**
+
 
 การประมวลผลของ neuron ใน hidden layer จะนำข้อมูลของ neuron ที่อยู่ใน layer ก่อนหน้ามาคำนวณผลรวมเชิงเส้นแบบถ่วงน้ำหนัก จากตัวอย่างของ deep learning model ในข้างต้น จะได้ว่าผลรวมเชิงเส้นของแต่ละ neuron ใน hidden layer คำนวณได้ดังนี้
 
@@ -71,8 +94,30 @@ $h_j=b+w_1x_1+w_2x_2$
 
 โดยทั่วไปมีความเป็นไปได้ที่ค่าของผลรวมเชิงเส้นที่คำนวณได้ข้างต้นจะมีพิสัยที่ไม่สอดคล้องกับตัวแปรตามที่ต้องการทำนาย จึงมีการนำค่าผลรวมเชิงเส้นดังกล่าวมาแปลงค่าด้วยฟังก์ชันที่เรียกว่า activation function ก่อนที่จะส่งค่าไปยัง neuron ใน layer ถัดไป ดังตัวอย่างในรูปด้านล่าง
 
-<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-13 at 09.35.57.png){width=70%}</left>
 
+## **Forward propagation**
+
+โดยปกติแล้วเมื่อเริ่มต้นกระบวนการผู้วิเคราะห์จะยังไม่ทราบค่าพารามิเตอร์ที่เหมาะสมของโมเดลดังนั้นจึงต้องมีการประมาณค่าพารามิเตอร์ดังกล่าวก่อนการใช้งานจริง กระบวนการ forward propagation จะเริ่มจากการสุ่มค่าเริ่มต้นของพารามิเตอร์ทั้งหมดภายในโมเดลขึ้นมาก่อน 1 ชุด และใช้ชุดของพารามิเตอร์นี้ไปใช้กับชุดข้อมูลฝึกหัดเพื่อคำนวณเป็นผลลัพธ์ใน output layer 
+
+เมื่อได้ผลลัพธ์ดังกล่าวจะนำผลลัพธ์นี้ไปเปรียบเทียบกับค่าจริงของผลลัพธ์ในชุดข้อมูลฝึกหัดโดยใช้ cost function จากนั้นจะใช้กระบวนการ **backward propagation** เพื่อปรับค่าพารามิเตอร์ในโมเดลเพื่อให้ค่าของ loss function ลดลง และได้ชุดของพารามิเตอร์ที่มีความสมเหตุสมผลมากยิ่งขึ้น
+
+กระบวนการทำงานข้างต้นจะดำเนินการแบบทวนซ้ำหลายรอบจนกระทั่งค่า cost function ของโมเดลลดลงอยู่ในระดับที่ต้องการ ในเชิงเทคนิคจะเรียกกระบวนการ forward + backward propagation 1 ชุด นี้ว่า 1 Epoch
+
+## **Backward propagation**
+
+กระบวนการ forward propagation จะสิ้นสุดลงเมื่อคำนวณค่าทำนายของตัวแปรเป้าหมายในโมเดลได้ เมื่อได้ค่าทำนายดังกล่าวผู้วิเคราะห์จะทำการประเมินความสอดคล้องเชิงประจักษ์ของโมเดลด้วยการเปรียบเทียบค่าทำนายนี้กับค่าจริงในชุดข้อมูลฝึกหัดผ่านฟังก์ชันวัตถุประสงค์หรือฟังก์ชันต้นทุน (cost function) ซึ่งมีหลากหลายตัวขึ้นกับปัญหาของการทำงาน เช่นในปัญหา regression อาจใช้ cost function เป็นค่า mean squares error (MSE) หรือปัญหา binary classification อาจใช้ cost function เป็น cross entropy ดังนี้
+
+$J = -\frac{1}{n}\sum_{i=1}^n (y_ilog(\hat{y}_i)+(1-y_i)log(1-\hat{y}_i))$
+
+กระบวนการ backward propagation จะปรับค่าพารามิเตอร์ในโมเดลเพื่อให้ได้โมเดลที่มีความสอดคล้่องกับข้อมูลฝึกหัดมากขึ้น โดยพิจารณาชุดของค่าพารามิเตอร์ที่ทำให้ cost function มีค่าต่ำที่สุด โดยใช้อัลกอริทึม gradient descent เป็นเครื่องมือ ดังนี้
+
+1. หา first-order derivative ของ cost function เทียบกับค่าพารามิเตอร์ในโมเดลเขียนแทนด้วย $\frac{\partial J(w)}{\partial w}$
+
+2. นำ $\frac{\partial J(w)}{\partial w}$ ไปหักลบออกจากค่าพารามิเตอร์ในรอบก่อนหน้าโดยควบคุมความเร็วในการเรียนรู้ผ่าน learning rate ($\alpha$)
+
+3. นำค่าพารามิเตอร์ที่ปรับปรุงใหม่ใน 2 ไปประมวลผลร่วมในกระบวนการ forward propagation ซึ่งจะทำให้ cost function มีค่าลดลง
+
+ทวนซ้ำกระบวนการข้างต้นจนกระทั่ง cost function มีแนวโน้มคงที่
 
 
 ## **Activation function**
@@ -193,32 +238,37 @@ $\sigma(x)=P(y=y_m|x)=\frac{exp(x_i)}{\sum_{j=1}^pexp(x_j)}$
 - Deep Belief Networks (DBNs)
 
 
-# **The first DL model (SLP and MLP) with Keras**
+# **The first DL model (MLP) with Keras**
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/1200px-Keras_logo.png){width=30%}
+multi-layer perceptron เป็น neural network ประเภทหนึ่งที่เรียกว่า Feedforward neural networks (FFNNs) ซึ่งเป็นโมเดลพื้นฐานที่ใช้ในการทำงานทั่วไป ภายในโมเดลประกอบด้วย input, hidden และ output layers ดังที่กล่าวมาแล้ว โมเดลประเภทนี้สามารถประยุกต์ใช้ได้กับทั้งปัญหา classification และ regression
 
-หนังสือบางเล่มเรียก DL ประเภทนี้ว่า Feedforward neural networks (FFNNs) เป็นโมเดล DL พื้นฐานที่ใช้กันทั่วไป ภายในโมเดลประกอบด้วย input, hidden และ output layers ดังที่กล่าวมาแล้ว โมเดลประเภทนี้สามารถประยุกต์ใช้ได้กับทั้งปัญหา classification และ regression
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-15 at 03.15.07.png)
 
-หัวข้อนี้จะกล่าวถึงการสร้าง DL model พื้นฐานโดยใช้ package-keras 
+*(a) Single layer perceptron; (b) multi-layer perceptron*
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep learning/Screen Shot 2564-05-14 at 10.04.28.png)
-
-นิสิตสามารถศึกษาภาพรวมของ package-keras ได้จากคลิปด้านล่าง
+หัวข้อนี้จะกล่าวถึงการสร้าง MLP โดยใช้ package-keras 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/j_pJmXJwMLA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## ติดตั้ง package
 
-keras สามารถติดตั้งและเรียกใช้งานได้ทั้งบน python และ R  
+keras สามารถติดตั้งและเรียกใช้งานได้ทั้งบน python และ R โดยสำหรับภาษา python ให้ดำเนินการดังนี้
 
-### สำหรับ python
+1. ในหน้าต่าง terminal ให้ดำเนินการดาวน์โหลดและติดตั้ง tensorflow และ keras ดังนี้
 
 ```{python eval=F}
 pip install --upgrade tensorflow
 pip install keras
 ```
 
-### สำหรับ R
+2. ใน python ก่อนการใช้งานแต่ละครั้งจะเป็นต้องเรียกใช้โดยพิมพ์คำสั่งดังนี้
+
+```{python eval=F}
+from keras.models import Sequential
+from keras.layers import Dense
+```
+
+สำหรับโปรแกรม R ให้ดำเนินการดาวน์โหลดและติดตั้ง package-keras โดยพิมพ์คำสั่งดังนี้
 
 ```{r eval=F}
 install.packages("keras")
@@ -226,21 +276,110 @@ install_keras()
 library(keras)
 ```
 
-- [regression example](https://ssiwacho.github.io/deep%20learning/DL_reg_1.html)
+## Regression Example
 
-- [classification example]()
+จากชุดข้อมูล crimm.csv สมมุติว่่าต้องการสร้าง MLP เพื่อทำนายอัตราการเกิดคดีโจรกรรมของแต่ละพื้นที่ 
 
+ใน python สามารถดำเนินการได้ดังนี้ ---> [MLP in Python](https://ssiwacho.github.io/deep%20learning/DL_reg_1.html)
 
+ใน R สามารถดำเนินการได้ดังนี้
 
+1. นำเข้าชุดข้อมูล 
 
-
-
-
-
-
-## Classification example
-
+```{r}
+library(dplyr)
+library(caret)
+dat<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/Machine Learning/เอกสาร/ep2_regression/_02_multiple regression/crimm.csv")
+dat<-dat[,-1]
+glimpse(dat)
 ```
+
+2. normalized ค่าของตัวแปรอิสระ
+
+```{r}
+dat[,1:16]<-scale(dat[,1:16], center=TRUE, scale=TRUE)
+summary(dat)
+```
+
+3. แบ่งชุดข้อมูลเป็น train and test data โดยให้เก็บค่าไว้ในรูปแบบของเมทริกซ์ (matrix) จำแนกเป็นเมทริกซ์ของตัวแปรอิสระ และเมทริกซ์ของตัวแปรตาม 
+
+```{r}
+train.id<-createDataPartition(dat$TheifperPop, p = 0.8 , list=F)
+train_x<-as.matrix(dat[train.id, 1:16])
+train_y<-as.numeric(dat[train.id, 17])
+
+test_x<-as.matrix(dat[-train.id, 1:16])
+test_y<-as.numeric(dat[-train.id, 17])
+
+#remove column name
+dimnames(train_x)<-NULL
+dimnames(train_y)<-NULL
+```
+
+4. สร้างโมเดล MLP ด้วย package-keras
+
+```{r eval=F}
+#1. Create a Sequential model
+model.r <- keras_model_sequential()
+
+#2. Add input, hidden and output layer
+model.r %>% layer_dense(units = 32, input_shape=c(16), activation="relu") %>%
+            layer_dense(units=16, activation="relu")%>%
+            layer_dense(units = 1)
+
+#3. summary the model
+model.r
+
+#4. compile model
+model.r %>% compile(optimizer = "adam", loss = "mse")
+
+#5. train the model
+history <- model.r %>% keras::fit(train_x, train_y, epoch = 500)
+```
+
+```{r echo=F}
+#1. Create a Sequential model
+model.r <- keras_model_sequential()
+
+#2. Add input, hidden and output layer
+model.r %>% layer_dense(units = 32, input_shape=c(16), activation="relu") %>%
+            layer_dense(units=16, activation="relu")%>%
+            layer_dense(units = 1)
+
+#3. summary the model
+model.r
+
+#4. compile model
+model.r %>% compile(optimizer = "adam", loss = "mse")
+
+#5. train the model
+history <- model.r %>% keras::fit(train_x, train_y, epoch = 500, verbose=0, validation_split=0.2)
+
+#6. Evaluate the model
+mse <-model.r %>% evaluate (test_x, test_y)
+pred<-model.r%>%predict(test_x)
+```
+
+5. ประเมินคุณภาพของโมเดล
+
+```{r}
+plot(history)
+mse #MSE
+sqrt(mse) #RMSE
+par(mar=c(4,4,1,1))
+plot(pred, test_y)
+```
+
+
+
+
+
+## Classification Example
+
+
+
+
+
 
 
 
