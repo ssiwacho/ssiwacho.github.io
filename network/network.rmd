@@ -1,0 +1,367 @@
+---
+title: "Network analysis and Visualization"
+output:
+  rmdformats::robobook:
+    self_contained: FALSE
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+library(reticulate)
+
+## Global options
+options(max.print="150")
+opts_chunk$set(echo=TRUE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=100)
+```
+
+
+
+<p style="line-height:1.3; font-size:16px; color: #353b48; text-align:right;">
+สิวะโชติ ศรีสุทธิยากร
+</br>
+</br>
+ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์
+</br>
+จุฬาลงกรณ์มหาวิทยาลัย
+</br>
+</font> 15 May 2021 </font>
+</p>
+
+
+# Basic Concepts
+
+โครงข่าย (network) เป็นกราฟประเภทหนึ่งที่ประกอบด้วยสมาชิกได้แก่ จุดยอด (vertices) และเส้นเชื่อม (edges) การสร้างแผนภาพโครงข่ายทำให้ผู้วิเคราะห์ได้สารสนเทศเกี่ยวกับลักษณะความเชื่อมโยงหรือความสัมพันธ์กันระหว่างหน่วยข้อมูลที่ทำการวิเคราะห์ 
+
+โดยปกติผู้วิเคราะห์มักกำหนดคุณลักษณะให้กับทั้งจุดยอดและเส้นเชื่อมเพื่อให้แผนภาพโครงข่ายแสดงสารสนเทศที่มีความชัดเจนและลึกซึ้งมากขึ้นได้ ดังนั้นลักษณะของจุดยอด และเส้นเชื่อมจึงเป็นปัจจัยที่ผู้วิเคราะห์ต้องพิจารณาในการสร้างแผนภาพโครงข่ายแต่ละรูป อีกปัจจัยหนึ่งที่จำเป็นเช่นเดียวกันคือการจัดวางสมาชิกของแผนภาพโครงข่าย (layouts) 
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 01.55.37.png)
+
+## จุดยอด (nodes)
+
+จุดยอดอาจเรียกว่า vertices หรือ nodes ก็ได้ เป็นสัญลักษณ์ที่ใช้แทนหน่วยข้อมูลแต่ละหน่วย หรือตัวแปรแต่ละตัวภายในแผนภาพ โดยปกติอาจจำแนก nodes ได้เป็น 2 ประเภทได้แก่
+
+- unimodal node 
+
+- multimodal node
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 01.59.34.png)
+
+## เส้นเชื่อม (edges)
+
+เส้นเชื่อมใช้บ่งชี้ความเชื่อมโยงหรือความสัมพันธ์ระหว่างจุดยอด โดยสามารถจำแนกได้เป็น 2 ประเภทได้แก่ เส้นเชื่อมแบบไม่มีทิศทาง (undirected edges) และเส้นเชื่อมแบบมีทิศทาง (directed edges) ซึ่งทำให้แผนภาพโครงข่ายจำแนกออกเป็น 2 ประเภทตามลักษณะของเส้นเชื่อมในแผนภาพได้แก่
+
+- undirected network
+
+- directed network
+
+ทิศทางของเส้นเชื่อมทำให้ผู้วิเคราะห์สามารถอธิบายลักษณะของความสัมพันธ์ระหว่างจุดยอดได้ลึกซึ้งมากยิ่งขึ้น
+
+นอกจากทิศทางแล้ว เส้นเชื่อมยังมี attribute ที่สำคัญอีกตัวหนึ่งคือการให้น้ำหนักของเส้นเชื่อม ซึ่งทำให้สามารถจำแนกแผนภาพโครงข่ายออกได้อีก 2 ประเภท ได้แก่
+
+- unweighted network 
+
+- weight network
+
+น้ำหนักที่แตกต่างกันของเส้นเชื่อมจะใช้แสดงขนาดหรือระดับความสัมพันธ์หรือความเชื่อมโยงกันระหว่างจุดยอดที่อยู่ในแผนภาพ
+
+เส้นเชื่อมนอกจากใช้เชื่อมโยงระหว่างจุดยอดที่แตกต่างกันแล้ว ยังใช้เชื่อมโยงภายในจุดยอดเดียวกันได้ด้วย เรียกเส้นเชื่อมประเภทนี้ว่า **Loops**
+
+## Network Layouts 
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/tXfhq.png){width=40%}</left><right>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/SpringLayout.png){width=30%}</right>
+
+การจัดวางสมาชิกในภาพแผนโครงข่ายสามารถทำได้หลายลักษณะ โดยอาจจำแนกออกเป็น 2 ประเภทใหญ่ ได้แก่
+
+- hierarchical layout: ลำดับการจัดเรียงของจุดยอดเป็นสารสนเทศ
+
+- spring or energy layout: ระยะห่างระหว่างจุดยอดเป็นสารสนเทศ อาจใช้แสดงความใกล้ชิดหรือความแตกต่างระหว่างหน่วยข้อมูลที่อยู่ในแต่ละจุดยอด สารสนเทศดังกล่าวสามารถนำไปประยุกต์ใช้เพื่อวิเคราะห์ได้หลากหลายวัตถุประสงค์
+
+
+# Data Structures
+
+ข้อมูลนำเข้าสำหรับสร้างแผนภาพโครงข่ายจำแนกได้เป็น 2 ลักษณะ ได้แก่ adjacency matrix และ edge list 
+
+## adjacency matrix
+
+
+```{r echo=F}
+adj.mat <- matrix(sample(0:1, 36, replace=TRUE, prob=c(0.8,0.2)), nc=6)
+vertices<-c("บุญหนัก","บุญทับ","บุญมา","บุญรอด","บุญมี","บุญยิ่ง")
+rownames(adj.mat)<-vertices
+colnames(adj.mat)<-vertices
+
+adj.mat
+```
+
+
+
+
+เป็นเมทริกซ์จัตุรัส (square matrix) ที่ row และ column ของเมทริกซ์แทนจุดยอดทั้งหมดภายในแผนภาพ และสมาชิกภายในเมทริกซ์จะกำหนดเป็นตัวเลข 0 หรือ 1 เพื่อใช้แทนความเชื่อมโยงกันระหว่างจุดยอดแต่ละคู่
+
+
+```{r echo=F, fig.width=4}
+library(igraph)
+
+graph<-graph_from_adjacency_matrix(adj.mat , mode='directed', diag=F)
+
+par(mar=c(0.5,0.5,0.5,0.5))
+plot(graph, vertex.label.family= 'ChulaCharasNew',
+        vertex.label.color="white",
+        vertex.shape = "circle",
+        vertex.size = 45,
+        vertex.color="maroon")
+```
+
+ข้อดีของการนำเข้าข้อมูลแบบ adjacency matrix คือผู้วิเคราะห์สามารถใช้การดำเนินการของเมทริกซ์เพื่อจัดกระทำหรือคำนวณค่าสถิติที่ใช้สรุปสารสนเทศต่าง ๆ จากแผนภาพโครงข่ายได้ เช่น centrality เป็นต้น
+
+อย่างไรก็ตามการเก็บข้อมูลในลักษณะของ adjacency matrix อาจทำได้ยากในเชิงปฏิบัติ
+
+## Edgelist
+
+ข้อมูลนำเข้าแบบ edgelist มีส่วนประกอบหลัก 3 ส่วนได้แก่
+
+- Sender node หรือ node ที่เป็นจุดเริ่มต้น
+
+- Target node หรือ node ที่เป็นเป้าหมายหรือเชื่อมโยงกับ sender node
+
+- Attribute ของเส้นเชื่อมในแต่ละคู่ sender กับ target
+
+
+```{r echo=F}
+Sender<-LETTERS[1:6]
+Target<-c("B","F","C","A","D","E")
+Weight<-c(1,1,2,3,1,1)
+edgelist<-data.frame(Sender,Target,Weight)
+
+edgelist
+```
+
+รูปต่อไปนี้เปรียบเทียบข้อมูลนำเข้าระหว่าง adjacency matrix กับ edgelist ของ network รูปเดียวกัน
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 07.44.30.png){width=80%}</left>
+
+# Generate Network using R
+
+ใน R มี package หลักที่ผู้วิเคราะห์สามารถใช้สนับสนุนการวิเคราะห​์โครงข่าย (network analysis) 3 ตัวได้แก่
+
+- [igraph](https://igraph.org/)
+
+- [statnet](http://statnet.org/)
+
+- [SNA](https://cran.r-project.org/web/packages/sna/index.html)
+
+## First Try
+
+สมมุติว่าคำถามวิจัยคือ เมื่อจัดการเรียนการสอนแบบ online นักเรียนมีปฏิสัมพันธ์ซึ่งกันและกันระหว่างเรียนหรือไม่ และมีปฏิสัมพันธ์กับเพื่อนใหม่ในชั้นเรียนหรือไม่?
+
+การวิเคราะห์นี้จะสร้าง network ขึึ้นมา 2 แผนภาพ 
+
+- เพื่อวิเคราะห์โครงข่ายของเพื่อนในชั้นเรียน
+
+- เพื่อวิเคราะห์โครงข่ายของการมีปฏิสัมพันธ์ในชั้นเรียน
+
+
+```{r}
+#install.packages("igraph")
+library(igraph)
+
+friend<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/personallity_know_edgelist.csv")
+
+interaction<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/interaction_edgelist.csv")
+```
+
+1. สำรวจชุดข้อมูลเบื้องต้น
+
+```{r}
+head(friend)
+head(interaction)
+```
+
+2. สร้าง graph object จาก edgelist
+
+```{r}
+friend_graph<-graph.data.frame(friend, directed=TRUE)
+interaction_graph<-graph.data.frame(interaction, directed=TRUE)
+```
+
+3. ทดลองวาด graph ที่สร้างขึ้น 
+
+```{r}
+
+set.seed(123)
+
+par(mar=c(0.5,0.5,0.5,0.5), mfrow=c(1,2))
+plot(friend_graph, layout= layout_with_fr)
+plot(friend_graph, layout= layout_with_kk)
+
+```
+
+แผนภาพที่ได้ดูรู้เรื่องมั้ย?
+
+
+
+## degree
+
+degree เป็นค่าสถิติของ node ภายใน network มีค่าเท่ากับจำนวนเส้นเชื่อมทั้งหมดของ node นั้นกับ node อื่น ๆ ในการวิเคราะห์โครงข่ายหนึ่ง ๆ จึงจะมีสถิติ degree เท่ากับจำนวน node ทั้งหมดภายในโครงข่าย
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 08.56.57.png){width=70%}
+
+การวิเคราะห์การแจกแจงของ degree ทำให้ผู้วิเคราะห์ได้สารสนเทศเกี่ยวกับความเชื่อมโยงหรือความสัมพันธ์โดยรวมระหว่างหน่วยข้อมูลภายในโครงข่าย
+
+ในกรณีที่เป็นโครงข่ายแบบมีทิศทาง degree สามารถจำแนกได้เป็น 2 ประเภท ได้แก่
+
+- in-degree คือจำนวนเส้นเชื่อมที่โยงเข้าหา node 
+
+- out-degree คือจำนวนเส้นเชื่อมที่โยงออกจาก node
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 08.59.07.png){width=70%}
+
+```{r}
+out.deg<-degree(friend_graph, mode="out")
+in.deg<-degree(friend_graph, mode="in")
+total.deg<-degree(friend_graph, mode="total")
+deg<-data.frame(out.deg,in.deg,total.deg)
+
+summary(deg)
+```
+
+## Second Try
+
+ลองปรับแต่งแผนภาพ
+
+```{r}
+# กำหนด attribute ให้กับ node
+V(friend_graph)$color <- "grey"
+V(friend_graph)[deg$in.deg>8]$color <- "yellow" 
+
+# กำหนด attribute ให้กับ edge
+E(friend_graph)$color<-"grey"
+
+par(mar=rep(0.1,4))
+plot(friend_graph, layout= layout_with_kk)
+```
+
+## Third Try
+
+ลองปรับอีกครั้ง
+
+```{r}
+V(friend_graph)$size=degree(friend_graph, mode = "in")/5 
+par(mfrow=c(1,2), mar=rep(0.1,4))
+plot(friend_graph, layout= layout_with_kk)
+plot(friend_graph, 
+    vertex.label.family="ChulaCharasNew",
+    edge.arrow.size=0.25)
+```
+
+ref: [plot.igraph](https://igraph.org/r/doc/plot.common.html)
+
+```{r}
+friend_graph2<-simplify(friend_graph, remove.multiple=TRUE, remove.loops=TRUE)
+par(mar=rep(0.1,4))
+plot(friend_graph2, layout= layout_with_kk, edge.arrow.size = 0.5)
+```
+
+## forth Try
+
+นำข้อมูล attribute ของ node ซึ่งก็คือหน่วยข้อมูลแต่ละหน่วยเข้ามาร่วมวิเคราะห์เพิ่มเติม
+
+```{r}
+friend_attribute<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Personally_Nodelist.csv")
+```
+
+```{r}
+head(friend_attribute)
+table(friend_attribute$Status)
+```
+
+ลองนำข้อมูลสถานะของผู้เรียนเข้ามาเป็น attribute ของ node ภายในแผนภาพ
+
+```{r}
+V(friend_graph2)$color <- ifelse(friend_attribute[V(friend_graph2), 2] == "Researcher", "#4d9dba", "#ffb600")
+E(friend_graph2)$color<-alpha("grey", alpha=0.4)
+par(mar=rep(0.05,4), mfrow=c(1,2))
+plot(friend_graph2, layout= layout_with_kk, edge.arrow.size = 0.25, , vertex.label = NA)
+plot(friend_graph2, layout= layout_with_fr, edge.arrow.size = 0.25, , vertex.label = NA)
+
+```
+
+นิสิตลองสร้างแผนภาพปฏิสัมพันธ์ของผู้เรียนด้วยตนเอง
+
+# Network Analysis
+
+การวิเคราะหโครงข่ายอาจจำแนกผลการวิเคราะห์ออกเป็นสองส่วนใหญ่ ได้แก่
+
+## connectionist features (of the network) 
+
+คุณลักษณะที่สนใจวิเคราะห์ในมิตินี้ เช่น
+
+- **ความหนาแน่น (density)** ความหนาแน่นของเส้นเชื่อมเป็นตัวชี้ที่บอกได้ว่าโครงข่ายที่ทำการวิเคราะห์มีการเชื่อมโยงซึ่งกันและกันมากน้อยเพียงใด ค่าความหนาแน่นมีค่าเท่ากับสัดส่วนของจำนวนเส้นเชื่อมที่เกิดขึ้นจริงต่อจำนวนเส้นเชื่อมที่สามารถเกิดขึ้นได้ทั้งหมด
+
+```{r}
+graph.density(friend_graph2, loop=F)
+```
+
+- **average path length** คือค่าเฉลี่ยของระยะทางหรือจำนวน step ที่สั้นที่สุดจาก node หนึ่งไปยัง node อื่น ๆ ภายใน network ค่าสถิตินี้บ่งชี้ประสิทธิภาพในการติดต่อสื่อสารหรือส่งสารสนเทศซึ่งกันและกันระหว่างหน่วยข้อมูลภายในโครงข่าย
+
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 09.38.57.png){width=70%}
+
+```{r}
+mean_distance(friend_graph2)
+```
+
+
+- **transitivity or clustering coefficient** จำนวน node ที่มีความเชื่อมโยงกันแบบ close triad ต่อจำนวน triad ทั้งหมด
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 10.17.12.png)
+
+
+
+- **degree distribution**
+
+```{r}
+par(mfrow=c(2,2))
+hist(out.deg)
+hist(in.deg)
+hist(total.deg)
+```
+
+## positional features 
+
+คุณลักษณะที่สนใจมีดังนี้
+
+- **degree**
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 09.53.56.png){width=80%}
+
+- **closeness centrality** มีค่าเท่ากับค่าเฉลี่ยของระยะทางระหว่าง node ที่ทำการวิเคราะห์กับ node อื่น ๆ ที่เชื่อมโยงด้วย
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 09.56.16.png){width=80%}
+
+```{r warning=F}
+closeness(friend_graph2, mode="in")
+closeness(friend_graph2, mode="out")
+
+
+```
+
+- **betweeness centrality** 
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/network/Screen Shot 2564-05-16 at 09.58.12.png){width=80%}
+
+```{r}
+betweenness(friend_graph2)
+
+```
+
+

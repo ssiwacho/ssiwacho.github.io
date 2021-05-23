@@ -1,0 +1,381 @@
+---
+title: "R markdown"
+author: สิวะโชติ ศรีสุทธิยากร
+date: "`r Sys.Date()`"
+output:
+  rmdformats::robobook:
+    highlight: kate
+    self_contained: FALSE
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+
+<p style="line-height:1.3; font-size:16px; color: #353b48; text-align:right;">
+สิวะโชติ ศรีสุทธิยากร
+</br>
+</br>
+ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์
+</br>
+จุฬาลงกรณ์มหาวิทยาลัย
+</br>
+</font> 23 May 2021 </font>
+</p>
+
+
+
+# What's Rmarkdown
+
+rmarkdown เป็น package สร้างเอกสารจากโปรแกรม R ที่ช่วยให้ผู้วิเคราะห์สามารถดำเนินการวิเคราะห์และสร้างรายงานผลการวิเคราะห์ได้ภายในไฟล์คำสั่งเดียว นอกจากนี้ rmarkdown ยังสามารถ convert ชุดคำสั่งที่สร้างขึ้นให้เป็นเอกสารที่มีรูปแบบหลากหลาย เช่น PDF document, HTML และ Word document โดยมีหลักการทำงานดังรูป
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/rmarkdown_workflow.png){width=60%}</left>
+
+
+# ติดตั้ง package พื้นฐาน
+
+การสร้างเอกสาร rmarkdown แบบพื้นฐานสามารถสร้างได้โดยง่ายผ่าน Rstudio IDE โดยจะมีเมนูลัดให้ผู้ใช้เลือกสร้างเอกสารได้อย่างสะดวก ส่วนผู้ที่ไม่ได้ใช้ Rstudio ก็สามารถสร้างเอกสาร rmarkdown จากโปรแกรม R โดยตรง ก่อนดำเนินการใด ๆ ผู้ใช้จำเป็นต้องติดตั้ง package-rmarkdown และ package อื่น ๆ ที่เกี่ยวข้อง โดยพิมพ์คำสั่งดังนี้
+
+```{r eval=F}
+install.packages("rmarkdown", dependencies=TRUE)
+library(rmarkdown)
+```
+
+# กิจกรรม 1: สร้างเอกสาร rmarkdown
+
+จากที่กล่าวไปในข้างต้น การสร้างเอกสาร rmarkdown สามารถสร้างได้จากทั้งใน Rstudio และโปรแกรม R กิจกรรมแรกในวันนี้จะให้ผู้เรียนสร้างเอกสาร rmarkdown จาก Rstudio ก่อน ผู้เรียนที่ยังไม่ได้ติดตั้งโปรแกรมสามารถติดตั้งได้โดย[คลิ้กที่นี่](https://www.rstudio.com/products/rstudio/download/)
+
+สำหรับผู้ที่ติดตั้งเรียบร้อยแล้วให้ดำเนินการตามขั้นตอนต่อไปนี้
+
+1. เปิด Rstudio
+
+2. ดาวน์โหลดและติดตั้ง package-rmarkdown
+
+3. ในโปรแกรม Rstudio คลิ้กเลือก `File/New File/R Markdown` ดังตัวอย่างในรูปด้านล่าง จากนั้นผู้เรียนจะได้พบกับหน้าต่าง New R Markdown ให้กำหนด Title และ Author 
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/1.png)
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/2.png){width=60%}</left>
+
+
+# กิจกรรม 2: โครงสร้างของ RMD file
+
+เมื่อดำเนินการเสร็จผู้ใช้จะได้หน้าต่าง script file ที่มีนามสกุล .rmd (RMarkdown file) ที่มีตัวอย่าง syntax รายงานผลการวิเคราะห์ข้อมูล ดังรูปด้านล่าง 
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/Screen Shot 2564-05-23 at 08.34.26.png)
+
+หากสังเกตดี ๆ ไฟล์ RMD ที่ generate ได้นั้นมีส่วนประกอบหลัก 3 ส่วนด้วยกันคือ
+
+1. **Header** เป็นคำสั่งในส่วนหัวของไฟล์ RMD เขียนในรูปแบบ *YAML* โดยจะกำหนดอยู่บริเวณส่วนต้นของไฟล์ .rmd โดยถูกคร่อมด้วยเครื่องหมาย --- ดังรูป
+
+```{r eval=F}
+# ---
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: html_document
+# ---
+```
+
+2. **Markdown sections** เป็นส่วนของเอกสารใช้เก็บเนื้อหาต่าง ๆ ข้อมูลรวมทั้งผลการวิเคราะห์ที่ต้องการทำเป็นรายงาน การเขียนคำสั่งในส่วนนี้จะใช้ภาษา markdown เป็นหลัก
+
+3. **Code chunks** เป็นส่วนชุดคำสั่งภาษา R ที่ฝังอยู่ในเอกสาร 
+
+ผู้เรียนลองพิจารณาว่าเอกสาร rmarkdown ที่สร้างขึ้นในครั้งแรกนี้มีเนื้อหาอะไรบ้าง?
+
+# กิจกรรม 3: สร้างเอกสารจาก rmarkdown
+
+1. ใน Rstudio ผู้ใช้สามารถสร้างเอกสาร rmarkdown ได้โดยการคลิ้กที่ปุ่ม **Knit** แล้วสังเกตผลลัพธ์ที่ได้
+
+2. ผู้เรียนลองเปลี่ยน format ของเอกสารเป็น pdf และ word document จากนั้นสังเกตผลลัพธ์ที่ได้
+
+
+# R code chunks
+
+จากกิจกรรมข้างต้นผู้เรียนทราบแล้วว่า code chunks เป็นส่วนที่ยอมให้ผู้วิเคราะห์สามารถเขียนคำสั่งภาษา R เพื่อทำการวิเคราะห์และรายงานผลการวิเคราะห์ดังกล่าวภายในเอกสาร rmarkdown ได้ ในทางปฏิบัติผู้วิเคราะห์สามารถกำหนดคุณสมบัติของ code chunks ได้หลายประการผ่านอาร์กิวเมนท์หลายตัว ดังนี้
+
+- `echo` ใช้สำหรับระบุว่าจะให้แสดงชุดคำสั่งที่ใช้ในการวิเคราะห์ข้อมูลหรือไม่ ถ้าต้องการให้แสดงจะกำหนด `echo=TRUE` (ค่าเริ่มต้น) แต่ถ้าไม่ต้องการจะกำหนด `echo=FALSE`
+
+- `eval` ใช้สำหรับระบุว่าจะให้ประมวลผลชุดคำสั่งภายใน chunk หรือไม่ ถ้าต้องการให้ประมวลผลจะกำหนด `eval=TRUE` (ค่าเริ่มต้น) แต่ถ้าไม่ต้องการจะกำหนด `eval=FALSE`
+
+- `warning` ใช้กำหนดว่ายอมให้โปรแกรมแสดงคำแจ้งเตือนต่าง ๆ ในรายงานผลการวิเคราะห์หรือไม่ ถ้ายอมจะกำหนดให้ `warning=TRUE` (ค่าเริ่มต้น) ถ้าไม่ต้องการจะกำหนดให้ `warning=FALSE`
+
+- `error` และ `message` กำหนดในทำนองเดียวกับ `warning` โดยที่ `error` จะเป็นการกำหนดว่าต้องการให้แจ้งเตือน error ต่าง ๆ ที่เกิดขึ้นจากการประมวลผลหรือไม่ ส่วน `message` เป็นการกำหนดว่าต้องการให้แสดงข้อความจากการดำเนินการต่าง ๆ ของโปรแกรมหรือไม่
+
+- `results` ใช้กำหนดว่าจะให้โปรแกรมนำเสนอผลการวิเคราะห์ข้อมูลหรือไม่ (ค่าเริ่มต้น `results=TRUE`)
+
+- `fig.width`, `fig.height` ใช้กำหนดความกว้างและความสูงของแผนภาพที่สร้างจากโปรแกรม R (ค่าเริ่มต้น `fig.width=7`) โดยหน่วยเป็น นิ้ว (inches)
+
+- `fig.align` ใช้กำหนดตำแหน่งที่จะวางแผนภาพในรายงาน โดยสามารถกำหนดได้ 3 ค่าคือ `left, center, right` (ค่าเริ่มต้น `fig.align="left"`)
+
+
+ลองสร้าง code chunk ใน rmarkdown จากนั้นกำหนดอาร์กิวเมนท์ต่าง ๆ ข้างต้น แล้วสังเกตผลลัพธ์ที่ได้
+
+นอกจากนี้ผู้ใช้ยังสามารถผังคำสั่งขนาดเล็กเพื่อช่วยประมวลผลลัพธ์ภายในย่อหน้าหรือเนื้อความต่าง ๆ ของเอกสาร ขอให้ผู้เรียนลองพิมพ์คำสั่งในรูปต่อไปนี้จากนั้นกด knit แล้วสังเกตผลลัพธ์ที่ได้
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/exam1.png)
+
+
+# Introduction to Markdown
+
+ผู้เรียนทราบแล้วว่าส่วนหลักของเอกสารที่สร้างจาก rmarkdown ใช้ภาษา markdown เป็นหลัก ภาษานี้เป็นภาษาที่เขียนค่อนข้างง่ายใกล้เคียงกับการเขียนเอกสารในโปรแกรม MS word หรือ Text processing ตัวอื่น ๆ ส่วนที่แตกต่างกันคือ markdown ไม่ได้มีเมนูลัดให้ผู้ใช้กดเพื่อปรับแต่งหน้าตาหรือคุณลักษณะของตัวอักษร การดำเนินการดังกล่าวใน markdown จำเป็นต้องสั่งการผ่าน syntax โดยมีรายละเอียดของคำสั่งพื้นฐานดังนี้
+
+- `#` หมายถึงหัวข้อ (header) ของเอกสาร ข้อความที่ต่อท้ายเครื่องหมายนี้จะเป็นหัวข้อ
+
+- `**` ข้อความภายใต้สัญลักษณ์ดังกล่าวจะเป็นตัวหนา เช่น `**ตัวหนา**` ---> **ตัวหนา**
+
+- `*` ข้อความภายใต้สัญลักษณ์นี้จะเป็นตัวเอียง เช่น `*ตัวเอียง*` ---> *ตัวเอียง*
+
+- `[Link](https://www.google.com)` ใช้สร้าง hyperlink ภายในเอกสาร เช่น `[คลิ้กที่นี่](www.edu.chula.ac.th)`
+
+- `$$` ใช้เขียนสมการหรือสัญลักษณ์ทางคณิตศาสตร์ โดยจะใช้ภาษา latex เป็นเครื่องมือ ผู้เริ่มหัดใช้ latex สามารถใช้ตัวช่วย generate syntax ของ latex ได้ เช่น [Online Latex](https://www.codecogs.com/latex/eqneditor.php)
+
+- `---` หรือ `***` ใช้ขีดเส้นคั่นส่วนของเอกสารในแนวนอน
+
+- `![image name](path-to-image)` ใช้สอดแทรกรูปแบบลงในเอกสาร เช่น `![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/1800x1200_dog_cool_summer_other.webp)`
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/1800x1200_dog_cool_summer_other.webp)
+
+- การแทรก clip video จาก youtube สามารถใช้การ embed video ได้เช่น
+
+```{r eval=F}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uZCD6XS333s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+
+ซึ่งจะให้ผลลัพธ์เป็นดังนี้
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uZCD6XS333s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+# YAML header
+
+ใน YAML header ผู้ใช้สามารถกำหนด option เพิ่มเติมเพื่อเปลี่ยนลักษณะของเอกสารให้เป็นไปตามที่ต้องการได้ดังนี้
+
+## Table of contents
+
+ผู้ใช้ Rmarkdown สามารถสร้างส่วนสารบัญของเอกสาร โดยเขียนคำสั่งเพิ่มเติมใน YAML header ดังตัวอย่างด้านล่าง โดยโปรแกรมจะใช้ header ในเอกสารส่วนของ markdown มาสร้างเป็น table of contents
+
+```{r eval=F}
+
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2 # specific level of table content
+
+```
+
+### `toc_float`
+
+หากเพิ่ม option `toc_float` ใน YAML จะปรับรูปแบบ table of contents ให้เป็นแบบลอยตัว และตั้งอยู่ด้านซ้ายมือของเอกสาร 
+
+```{r eval=F}
+
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2 # specific level of table content
+    toc_float: true
+
+```
+
+`toc_float` ยังมี option ให้กำหนดเพิ่มเติมได้อีก คือ `collapsed` และ `smooth_scroll` ทั้งนี้คือเริ่มต้นของ option ทั้งสองเป็น TRUE ทั้งหมด
+
+```{r eval=F}
+
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2 # specific level of table content
+    toc_float:
+        collapsed: false
+        smooth_scroll: false
+```
+
+
+### กำหนดเลขหัวข้อ (section numbering)
+
+ผู้เขียนรายงานสามารถกำหนดให้โปรแกรมรันเลขให้กับหัวข้อในสารบัญของเอกสารได้ กำหนด option `number_sections` เพิ่มเติมดังนี้
+
+```{r eval=F}
+
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2 # specific level of table content
+    toc_float:
+        collapsed: false
+        smooth_scroll: false
+    number_sections: true
+```
+
+
+## การปรับแต่งรูปแบบของเอกสารเบื้องต้น
+
+เอกสาร rmarkdown ในรูปแบบ HTML สามารถปรับแต่งให้มีรูปแบบได้หลากหลาย และ customized ได้ตามความต้องการของผู้เขียนรายงาน ในเบื้องต้นผู้เขียนรายงานสามารถปรับแต่ง theme และ highlight ของเอกสารได้โดยกำหนดบนส่วน YAML header ดังเช่น
+
+```{r eval=F}
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    theme: united
+    hightlight: tango
+```
+
+- `theme` ที่สามารถกำหนดได้อ้างอิงจาก [package-Bootswatch](https://bootswatch.com/3/) โดยสามารถกำหนดได้เป็น *default, cerulean, journal, flatly, darkly, readable, spacelab, united, cosmo, lumen, paper, sandstone, simplex* และ *yeti*
+
+- `highlight` ที่สามารถกำหนดได้ได้แก่ *default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, breezedark* และ *textmate*
+
+
+
+## Tabbed sections
+
+รูปแบบของสารบัญสามารถทำให้อยู่ในรูปแบบของแถบเมนูได้ โดยรูปแบบพื้นฐานสามารถสร้างได้ง่าย ๆ ดังนี้
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/Screen Shot 2564-05-23 at 09.23.27.png)
+
+การกำหนดแถบเมนูดังกล่าวมี option ให้เลือกเพิ่มเติมอีก 2 ตัวได้แก่ `.tabset-fade` ใช้เพิ่ม fade in และ fade out effect เมื่อกดเลือกแถบเมนูแต่ละแถบ และ `.tabset-pills` ใช้เพิ่ม effect เป็นสีของแถบเมนูเมื่อกดเลือกแถบนั้น ๆ 
+
+```{r eval=F}
+# tabmenu {.tabset .tabset-fade .tabset-pills}
+```
+
+# การสร้างตาราง
+
+การสร้างตารางใน rmarkdown มีหลายวิธีมาก วิธีการหนึ่งที่มีประสิทธิภาพคือการใช้ [package-kableExtra](https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf)
+
+[ดาวน์โหลดไฟล์ข้อมูล](http://161.200.152.253/2758604/datafiles/t2.sav) 
+
+```{r message=F}
+library(foreign)
+library(dplyr)
+#install.packages("kableExtra")
+library(kableExtra)
+dat<-read.spss("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/t2.sav",to.data.frame = T)
+subset<-dat%>%select(id,matach,ses_kb,sibl,male)
+kable(head(subset))
+```
+
+จะเห็นว่าตารางในข้างต้นค่อยข้างเรียบเกินไป ไม่ค่อยสวย และอาจดูยากในกรณีที่มีข้อมูลจำนวนมาก ๆ ผู้ใช้สามารถปรับแต่งลักษณะของตารางได้ตามความต้องการผ่านฟังก์ชัน `kable_styling()` 
+
+```{r}
+head(subset)%>%
+      kable()%>%
+      kable_styling()
+
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped"))
+
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"))
+
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"),
+                              position="left",full_width = F)
+```
+
+
+```{r}
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"),
+                              position="float_right",full_width = F)
+```
+
+ตารางข้อมูล t2.sav ประกอบด้วยค่าสังเกตของตัวแปรทั้งหมด 4 ตัวได้แก่ ผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของนักเรียน (matach) เศรษฐานะของครอบครัวนักเรียนที่วัดจากรายได้ของหัวหน้าครอบครัว หน่วยเป็น 1,000 บาท (ses_kb) จำนวนพี่น้องในครอบครัว (sibl) และตัวแปร dummy ของเพศชาย (male)
+
+จะเห็นว่าการกำหนด position="float_right" ทำให้สามารถเขียนคำอธิบายตารางไว้ด้านข้างของตารางได้
+
+
+```{r}
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"),
+                              position="left",full_width = F,
+                              font_size = 11)
+```
+
+## Column Specification
+
+```{r}
+text_tbl <- data.frame(
+  Items = c("Item 1", "Item 2", "Item 3"),
+  Features = c(
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula tempor ex. Morbi malesuada sagittis turpis, at venenatis nisl luctus a. ",
+    "In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius, posuere risus et, cursus augue. Duis eleifend aliquam ante, a aliquet ex tincidunt in. ", 
+    "Vivamus venenatis egestas eros ut tempus. Vivamus id est nisi. Aliquam molestie erat et sollicitudin venenatis. In ac lacus at velit scelerisque mattis. "
+  )
+)
+
+kable(text_tbl) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, width = "30em", background = "grey")
+```
+
+## Row Specification
+
+```{r}
+kable(head(subset,10)) %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(2, bold = T) %>%
+  row_spec(7:10, bold = T, color = "white", background = "grey")
+```
+
+## Header Specification
+
+```{r}
+kable(head(subset)) %>%
+  kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -45,color="white",background = "#D7261E")
+
+```
+
+## Grouped Columns
+
+```{r}
+kable(head(subset)) %>%
+  kable_styling("striped",font_size = 14,full_width = F) %>%
+  add_header_above(c(" " = 1,"Achievement" = 1,"Family Background" = 3))
+```
+
+## Scroll box table
+
+```{r}
+kable(dat) %>%
+  kable_styling() %>%
+  scroll_box(width = "500px", height = "400px")
+```
+
+
+---
