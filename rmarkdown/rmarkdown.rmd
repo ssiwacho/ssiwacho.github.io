@@ -46,6 +46,14 @@ rmarkdown เป็น package สร้างเอกสารจากโป�
 
 <left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/rmarkdown_workflow.png){width=60%}</left>
 
+นอกจากนี้ยังเป็นพื้นฐานที่สามารถนำไปประยุกต์ใช้สร้างเอกสารในรูปแบบอื่นที่หลากหลาย เช่น
+
+- [Presentation document](https://ssiwacho.github.io/2758501/week1/week1.html#1)
+
+- [Tutorial document](https://siwachoat.shinyapps.io/multinomial/#section-introduction)
+
+- [Dashboard](https://161.200.152.253/2758604/nakornnayok/)
+
 
 # ติดตั้ง package พื้นฐาน
 
