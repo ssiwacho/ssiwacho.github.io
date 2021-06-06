@@ -1,0 +1,12 @@
+x Install the styler package in order to use `style = TRUE`.
+running: bash  -c 'echo "Hello Bash!";
+pwd;
+ls | head;'
+Building shared library for Rcpp code chunk...
+In file included from file74551417672e.cpp:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/Rcpp.h:57:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/Rcpp/DataFrame.h:136:18: warning: unused variable 'data' [-Wunused-variable]
+            SEXP data = Parent::get__();
+                 ^
+1 warning generated.
+Output that would normally be lost

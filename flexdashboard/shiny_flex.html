@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+    
+    
+    <title>Using shiny with flexdashboard</title>
+
+        <script src="shiny_flex_files/header-attrs-2.8/header-attrs.js"></script>
+        <script src="shiny_flex_files/jquery-1.11.3/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="shiny_flex_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="shiny_flex_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="shiny_flex_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+        <script src="shiny_flex_files/navigation-1.1/tabsets.js"></script>
+        <link href="shiny_flex_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="shiny_flex_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="shiny_flex_files/clean-0.1/clean.css" rel="stylesheet" />
+        <script src="shiny_flex_files/clean-0.1/clean.js"></script>
+    
+    
+    
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+      <!-- html_clean start -->
+   <div class="container-fluid main-container">
+     <div class="row">
+       <div class="col-md-10">
+   	
+            
+   
+        
+      <h1 class="title"><strong>Using shiny with flexdashboard</strong></h1>
+      
+        
+
+      <!-- html_clean authors -->
+         
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="content">
+<link rel="preconnect" href="https://fonts.gstatic.com"> <link href="https://fonts.googleapis.com/css2?family=Krub&family=Sarabun:wght@100&display=swap" rel="stylesheet">
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 16px;
+        font-family: 'Krub', sans-serif;
+      color: #1B2631;
+      line-height: 1.7em;
+  }
+td {  /* Table  */
+  font-size: 8px;
+}
+h1.title {
+  font-size: 38px;
+  color: #154360;
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #154360;
+}
+h2 { /* Header 2 */
+    font-size: 22px;
+  color: #154360;
+}
+h3 { /* Header 3 */
+  font-size: 20px;
+  font-family: 'Sarabun', sans-serif;  
+  color: #154360;
+}
+code.r{ /* Code block */
+    font-size: 12px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+</style>
+<p>การ intergrate package-shiny ไว้ใน flexdashboard ช่วยเสริมประสิทธิภาพของ dashboard ที่สร้างขึ้นได้ ผู้พัฒนาสามารถกำหนดพารามิเตอร์ให้กับ dashboard โดยผู้อ่านสามารถปรับเปลี่ยน parameter ดังกล่าวเพื่อเรียกดูหรือปรับเปลี่ยนมุมมองของทัศนภาพข้อมูลตามที่ต้องการได้ กล่าวคือเป็นการเพิ่มความสามารถด้านการมีปฏิสัมพันธ์กับผู้ใช้</p>
+<div id="เตรียมตัวก่อนเรียน" class="section level1">
+<h1><strong>เตรียมตัวก่อนเรียน</strong></h1>
+<p>ให้ดำเนินการตามขั้นตอนต่อไปนี้</p>
+<ol style="list-style-type: decimal">
+<li><p>ติดตั้ง package ที่เกี่ยวข้องให้เรียบร้อย</p></li>
+<li><p>สร้าง rmd file ของ flexdashboard และเพิ่ม option <code>runtime: shiny</code> ที่ส่วน YAML header การเพิ่ม option นี้จะทำให้ผู้พัฒนาสามารถใช้ความสามารถของ shiny บน flexdashboard ได้</p></li>
+</ol>
+<div id="กิจกรรม-1" class="section level2">
+<h2><strong>กิจกรรม 1</strong></h2>
+<ol style="list-style-type: decimal">
+<li><p>เปิด file <code>example1.rmd</code></p></li>
+<li><p>กดปุ่ม Run Document</p></li>
+<li><p>สังเกตผลที่ได้</p></li>
+</ol>
+</div>
+</div>
+<div id="reactive-dataframe-pattern" class="section level1">
+<h1><strong>Reactive dataframe pattern</strong></h1>
+<p>การสร้าง interactive dashboard หมายถึงการสร้าง dashboard ที่รับคำสั่งหรือข้อมูลนำเข้าของผู้ใช้ผ่านพารามิเตอร์ที่กำหนดไว้ จากนั้นนำข้อมูลนำเข้าจากผู้ใช้ดังกล่าวมาสร้างเป็น output</p>
+<p>วิธีการหนึ่งที่มักนิยมใช้เพื่อแบ่งส่วนการรับข้อมูลและนำเสนอข้อมูลให้แยกออกจากกันคือการสร้าง sidebar ใน dashboard เพื่อเป็นส่วนรับข้อมูล การสร้าง sidebar สามารถทำได้โดยการสร้างคอลัมน์ปกติใน flexdashboard จากนั้นเพิ่ม attribute {.sidebar} ผลลัพธ์ที่ได้เป็นดังคอลัมน์ด้านซ้ายมือสุดของรูปด้านล่าง</p>
+<p><img src="Screen%20Shot%202564-06-06%20at%2008.36.30.png" /></p>
+<ol style="list-style-type: decimal">
+<li><p>สร้าง sidebar column</p></li>
+<li><p>สร้างส่วน user input บน sidebar —&gt; xxxInput()</p></li>
+</ol>
+<p><img src="Screen%20Shot%202564-06-06%20at%2008.50.45.png" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>นำข้อมูล example_data.csv เข้าใน dashboard จากนั้นเปลี่ยน dataframe ดังกล่าวให้เป็น reactive dataframe pattern ตามต้องการ โดยดำเนินการภายใต้ฟังก์ชัน <code>reactive()</code> ยกตัวอย่างเช่น</p></li>
+<li><p>แทนที่ dataframe ใน dashboard ปกติ ด้วย reactive dataframe dashboard ที่สร้างขึ้นในข้อ 3.</p></li>
+<li><p>ครอบ dashboard output แต่ละตัวด้วย render function ที่อยู่ในรูปแบบ —&gt; <code>renderXXX({...})</code></p></li>
+</ol>
+<p><img src="Screen%20Shot%202564-06-06%20at%2008.55.12.png" /></p>
+<div id="กิจกรรม-2" class="section level2">
+<h2><strong>กิจกรรม 2</strong></h2>
+<ol style="list-style-type: decimal">
+<li><p>เปิด file dashboard การบ้านคราวที่แล้ว</p></li>
+<li><p>เพิ่ม sidebar column ความกว้าง 200 pixel</p></li>
+<li><p>run Document สังเกตผลลัพธ์ที่ได้</p></li>
+</ol>
+</div>
+<div id="กิจกรรม-3" class="section level2">
+<h2><strong>กิจกรรม 3</strong></h2>
+<ol style="list-style-type: decimal">
+<li><p>เพิ่ม sliderInput() ลงบน sidebar</p></li>
+<li><p>กำหนดอาร์กิวเมนท์ของ sliderInput ตามความเหมาะสม</p></li>
+<li><p>run document แล้วสังเกตผลลัพธ์ที่ได้</p></li>
+</ol>
+</div>
+<div id="กิจกรรม-4" class="section level2">
+<h2><strong>กิจกรรม 4</strong></h2>
+<ol style="list-style-type: decimal">
+<li><p>สร้างชุดข้อมูลใหม่ชื่อ <code>show.dat</code> ให้อยู่ภายใต้ coded chunk เดียวกับ sliderInput() ในข้างต้น โดยชุดข้อมูลนี้คัดกรองนักเรียนเฉพาะที่มีช่วง ACH_P6 ตามที่กำหนดใน sliderInput()</p></li>
+<li><p>run document แล้วสังเกตผลที่ได้ (output เปลี่ยนไปตาม input ที่กำหนดหรือไม่)</p></li>
+</ol>
+</div>
+<div id="กิจกรรม-5" class="section level2">
+<h2><strong>กิจกรรม 5</strong></h2>
+<p>กิจกรรมก่อนหน้าจะเห็นว่า output ที่กำหนดไว้ยังไม่ปรับเปลี่ยนไปตาม input ใน <code>sliderInput()</code> ทั้งนี้เป็นเพราะยังไม่ได้มีการเชื่อมต่อสองส่วนนี้ซึ่งกันและกัน</p>
+<ol style="list-style-type: decimal">
+<li><p>เปลี่ยนชุดข้อมูลที่ใช้ใน output เป็น <code>show.dat()</code> อย่าลืมว่า output ดังกล่าวจะต้องครอบด้วยฟังก์ชัน <code>renderXXX()</code></p></li>
+<li><p>run document แล้วสังเกตผลลัพธ์ที่ได้</p></li>
+<li><p>ลองปรับเปลี่ยน output ที่เหลือให้ปรับเปลี่ยนตาม output ที่กำหนดตามความเหมาะสม (ถ้ามี)</p></li>
+</ol>
+</div>
+</div>
+<div id="customized-inputs-for-charts" class="section level1">
+<h1>Customized inputs for charts</h1>
+<p>input parameter ทั้งหมดที่กล่าวมาไม่จำเป็นต้องอยู่แต่บน sidebar แต่เพียงอย่างเดียว ผู้พัฒนาสามารถเปลี่ยนที่ให้ไปอยู่กับ chart หรือ output ส่วนใดก็ได้ใน dashboard โดยย้าย syntax ทั้งหมดไปวางคู่กับ output ส่วนนั้น</p>
+<p>นอกจากนี้การใส่ input parameters บริเวณ sidebar แล้ว ผู้พัฒนายังสามารถเลือกใช้ input parameters ดังกล่าวบนแผนภาพแต่ละแผนภาพแยกออกจาก sidebar ได้ด้วย โดยใช้ฟังก์ชัน <code>fillCol</code> หรือ <code>fillRow</code> ดังตัวอย่าง syntax ต่อไปนี้</p>
+</div>
+<div id="dynamic-dashboard" class="section level1">
+<h1>Dynamic dashboard</h1>
+<p>เราสามารถสร้าง dashboard ที่ update ข้อมูลแบบ realtime โดยอิงจาก googlesheet ได้ตัวอย่าง</p>
+<p></br> </br></p>
+</div>
+</div>
+
+   
+   
+      </div>
+   <div class="col-md-2">
+          <div id="toc">
+       <button type="button" class="close">×</button>
+       <ul>
+       <li><a href="#เตรียมตัวก่อนเรียน"><strong>เตรียมตัวก่อนเรียน</strong></a>
+       <ul>
+       <li><a href="#กิจกรรม-1"><strong>กิจกรรม 1</strong></a></li>
+       </ul></li>
+       <li><a href="#reactive-dataframe-pattern"><strong>Reactive dataframe pattern</strong></a>
+       <ul>
+       <li><a href="#กิจกรรม-2"><strong>กิจกรรม 2</strong></a></li>
+       <li><a href="#กิจกรรม-3"><strong>กิจกรรม 3</strong></a></li>
+       <li><a href="#กิจกรรม-4"><strong>กิจกรรม 4</strong></a></li>
+       <li><a href="#กิจกรรม-5"><strong>กิจกรรม 5</strong></a></li>
+       </ul></li>
+       <li><a href="#customized-inputs-for-charts">Customized inputs for charts</a></li>
+       <li><a href="#dynamic-dashboard">Dynamic dashboard</a></li>
+       </ul>
+     </div>
+        </div>
+   </div>
+   </div>
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+		// add bootstrap table styles to pandoc tables
+	$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+		
+ 	 	$('#content img').addClass("image-thumb");
+		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>
