@@ -30,7 +30,7 @@ kable(tab)%>%kable_styling(bootstrap_options = c("hover"),
                             full_width = FALSE,
                            position="left")%>%
               column_spec(1, width="8em")%>%
-              column_spec(2, width="35em")
+              column_spec(2, width="40em")
 
 
 ```
@@ -72,7 +72,7 @@ body{ /* Normal  */
       line-height: 1.7em;
   }
 td {  /* Table  */
-  font-size: 14px;
+  font-size: 16px;
   font-family: 'Sarabun', sans-serif;
 
 }
