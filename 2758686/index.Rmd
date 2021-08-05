@@ -1,0 +1,117 @@
+---
+title: "**2758686 Data Visualization**"
+---
+
+
+</br>
+
+ภาคต้น ปีการศึกษา 2564
+
+**หน่วยกิต: ** 2 หน่วยกิต (2-0-6)
+
+**ผู้สอน: ** อ.ดร.สิวะโชติ ศรีสุทธิยากร
+
+**ทัศนภาพข้อมูล (data visualization)** เป็นทั้งศาสตร์และศิลป์ในการสร้างตัวแทนของข้อมูล (representation) และนำเสนอข้อมูล (presentation) เพื่อช่วยอำนวยความสะดวกหรือทำให้ผู้ใช้ข้อมูลสามารถเข้าถึงสารสนเทศเชิงลึกที่ซ้อนอยู่เบื้องหลังข้อมูลได้ รายวิชานี้จะกล่าวถึงการพัฒนาทัศนภาพข้อมูลที่เหมาะสมสำหรับการวิเคราะห์และนำเสนอข้อมูลในลักษณะต่าง ๆ ภายใต้บริบทต่าง ๆ 
+
+
+</br>
+
+### เนื้อหารายสัปดาห์
+
+
+```{r echo=F}
+
+library(kableExtra)
+สัปดาห์ที่<-c("1-2","3-5","6","7","8-10","11-12","13-14","15-16")
+เนื้อหา<-c("\n 1.แนะนำรายวิชา มโนทัศน์พื้นฐานของทัศนภาพข้อมูล กระบวนการออกแบบทัศนภาพข้อมูล \n  2. หลักการพัฒนาทัศนภาพข้อมูล ได้แก่ การกำหนดตัวแทนข้อมูล (data representation) การกำหนดวิธีการนำเสนอ (presentation) \n 3. ทบทวนการใช้โปรแกรม R เบื้องต้น เช่น การแนะนำสภาพแวดล้อมของโปรแกรม มโนทัศน์เกี่ยวกับตัวแปร การนำข้อมูลเข้าสู่โปรแกรม และการจัดระเบียบและจัดกระทำข้อมูล \n 4. แนะนำเครื่องมืออื่น ๆ สำหรับสร้างทัศนภาพข้อมูล
+","\n 1.แนะนำการสร้างทัศนภาพข้อมูลด้วย R เช่น การใช้ library base graphics, ggplot2, lattice, plotly, bokeh, highcharter เป็นต้น \n 2. แนะนำการสร้างทัศนภาพข้อมูลด้วยโปรแกรม Python เช่น การใช้ library mathplotlib, seaborn, plotly, bokeh เป็นต้น", "แนะนำ R/Python markdown และหัวข้ออื่น ๆ ที่เกี่ยวข้อง เช่น การสร้าง reproducible report การสร้างหน้า website อย่างง่าย การสร้าง website ด้วย library blogdown เป็นต้น", "การนำเสนองานสร้างทัศนภาพข้อมูล" ,"การออกแบบทัศนภาพข้อมูลแบบมีปฏิสัมพันธ์ (interactive data visualization) และแนะนำการใช้ Shiny R", "การออกแบบและสร้าง Dashboard", "การสร้างทัศนภาพข้อมูลเชิงพื้นที่ (geospatial data visualization)" ,"Text Visualization")
+tab<-data.frame(สัปดาห์ที่,เนื้อหา)
+kable(tab)%>%kable_styling(bootstrap_options = c("hover"),
+                            full_width = FALSE,
+                           position="left")%>%
+              column_spec(1, width="8em")%>%
+              column_spec(2, width="35em")
+
+
+```
+
+</br>
+
+### การวัดและประเมินผลการเรียนรู้
+
+1. สอบวัดความรู้ (จัดสอบนอกตาราง) **60%**
+2. การบ้าน/งานที่มอบหมาย  **30%**
+3. การเข้าเรียนและมีส่วนร่วมในชั้นเรียน  **10%**
+
+</br>
+
+### วันเวลาและช่องทางการเรียน
+
+รายวิชานี้สอนทุกวันอาทิตย์ เริ่มตั้งแต่วันที่ 15 สิงหาคม 2564 เวลา 13:00 - 15:00 น. โดยจัดการเรียนการสอนแบบออนไลน์ 100% ผ่านทางโปรแกรม Zoom 
+
+[คลิกที่นี่เพื่อเข้าสู่ห้องเรียน](https://chula.zoom.us/j/4256499854?pwd=ajNudWEweDRJS1VLbmQvblg4QXE2UT09)
+
+</br>
+
+### เอกสารประกอบการสอน
+
+เอกสารประกอบการสอนรวมทั้ง clip ต่าง ๆ จะใส่ไว้ใน slack ทั้งนี้นิสิตสามารถเข้าถึง workspace ของรายวิชานี้ได้จากลิงค์/QR code ด้านล่าง
+
+
+
+
+
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+body{ /* Normal  */
+      font-size: 16px;
+      font-family: 'Sarabun', sans-serif;
+      line-height: 1.7em;
+  }
+td {  /* Table  */
+  font-size: 14px;
+  font-family: 'Sarabun', sans-serif;
+
+}
+h1.title {
+  font-size: 38px;
+  color: #004D7F;
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #004D7F;
+
+}
+h2 { /* Header 2 */
+    font-size: 22px;
+    color: #004D7F;
+
+}
+h3 { /* Header 3 */
+  font-size: 20px;
+  font-family: 'Sarabun', sans-serif;  
+  color: #004D7F;
+
+}
+code.r{ /* Code block */
+    font-size: 12px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+
+
+a:link {
+  color: #B84C00; 
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+</style>
+
+
+
+

@@ -1,0 +1,20 @@
+name: "Data Visualization"
+navbar:
+  title: "Data Visualization"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+      
+output:
+  html_document:
+    theme: united
+    highlight: tango
+
+  
+css: style.css
+
+
+
+

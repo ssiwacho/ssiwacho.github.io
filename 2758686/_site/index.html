@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>2758686 Data Visualization</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Visualization</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore"><strong>2758686 Data Visualization</strong></h1>
+
+</div>
+
+
+<p></br></p>
+<p>ภาคต้น ปีการศึกษา 2564</p>
+<p><strong>หน่วยกิต: </strong> 2 หน่วยกิต (2-0-6)</p>
+<p><strong>ผู้สอน: </strong> อ.ดร.สิวะโชติ ศรีสุทธิยากร</p>
+<p><strong>ทัศนภาพข้อมูล (data visualization)</strong> เป็นทั้งศาสตร์และศิลป์ในการสร้างตัวแทนของข้อมูล (representation) และนำเสนอข้อมูล (presentation) เพื่อช่วยอำนวยความสะดวกหรือทำให้ผู้ใช้ข้อมูลสามารถเข้าถึงสารสนเทศเชิงลึกที่ซ้อนอยู่เบื้องหลังข้อมูลได้ รายวิชานี้จะกล่าวถึงการพัฒนาทัศนภาพข้อมูลที่เหมาะสมสำหรับการวิเคราะห์และนำเสนอข้อมูลในลักษณะต่าง ๆ ภายใต้บริบทต่าง ๆ</p>
+<p></br></p>
+<div id="เนอหารายสปดาห" class="section level3">
+<h3>เนื้อหารายสัปดาห์</h3>
+<table class="table table-hover" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+สัปดาห์ที่
+</th>
+<th style="text-align:left;">
+เนื้อหา
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 8em; ">
+1-2
+</td>
+<td style="text-align:left;width: 35em; ">
+1.แนะนำรายวิชา มโนทัศน์พื้นฐานของทัศนภาพข้อมูล กระบวนการออกแบบทัศนภาพข้อมูล 2. หลักการพัฒนาทัศนภาพข้อมูล ได้แก่ การกำหนดตัวแทนข้อมูล (data representation) การกำหนดวิธีการนำเสนอ (presentation) 3. ทบทวนการใช้โปรแกรม R เบื้องต้น เช่น การแนะนำสภาพแวดล้อมของโปรแกรม มโนทัศน์เกี่ยวกับตัวแปร การนำข้อมูลเข้าสู่โปรแกรม และการจัดระเบียบและจัดกระทำข้อมูล 4. แนะนำเครื่องมืออื่น ๆ สำหรับสร้างทัศนภาพข้อมูล
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8em; ">
+3-5
+</td>
+<td style="text-align:left;width: 35em; ">
+1.แนะนำการสร้างทัศนภาพข้อมูลด้วย R เช่น การใช้ library base graphics, ggplot2, lattice, plotly, bokeh, highcharter เป็นต้น 2. แนะนำการสร้างทัศนภาพข้อมูลด้วยโปรแกรม Python เช่น การใช้ library mathplotlib, seaborn, plotly, bokeh เป็นต้น
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8em; ">
+6
+</td>
+<td style="text-align:left;width: 35em; ">
+แนะนำ R/Python markdown และหัวข้ออื่น ๆ ที่เกี่ยวข้อง เช่น การสร้าง reproducible report การสร้างหน้า website อย่างง่าย การสร้าง website ด้วย library blogdown เป็นต้น
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8em; ">
+7
+</td>
+<td style="text-align:left;width: 35em; ">
+การนำเสนองานสร้างทัศนภาพข้อมูล
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8em; ">
+8-10
+</td>
+<td style="text-align:left;width: 35em; ">
+การออกแบบทัศนภาพข้อมูลแบบมีปฏิสัมพันธ์ (interactive data visualization) และแนะนำการใช้ Shiny R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8em; ">
+11-12
+</td>
+<td style="text-align:left;width: 35em; ">
+การออกแบบและสร้าง Dashboard
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8em; ">
+13-14
+</td>
+<td style="text-align:left;width: 35em; ">
+การสร้างทัศนภาพข้อมูลเชิงพื้นที่ (geospatial data visualization)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 8em; ">
+15-16
+</td>
+<td style="text-align:left;width: 35em; ">
+Text Visualization
+</td>
+</tr>
+</tbody>
+</table>
+<p></br></p>
+</div>
+<div id="การวดและประเมนผลการเรยนร" class="section level3">
+<h3>การวัดและประเมินผลการเรียนรู้</h3>
+<ol style="list-style-type: decimal">
+<li>สอบวัดความรู้ (จัดสอบนอกตาราง) <strong>60%</strong></li>
+<li>การบ้าน/งานที่มอบหมาย <strong>30%</strong></li>
+<li>การเข้าเรียนและมีส่วนร่วมในชั้นเรียน <strong>10%</strong></li>
+</ol>
+<p></br></p>
+</div>
+<div id="วนเวลาและชองทางการเรยน" class="section level3">
+<h3>วันเวลาและช่องทางการเรียน</h3>
+<p>รายวิชานี้สอนทุกวันอาทิตย์ เริ่มตั้งแต่วันที่ 15 สิงหาคม 2564 เวลา 13:00 - 15:00 น. โดยจัดการเรียนการสอนแบบออนไลน์ 100% ผ่านทางโปรแกรม Zoom</p>
+<p><a href="https://chula.zoom.us/j/4256499854?pwd=ajNudWEweDRJS1VLbmQvblg4QXE2UT09">คลิกที่นี่เพื่อเข้าสู่ห้องเรียน</a></p>
+<p></br></p>
+</div>
+<div id="เอกสารประกอบการสอน" class="section level3">
+<h3>เอกสารประกอบการสอน</h3>
+<p>เอกสารประกอบการสอนรวมทั้ง clip ต่าง ๆ จะใส่ไว้ใน slack ทั้งนี้นิสิตสามารถเข้าถึง workspace ของรายวิชานี้ได้จากลิงค์/QR code ด้านล่าง</p>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+body{ /* Normal  */
+      font-size: 16px;
+      font-family: 'Sarabun', sans-serif;
+      line-height: 1.7em;
+  }
+td {  /* Table  */
+  font-size: 14px;
+  font-family: 'Sarabun', sans-serif;
+
+}
+h1.title {
+  font-size: 38px;
+  color: #004D7F;
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #004D7F;
+
+}
+h2 { /* Header 2 */
+    font-size: 22px;
+    color: #004D7F;
+
+}
+h3 { /* Header 3 */
+  font-size: 20px;
+  font-family: 'Sarabun', sans-serif;  
+  color: #004D7F;
+
+}
+code.r{ /* Code block */
+    font-size: 12px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+
+
+a:link {
+  color: #B84C00; 
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+</style>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
