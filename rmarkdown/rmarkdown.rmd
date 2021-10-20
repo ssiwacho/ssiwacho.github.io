@@ -154,9 +154,9 @@ output: html_document
 
 - `---` หรือ `***` ใช้ขีดเส้นคั่นส่วนของเอกสารในแนวนอน
 
-- `![image name](path-to-image)` ใช้สอดแทรกรูปแบบลงในเอกสาร เช่น `![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/1800x1200_dog_cool_summer_other.webp)`
+- `![image name](path-to-image)` ใช้สอดแทรกรูปแบบลงในเอกสาร เช่น `![](0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg)`
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/1800x1200_dog_cool_summer_other.webp)
+![](0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg)
 
 - การแทรก clip video จาก youtube สามารถใช้การ embed video ได้เช่น
 

@@ -1,5 +1,66 @@
 ---
-title: "About This Website"
+title: "เอกสารอ้างอิง"
 ---
 
-More about this website.
+</br>
+
+1. สิวะโชติ ศรีสุทธิยากร. (2564). *สถิติและวิทยาการข้อมูลทางการศึกษา: R สำหรับการจัดระเบียบและจัดกระทำข้อมูล* 
+
+2. Stack Overflow: https://stackoverflow.com/questions/tagged/ggplot2?sort=frequent&pageSize=50
+
+3. https://r4ds.had.co.nz/
+
+
+
+
+
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+body{ /* Normal  */
+      font-size: 16px;
+      font-family: 'Sarabun', sans-serif;
+      line-height: 1.7em;
+  }
+td {  /* Table  */
+  font-size: 16px;
+  font-family: 'Sarabun', sans-serif;
+
+}
+h1.title {
+  font-size: 38px;
+  color: #004D7F;
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #004D7F;
+
+}
+h2 { /* Header 2 */
+    font-size: 22px;
+    color: #004D7F;
+
+}
+h3 { /* Header 3 */
+  font-size: 20px;
+  font-family: 'Sarabun', sans-serif;  
+  color: #004D7F;
+
+}
+code.r{ /* Code block */
+    font-size: 12px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+
+
+a:link {
+  color: #B84C00; 
+  background-color: transparent; 
+  text-decoration: none;
+}
+
+</style>
