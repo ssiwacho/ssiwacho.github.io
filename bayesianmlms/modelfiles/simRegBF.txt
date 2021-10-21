@@ -1,0 +1,27 @@
+model{
+  M ~ dcat(model.p[])
+  model.p[1] <- prior1
+  model.p[2] <- 1-prior1
+
+
+  # Likelihood
+  for (i in 1:n){
+    y[i] ~ dnorm(mu[i,M],tau[M])
+    mu[i,1] <- b0[1]
+    mu[i,2] <- b0[2] + b1*x[i]
+  }
+
+  for (m in 1:2){
+      b0[m] ~ dnorm(0,0.0001)
+      sigma2[m] <- (1/tau[m])
+  }
+
+
+    b1~ dnorm(0,0.0001)
+  
+
+
+  tau[1] ~ dgamma(shape1[M],rate1[M])
+  tau[2] ~ dgamma(shape2[M],rate2[M])
+
+}

@@ -1,0 +1,20 @@
+
+
+model{
+
+# likelihood part    
+for (i in 1:n)
+{
+  y[i]~dbern(theta)
+  
+}
+  
+# prior part
+  theta~dbeta(a,b)
+
+# deterministic part
+  a<-3
+  b<-2
+}
+
+
