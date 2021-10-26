@@ -1,20 +1,21 @@
 ---
-title: "Bayesian Multilevel Modelling"
+title: ""
 date: "`r Sys.Date()`"
-author: "อ.ดร.สิวะโชติ ศรีสุทธิยากร"
 output:
-  rmdformats::downcute:
-    self_contained: true
-    default_style: "light"
-    downcute_theme: "chaos"
-    lightbox: TRUE
+  rmdformats::robobook:
+    highlight: kate
+    thumbnails: true
+    gallery: true
+    lightbox: true
+    fig_width: 16
+    fig_height: 9
 ---
-
 
 ```{r setup, include=FALSE}
 ## Global options
 knitr::opts_chunk$set(cache = TRUE)
 ```
+
 
 
 # เตรียมตัวก่อนเรียน
@@ -114,7 +115,7 @@ t.test(dat$Ach, mu=5.5)
 
 สมมุติว่าต้องการคาดการณ์คะแนนสอบของนายบูม ที่มีความเป็นไปได้ 4 แบบดังรูป
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b1.png)
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b1.png){width=80%}
 
 
 ก่อนการเก็บรวบรวมข้อมูลจริงในชั้นเรียนของนายบูม สมมุติว่าผู้วิเคราะห์มีข้อมูลในอดีตที่เกี่ยวข้องกับคะแนนสอบของนายบูมดังนี้
@@ -128,19 +129,19 @@ t.test(dat$Ach, mu=5.5)
 4. หากทราบอีกว่า ในการสอบที่ผ่าน ๆ มา นิดสอบได้คะแนนโดยเฉลี่ยคิดเป็น 89 คะแนน ซึ่งเป็นอันดับที่ 3 ของชั้นเรียนนี้ (น้ำหนักของความเป็นไปได้ทั้ง 4 เหมือนเดิมหรือไม่?)
 
 
-![การแจกแจงก่อนหน้าของคะแนนสอบนายบูม](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b2.png)
+![การแจกแจงก่อนหน้าของคะแนนสอบนายบูม](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b2.png){width=80%}
 
 ผู้วิเคราะห์สามารถปรับสารสนเทศในการแจกแจงความน่าจะเป็นก่อนหน้าในข้างต้นได้ หากมีการเก็บรวบรวมข้อมูลตัวอย่างเพิ่มเติม เช่น
 
 สมมุติว่าการแจกแจงความน่าจะเป็นก่อนหน้าของคะแนนนายบูมเป็นแบบ uniform และมีข้อมูลการสอบครั้งล่าสุดเพิ่มเติมดังรูป 
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b3.png)
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b3.png){width=80%}
 
 
 
 อีกตัวอย่างหนึ่ง สมมุติว่า การแจกแจงความน่าจะเป็นก่อนหน้าของคะแนนนายบูมมีน้ำหนักสูงที่ A3 และมีข้อมูลการสอบครั้งล่าสุดเพิ่มเติมดังรูป
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b4.png)
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/b4.png){width=80%}
 
 
 # ทฤษฎีบทของเบส์ (Bayes' theorem)
@@ -387,11 +388,23 @@ c01<-1
 อีกวิธีการที่ง่ายกว่าสองวิธีการแรกมากคือ วิธี ROPE ซึ่งเป็นการเปรียบเทียบกันระหว่างช่วงความน่าเชื่อถือแบบ HDI กับช่วง ROPE ที่เรียกว่า region of practical equivalence ซึ่งเป็นช่วงที่ยอมรับได้ในทางปฏิบัติ (โดยผู้วิเคราะห์) ว่าหากพารามิเตอร์ยังมีค่าอยู่ในช่วง ROPE ดังกล่าวอยู่ แสดงว่ายังไม่แตกต่างจาก $H_0$ โดยหากช่วง HDI ครอบคลุมช่วง ROPE เราจะสามารถยอมรับ $H_0$ ได้ แต่หากช่วง HDI ไม่มีส่วนใดที่ครอบคลุมช่วง ROPE เลย แสดงว่าไม่ช่วงเชื่อถือ $H_0$ อย่างยิ่ง
 
 
-วิธีการสุดท้ายคือการใช้ Bayes Factor ที่เป็นอัตราส่วนระหว่างค่าภาวะความควรจะเป็นของโมเดลระหว่างโมเดลภายใต้ $H_1$ กับ $H_2$ อัตราส่วนดังกล่าวมีความหมายเป็นระดับของความน่าเชื่อถือของแต่ละโมเดลที่ประเมินโดยใช้สารสนเทศจากข้อมูลจริง
+### การคัดเลือกโมเดล (model selection)
 
-$BF = \frac{p(H_2|\bf{x})}{p(H_1|\bf{x})} = \frac{p(H_2)}{p(H_1)} \times \frac{p(\bf{x}|H_2)}{p(\bf{x}|H_1)}$
+การคัดเลือกโมเดลเป็นวิธีการหนึ่งที่สามารถใช้ในการทดสอบมสมมุติฐานของผู้วิเคราะห์ รวมทั้งใช้เปรียบเทียบและคัดเลือกโมเดลที่เหมาะสมที่สุดสำหรับอธิบายข้อมูล  สถิติตัวหนึ่งที่มีความสำคัญคือ bayes factor 
+วัตถุประสงค์ของ bayes factor ถูกใช้เพื่อวัดว่าข้อมูลตัวอย่างที่เก็บรวบรวมมมานี้สนับสนุนโมเดลหรือสมมุติฐานตัวใดมากกว่ากัน bayes factor มีค่าเท่ากับอัตราส่วนระหว่างค่าภาวะความควรจะเป็นของสมมุติฐานสองตัวบนชุดข้อมูลตัวอย่างเดียวกัน สมมุติให้ $H_1$ คือโมเดลตามสมมุติฐานที่ 1 และ $H_2$ คือโมเดลตามสมมุติฐานที่ 2 และ $\bf{x}$ คือชุดข้อมูลตัวอย่าง จะได้ว่าสถิติ bayes factor (BF) มีค่าเท่ากับ
+
+$BF = \frac{p(\bf{x}|H_1)}{p(\bf{x}|H_2)}=\frac{p(H_1|\bf{x})}{p(H_2|\bf{x})}\times \frac{p(H_2)}{p(H_1)}$
+
+จากนิยามข้างต้นจะเห็นว่า bayes factor ตามนิยามดังกล่าวสามารถเขียนใหม่ในรูปผลคูณระหว่างอัตราส่วนสองตัว ได้แก่ อัตราส่วนระหว่างการแจกแจงความน่าจะเป็นภายหลังกับอัตราส่วนระหว่างการแจกแจงความน่าจะเป็นก่อนหน้าของสมมุติฐานที่ 1 ต่อสมมุติฐานที่ 2
+
+จากนิยามนี้สามารถแปลผลได้ว่าหาก $BF$ มีค่ามากกว่า 1 นั่นหมายถึงข้อมูลที่มีสนับสนุนโมเดลตามสมมุติฐาน $H_1$ มากกว่า ในทางกลับกันหาก $BF$ มีค่าน้อยกว่า 1 นั่นหมายความว่าข้อมูลที่มีสนับสนุนโมเดลตามสมมุติฐาน $H_2$ มากกว่า [Harold Jeffery (1998)](https://books.google.co.th/books?id=vh9Act9rtzQC&pg=PA432&redir_esc=y#v=onepage&q&f=false) ได้เสนอสเกลการแปลความหมายสถิติ bayes factor ไว้ดังนี้
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/BF.png){width=60%}
+
+การคำนวณและการใช้งาน bayes factor จะกล่าวถึงในสัปดาห์ที่สองของหัวข้อนี้
 
 
+นอกจากสถิติ bayes factor แล้วยังมีสถิติอีกหลายตัวที่สามารถใช้เปรียบเทียบและคัดเลือกโมเดลแบบเบส์ได้ เช่น deviance information criterion (DIC), widely applicable information criterion (WAIC) และ leave-one-out cross-validation (LOO) สถิติทั้งหมดที่กล่าวมานี้ใช้สะท้อนความแตกต่างกันระหว่างข้อมูลตัวอย่าง $y$ กับค่าทำนายที่ generate จากโมเดลการวิเคราะห์ $\hat{y}$ ค่าที่ได้จากสถิติดังกล่าวจึงใช้สะท้อนความคลาดเคลื่อนของแต่ละโมเดลเมื่อเปรียบเทียบกับข้อมูลจริง โมเดลที่มีค่าสถิติดังกล่าวต่ำกว่าจะเป็นโมเดลที่มีความเหมาะสมมากกว่า
 
 
 # Monte Carlo Markov Chain (MCMC)
@@ -433,16 +446,23 @@ $\mu_i = \beta_0 + \beta_1x_i$
 
 โดยทั่วไปการกำหนดการแจกแจงความน่าจะเป็นก่อนหน้าสามารถทำได้ 2 ลักษณะ ลักษณะแรกเรียกว่า การแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศ (non-informative prior distribution) และการแจกแจงความน่าจะเป็นก่อนหน้าแบบให้สารสนเทศ (informative prior distribution)
 
-การแจกแจงความน่าจะเป็นก่อนหน้าของพารามิเตอร์อิทธิพลคงที่สามารถเลือกใช้ได้หลายการแจกแจง เช่น การแจกแจงแบบ uniform ที่เป็น noninformative prior การแจกแจงแบบปกติ ที่เป็นไปได้ทั้ง noninformative และ informative prior ขึ้นอยู่กับการกำหนดพารามิเตอร์ค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐานของการแจกแจง
+การแจกแจงความน่าจะเป็นก่อนหน้าของพารามิเตอร์อิทธิพลคงที่สามารถเลือกใช้ได้หลายการแจกแจง เช่น การแจกแจงแบบ uniform ที่เป็น noninformative prior การแจกแจงแบบปกติ ที่เป็นไปได้ทั้ง noninformative และ informative prior ขึ้นอยู่กับการกำหนดพารามิเตอร์ค่าเฉลี่ย (mean) และค่าความถูกต้อง (precision) โดยที่ค่าความถูกต้องดังกล่าวเป็นส่วนกลับของพารามิเตอร์ความแปรปรวน (variance) ดังนี้ precision = 1/variance
 
 จากตัวอย่างข้างต้นกำหนดให้
 
-$\beta_0 \sim N(0,10000)$
+$\beta_0 \sim N(0,10^{-4})$
 
-$\beta_1 \sim N(0,10000)$
+$\beta_1 \sim N(0,10^{-4})$
 
-ซึ่งเป็นการแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศ
+การกำหนดข้างต้นคือการแจกแจงความน่าจะเป็นแบบปกติที่มีค่าเฉลี่ยเท่ากับ 0 และความแปรปรวนเท่ากับ 10000 ซึ่งเรียกได้ว่าเป็นการแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศ รูปด้่านล่างแสดงลักษณะการแจกแจงแบบปกติข้างต้น จากรูปจะเห็นว่าการแจกแจงดังกล่าวมีขอบเขตที่กว้างพารามิเตอร์ส่วนใหญ่จะมีค่าตกอยู่ในช่วง -200 ถึง 200
 
+```{r echo=F}
+b0<-rnorm(100000,0,100)
+b1<-rnorm(100000,0,100)
+par(mfrow=c(1,2), mar=c(4,4,1,1))
+plot(density(b0), xlab=expression(beta[0]), main="", ylim=c(0,0.005))
+plot(density(b1), xlab=expression(beta[1]), main="", ylim=c(0,0.005))
+```
 
 การแจกแจงความน่าจะเป็นก่อนหน้าของส่วนเบี่ยงเบนมาตรฐานหรือความแปรปรวน มีความจำเป็นต้องเลือกการแจกแจงที่ domain ของการแจกแจงมีค่าไม่ติดลบ โดยปกติมักกำหนดให้ความแปรปรวนดังกล่าวมีการแจกแจงแบบแกมมาผกผัน (inverse gamma distribution)
 
@@ -464,9 +484,10 @@ $p(\sigma^2|a,b) \propto  \frac{1}{\sigma^2}$ เรียกว่า Jeffery p
 
 $sigma^2 \sim IG(0.0001,0.0001)$
 
+
 รูปด้านล่างแสดงรายการของการแจกแจงความน่าจะเป็นที่สามารถกำหนดได้ใน BUGS และ JAGS
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/distribution.png)
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/distribution.png){width=80%}
 
 จากการระบุโมเดลข้างต้นทำให้สามารถเขียน syntax เพื่อระบุโมเดลใน JAGS ได้ดังนี้
 
@@ -537,9 +558,9 @@ writeLines(modelString, con="/Users/siwachoat/Library/Mobile Documents/com~apple
 
 ### การสั่งประมวลผล
 
-สมมุติว่าข้อมูลที่ใช้ในการวิเคราะห์เป็นดังรูป โดยเก็บไว้ในตัวแปร `dat.reg`
+สมมุติว่าข้อมูลที่ใช้ในการวิเคราะห์เป็นดังรูป โดยเก็บไว้ในตัวแปร `dat.reg` (ข้อมูลในตัวอย่างนี้ได้จากการจำลองด้วยเทคนิค Monte Carlo) โดยใช้ syntax ด้านล่าง
 
-```{r echo=F}
+```{r}
 ATT<-rnorm(100,30,10)
 ACH<-30+0.55*ATT+rnorm(100,0,5)
 dat.reg<-data.frame(ATT,ACH)
@@ -760,7 +781,7 @@ plotPost(samples[,"b1"], compVal=0.6, cenTend="median", ROPE=c(0.55,0.65), credM
 
 พารามิเตอร์ทั้งสองตัวของการแจกแจงแบบบีต้าทำให้รูปทรงการแจกแจงมีความแตกต่างกัน ซึ่งสามารถใช้สะท้อนความเชื่อเกี่ยวกับความลำเอียงของเหรียญที่แตกต่างกันได้เป็นอย่างดี รูปด้านล่างแสดงตัวอย่างโค้งความหนาแน่นของการแจกแจงแบบบีต้า เมื่อกำหนดพารามิเตอร์ต่าง ๆ 
 
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/beta.png)
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/markdown/multilevel/beta.png){width=80%}
 Kruschke (2012)
 
 </br>
@@ -858,12 +879,20 @@ plotPost(samples[,"theta"], compVal=0.5, cenTend="median", ROPE=c(0.48,0.1), cre
 
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Krub:wght@400;500;600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
 
 .math {font-size: 1.05em;}
 
-}
+body{ /* Normal  */
+      font-family: 'Sarabun', sans-serif;
+      line-height: 1.9px;
+      color: #152D35;
+      font-size: 16px;
+  }
+
 </style>
-
-
 
