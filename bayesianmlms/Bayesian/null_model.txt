@@ -1,0 +1,20 @@
+model{
+
+for (i in 1:n)
+{
+y[i]~dnorm(mu[i],inv.sigma2[schoolid[i]])
+mu[i]<-beta0j[schoolid[i]]
+}
+
+for (j in tab)
+{
+beta0j[j]~dnorm(gamma00, inv.tau00)
+inv.sigma2[j]~dgamma(0.0001,0.0001)
+sigma2[j]<-inv.sigma2[j]^(-1)
+
+}
+
+inv.tau00~dgamma(0.0001,0.0001)
+gamma00~dnorm(0,10^-4) T(0,) #half-normal distribution
+tau00<-inv.tau00^(-1)
+}

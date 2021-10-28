@@ -870,11 +870,357 @@ plotPost(samples[,"theta"], compVal=0.5, cenTend="median", ROPE=c(0.48,0.1), cre
 
 # Multilevel Modelling
 
-## Null model (random-effect ANOVA)
+หัวข้อนี้จะกล่าวถึงการวิเคราะห์ multilevel model ด้วยวิธีการแบบเบส์ จากชุดข้อมูล hsb สมมุติว่านักวิจัยมีคำถามวิจัยดังนี้
 
-## random-intercept model
+1. ผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของนักเรียนมีความแตกต่างกันระหว่างโรงเรียนหรือไม่?
+
+2. โรงเรียนโดยเฉลี่ยแล้วนักเรียนมีเศราฐานะทางบ้านสูงจะมีค่าเฉลี่ยผลสัมฤทธิ์ทางคณิตศาสตร์สูงด้วยหรือไม่?
+
+3. ความสัมพันธ์ในระดับนักเรียนระหว่าง SES กับ mathach มีมากน้อยแค่ไหน? ความสัมพันธ์ดังกล่าวมีความแตกต่างกันไปตามโรงเรียนหรือไม่อย่างไร?
+
+4. เมื่อเปรียบเทียบกันระหว่างโรงเรียนรัฐบาลกับโรงเรียนในเครือคาทอลิก ในมิติของผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาตร์ และระดับความสััมพันธ์ระหว่าง ses กับ mathach มีความแตกต่างกันหรือไม่ เมื่อมีการควบคุมความผันแปรของ mathach ด้วยค่าเฉลี่ยเศรษฐานะของนักเรียนในแต่ละโรงเรียนแล้ว
+
+จงออกแบบการวิเคราะห์เพื่อตอบคำถามวิจัยในข้างต้น
+
+
+## One-Way ANOVA with random effect
+
+null model หรือโมเดลการวิเคราะห์ความแปรปรวนแบบอิทธิพลสุ่มมีสมการดังนี้
+
+
+level-1 model: $y_{ij}=\beta_{0j}+\epsilon_{ij}$
+
+level-2 model: $\beta_{0j}=\gamma_{00}+u_{0j}$
+
+combined model: $y_{ij}=\gamma_{00}+u_{0j}+\epsilon_{ij}$
+
+โดยที่ตัวแปรตามคือ mathach ในชุดข้อมูล hsb หากดำเนินการวิเคราะห์ข้อมูลด้วยวิธีการแบบดั้งเดิม จะได้ผลการวิเคราะห์เป็นดังนี้
+
+```{r}
+library(foreign)
+dat1<-read.spss("/Users/siwachoat/Downloads/hsb1.sav", to.data.frame = TRUE)
+dat2<-read.spss("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/2756714/HLM/hsb2.sav", to.data.frame=TRUE)
+dat<-merge(dat1,dat2, by="schoolid")
+library(lme4)
+library(lmerTest)
+fit<-lmer(mathach~1+(1|schoolid), data=dat1)
+ranova(fit) #reduce random-effect term
+summary(fit)
+performance::icc(fit)
+
+# reliability of the sample mean (Raudenbush & Bryk (2002) p.46)
+nj<-table(dat1$schoolid)
+reliaj<-8.614/(8.614+39.148/nj)
+hist(reliaj)
+mean(reliaj)
+```
+
+```{r}
+#calculate level-1 residual
+res1<-dat1$mathach-predict(fit)
+res1<-data.frame(schoolid=dat1$schoolid, res1)
+#calculate level-2 residual
+res2<-coef(fit)$schoolid-12.6370
+names(res2)<-"res2"
+res2<-data.frame(schoolid=as.numeric(names(table(dat1$schoolid))), res2)
+
+
+#normality
+ggplot(res1)+geom_histogram(aes(x=res1))
+ggplot(res2)+geom_histogram(aes(x=res2))
+
+library(ggpubr)
+ggqqplot(res1$res1)
+ggqqplot(res2$res2)
+
+#homogeneity of variance
+res1%>%group_by(schoolid)%>%summarise(var.e=var(res1))%>%summary()
+res1%>%group_by(schoolid)%>%summarise(var.e=var(res1))%>%ggplot(aes(x=var.e))+geom_density()
+```
+
+หากดำเนินการวิเคราะห์ด้วยวิธีการแบบ bayes โดยใช้โปรแกรม JAGS อาจดำเนินการได้ดังนี้
+
+
+```{r}
+library(rjags)
+
+#generate model file
+null.model<-"model{
+
+for (i in 1:n)
+{
+y[i]~dnorm(mu[i],inv.sigma2)
+mu[i]<-beta0j[schoolid[i]]
+}
+
+for (j in tab)
+{
+beta0j[j]~dnorm(gamma00, inv.tau00)
+}
+
+inv.sigma2~dgamma(0.0001,0.0001)
+inv.tau00~dgamma(0.0001,0.0001)
+gamma00~dnorm(0,10^-4) T(0,) #half-normal distribution
+
+sigma2<-inv.sigma2^(-1)
+tau00<-inv.tau00^(-1)
+
+icc<-tau00/(tau00+sigma2)
+
+}"
+
+writeLines(null.model,con="null_model.txt")
+
+datlist<-list(y=dat1$mathach,schoolid=dat1$schoolid, n=length(dat1$mathach),
+              tab=as.numeric(names(table(dat1$schoolid))))
+fit.null<-jags.model(file="null_model.txt",
+                     data=datlist,
+                     n.chains=3)
+
+update(fit.null,n.iter=2000) #n.burnin
+output<-coda.samples(fit.null,
+                     variable.names=c("gamma00","tau00","sigma2","icc"),
+                     n.iter=30000,
+                     thin=2)
+
+library(MCMCvis)
+MCMCtrace(output, params=c("gamma00","icc"), pdf=F)
+MCMCsummary(output)
+summary(output)
+```
+
+```{r}
+plotPost(output[,"icc"], compVal=0.05, cenTend="median", ROPE=c(0.04,0.06), credMass=0.95,
+         xlab="ICC")
+```
+
+
+
+
+```{r}
+library(rjags)
+
+#generate model file
+null.model<-"model{
+
+for (i in 1:n)
+{
+y[i]~dnorm(mu[i],inv.sigma2[schoolid[i]])
+mu[i]<-beta0j[schoolid[i]]
+}
+
+for (j in tab)
+{
+beta0j[j]~dnorm(gamma00, inv.tau00)
+inv.sigma2[j]~dgamma(0.0001,0.0001)
+sigma2[j]<-inv.sigma2[j]^(-1)
+
+}
+
+inv.tau00~dgamma(0.0001,0.0001)
+gamma00~dnorm(0,10^-4) T(0,) #half-normal distribution
+tau00<-inv.tau00^(-1)
+}"
+
+writeLines(null.model,con="null_model.txt")
+
+datlist<-list(y=dat1$mathach,schoolid=dat1$schoolid, n=length(dat1$mathach),
+              tab=as.numeric(names(table(dat1$schoolid))))
+fit.hetero<-jags.model(file="null_model.txt",
+                     data=datlist,
+                     n.chains=3)
+
+update(fit.hetero,n.iter=2000) #n.burnin
+output<-coda.samples(fit.hetero,
+                     variable.names=c("gamma00","tau00","sigma2"),
+                     n.iter=30000,
+                     thin=2)
+
+library(MCMCvis)
+MCMCsummary(output)
+#summary(output)
+```
+
+การเปรียบเทียบโมเดลแบบเบส์สามารถทำได้หลายวิธีการ วิธีการหนึ่งคือการใช้ดัชนี DIC ซึ่ง JAGS คำนวณให้ DIC มีสูตรคำนวณดังนี้
+
+กำหนดให้ deviance มีค่าเท่ากับ$D(\theta)=-2log(p(\bf{y}|\theta))+C$ โดยที่ $C$ คือค่าคงที่
+
+การคำนวณค่า DIC มีหลายวิธีการ วิธีการหลักนำเสนอโดย Spiegelhalter และคณะ (2002) และ Gelman และคณะ (2004) ดังนี้
+
+- Spiegelhalter et al. (2002) กำหนดให้ $p_D=\overline{D(\theta})-D(\overline{\theta})$
+
+- Gelman และคณะ (2004) กำหนดให้ $p_D=\frac{1}{2}\overline{Var(D(\theta))}$
+
+$DIC = p_d+\overline{D(\theta)}$
+
+หรือ
+
+$DIC = D(\overline{\theta})+2p_D$
+
+จากสูตรในข้างต้นจะเห็นว่าโมเดลที่มีค่า DIC ต่ำกว่าจะเป็นโมเดลที่มีความเหมาะสมมากกว่า 
+
+```{r}
+dic.samples(fit.null, n.iter=30000, thin = 2)
+dic.samples(fit.hetero, n.iter=30000, thin = 2)
+
+```
+
+ 
+## package-brms
+
+ผู้เรียนจะเห็นว่าการระบุโมเดลในภาษา JAGS ข้างต้นจำเป็นต้องอาศัยความเชี่ยวชาญพอสมควร นอกจากนี้ยังค่อนข้างใช้เวลาในการเขียนโมเดลถึงแม้จะเป็นโมเดลพื้นฐานอย่าง one-way ANOVA ในข้างต้น ปัจจุบันมี package หลายตัวที่ทำหน้าที่เป็นส่วนต่อประสานระหว่างผู้ใช้กับ engine ต่าง ๆ ซึ่งใช้ภาษาที่เรียบง่ายกว่า ทำให้การ modelling ด้วยวิธีการแบบเบส์ทำได้สะดวกและง่ายขึ้น หัวข้อนี้จะกล่าวถึง package-brms (ย่อมาจาก bayesian multilevel models using stan) ซึ่งเป็น high-level API ตัวหนึ่งของภาษา Stan รายละเอียดมีดังนี้
+
+### ขอบเขตของ model ใน package-brms
+
+โมเดลทั่วไปที่สามารถวิเคราะห์ได้ด้วย package-brms มีรูปแบบดังนี้
+
+$y_i \sim D(f(\eta_i),\theta)$
+
+เมื่อ $y_i$ คือค่าสังเกตของตัวแปรตาม ที่มีการแจกแจง $D$ ในโปรแกรม R จะเรียก $D$ นี้ว่า `family` ในขณะที่ $f(.)$ คือ link function, $\theta$ คือพารมิเตอร์ของการแจกแจง $D$ ซึ่งสามารถมีได้หลายตัวขึ้นอยู่กับการแจกแจงที่กำหนด และ $eta_i$ คือผลรวมเชิงเส้นของตัวแปรอิสระซึ่งสามารถเขียนได้ในรูปทั่วไปดังนี้
+
+$\bf{\eta}=\bf{X}\beta+\bf{Z}u$
+
+$\beta$ คือสัมประสิทธิ์ความถดถอยในระดับ individual ส่วน $u$ คือสัมประสิทธิ์ความถดถอยในระดับกลุ่ม $X$ และ $Z$ คือ design matrix ของตัวแปรอิสระในระดับ individual และ กลุ่ม ตามลำดับ
+
+
+### prior distribution
+
+นอกจากจะมีประสิทธิภาพที่ดีในด้านของอัลกอริทึม MCMC แล้ว Stan ยังสามารถกำหนด prior distribution ได้มีประสิทธิภาพมากกว่าใน JAGS รวมถึง BUGS ด้วย รายละเอียดไปอ่านเอง [ไม่อ่านก็ตามใจ](https://mc-stan.org/docs/2_21/functions-reference/discrete-distributions.html#discrete-distributions)
+
+**individual-level reg coef** ---> flat prior
+
+**group-level reg coef** ---> $\bf{u} \sim N(\bf{0},\Sigma)$
+
+เมื่อ $\Sigma$ คือเมทริกซ์ความแปรปรวนร่วม ซึ่งเป็นไปได้ทั้ง diagonal matrix และ symmetry matrix ขึ้นอยู่กับการกำหนด prior distribution ของเมทริกซ์ความแปรปรวนร่วมดังกล่าว นอกจากนี้ยังสามารถ model ให้ group-level reg coef นี้มีการแจกแจงที่เป็นอิสระไปตามกลุ่มได้อีกด้วย  ---> $\bf{u}_j \sim N(\bf{0},\Sigma_j)$ 
+
+โดยปกติ prior distribution ของ covariance matrix จะกำหนดให้เป็นการแจกแจงแบบ Inverse-Wishart ซึ่งเป็น conjugacy prior กับ exponential family ต่าง ๆ และทำให้อัลกอริทึม Gibb-samplers มีประสิทธิภาพสูง อย่างไรก็ตามใน Stan ไม่จำเป็นต้องกำหนดการแจกแจงในลักษณะดังกล่าว ทำให้การกำหนด prior ของพารามิเตอร์นี้ทำได้ง่ายและมีความหมายที่เข้าใจได้ชัดเจนมากขึ้น ดังนี้
+
+กำหนดให้ $\Sigma_k=D(\sigma_k)\Omega_kD(\sigma_k)$
+
+เมื่อ $D(\sigma_k)$ คือ diagonal matrix ของส่วนเบี่ยงเบนมาตรฐานของ $u_k$ ส่วน $\Omega$ คือเมทริกซ์สหสัมพันธ์ของพารามิเตอร์ $\bf{u}$ ดังกล่าว Lewandowski และคณะ (2009) เสนอให้กำหนด prior ของเมทริกซ์สหสัมพันธ์นี้เป็น LKJ-Correlation prior ที่มีพารามิเตอร์ $\zeta>0$ กล่าวคือ $\Omega \sim LKJ(\zeta)$
+
+- ถ้า $\zeta=1$ (ค่าเริ่มต้น) การแจกแจงจะมีลักษณะเป็น uniform บน correlation matrix
+
+- ถ้า $\zeta>1$ การแจกแจงจะมีลักษณะลู่เข้าหา identity matrix ขึ้นอยู่กับค่าของ $zeta$ 
+
+- ถ้า $0<\zeta<1$ การแจกแจงมีลักษณะเป็น U-shape กล่าวคือให้ค่าความน่าจะเป็นที่จะมีค่า correlation สูง
+
+ส่วน $sigma_k$ สามารถกำหนด prior distribution แยกรายตัวหรือให้เหมือนกันทั้งหมดก็ได้ ค่าเริ่มต้นของ brms คือการแจกแจงทีแบบครึ่งเดียว (half-Student-t prior) ที่มีองศาความเป็นอิสระเท่ากับ 3
+
+brms ยังสามารถ model ให้พารามิเตอร์ในระดับ individual กับ group มีความสัมพันธ์กันได้ด้วย โดยการแตกเมทริกซ์ $\Sigma_k$ เป็นดังนี้ $\Sigma_k=V_k \otimes  A_k$ เมื่อ $V_k$ คือเมทริกซ์ความแปรปรวนร่วมในระดับกลุ่ม (แทน $\Sigma_k$ ตัวเดิม) และ $A_k$ คือเมทริกซืความแปรปรวนร่วมของพารามิเตอร์ระหว่างระดับ individual กับ group
+
+
+### การประมาณค่าพารามิเตอร์ในโมเดล
+
+อย่างที่กล่าวไว้ก่อนหน้าแล้วว่า brms ที่ใช้ Stan เป็น engine นั้นมีอัลกอริทึมประมาณค่าพารามิเตอร์ที่มีประสิทธิภาพสูงกว่า JAGS และ BUGS ในแง่ของคุณภาพของตัวอย่างพารามิเตอร์ที่ได้จาก MCMC กล่าวคือตัวอย่างที่ได้จะลู่เข้าหาการแจกแจงความน่าจะเป็นภายหลังได้อย่างรวดเร็ว และมีความค่าอัตสหสัมพันธ์ต่ำ ทำให้ผู้วิเคราะห์ไม่จำเป็นต้องรันลูกโซ่ยาวมากเหมือนกับ Gibb-sampler ใน JAGS และ BUGS อย่างไรก็ตามหากเปรียบเทียบกันต่อรอบ Stan จะใช้เวลามากกว่า
+
+ข้อดีอีกประการหนึ่งของการใช้ Stan ผ่าน brms คือจะให้ค่าสถิติสำหรับเปรียบเทียบโมเดลไว้หลายตัวได้แก่ WAIC และ LOO ซึ่งเป็นดัชนีทีปรับปรุงจาก DIC 
+
+ผู้เรียนได้ติดตั้ง package-brms ลงในเครื่องแล้ว ตัวอย่างต่อไปนี้จะแสดงการรัน null model ด้วย brms 
+
+```{r message=F, warnings=F}
+library(brms)
+fit.brm1<-brm(formula = mathach ~ 1 + (1|schoolid), data=dat1,
+              family=gaussian(),
+              warmup=1000,
+              iter=3000,
+              chains=3)
+plot(fit.brm1)
+summary(fit.brm1)
+```
+
+posterior predictive check
+
+```{r}
+pp_check(fit.brm1, resp = "mathach")
+bayes_R2(fit.brm1)
+loo(fit.brm1)
+```
+
+
+เราสามารถปรับเปลี่ยน prior ได้หลายวิธีการ วิธีการหนึ่งคือการเรียกค่าเริ่มต้นของ prior มาก่อน แล้วปรับเปลี่ยนทีละตัวตามต้องการดังนี้
+
+```{r}
+priors<-get_prior(mathach ~ 1 + (1|schoolid), data=dat1,
+              family=gaussian())
+priors
+priors$prior[1]<-"normal(0,20)" #mu and sd
+```
+
+จากนั้นก็ run ใหม่โดยกำหนดอาร์กิวเมนท์ prior ดังนี้
+
+```{r message=F, warnings=F}
+fit.brm2<-brm(formula = mathach ~ 1 + (1|schoolid), data=dat1,
+              family=gaussian(),
+              prior=priors,
+              warmup=1000,
+              iter=3000,
+              chains=3)
+```
+
+ผู้วิเคราะห์สามารถทดสอบสมมุติฐานของพารามิเตอร์ที่ต้องการในโมเดลได้ โดยใช้วิธีการเปรียบเทียบ test value กับ HDI โดยใช้ฟังก์ชัน `hypothesis()` ดังตัวอย่างต่อไปนี้
+
+```{r}
+hypothesis(fit.brm1, "Intercept>0", class="sd", group="schoolid", alpha=0.05)
+```
+
+### Extract output from brm
+
+ผู้วิเคราะห์สามารถแปลงผลการวิเคราะห์ที่ได้ใช้เป็น mcmc objects แล้วไปวิเคราะห์แบบเดิมก็ได้ดังนี้
+
+```{r}
+gamma.mcmc<-as.mcmc(as.data.frame(fit.brm1, pars="b_Intercept"))
+tau.mcmc<-as.mcmc(as.data.frame(fit.brm1, pars="sd")^2)
+sigma2.mcmc<-as.mcmc(as.data.frame(fit.brm1, variable="sigma"))^2
+icc<-tau.mcmc/(tau.mcmc+sigma2.mcmc)
+mean(icc)
+sd(icc)
+plotPost(icc, compVal=0.05, cenTend="median", ROPE=c(0.04,0.06), credMass=0.95)
+```
+
+
+อีกลักษณะหนึ่งสามารถทำได้โดยใช้ package-tidybayes ช่วย สามารถอ่านเพิ่มเติมได้จาก  [ไม่อ่านก็ตามใจ](http://mjskay.github.io/tidybayes/articles/tidy-brms.html#introduction-1)
+
+
+```{r}
+library(tidybayes)
+get_variables(fit.brm1)%>%head(15)
+
+fit.brm1%>%spread_draws(r_schoolid[schoolid, Intercept]) #group-mean
+
+fit.brm1%>%spread_draws(b_Intercept,sd_schoolid__Intercept) #grand-mean and sqrt(tau00)
+
+# mean and median with quantile interval
+fit.brm1%>%spread_draws(b_Intercept,sd_schoolid__Intercept)%>%
+              mean_qi()
+fit.brm1%>%spread_draws(b_Intercept,sd_schoolid__Intercept)%>%
+              median_qi()
+
+```
 
 ## random-coefficient model
+
+```{r message=F, warnings=F}
+priors<-get_prior(mathach~1+ses+(1+ses|schoolid), 
+            data=dat, family=gaussian())
+priors
+priors$prior[1]<-"normal(0,20)" #mu and sd
+
+fit.brm3<-brm(mathach~1+ses+(1+ses|schoolid), 
+            data=dat, family="gaussian",
+            prior=c(set_prior("horseshoe(1)", class="b"),
+                    set_prior("student_t(1,0,5)", class="sd"),
+                    set_prior("lkj(0.8)", class="cor")),
+            warmup=1000, iter=6000, chains=3, thin=5,
+            cores=3)
+plot(fit.brm3)
+summary(fit.brm3)
+pp_check(fit.brm3, resp = "mathach")
+bayes_R2(fit.brm3)
+loo(fit.brm3)
+```
+
+
 
 
 

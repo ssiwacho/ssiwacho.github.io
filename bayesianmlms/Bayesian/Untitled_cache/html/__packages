@@ -3,3 +3,13 @@ coda
 rjags
 runjags
 MCMCvis
+foreign
+Matrix
+lme4
+lmerTest
+ggplot2
+ggpubr
+dplyr
+Rcpp
+brms
+tidybayes
