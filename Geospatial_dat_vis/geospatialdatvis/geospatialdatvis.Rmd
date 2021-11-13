@@ -1,0 +1,203 @@
+---
+title: ""
+date: "`r Sys.Date()`"
+output:
+  rmdformats::robobook:
+    highlight: kate
+---
+
+```{r setup, include=FALSE}
+## Global options
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+# Introduction
+
+```{r eval=F}
+# install packages
+install.packages("OpenStreetMap")
+install.packages("DT")
+install.packages("RColorBrewer")
+install.packages("mapproj")
+install.packages("sf")
+install.packages("RgoogleMaps")
+install.packages("scales")
+install.packages("rworldmap")
+install.packages("maps")
+install.packages("tidyverse")
+install.packages("rnaturalearth")
+install.packages("rnaturalearthdata")
+install.packages("rgeos")
+install.packages("ggspatial")
+install.packages("maptools")
+install.packages("leaflet")
+install.packages("sf")
+install.packages("tmap")
+install.packages("here")
+install.packages("rgdal")
+install.packages("scales")
+install.packages("flextable")
+# install package from github
+devtools::install_github("dkahle/ggmap", ref = "tidyup")
+# install klippy for copy-to-clipboard button in code chunks
+remotes::install_github("rlesur/klippy")
+```
+
+loading packages
+
+```{r message=F, warning=F}
+# load package
+library(OpenStreetMap)
+library(DT)
+library(RColorBrewer)
+library(mapproj)
+library(sf)
+library(RgoogleMaps)
+library(scales)
+library(rworldmap)
+library(maps)
+library(tidyverse)
+
+library(rgeos)
+library(ggspatial)
+library(maptools)
+library(leaflet)
+library(sf)
+library(tmap)
+library(here)
+library(rgdal)
+library(scales)
+library(flextable)
+library(ggmap)
+library(ggplot2)
+```
+
+
+# Generate Maps
+
+พื้นฐานของการ plot geospatial data คือการดาวน์โหลดและพล็อตแผนที่บนพื้นที่ที่ต้องการ ในโปรแกรม R มี packagae หลายตัวที่สามารถใช้ดำเนินการดังกล่าวได้
+
+- `OpenStreetMap` และ `ggmap` เป็น package ที่มีแผนที่หลากหลายประเภทให้ผู้วิเคราะห์เลือกใช้ ฟังก์ชันสำหรับดาวน์โหลดแผนที่ของ package ทั้งสองคือ `openmap()` และ `ggmap()` ตามลำดับ 
+
+
+```{r}
+## ggmap
+gmap<-get_map(location=c(lon=101.490104, lat=13.03887), zoom=5, scale=2)
+ggmap(gmap)
+```
+
+```{r}
+osm <- openmap(upperLeft=c(21,97.6),
+    lowerRight=c(5.18,106.07),
+#   type = "osm",
+#   type = "esri",
+    type = "stamen-terrain",
+    minNumTiles=7)
+plot(osm)
+
+```
+
+## Other database
+
+```{r}
+library(rworldmap)
+worldmap <- getMap(resolution = "coarse")
+plot(worldmap, col = "lightgrey", border = "darkgray",
+     xlim = c(-180, 180), ylim = c(-90, 90),
+     bg = "aliceblue",
+     asp = 1)
+```
+
+
+
+```{r}
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(ggspatial)
+
+#load data
+world <- ne_countries(scale = "medium", type="countries", returnclass = "sf")
+
+# plot world map
+ggplot(data = world) +
+  geom_sf() +
+  labs( x = "Longitude", y = "Latitude") +
+  ggtitle("World map", subtitle = paste0("(", length(unique(world$admin)), " countries)"))
+
+
+ggplot(data = world) +
+  geom_sf() +
+  labs( x = "Longitude", y = "Latitude") +
+  coord_sf(xlim = c(97.6,106.7), ylim = c(5.18,21), expand = T) +
+  annotation_scale(location = "bl", line_width = 1, width_hint=0.5) +
+  annotation_north_arrow(location = "bl", which_north = "true", 
+                         pad_x = unit(1.75, "in"), pad_y = unit(0.5, "in"),
+                         style = north_arrow_fancy_orienteering) +
+  theme_bw()
+```
+
+
+# Customizing Map
+
+การพล็อตแต่แผนที่นั้นไม่ค่อยมีประโยชน์นัก โดยปกติผู้วิเคราะห์จะพล็อตสารสนเทศอื่น ๆ เป็น layer ซ้อนทับลงบน map ด้วย การพล็อตสารสนเทศเชิงภูมิศาสตร์ลงบนแผนที่สามารถทำได้ 4 ลักษณะได้แก่
+
+- points
+
+- lines
+
+- polygons
+
+- raster
+
+
+
+ไฟล์ข้อมูล `dat61.xlsx` เก็บข้อมูลพื้นฐานของโรงเรียนสังหัด สพฐ. ของประเทศไทย
+
+
+```{r}
+library(readxl)
+sch<-read_excel("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/งานวิจัย/ฐานข้อมูล สทศ./dat61.xlsx")
+head(sch)
+
+ggplot(data = world) +
+  geom_sf() +
+  labs( x = "Longitude", y = "Latitude") +
+  coord_sf(xlim = c(97.6,106.7), ylim = c(5.18,21), expand = T) +
+  annotation_scale(location = "bl", line_width = 1, width_hint=0.5) +
+  annotation_north_arrow(location = "bl", which_north = "true", 
+                         pad_x = unit(1.75, "in"), pad_y = unit(0.5, "in"),
+                         style = north_arrow_fancy_orienteering) +
+  theme_bw()+
+  geom_point(aes(x=long, y=lat), data=sch, col="blue", size=0.1, alpha=0.5)
+```
+
+```{r}
+ggplot(data = world) +
+  geom_sf() +
+  labs( x = "Longitude", y = "Latitude") +
+  coord_sf(xlim = c(97.6,106.7), ylim = c(5.18,21), expand = T) +
+  annotation_scale(location = "bl", line_width = 1, width_hint=0.5) +
+  annotation_north_arrow(location = "bl", which_north = "true", 
+                         pad_x = unit(1.75, "in"), pad_y = unit(0.5, "in"),
+                         style = north_arrow_fancy_orienteering) +
+  theme_bw()+
+  geom_point(aes(x=long, y=lat, col=`รวมนักเรียน`/4800, size=`รวมนักเรียน`/48000), data=sch, alpha=0.5, pch=20)
+  scale_color_continuous(trans="reverse")
+```
+
+```{r}
+ggplot(data = world) +
+  geom_sf() +
+  labs( x = "Longitude", y = "Latitude") +
+  coord_sf(xlim = c(99.5,101.5), ylim = c(12.5,15), expand = T) +
+  annotation_scale(location = "bl", line_width = 1, width_hint=0.5) +
+  annotation_north_arrow(location = "bl", which_north = "true", 
+                         pad_x = unit(1.75, "in"), pad_y = unit(0.5, "in"),
+                         style = north_arrow_fancy_orienteering) +
+  theme_bw()+
+  geom_point(aes(x=long, y=lat, col=`รวมนักเรียน`/4800, size=`รวมนักเรียน`/48000), data=sch, alpha=0.5, pch=20)
+  scale_color_continuous(trans="reverse")
+
+```
+
+

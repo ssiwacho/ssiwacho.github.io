@@ -1,0 +1,46 @@
+---
+title: ""
+date: "`r Sys.Date()`"
+output:
+  rmdformats::robobook:
+    highlight: kate
+---
+
+```{r setup, include=FALSE}
+## Global options
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+
+
+# Spatial Data
+
+- Data is associated with locations
+- Location --> coordinates called coordinate reference system (CRS)
+- Common CRS --> longitude, lattitude
+
+EX.
+(13.737482807043719 , 100.52842544029849)
+
+```{r}
+library(googledrive)
+library(ggplot2)
+library(ggmap)
+library(dplyr)
+```
+
+
+ggmap สามารถเรียกพิกัดของสถานที่จาก google map โดยใช้ฟังก์ชัน geocode() ดังตัวอย่างต่อไปนี้
+
+```{r}
+#?register_google()
+register_google(key = "AIzaSyBhfNvdLVQ706yMr84QlZtxxDK82ri9rnE", write = TRUE)
+```
+
+
+```{r}
+dat<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/งานวิจัย/งานวิจัยความเหลื่อมล้ำ final/webscraping/csv/school1.csv")
+
+
+
+```
