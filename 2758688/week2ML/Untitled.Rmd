@@ -1,0 +1,656 @@
+---
+title: 'Week2: Basic Knowledge'
+author: "อ.ดร.สิวะโชติ ศรีสุทธิยากร"
+date: "ภาควิชาวิจัยและจิตวิทยาการศึกษา <br> คณะครุศาตร์ จุฬาลงกรณ์มหาวิทยาลัย"
+output:
+  ioslides_presentation: default
+  beamer_presentation: default
+subtitle: 2758688 ML PRIN APP
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;600&family=Poppins:wght@600&family=Sarabun&family=Thasadith:wght@400;700&family=Trirong&display=swap');
+
+.main-container {
+  max-width: 100%;
+  margin-left: 500px;
+  margin-right: auto;
+  background-color: "white";
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Futura-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  line-height: 1.4;
+  font-family: 'Trirong';
+  -webkit-font-smoothing: antialiased;
+  font-size: 18px;
+  color: "black";
+}
+
+p, .paragraph {
+  font-weight: 400;
+  color: "black";
+  font-size: 18px;
+  line-height: 1.8;
+  font-family: 'Trirong'';
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: $text-color-dark;
+  font-family: 'Poppins';
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1, .h1{
+  font-size: 40px;
+  font-family: 'futura-bold';
+  @include mobile {
+    font-size: 35px;
+  }
+}
+
+h2, .h2{
+  font-size: 30px;
+  @include mobile {
+    font-size: 30px;
+  }
+}
+
+h3, .h3{
+  font-size: 25px;
+  @include mobile {
+    font-size: 20px;
+  }
+}
+
+h4, .h4{
+  font-size: 20px;
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+h5, .h5{
+  font-size: 18px;
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+h6, .h6{
+  font-size: 16px;
+  @include mobile {
+    font-size: 14px;
+  }
+}
+
+
+#future-steps {
+  color: blue;
+}
+
+.emphasized {
+  font-size: 1.2em;
+}
+
+</style>
+
+
+## Modeling Process
+
+กระบวนการพัฒนาการเรียนรู้ของเครื่องนั้น มีลักษณะคล้ายคลึงกับการวิเคราะห์ข้อมูลเชิงสำรวจ (exploratory data analysis: EDA) กล่าวคือเป็นกระบวนการที่ไม่ทราบคำตอบหรือวิธีการดำเนินงานที่แน่นอน และมักต้องมีการดำเนินการทวนซ้ำจนกระทั่งได้ผลลัพธ์เป็นที่น่าพึงพอใจ
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/MLProcess.png){width=100%}
+
+
+
+## Data Splitting
+
+- วัตถุประสงค์หลักในการเรียนรู้ของเครื่อง คือ การพัฒนาอัลกอริทึม $f(X)$ ที่สามารถทำนายผลลัพธ์ $Y$ ของหน่วยข้อมูลที่สนใจได้อย่างแม่นยำมา
+
+- นอกจากนี้ผู้วิเคราะห์ยังไม่ได้สนใจเพียงแต่ความแม่นยำของการทำนายภายใต้ชุดข้อมูลที่นำมาวิเคราะห์เท่านั้น ยังสนใจความแม่นยำของการทำนายหน่วยข้อมูลที่เครื่องไม่รู้จักกล่าวคืออยู่นอกเหนือจากชุดข้อมูลที่นำมาวิเคราะห์ด้วย เรียกคุณสมบัตินี้ว่า generaliability
+
+- การจะประเมินว่าโมเดลทำนายของผู้วิเคราะห์มีคุณสมบัติ generalizability มากน้อยเพียงใด ไม่สามารถประเมินได้จากข้อมูลเพียงชุดเดียว ในการดำเนินงานจึงมีการแบ่งข้อมูลออกเป็นสองส่วน เรียกว่า ชุดข้อมูลฝึกหัด (training datset) และชุดข้อมูลทดสอบ (test dataset) 
+
+## Data Splitting
+
+ชุดข้อมูลฝึกหัด เป็นชุดข้อมูลที่ผู้วิเคราะห์จะนำไปใช้สำหรับพัฒนาโมเดลที่ดีที่สุด โดยเริ่มตั้งแต่ขั้นตอนการคัดเลือกตัวแปรทำนาย สร้างโมเดลทำนาย ปรับแต่ง hyperparameters ของโมเดลทำนาย เปรียบเทียบและคัดเลือกชุดของโมเดลที่ดีที่สุดที่จะนำไปแข่งขันกันในชุดข้อมูลทดสอบ การเปรียบเทียบโมเดลบนชุดข้อมูลทดสอบช่วยให้ผู้วิเคราะห์พิจารณาได้ว่าโมเดลใดเป็นโมเดลที่มี generalization error ต่ำที่สุด และควรถูกเลือกไปใช้งาน
+
+
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/train_test.png){width=40%}
+
+## Data Splitting
+
+โดยปกติแล้วผู้วิเคราะห์มักแบ่งข้อมูลออกเป็นชุดข้อมูลฝึกหัดกับชุดข้อมูลทดสอบด้วยอัตราส่วน 60:40, 70:30 หรือ 80:20 อย่างไรก็ตามตัวเลขดังกล่าวไม่ใช่เกณฑ์ตายตัวเสมอไป 
+
+- หากให้ชุดข้อมูลฝึกหัดมีขนาดใหญ่มากเกินไป ---> จะทำให้ชุดข้อมูลทดสอบมีขนาดเล็กเกินไป ส่งผลให้การประมาณ generalization error มีความคลาดเคลื่อนหรือไม่สะท้อนสภาพจริง เพิ่มโอกาสที่ผู้วิเคราะห์จะได้โมเดลที่สอดคล้องกับข้อมูลเกินพอดี (overfitting)
+
+- ในทางกลับกันหากใช้ข้อมูลทดสอบมีขนาดใหญ่มากเกินไป ---> จะทำให้ชุดข้อมูลฝึกหัดมีขนาดเล็กและอาจไม่เพียงพอที่จะพัฒนาโมเดลทำนายให้มีประสิทธิภาพสูงที่สุดตามที่ควรจะเป็นได้ ซึ่งเพิ่มโอกาสที่จะได้โมเดลที่ไม่สอดคล้องกับข้อมูล (underfitting)
+
+
+อีกปัจจัยหนึ่งที่สามารถใช้สำหรับพิจารณาขนาดของชุดข้อมูล training และ test คือขนาดข้อมูลในภาพรวม เช่นในกรณีที่ชุดข้อมูลมีขนาดใหญ่มาก ผู้วิเคราะห์อาจเลือกกำหนดชุดข้อมูลฝึกหัดให้มีขนาดเล็กลง ทั้งนี้เพื่อประหยัดทรัพยากรในขั้นตอนของการพัฒนาโมเดล อย่างไรก็ตามจำนวนข้อมูลขั้นต่ำควรมีจำนวนมากกว่าจำนวนของตัวแปรทำนาย
+
+
+## Data Splitting
+
+- Simple Splitting based on Outcome
+
+- Stratified Splitting based on Outcome
+
+- Splitting Based on the Predictors
+
+```{r message=F}
+library(dplyr)
+library(caret)
+library(ggplot2)
+```
+
+## Simple Splitting based on Outcome
+
+```{r message=F, warning=F, echo=T, eval=F}
+## importing data
+dat<-read.csv(file="housing.csv")
+glimpse(dat)
+```
+
+```{r echo=F}
+setwd("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML")
+dat<-read.csv(file="housing.csv")
+glimpse(dat)
+```
+
+
+## Simple Splitting based on Outcome
+
+
+```{r message=F, warning=F, fig.height=3, echo=T}
+ggplot(dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("Distribution of `median_house_value`")+
+    theme_minimal()
+```
+
+
+## Simple Splitting based on Outcome
+
+การแบ่งข้อมูลตามตัวแปรตามด้วยวิธีการสุ่มอย่างง่ายใน R สามารถทำได้หลายวิธี วิธีการหนึ่งที่สามารถทำได้คือการใช้ฟังก์ชัน `createDataPartition()` ของ package-caret
+
+
+```{r message=F, warning=F, echo=T}
+set.seed(123)
+## splitting data
+train.id<-createDataPartition(dat$median_house_value, 
+                              p=0.8, 
+                              list=FALSE,
+                              times=1) 
+train.dat<-dat[train.id,]
+test.dat<-dat[-train.id,]
+```
+
+## Simple Splitting based on Outcome
+
+รูปต่อไปนี้เปรียบเทียบการแจกแจงของ  `median_house_value`  ระหว่างชุดข้อมูลใหญ่  ชุดข้อมูลฝึกหัด และชุดข้อมูลทดสอบที่สร้างด้วยฟังก์ชัน `createDataPartition()`
+
+```{r message=F, fig.height=3, echo=F}
+library(gridExtra)
+p1<-ggplot(dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("overall")+
+    theme_minimal()
+
+p2<-ggplot(train.dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("train.dat")+
+    theme_minimal()
+
+p3<-ggplot(test.dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("test.dat")+
+    theme_minimal()
+grid.arrange(p1,p2,p3, ncol=3)
+
+```
+
+## Stratified Splitting based on Outcome
+
+- การสุ่มแบบ simple random sampling สามารถใช้ได้ดีในกรณีที่หน่วยข้อมูลมีความเป็นเอกพันธ์กัน (homogenous) แต่หากหน่วยข้อมูลมีความแตกต่างกันสูง (heterogenous) การสุ่มแบบ SRS อาจไม่สามารถรับประกันได้ว่าจะได้ชุดข้อมูลที่มีลักษณะสอดคล้องกัน
+
+- อีกสถานการณ์หนึ่งคือในปัญหา classification ตัวแปรตามที่ใช้ในการวิเคราะห์อาจมีความไม่สมดุลกันในแต่ละ category (imbalance class) เช่น นักเรียนที่คงอยู่ในระบบการศึกษามี 90% ส่วนนักเรียนที่ออกกลางคันจากระบบการศึกษามี 10% การใช้ SRS ในกรณีเช่นนี้อาจทำให้ผู้วิเคราะห์ได้หน่วยข้อมูลที่มีีคุณลักษณะไม่ครบถ้วน
+
+- กรณีดังกล่าวการสุ่มตัวอย่างแบบชั้นภูมิอาจให้ชุดข้อมูลฝึกหัดและชุดข้อมูลทดสอบที่มีความเหมาะสมมากกว่า การสุ่มแบบชั้นภูมิใน R สามารถทำได้หลายวิธี วิธีการหนึ่งคือการใช้ฟังก์ชัน `initial_split()` ใน package-rsample ดังตัวอย่างต่อไปนี้
+
+
+
+## Stratified Splitting based on Outcome
+
+กรณีที่ตัวแปรตามเป็นตัวแปรต่อเนื่อง การสุ่มตัวอย่างจะเริ่มจากการแบ่งข้อมูลของตัวแปรตามออกเป็นส่วนย่อย ๆ ตามค่า quantile ก่อน แล้วจึงสุ่มหน่วยข้อมูลจากแต่ละช่วงด้วยวิธีการสุ่มอย่างง่าย
+
+```{r}
+#devtools::install_github("bedapub/ribiosPlot")
+library(ribiosPlot)
+qHist(dat$median_house_value, quantiles = c(0.2,0.4,0.6,0.8), breaks = 30, qlty = 2, qlwd = 2, qcol = "red", main="")
+
+```
+
+
+
+## Stratified Splitting based on Outcome
+
+```{r echo=T}
+library(rsample)
+
+set.seed(123)
+strat_split<-initial_split(dat, 
+                        prop=0.8,
+                        strata="median_house_value")
+str_train<-training(strat_split)
+str_test<-testing(strat_split)
+```
+
+## Stratified Splitting based on Outcome
+
+เปรียบเทียบการแจกแจงระหว่าง training กับ test datasest
+
+```{r echo=T}
+
+summary(str_train$median_house_value)
+summary(str_test$median_house_value)
+
+```
+
+
+## Stratified Splitting based on Outcome
+
+เปรียบเทียบการแจกแจงระหว่าง training กับ test datasest
+
+
+```{r echo=F, message=F, fig.height=3}
+p1<-ggplot(str_train, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("train.dat")+
+    theme_minimal()
+
+p2<-ggplot(str_test, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("test.dat")+
+    theme_minimal()
+
+grid.arrange(p1,p2, ncol=2)
+
+```
+
+
+## Stratified Splitting based on Outcome
+
+
+กรณีที่ตัวแปรตามเป็นตัวแปรจัดประเภท จะสุ่มหน่วยข้อมูลจากแต่ละ category ในตัวแปรตาม โดยใช้สัดส่วนของ category เป็นเกณฑ์
+
+```{r message=F}
+glimpse(iris)
+table(iris$Species)
+```
+
+## Stratified Splitting based on Outcome
+
+การแบ่งข้อมูลโดยใช้การสุ่มแบบชั้นภูมิใน R สามารถทำได้หลายวิธีการเช่นเดียวกัน วิธีการหนึ่งที่สามารถทำได้คือการใช้ฟังก์ชัน `initial_split()` ของ package-rsample ดังตัวอย่างด้านล่าง
+
+```{r echo=T}
+
+set.seed(123)
+strat_split<-initial_split(iris, 
+                        prop=0.7,
+                        strata="Species")
+str_train<-training(strat_split)
+str_test<-testing(strat_split)
+```
+
+## Stratified Splitting based on Outcome
+
+```{r echo=T}
+table(str_train$Species)%>%prop.table()
+table(str_test$Species)%>%prop.table()
+
+```
+
+
+## Splitting Based on the Predictors
+
+
+การแบ่งข้อมูลลักษณะนี้จะใช้อัลกอริทึม maximum dissimilarity หรือ `maxDissim` (Willett, 1999)กำหนดให้ A เป็นชุดข้อมูลตั้งต้น (initial dataset) ขนาด m หน่วย และ B เป็นชุดข้อมูลรวมขนาด n หน่วย โดยที่ $n > m$ 
+
+อัลกอริทึม `maxDissim` จะสุ่มเลือกหน่วยข้อมูลใน B โดยพิจารณาให้มีความแตกต่าง (disimilarity) กับหน่วยข้อมูลในชุดข้อมูล A มากที่สุด
+
+
+## Splitting Based on the Predictors
+
+
+```{r message=F, echo=T}
+#standardized quantitative variables
+dat.all<-data.frame(scale(iris[,1:4],center=TRUE,scale=TRUE))
+glimpse(dat.all)
+```
+
+
+## Splitting Based on the Predictors
+
+
+```{r message=T, echo=T}
+set.seed(123)
+initial.id<-sample(1:dim(dat.all)[1],5)
+A.set<-dat.all[initial.id,] #initial dataset
+B.set<-dat.all[-initial.id,] #larger dataset
+
+## maxDissim dataset
+maxdis.dat<-maxDissim(A.set, B.set, n=50)
+maxdis.dat<-B.set[maxdis.dat,]
+```
+
+
+```{r echo=F, fig.height=3}
+p1<-ggplot()+
+  geom_point(data=dat.all, aes(x=Sepal.Length, y=Sepal.Width), col=alpha("grey",0.8))+
+  geom_point(data=A.set, aes(x=Sepal.Length, y=Sepal.Width), col="blue", size=4)+
+  geom_point(data=maxdis.dat,  aes(x=Sepal.Length, y=Sepal.Width), col=alpha("orange",0.6), size=2)+
+  theme_minimal()
+
+p2<-ggplot()+
+  geom_point(data=dat.all, aes(x=Petal.Length, y=Petal.Width), col=alpha("grey",0.8))+
+  geom_point(data=A.set, aes(x=Petal.Length, y=Petal.Width), col="blue", size=4)+
+  geom_point(data=maxdis.dat,  aes(x=Petal.Length, y=Petal.Width), col=alpha("orange",0.6), size=2)+
+  theme_minimal()
+
+grid.arrange(p1,p2, ncol=2)
+```
+
+
+## Class Imbalances Problem
+
+ปัญหาข้อมูลไม่สมดุล (class imbalance problem) เป็นปัญหาที่พบใน classification problem ปัญหานี้เป็นปัญหาสำคัญที่ส่งผลเสียที่ค่อนข้างรุนแรงต่อประสิทธิภาพในการทำนายของโมเดล 
+
+- biased predictions
+
+- misleading accuracy
+
+เมื่อเกิดปัญหาข้อมูลไม่สมดุล จำนวนหน่วยข้อมูลใน category ของตัวแปรตามอย่างน้อย 2 category มีความแตกต่างกันมากเกินไป เช่นตัวอย่างชุดข้อมูลต่อไปนี้
+
+
+```{r echo=T, eval=F}
+dat<-read.csv(file="housing.csv")
+dropout<-read.csv(file="dropout.csv")
+table(dropout$Class)%>%prop.table()
+```
+
+```{r echo=F}
+setwd("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML")
+dropout<-read.csv(file="dropout.csv")
+table(dropout$Class)%>%prop.table()
+```
+
+โดยที่ `Class=1` คือกลุ่มนักเรียนที่ออกกลางคัน
+
+## Class Imbalances Problem
+
+การแก้ปัญหา class imbalances สามารถทำได้หลายวิธี โดยแต่ละวิธีมีวัตถุประสงค์เดียวกันคือพยายามปรับสมดุลของข้อมูลให้แต่ละ class มีจำนวนหน่วยข้อมูลที่ใกล้เคียงกันก่อนนำไปวิเคราะห์ วิธีการที่มักใช้กันโดยทั่วไป เช่น
+
+- up-sampling (increasing minority class)
+
+- down-sampling (decreasing majority class)
+
+- hybrid methods ---> SMOTE, ROSE
+
+## Up-sampling (Oversampling)
+
+สมมุติให้ A เป็น majority class และ B เป็น minority class วิธี up-sampling จะใช้การสุ่มตัวอย่างแบบใส่คืน (sampling with replacement) สุ่มหน่วยข้อมูลจาก class B เพื่อใส่กลับคืนไปยัง class B เพื่อให้จำนวนหน่วยข้อมูลใน minority class มีขนาดเท่ากับจำนวนหน่วยข้อมูลใน majority class 
+
+การทำ up-sampling ใน R วิธีการหนึ่งสามารถทำได้โดยใช้ฟังก์ชัน `upSample()` ของ package-caret
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/upsampling.png){width=70%}
+
+
+## Down-sampling (Undersampling)
+
+เป็นวิธีการตรงกันข้ามกับ up-sampling โดยใช้การสุ่มตัวอย่างจาก class อื่นลงมาให้มีขนาดเท่ากับ minority class
+
+การทำ down-sampling สามารถทำได้โดยใช้ฟังก์ชัน `downSample()` ของ package-caret
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/downsampling.png){width=70%}
+
+
+## Up-sampling and Down-sampling
+
+```{r echo=T}
+set.seed(123)
+subset<-sample(1:dim(dropout)[1], 0.3*dim(dropout)[1])
+subset<-dropout[subset,]
+subset$Class<-factor(subset$Class)
+
+dim(subset)
+table(subset$Class)
+```
+
+
+## Up-sampling and Down-sampling
+
+```{r echo=T}
+train.id<-createDataPartition(subset$Class, p=0.7, list=FALSE, times=1)
+train.dat<-subset[train.id,]
+test.dat<-subset[-train.id,]
+
+train.up<-upSample(x = train.dat%>%select(-Class),
+                   y = train.dat$Class)
+table(train.up$Class)
+
+
+train.down<-downSample(x = train.dat%>%select(-Class),
+                   y = train.dat$Class)
+table(train.down$Class)
+```
+
+
+## Up-sampling and Down-sampling
+
+- จะเห็นว่า down-sampling เป็นวิธีการที่ทำให้ผู้วิเคราะห์สูญเสียข้อมูล ซึ่งอาจส่งผลต่อความตรงของโมเดลทำนาย และทำให้การทำนายผลลัพธ์ที่สนใจมีความลำเอียงหรือคลาดเคลื่อนไปจากความเป็นจริง
+
+- ส่วน up-sampling ไม่ได้ทำให้เกิดการสูญเสียข้อมูล แต่อาจก่อให้เกิดปัญหา overfitting เนื่องจากโมเดลเรียนรู้จากข้อมูลเดิม ๆ ซ้ำ ๆ มากเกินไป
+
+
+
+## SMOTE
+
+การแก้ปัญหาข้างต้นสามารถทำได้หลายวิธีการ วิธีการหนึ่งคือการใช้อัลกอริทึม SMOTE (Chawla et al., 2002)  หลักการของวิธีการนี้คล้ายกับ up-sampling ในส่วนที่จะพยายามทำให้กลุ่ม minority มีจำนวนหน่วยข้อมูลที่ใกล้เคียงหรือเท่ากับกลุ่ม majority แต่หลีกเลี่ยงการใช้ข้อมูลซ้ำแบบ up-sampling ด้วยการสร้าง systhetic observation ขึ้นมาแทน
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/Illustration-of-the-synthetic-sample-generation-process-using-the-SMOTE-technique.png){width=70%}
+
+## Before SMOTE
+
+```{r echo=T}
+ggplot(subset)+geom_point(aes(x=V1, y=V2, col=Class), alpha=0.5)+
+  theme_minimal()
+```
+
+
+## Doing SMOTE
+
+```{r echo=T}
+#install.packages("smotefamily")
+library(smotefamily)
+
+set.seed(123)
+train.smote<-SMOTE(X = train.dat%>%select(-Class),
+      target = train.dat$Class,
+      K=5)
+train.smote<-train.smote$data
+train.smote$class<-factor(train.smote$class)
+```
+
+
+## After SMOTE
+
+```{r}
+ggplot(train.smote)+geom_point(aes(x=V1, y=V2, col=class), alpha=0.5)+
+  theme_minimal()
+```
+
+## Other Methods 
+
+นอกจาก SMOTE ยังมีเทคนิคอื่น ๆ อีกหลายตัวที่ใช้แก้ปัญหา imbalance class ได้ เช่น
+
+- Adaptive Synthetic Sampling (ADASYN)
+
+- Adaptive Neighbor Synthetic Majority Oversampling (ANS)
+
+- Borderline-SMOTE
+
+- Density-based SMOTE
+
+- Safe-level SMOTE
+
+
+## Model Training 
+
+- การพัฒนาโมเดลเป็นกระบวนการเลือก/กำหนดโมเดลทางคณิตศาสตร์ให้กับข้อมูล ประมาณ/กำหนดค่าพารามิเตอร์ภายในโมเดล เพื่อให้ได้โมเดลที่มีความสอดคล้องกับข้อมูลมากที่สุด และสามารถใช้เป็นโมเดลทำนายค่าสังเกตของตัวแปรตามได้แม่นยำมากที่สุด
+
+- พารามิเตอร์ภายในโมเดลอาจจำแนกเป็นสองประเภท ประเภทแรกเรียกว่า พารามิเตอร์ (parameters) สามารถหาค่าที่เหมาะสมได้จากการประมาณค่าทางสถิติ ซึ่งจะใช้ฟังก์ชันวัตถุประสงค์ (objective functions) หรือฟังก์ชันต้นทุน (cost functions) หรือฟังก์ชันความสูญเสีย (loss functions) เป็นเกณฑ์ในการกำหนดค่าพารามิเตอร์ที่เหมาะสม 
+
+- ประเภทที่สองเรียกว่า hyperparameter พารามิเตอร์ประเภทนี้มีหน้าที่ควบคุมการเรียนรู้ของโมเดลทำนาย ทำให้ความยืดหยุ่น/ความซับซ้อนของโมเดลเปลี่ยนแปลงไป ซึ่งส่งผลโดยตรงต่อทั้งประสิทธิภาพในการทำนายของโมเดล และความรวดเร็วในการเรียนรู้ของโมเดล โมเดลทำนายแต่ละตัวจะมี hyperparameter ที่แตกต่างกัน เช่น k-nearest neighbor มี hyperparameter จำนวน 1 ตัวคือ k หรือจำนวนค่าสังเกตที่อยู่ใกล้กันมากที่สุด หรือ decision tree มี hyperparameters เช่น ความลึกสูงสุดของตันไม่ (max_depth) จำนวนหน่วยข้อมูลต่ำสุดในแต่ละ leaf node (min_sample_split) ...
+
+## Model Training 
+
+- การประมาณ/กำหนดค่าพารามิเตอร์ดังกล่าวให้เหมาะสม จำเป็นที่จะต้องพิจารณา generalization error ของโมเดลทำนายด้วย อย่างไรก็ตามในขั้นตอนการพัฒนาโมเดลทำนายจะใช้เฉพาะ training dataset เท่านั้น (ทำไม?)
+
+คำถามคือ การประเมิน generalization error ด้วย training dataset สามารถทำได้อย่างไร?
+
+- validation method
+
+- resampling methods
+
+
+## Validation method
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/validation.png){width=80%}
+
+## Resampling methods
+
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/MLProcess.png){width=100%}
+
+## Resampling methods
+
+- k-fold cross validation
+
+- bootstrapping
+
+## k-fold cross validation (k-fold CV)
+
+- เป็นเทคนิคการสุ่มซ้ำเทคนิคหนึ่ง เทคนิคนี้จะแบ่งข้อมูล training dataset ออกเป็นส่วนย่อยอย่างสุ่มจำนวน k ชุด เรียกแต่ละชุดว่า fold
+
+- วิธีการนี้จะนำชุดข้อมูลย่อยจำนวน k-1 ชุด ไปประมาณพารามิเตอร์ในโมเดล และอีก 1 ชุดที่เหลือจะนำไปใช้สำหรับประเมิน generalization error ของโมเดล วิธีการนี้มีลักษณะการทำงานแบบทวนซ้ำจำนวน k รอบ โดยที่ในแต่ละรอบจะเปลี่ยนชุดข้อมูลสำหรับประมาณค่าพารามิเตอร์ และประเมิน generalization error ไปเรื่อย ๆ จนครบ
+
+- จากขั้นตอนในข้างต้นจะทำให้ได้ค่า generalization error จำนวน k ค่า เขียนแทนด้วย $\epsilon_1, \epsilon_2, ..., \epsilon_k$ ค่า generalization error ของโมเดลทำนายคำนวณได้จากค่าเฉลี่ยของ generalization error ที่คำนวณได้จากการทวนซ้ำในแต่ละรอบ
+
+
+## k-fold cross validation (k-fold CV)
+
+![5-fold CV (Boehmke, & Greenwell, 2020)](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/kfoldcv.png){width=90%}
+
+## k-fold cross validation (k-fold CV)
+
+- หน่วยข้อมูลแต่ละหน่วยจะอยู่ในชุดข้อมูลทดสอบเพียงครั้งเดียวเท่านั้น 
+
+- การกำหนดค่า k ไม่ได้มีกฎเกณฑ์ตายตัว แต่โดยปกติมักกำหนดให้ k=5 หรือ k=10
+
+- ยิ่งกำหนดให้ k มีค่ามาก จะส่งผลให้ความแปรปรวนในการประมาณ generalization error มีแนวโน้มลดลง และถ้า k=n เมื่อ n คือจำนวนหน่วยข้อมูลทั้งหมด อัลกอริิทึม k-fold CV จะเทียบเท่า leave-one-out CV (LOOCV)
+
+- k=10 ให้ค่าประมาณ generalization error ที่ใกล้เคียงกับ LOOCV (Molinaro et al., 2005)
+
+- repeating k-fold CV ใช้การทวนซ้ำกระบวนการ k-fold CV หลาย ๆ รอบ ซึ่งช่วยลดความแปรปรวนในการประมาณ generalization error ได้มากขึ้น (Kim, 2009)
+
+
+## k-fold cross validation 
+
+
+```{r}
+
+
+```
+
+
+## bootstrapping
+
+![bootstrapping process (Boehmke, & Greenwell, 2020)](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/bootstrap.png){width=90%}
+
+
+## bootstrapping: bootstrap samples
+
+- Bootstrap sample คือตัวอย่างที่ได้จากการสุ่มแบบใส่คืน (random sampling with replacement) จากชุดข้อมูลตั้งต้น
+
+
+- จากการสร้าง bootstrap sample ข้างต้นจะเห็นว่าหน่วยข้อมูลแต่ละหน่วยสามารถปรากฏอยู่ใน bootstrap sample ได้มากกว่าหนึ่งครั้ง แตกต่างจาก k-fold CV ที่หน่วยข้อมูลแต่ละหน่วยจะปรากฏอยู่เพียง fold ใด fold หนึ่งเท่านั้น
+
+- และเนื่องจาก bootstrap sample สร้างจากการสุ่มตัวอย่างแบบใส่คืนจากชุดข้อมูลตั้งต้น จึงทำให้ลักษณะการแจกแจงของข้อมูลใน bootstrap sample มีลักษณะโดยประมาณเป็นการแจกแจงเดียวกับข้อมูลในชุดข้อมูลตั้งต้น
+
+
+
+## bootstrapping: out-of-bag (OOB)
+
+- เมื่อพิจารณาในแต่ละ bootstrap sample เปรียบเทียบกับชุดข้อมูลตั้งต้นจะพบว่าสามารถจำแนกหน่วยข้อมูลได้เป็น 2 ประเภท ประเภทแรกคือหน่วยข้อมูลที่ถูกสุ่มมาใส่ใน bootstrap sample หน่วยข้อมูลกลุ่มนี้จะนำไปใช้วิเคราะห์ภายใต้โมเดลทำนายที่กำหนด ส่วนประเภทที่สองคือหน่วยข้อมูลที่ไม่ถูกสุ่มมาไว้ใน bootstrap sample เรียกหน่วยข้อมูลกลุ่มนี้ว่า **out-of-bag (OOB)** หน่วยข้อมูลประเภทนี้จะนำไปใช้ประมาณค่า generalization error ของโมเดลทำนาย ในทำนองเดียวกับ k-fold CV
+
+- วิธี bootstrapping เป็นวิธีการที่ให้ค่าประมาณ generalization error ที่มีความแปรปรวนต่ำกว่าวิธี k-fold CV อย่างไรก็ตามในกรณีที่ชุดข้อมูลตั้งต้นมีขนาดเล็ก วิธี bootstrapping อาจให้ค่าประมาณความคลาดเคลื่อนที่ลำเอียง (bias)  
+
+## bootstrapping
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/bootvscv.png){width=100%}
+
+## Bias and Variance trace-off
+
+Generalization error ของแต่ละโมเดลทำนายประกอบด้วยส่วนประกอบ 3 ส่วนได้แก่ ความลำเอียง (bias) ความแปรปรวน (variance) และตัวรบกวน (noise) หรือในหนังสือบางเล่มเรียกว่าความคลาดเคลื่อนที่ลดทอนไม่ได้ (irreducible error) ความคลาดเคลื่อนแต่ละส่วนมีความหมายที่แตกต่างกัน ดังนี้
+
+- ความลำเอียง --> ในทางทฤษฎี bias = E($\hat{theta}$)-$theta$ ความคลาดเคลื่อนส่วนนี้เกิดขึ้นจาก misspecification ของโมเดล โมเดลทำนายที่มีความลำเอียงสูง ๆ มีแนวโน้มที่จะเป็น underfitting model
+
+- ความแปรปรวน --> ความไวของการเปลี่ยนแปลงของค่าทำนายจากโมเดล ที่เกิดจากการเปลี่ยนแปลงเงื่อนไข/ค่าสังเกตของตัวแปรอิสระที่ใช้เป็นตัวทำนาย โมเดลที่ค่าทำนายเปลี่ยนแปลงอย่างรวดเร็วเมื่อตัวแปรอิสระมีการเปลี่ยนแปลงเพียงเล็กน้อย มีแนวโน้มที่จะเป็นโมเดลที่มีความแปรปรวนสูง สาเหตุของการเกิดความคลาดเคลื่อนส่วนนี้เกิดจาก overfitting model
+
+- ตัวรบกวน (noise) เป็นความคลาดเคลื่อนจากปัจจัยแทรกซ้อน ซึ่งเกิดได้จากหลายสาเหตุ เช่น ความคลาดเคลื่อนจากการสุ่มตัวอย่าง ค่าผิดปกติ ความคลาดเคลื่อนจากการบันทึกข้อมูล สเกลของข้อมูลไม่ถูกต้อง ความคลาดเคลื่อนส่วนนี้สามารถลดทอนได้ด้วยการตรวจสอบทำความสะอาดข้อมูลก่อนนำไปวิเคราะห์
+
+## Bias and Variance trace-off
+
+โมเดลที่มีความซับซ้อนสูงมีแนวโน้มที่จะมีความลำเอียงต่ำ แต่ก็มีแนวโน้มที่จะมีความแปรปรวนสูงด้วย ในทางกลับกันโมเดลที่มีความซับซ้อนต่ำก็จะมีแนวโน้มที่จะมีความลำเอียงสูง แต่มีความแปรปรวนต่ำ
+
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/tradeoff.png){width=80%}
+
+## Bias and Variance trace-off
+
+![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/biasvar.png){width=100%}
+
