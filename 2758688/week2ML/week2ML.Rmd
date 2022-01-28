@@ -1,0 +1,333 @@
+---
+title: "Modeling Process"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::robobook:
+    highlight: kate
+---
+
+```{r setup, include=FALSE}
+## Global options
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;600&family=Sarabun&family=Thasadith:wght@200;700&display=swap');
+
+
+.main-container {
+  max-width: 100%;
+  margin-left: 500px;
+  margin-right: auto;
+}
+
+@font-face {
+  font-family: 'futura-bold';
+  src: url('../fonts/Futura-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  line-height: 1.4;
+  font-family: 'Sarabun';
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  color: $text-color;
+}
+
+p, .paragraph {
+  font-weight: 400;
+  color: $text-color;
+  font-size: 17px;
+  line-height: 1.8;
+  font-family: 'Sarabun';
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: $text-color-dark;
+  font-family: 'Noto Sans Thai';
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1, .h1{
+  font-size: 40px;
+  font-family: 'futura-bold';
+  @include mobile {
+    font-size: 35px;
+  }
+}
+
+h2, .h2{
+  font-size: 30px;
+  @include mobile {
+    font-size: 30px;
+  }
+}
+
+h3, .h3{
+  font-size: 25px;
+  @include mobile {
+    font-size: 20px;
+  }
+}
+
+h4, .h4{
+  font-size: 20px;
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+h5, .h5{
+  font-size: 18px;
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+h6, .h6{
+  font-size: 16px;
+  @include mobile {
+    font-size: 14px;
+  }
+}
+
+
+</style>
+
+กระบวนการพัฒนาการเรียนรู้ของเครื่องนั้น มีลักษณะคล้ายคลึงกับการวิเคราะห์ข้อมูลเชิงสำรวจ (exploratory data analysis: EDA) กล่าวคือเป็นกระบวนการที่ไม่ทราบคำตอบหรือวิธีการดำเนินงานที่แน่นอน และมักต้องมีการดำเนินการทวนซ้ำจนกระทั่งได้ผลลัพธ์เป็นที่น่าพึงพอใจ
+
+![Modeling Process](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/MLProcess.png)
+
+
+จากรูปข้างต้นจะเห็นว่ากระบวนการพัฒนาการเรียนรู้ของเครื่องนั้นประกอบด้วยขั้นตอนการดำเนินการหลายขั้นตอน และมีความรู้พื้นฐานหลายอย่างที่ผู้เรียนจำเป็นต้องทราบก่อนการเรียนเนื้อหาอื่น ๆ ถัดไป บทเรียนนี้จะกล่าวถึงความรู้พื้นฐานสำคัญดังกล่าว รายละเอียดมีดังนี้
+
+# การแบ่งข้อมูล (Data Splitting)
+
+วัตถุประสงค์หลักในการเรียนรู้ของเครื่อง คือ การพัฒนาอัลกอริทึม $f(X)$ ที่สามารถทำนายผลลัพธ์ $Y$ ของหน่วยข้อมูลที่สนใจได้อย่างแม่นยำมากที่สุด 
+
+นอกจากนี้ผู้วิเคราะห์ยังไม่ได้สนใจเพียงแต่ความแม่นยำของการทำนายภายใต้ชุดข้อมูลที่นำมาวิเคราะห์เท่านั้น ยังสนใจความแม่นยำของการทำนายหน่วยข้อมูลที่เครื่องไม่รู้จักกล่าวคืออยู่นอกเหนือจากชุดข้อมูลที่นำมาวิเคราะห์ด้วย เรียกคุณสมบัตินี้ว่า generalizability
+
+การจะประเมินว่าโมเดลทำนายของผู้วิเคราะห์มีคุณสมบัติ generalizability มากน้อยเพียงใด ไม่สามารถประเมินได้จากข้อมูลเพียงชุดเดียว ในการดำเนินงานจึงมีการแบ่งข้อมูลออกเป็นสองส่วน เรียกว่า ชุดข้อมูลฝึกหัด (training datset) และชุดข้อมูลทดสอบ (test dataset) 
+
+ชุดข้อมูลฝึกหัด เป็นชุดข้อมูลที่ผู้วิเคราะห์จะนำไปใช้สำหรับพัฒนาโมเดลที่ดีที่สุด โดยเริ่มตั้งแต่ขั้นตอนการคัดเลือกตัวแปรทำนาย สร้างโมเดลทำนาย ปรับแต่ง hyperparameters ของโมเดลทำนาย เปรียบเทียบและคัดเลือกชุดของโมเดลที่ดีที่สุดที่จะนำไปแข่งขันกันในชุดข้อมูลทดสอบ การเปรียบเทียบโมเดลบนชุดข้อมูลทดสอบช่วยให้ผู้วิเคราะห์พิจารณาได้ว่าโมเดลใดเป็นโมเดลที่มี generalization error ต่ำที่สุด และควรถูกเลือกไปใช้งาน
+
+โดยปกติแล้วผู้วิเคราะห์มักแบ่งข้อมูลออกเป็นชุดข้อมูลฝึกหัดกับชุดข้อมูลทดสอบด้วยอัตราส่วน 60:40, 70:30 หรือ 80:20 อย่างไรก็ตามตัวเลขดังกล่าวไม่ใช่เกณฑ์ตายตัวเสมอไป 
+
+- หากให้ชุดข้อมูลฝึกหัดมีขนาดใหญ่มากเกินไป ---> จะทำให้ชุดข้อมูลทดสอบมีขนาดเล็กเกินไป ส่งผลให้การประมาณ generalization error มีความคลาดเคลื่อนหรือไม่สะท้อนสภาพจริง เพิ่มโอกาสที่ผู้วิเคราะห์จะได้โมเดลที่สอดคล้องกับข้อมูลเกินพอดี (overfitting)
+
+- ในทางกลับกันหากใช้ข้อมูลทดสอบมีขนาดใหญ่มากเกินไป ---> จะทำให้ชุดข้อมูลฝึกหัดมีขนาดเล็กและอาจไม่เพียงพอที่จะพัฒนาโมเดลทำนายให้มีประสิทธิภาพสูงที่สุดตามที่ควรจะเป็นได้ ซึ่งเพิ่มโอกาสที่จะได้โมเดลที่ไม่สอดคล้องกับข้อมูล (underfitting)
+
+อีกปัจจัยหนึ่งที่สามารถใช้สำหรับพิจารณาขนาดของชุดข้อมูล training และ test คือขนาดข้อมูลในภาพรวม เช่นในกรณีที่ชุดข้อมูลมีขนาดใหญ่มาก ผู้วิเคราะห์อาจเลือกกำหนดชุดข้อมูลฝึกหัดให้มีขนาดเล็กลง ทั้งนี้เพื่อประหยัดทรัพยากรในขั้นตอนของการพัฒนาโมเดล อย่างไรก็ตามจำนวนข้อมูลขั้นต่ำควรมีจำนวนมากกว่าจำนวนของตัวแปรทำนาย
+
+
+การแบ่งข้อมูลใน R สามารถทำได้หลายลักษณะ และหลายวิธีการ เช่น
+
+## Simple Splitting based on Outcome
+
+```{r message=F, warning=F, echo=F}
+library(dplyr)
+library(caret)
+library(ggplot2)
+
+## importing data
+dat<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/housing(1).csv")
+glimpse(dat)
+```
+
+ลองพิจารณาการแจกแจงของตัวแปรตาม median_house_value 
+
+```{r message=F, warning=F}
+ggplot(dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    theme_minimal()
+```
+
+
+```{r message=F, warning=F}
+set.seed(123)
+## splitting data
+train.id<-createDataPartition(dat$median_house_value, 
+                              p=0.8, 
+                              list=FALSE,
+                              times=1) 
+train.dat<-dat[train.id,]
+test.dat<-dat[-train.id,]
+```
+
+รูปต่อไปนี้เปรียบเทียบการแจกแจงของ  median_house_value  ระหว่างชุดข้อมูลใหญ่  ชุดข้อมูลฝึกหัด และชุดข้อมูลทดสอบ
+
+```{r message=F, fig.height=9, echo=F}
+library(gridExtra)
+p1<-ggplot(dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("overall")+
+    theme_minimal()
+
+p2<-ggplot(train.dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("train.dat")+
+    theme_minimal()
+
+p3<-ggplot(test.dat, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("test.dat")+
+    theme_minimal()
+
+grid.arrange(p1,p2,p3, nrow=3)
+
+```
+
+
+## Stratified Splitting based on Outcome
+
+การสุ่มแบบ simple random sampling สามารถใช้ได้ดีในกรณีที่หน่วยข้อมูลมีความเป็นเอกพันธ์กัน (homogenous) แต่หากหน่วยข้อมูลมีความแตกต่างกันสูง (heterogenous) การสุ่มแบบ SRS อาจไม่สามารถรับประกันได้ว่าจะได้ชุดข้อมูลที่มีลักษณะสอดคล้องกัน
+
+อีกสถานการณ์หนึ่งคือในปัญหา classification ตัวแปรตามที่ใช้ในการวิเคราะห์อาจมีความไม่สมดุลกันในแต่ละ category (imbalance class) เช่น นักเรียนที่คงอยู่ในระบบการศึกษามี 90% ส่วนนักเรียนที่ออกกลางคันจากระบบการศึกษามี 10% การใช้ SRS ในกรณีเช่นนี้อาจทำให้ผู้วิเคราะห์ได้หน่วยข้อมูลที่มีีคุณลักษณะไม่ครบถ้วน
+
+กรณีดังกล่าวการสุ่มตัวอย่างแบบชั้นภูมิอาจให้ชุดข้อมูลฝึกหัดและชุดข้อมูลทดสอบที่มีความเหมาะสมมากกว่า การสุ่มแบบชั้นภูมิใน R สามารถทำได้หลายวิธี วิธีการหนึ่งคือการใช้ฟังก์ชัน `initial_split()` ใน package-rsample ดังตัวอย่างต่อไปนี้
+
+### กรณีตัวแปรตามเป็นตัวแปรต่อเนื่อง
+
+กรณีที่ตัวแปรตามเป็นตัวแปรต่อเนื่อง การสุ่มตัวอย่างจะเริ่มจากการแบ่งข้อมูลของตัวแปรตามออกเป็นส่วนย่อย ๆ ตามค่า quantile ก่อน ค่าเริ่มต้นกำหนดให้ใช้ quantile จำนวน 4 ค่าเป็นจุดแบ่ง ผู้วิเคราะห์สามารถเปลี่ยนค่าดังกล่าวได้ผ่านอาร์กิวเมนท์ `breaks` เมื่อแบ่งข้อมูลแล้วจึงทำการสุ่มหน่วยข้อมูลจากแต่ละช่วงด้วยวิธีการสุ่มอย่างง่าย ตัวอย่างข้างต้นแสดงการเขียนคำสั่งดังกล่าว
+
+```{r}
+library(rsample)
+glimpse(dat)
+
+set.seed(123)
+strat_split<-initial_split(dat, 
+                        prop=0.8,
+                        strata="median_house_value")
+str_train<-training(strat_split)
+str_test<-testing(strat_split)
+
+summary(str_train$median_house_value)
+summary(str_test$median_house_value)
+
+```
+
+
+```{r echo=F}
+p1<-ggplot(str_train, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("train.dat")+
+    theme_minimal()
+
+p2<-ggplot(str_test, aes(x=median_house_value))+
+    geom_histogram(aes(y=..density..),
+                   col="black",
+                   fill="white")+
+    geom_density(col="blue")+
+    ggtitle("test.dat")+
+    theme_minimal()
+
+grid.arrange(p1,p2, ncol=2)
+
+```
+
+### กรณีตัวแปรตามเป็นตัวแปรจัดประเภท
+
+กรณีที่ตัวแปรตามเป็นตัวแปรจัดประเภท จะสุ่มหน่วยข้อมูลจากแต่ละ category ในตัวแปรตาม โดยใช้สัดส่วนของ category เป็นเกณฑ์
+
+```{r message=F}
+glimpse(iris)
+table(iris$Species)
+
+
+set.seed(123)
+strat_split<-initial_split(iris, 
+                        prop=0.7,
+                        strata="Species")
+str_train<-training(strat_split)
+str_test<-testing(strat_split)
+
+table(str_train$Species)%>%prop.table()
+table(str_test$Species)%>%prop.table()
+
+```
+
+
+## Splitting Based on the Predictors
+
+การแบ่งข้อมูลลักษณะนี้จะใช้อัลกอริทึม maximum dissimilarity หรือ `maxDissim` (Willett, 1999)กำหนดให้ A เป็นชุดข้อมูลตั้งต้น (initial dataset) ขนาด m หน่วย และ B เป็นชุดข้อมูลรวมขนาด n หน่วย โดยที่ $n > m$ 
+
+อัลกอริทึม `maxDissim` จะสุ่มเลือกหน่วยข้อมูลใน B โดยพิจารณาให้มีความแตกต่าง (disimilarity) กับหน่วยข้อมูลใน A มากที่สุด
+
+
+```{r message=F}
+dat.all<-data.frame(scale(iris[,1:4],center=TRUE,scale=TRUE))
+glimpse(dat.all)
+
+set.seed(123)
+initial.id<-sample(1:dim(dat.all)[1],5)
+A.set<-dat.all[initial.id,] #initial set
+B.set<-dat.all[-initial.id,] 
+
+## maxDissim dataset
+maxdis.dat<-maxDissim(A.set, B.set, n=50)
+maxdis.dat<-B.set[maxdis.dat,]
+```
+
+รูปต่อไปนี้แสดงการเปรียบเทียบระหว่างชุดข้อมูลรวม ชุดข้อมูลตั้งต้น และชุดข้อมูลที่สุ่มโดยใช้อัลกอริทึม `maxDissim`
+
+
+```{r echo=F}
+ggplot()+
+  geom_point(data=dat.all, aes(x=Sepal.Length, y=Sepal.Width), col=alpha("grey",0.8))+
+  geom_point(data=A.set, aes(x=Sepal.Length, y=Sepal.Width), col="blue", size=4)+
+  geom_point(data=maxdis.dat,  aes(x=Sepal.Length, y=Sepal.Width), col=alpha("orange",0.6), size=2)+
+  theme_minimal()
+
+ggplot()+
+  geom_point(data=dat.all, aes(x=Petal.Length, y=Petal.Width), col=alpha("grey",0.8))+
+  geom_point(data=A.set, aes(x=Petal.Length, y=Petal.Width), col="blue", size=4)+
+  geom_point(data=maxdis.dat,  aes(x=Petal.Length, y=Petal.Width), col=alpha("orange",0.6), size=2)+
+  theme_minimal()
+```
+
+
+# Class Imbalances Problem
+
+ปัญหาข้อมูลไม่สมดุล (class imbalance problem) เป็นปัญหาที่พบใน classification problem ปัญหานี้เป็นปัญหาสำคัญที่ส่งผลกระทบค่อนข้างรุนแรงต่อประสิทธิภาพในการทำนายของโมเดล 
+
+เมื่อเกิดปัญหาข้อมูลไม่สมดุล จำนวนหน่วยข้อมูลใน category ของตัวแปรตามอย่างน้อย 2 category มีความแตกต่างกันมากเกินไป เช่นตัวอย่างชุดข้อมูลต่อไปนี้
+
+
+```{r}
+dropout<-read.csv("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/2758688 ML/new/week2ML/dropout.csv")
+table(dropout$Class)%>%prop.table()
+```
+
+โดยที่ `class = 1` คือนักเรียนที่ออกกลางคัน
+
+
+การแก้ปัญหา class imbalances สามารถทำได้หลายวิธีการ วิธีการที่เป็นที่นิยมกันคือ
+
+- up-sampling
+
+- down-sampling
+
+- SMOTE
+
+
+
+
