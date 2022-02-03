@@ -1,0 +1,36 @@
+[
+  {
+    "path": "posts/2022-02-03-mcmc-via-jags/",
+    "title": "MCMC via JAGS",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Siwachoat Srisuttiyakorn",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-02-03",
+    "categories": [],
+    "contents": "\nทดสอบการสร้าง blog ด้วย distill package\nDistill is a publication format for scientific and technical writing, native to the web.\nLearn more about using Distill at https://rstudio.github.io/distill.\n\n\n\n",
+    "preview": {},
+    "last_modified": "2022-02-03T15:36:27+07:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to My Blog",
+    "description": "Welcome to our new blog, My Blog. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "Nora Jones",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-02-03",
+    "categories": [],
+    "contents": "\n\n\n\n",
+    "preview": {},
+    "last_modified": "2022-02-03T15:32:21+07:00",
+    "input_file": {}
+  }
+]
