@@ -2280,14 +2280,14 @@ Show code
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>theta</span><span class='op'>&lt;-</span><span class='fl'>0.99</span> <span class='co'>#initial value</span>
 <span class='va'>m</span><span class='op'>&lt;-</span><span class='fl'>5000</span> <span class='co'>#iteration number</span>
 <span class='va'>theta.dat</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>nrow<span class='op'>=</span><span class='va'>m</span>,ncol<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-<span class='va'>sd.pro</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.02</span>,<span class='fl'>0.2</span>,<span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>sd.pro</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.02</span>,<span class='fl'>0.2</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='co'>#learning rate</span>
 <span class='va'>count</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>nrow<span class='op'>=</span><span class='va'>m</span>, ncol<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 
 <span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>sd.pro</span><span class='op'>)</span><span class='op'>)</span>
   <span class='op'>{</span>
   <span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>m</span><span class='op'>)</span>
     <span class='op'>{</span>
-<span class='va'>delta.theta</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='va'>sd.pro</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>delta.theta</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='va'>sd.pro</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span><span class='op'>)</span> <span class='co'>#proposal jump (change)</span>
 <span class='va'>theta.pro</span><span class='op'>&lt;-</span><span class='va'>theta</span><span class='op'>+</span><span class='va'>delta.theta</span> <span class='co'>#proposed bias parameter</span>
 
 <span class='va'>nom</span><span class='op'>&lt;-</span><span class='va'>theta.pro</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>7</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='va'>theta.pro</span><span class='op'>)</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>20</span><span class='op'>-</span><span class='fl'>7</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span>
@@ -2348,7 +2348,7 @@ Show code
 </code></pre>
 </div>
 </details>
-<pre><code>[1] 0.9382 0.5022 0.0656</code></pre>
+<pre><code>[1] 0.9348 0.4982 0.0648</code></pre>
 </div>
 <h2 id="example-2-one-sample-mean-and-sd">Example 2: One-sample Mean and SD</h2>
 <p>สมมุตินักวิจัยต้องการประมาณค่าเฉลี่ย IQ ของนักเรียนในโรงเรียนสังกัด สพฐ. ว่ามีค่าสูงกว่าเกณฑ์มาตรฐานคือ 90 คะแนน หรือไม่ ในการวิจัยนักวิจัยได้สร้างแบบวัด IQ และนำไปเก็บรวบรวมข้อมูลจากนักเรียนดังกล่าวจำนวน 3000 คน พบว่ามีคะแนนดังนี้</p>
