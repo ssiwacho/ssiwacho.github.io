@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bayes_exam1.csv","distributions.png","jag.png","jags_files/anchor-4.2.2/anchor.min.js","jags_files/bowser-1.9.3/bowser.min.js","jags_files/distill-2.2.21/template.v2.js","jags_files/figure-html5/unnamed-chunk-11-1.png","jags_files/figure-html5/unnamed-chunk-12-1.png","jags_files/figure-html5/unnamed-chunk-13-1.png","jags_files/figure-html5/unnamed-chunk-6-1.png","jags_files/figure-html5/unnamed-chunk-7-1.png","jags_files/figure-html5/unnamed-chunk-8-1.png","jags_files/header-attrs-2.11/header-attrs.js","jags_files/jquery-3.6.0/jquery-3.6.0.js","jags_files/jquery-3.6.0/jquery-3.6.0.min.js","jags_files/jquery-3.6.0/jquery-3.6.0.min.map","jags_files/popper-2.6.0/popper.min.js","jags_files/tippy-6.2.7/tippy-bundle.umd.min.js","jags_files/tippy-6.2.7/tippy-light-border.css","jags_files/tippy-6.2.7/tippy.css","jags_files/tippy-6.2.7/tippy.umd.min.js","jags_files/webcomponents-2.0.0/webcomponents.js","model1.txt","normal model.png"]}
+  {"type":"character","attributes":{},"value":["bayes_exam1.csv","distributions.png","jag.png","jags_files/anchor-4.2.2/anchor.min.js","jags_files/bowser-1.9.3/bowser.min.js","jags_files/distill-2.2.21/template.v2.js","jags_files/figure-html5/unnamed-chunk-11-1.png","jags_files/figure-html5/unnamed-chunk-12-1.png","jags_files/figure-html5/unnamed-chunk-13-1.png","jags_files/figure-html5/unnamed-chunk-16-1.png","jags_files/figure-html5/unnamed-chunk-16-2.png","jags_files/figure-html5/unnamed-chunk-16-3.png","jags_files/figure-html5/unnamed-chunk-16-4.png","jags_files/figure-html5/unnamed-chunk-17-1.png","jags_files/figure-html5/unnamed-chunk-17-2.png","jags_files/figure-html5/unnamed-chunk-17-3.png","jags_files/figure-html5/unnamed-chunk-18-1.png","jags_files/figure-html5/unnamed-chunk-20-1.png","jags_files/figure-html5/unnamed-chunk-21-1.png","jags_files/figure-html5/unnamed-chunk-23-1.png","jags_files/figure-html5/unnamed-chunk-23-2.png","jags_files/figure-html5/unnamed-chunk-23-3.png","jags_files/figure-html5/unnamed-chunk-6-1.png","jags_files/figure-html5/unnamed-chunk-7-1.png","jags_files/figure-html5/unnamed-chunk-8-1.png","jags_files/header-attrs-2.11/header-attrs.js","jags_files/jquery-3.6.0/jquery-3.6.0.js","jags_files/jquery-3.6.0/jquery-3.6.0.min.js","jags_files/jquery-3.6.0/jquery-3.6.0.min.map","jags_files/popper-2.6.0/popper.min.js","jags_files/tippy-6.2.7/tippy-bundle.umd.min.js","jags_files/tippy-6.2.7/tippy-light-border.css","jags_files/tippy-6.2.7/tippy.css","jags_files/tippy-6.2.7/tippy.umd.min.js","jags_files/webcomponents-2.0.0/webcomponents.js","model1.txt","normal model.png","runjagsfiles/CODAchain1.txt","runjagsfiles/CODAchain2.txt","runjagsfiles/CODAchain3.txt","runjagsfiles/CODAindex.txt","runjagsfiles/data.txt","runjagsfiles/inits1.txt","runjagsfiles/inits2.txt","runjagsfiles/inits3.txt","runjagsfiles/jagsinfo.Rsave","runjagsfiles/model.txt","runjagsfiles/out1.Rdump","runjagsfiles/out2.Rdump","runjagsfiles/out3.Rdump","runjagsfiles/samplers.csv","runjagsfiles/scriptlauncher.sh","runjagsfiles/sim.1/jagsoutput.txt","runjagsfiles/sim.1/jagspid.txt","runjagsfiles/sim.1/script.cmd","runjagsfiles/sim.2/CODAindex.txt","runjagsfiles/sim.2/jagsoutput.txt","runjagsfiles/sim.2/jagspid.txt","runjagsfiles/sim.2/samplers.csv","runjagsfiles/sim.2/script.cmd","runjagsfiles/sim.3/CODAindex.txt","runjagsfiles/sim.3/jagsoutput.txt","runjagsfiles/sim.3/jagspid.txt","runjagsfiles/sim.3/samplers.csv","runjagsfiles/sim.3/script.cmd","runjagsfiles/simchainsinfo.Rsave"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2203,8 +2203,10 @@ h6, .h6{
 <li><a href="#การประมวลผล">การประมวลผล</a>
 <ul>
 <li><a href="#ระบ-jags-โมเดล">ระบุ JAGs โมเดล</a></li>
-<li><a href="#สงประมวลผล">สั่งประมวลผล</a></li>
 </ul></li>
+<li><a href="#runjags-packages">runjags packages</a></li>
+<li><a href="#rjags-packages">rjags packages</a></li>
+<li><a href="#การตรวจสอบคณสมบตของตวอยางจาก-mcmc-algorithm">การตรวจสอบคุณสมบัติของตัวอย่างจาก MCMC algorithm</a></li>
 <li><a href="#การอนมานเชงสถตแบบเบสโดยใชตวอยางจาก-mcmc-algorithm">การอนุมานเชิงสถิติแบบเบส์โดยใช้ตัวอย่างจาก MCMC algorithm</a></li>
 </ul></li>
 </ul>
@@ -2217,11 +2219,12 @@ h6, .h6{
 </ol>
 <p><a href="https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/" class="uri">https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/</a></p>
 <ol start="2" type="1">
-<li>การใช้งาน JAGS ในข้างต้นจะไม่ได้ใช้งานแบบ standard alone แต่จะใช้งานผ่านโปรแกรม R โดยผู้ใช้จำเป็นต้องดาวน์โหลด package เสริมอีก 2 ตัวได้แก่ <code>rjags</code> และ <code>runjags</code> ดังนี้</li>
+<li>การใช้งาน JAGS ในข้างต้นจะไม่ได้ใช้งานแบบ standard alone แต่จะใช้งานผ่านโปรแกรม R ทั้งนี้ปัจจุบันมี package หลายตัวที่ถูกพัฒนาขึ้นเพื่อทำงานบน R ร่วมกับโปรแกรม JAGs เช่น <code>R2jags</code>, <code>rjags</code> และ <code>runjags</code> ในบทเรียนนี้จะกล่าวถึงการใช้งาน package ทั้งสาม โดยก่อนการใช้งานผู้้วิเคราะห์จำเป็นต้องดาวน์โหลด package ดังกล่าวก่อน ด้วยคำสั่งดังนี้</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"rjags"</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"R2jags"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"rjags"</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"runjags"</span>, dependencies <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2229,7 +2232,8 @@ h6, .h6{
 <p>ก่อนใช้งาน package ทั้งสองผู้ใช้จำต้องเรียกใช้ package ดังกล่าวก่อนโดยพิมพ์คำสั่งดังนี้</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mcmc-jags.sourceforge.io'>rjags</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>R2jags</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mcmc-jags.sourceforge.io'>rjags</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ku-awdc/runjags'>runjags</a></span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2349,139 +2353,61 @@ model{
 </code></pre>
 </div>
 </div>
-<h3 id="สงประมวลผล">สั่งประมวลผล</h3>
+<p>ในบางกรณี ผู้วิเคราะห์อาจไม่ต้องการสร้างไฟล์โมเดลเพิ่ม ก็สามารถเขียนโมเดลให้เก็บอยู่ใน R Console แล้วนำไปใช้ได้เลย โดยเขียนโมเดลเหมือนปกติ และบันทึกไว้ในลักษณะของ character variable ดังนี้</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mcmc-jags.sourceforge.io'>rjags</a></span><span class='op'>)</span>
-<span class='va'>dataList</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>y<span class='op'>=</span><span class='va'>dat</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, n<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>initsList</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mu<span class='op'>=</span><span class='fl'>1</span>, tau<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mean.model</span><span class='op'>&lt;-</span> <span class='st'>"model{
+  
+  # Likelihood
+  for (i in 1:n)
+  {
+    y[i]~dnorm(mu, tau)
+  }
+  
+  # Prior Distributions
+  mu~dnorm(0,0.01)
+  tau~dunif(0,5)
+  
+  # Derived quantities 
+  sigma2&lt;-1/tau
 
-<span class='va'>model</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/rjags/man/jags.model.html'>jags.model</a></span><span class='op'>(</span>file<span class='op'>=</span><span class='st'>"/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-05-jags/model1.txt"</span>,
-                  data <span class='op'>=</span> <span class='va'>dataList</span>,
-                  inits <span class='op'>=</span> <span class='va'>initsList</span>,
-                  n.chains <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>Compiling model graph
-   Resolving undeclared variables
-   Allocating nodes
-Graph information:
-   Observed stochastic nodes: 100
-   Unobserved stochastic nodes: 2
-   Total graph size: 108
-
-Initializing model</code></pre>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>model</span>, n.iter<span class='op'>=</span><span class='fl'>2000</span><span class='op'>)</span> <span class='co'>#n.burnin</span>
-<span class='va'>samples</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/rjags/man/coda.samples.html'>coda.samples</a></span><span class='op'>(</span><span class='va'>model</span>,
-                      variable.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mu"</span>,<span class='st'>"sigma2"</span><span class='op'>)</span>,
-                      n.iter <span class='op'>=</span> <span class='fl'>10000</span>,
-                      thin <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+}"</span>
 </code></pre>
 </div>
 </div>
+<h2 id="runjags-packages">runjags packages</h2>
+<p>เป็น package หนึ่งที่สามารถเรียก JAGS จาก R ได้ ซึ่งมีจุดเด่นคือสามารถสั่งประมวลแบบคู่ขนาน (parallel) แยกตาม core ของ CPU ได้ในกรณีที่ผู้วิเคราะห์กำหนดให้สุ่มตัวอย่างจากลูกโซ่มาร์คอฟที่มีจำนวนมากกว่า 1 ลูกโซ่ ตัวอย่างคำสั่งเป็นดังนี้</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
-</code></pre>
+
 </div>
-<pre><code>[[1]]
-Markov Chain Monte Carlo (MCMC) output:
-Start = 3003 
-End = 3021 
-Thinning interval = 3 
-           mu   sigma2
-[1,] 55.12349 252.9210
-[2,] 56.19340 318.1755
-[3,] 53.93006 280.1723
-[4,] 59.29230 333.6383
-[5,] 56.70130 296.6507
-[6,] 56.40573 352.2187
-[7,] 57.60478 288.4039
-
-[[2]]
-Markov Chain Monte Carlo (MCMC) output:
-Start = 3003 
-End = 3021 
-Thinning interval = 3 
-           mu   sigma2
-[1,] 56.89413 290.5679
-[2,] 54.91536 261.8812
-[3,] 58.72022 274.5510
-[4,] 58.12036 310.0545
-[5,] 55.40816 352.8546
-[6,] 56.03175 287.9578
-[7,] 56.29653 287.9962
-
-[[3]]
-Markov Chain Monte Carlo (MCMC) output:
-Start = 3003 
-End = 3021 
-Thinning interval = 3 
-           mu   sigma2
-[1,] 55.76373 333.7668
-[2,] 57.29258 281.3218
-[3,] 58.31160 323.9150
-[4,] 58.20681 270.2196
-[5,] 58.58410 293.0907
-[6,] 58.01605 283.9231
-[7,] 56.83537 394.7078
-
-[[4]]
-Markov Chain Monte Carlo (MCMC) output:
-Start = 3003 
-End = 3021 
-Thinning interval = 3 
-           mu   sigma2
-[1,] 56.53639 260.0271
-[2,] 59.52916 266.9013
-[3,] 58.44237 263.5357
-[4,] 55.88040 273.9041
-[5,] 57.52341 309.9290
-[6,] 54.58892 291.0449
-[7,] 56.86572 271.2370
-
-[[5]]
-Markov Chain Monte Carlo (MCMC) output:
-Start = 3003 
-End = 3021 
-Thinning interval = 3 
-           mu   sigma2
-[1,] 54.90347 353.8803
-[2,] 59.48020 305.8382
-[3,] 58.94131 227.5358
-[4,] 56.72242 255.8199
-[5,] 57.76389 382.9553
-[6,] 52.89174 346.5648
-[7,] 58.59618 214.9703
-
-attr(,&quot;class&quot;)
-[1] &quot;mcmc.list&quot;</code></pre>
-</div>
-<p>อีก package หนึ่งที่สามารถเรียก JAGS จาก R ได้คือ package-runjags ซึ่งมีจุดเด่นคือสามารถสั่งประมวลแบบคู่ขนาน (parallel) แยกตาม core ของ CPU ได้ในกรณีที่ผู้วิเคราะห์กำหนดให้สุ่มตัวอย่างจากลูกโซ่มาร์คอฟที่มีจำนวนมากกว่า 1 ลูกโซ่ ตัวอย่างคำสั่งเป็นดังนี้</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ku-awdc/runjags'>runjags</a></span><span class='op'>)</span>
+<span class='va'>dataList</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>y<span class='op'>=</span><span class='va'>dat</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, n<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>init1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mu<span class='op'>=</span><span class='fl'>50</span>, tau<span class='op'>=</span><span class='fl'>0.1</span><span class='op'>)</span>
+<span class='va'>init2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mu<span class='op'>=</span><span class='fl'>30</span>, tau<span class='op'>=</span><span class='fl'>0.01</span><span class='op'>)</span>
+<span class='va'>init3</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mu<span class='op'>=</span><span class='fl'>90</span>, tau<span class='op'>=</span><span class='fl'>0.05</span><span class='op'>)</span>
+<span class='va'>initsList</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>init1</span>, <span class='va'>init2</span>, <span class='va'>init3</span><span class='op'>)</span>
 
 <span class='va'>model.runjags</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/runjags/man/run.jags.html'>run.jags</a></span><span class='op'>(</span>method<span class='op'>=</span><span class='st'>"parallel"</span>,
-                        model<span class='op'>=</span><span class='st'>"/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-05-jags/model1.txt"</span>,
+                        model<span class='op'>=</span><span class='va'>mean.model</span>,
                         monitor<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mu"</span>,<span class='st'>"sigma2"</span><span class='op'>)</span>,
                         data<span class='op'>=</span><span class='va'>dataList</span>,
                         inits<span class='op'>=</span><span class='va'>initsList</span>,
                         n.chains<span class='op'>=</span><span class='fl'>3</span>,
+                        adapt <span class='op'>=</span> <span class='fl'>1000</span>,
                         burnin<span class='op'>=</span><span class='fl'>1000</span>,
                         sample <span class='op'>=</span> <span class='fl'>10000</span>,
-                        thin<span class='op'>=</span><span class='fl'>3</span>,
+                        thin<span class='op'>=</span><span class='fl'>1</span>,
                         summarise<span class='op'>=</span><span class='cn'>TRUE</span>,
-                        plots<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+                        plots<span class='op'>=</span><span class='cn'>FALSE</span>,
+                        keep.jags.files <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Calling 3 simulations using the parallel method...
 Following the progress of chain 1 (the program will wait for
 all chains to finish before continuing):
-Welcome to JAGS 4.3.0 on Tue Feb  8 01:24:15 2022
+Welcome to JAGS 4.3.0 on Sat Feb 12 11:44:12 2022
 JAGS is free software and comes with ABSOLUTELY NO WARRANTY
 Loading module: basemod: ok
 Loading module: bugs: ok
@@ -2502,8 +2428,8 @@ Adaptation successful
 . Updating 1000
 -------------------------------------------------| 1000
 ************************************************** 100%
-. . . Updating 30000
--------------------------------------------------| 30000
+. . . Updating 10000
+-------------------------------------------------| 10000
 ************************************************** 100%
 . . . . Updating 0
 . Deleting model
@@ -2514,61 +2440,378 @@ Coda files loaded successfully
 Calculating summary statistics...
 Calculating the Gelman-Rubin statistic for 2 variables....
 Finished running the simulation</code></pre>
+</div>
+<p>เมื่อประมวลผลเสร็จผู้วิเคราะห์สามารถเรียกดูข้อสรุปเบื้องต้นเกี่ยวกับตัวอย่างที่จำลองจากกระบวนการสุ่มข้างต้นได้ โดยพิมพ์ชื่อของตัวแปรที่เก็บผลลัพธ์จาก <code>run.jags()</code> ดังนี้</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+JAGS model summary statistics from 30000 samples (chains = 3; adapt+burnin = 2000):
+                                                                 
+       Lower95 Median Upper95   Mean     SD Mode    MCerr MC%ofSD
+mu      53.772 57.168  60.512 57.152 1.7191   -- 0.010201     0.6
+sigma2   218.2 294.86  383.64 299.03 43.271   --  0.32807     0.8
+                               
+       SSeff      AC.10    psrf
+mu     28403   0.008448 0.99998
+sigma2 17397 -0.0020839  1.0004
+
+Total time taken: 1.1 seconds</code></pre>
+</div>
+<p>สำหรับการตรวจสอบและวิเคราะห์ในเชิงลึกอื่น ๆ ผู้วิเคราะห์สามารถดึงกระบวนการสุ่มหรือลูกโซ่ของพารามิเตอร์ <span class="math inline">\(\mu\)</span> และ <span class="math inline">\(\sigma^2\)</span> ที่จำลองขึ้นมาอยู่ในโปรแกรม R เพื่อดำเนินการวิเคราะห์ในขั้นตอนต่อไปได้โดยใช้คำสั่ง <code>as.mcmc.list()</code> ดังนี้</p>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>samples2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>as.mcmc.list</a></span><span class='op'>(</span><span class='va'>model.runjags</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># sampling posterior samples</span>
+<span class='va'>samples2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>as.mcmc.list</a></span><span class='op'>(</span><span class='va'>model.runjags</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>samples2</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[[1]]
 Markov Chain Monte Carlo (MCMC) output:
 Start = 2001 
-End = 2019 
-Thinning interval = 3 
+End = 2007 
+Thinning interval = 1 
           mu  sigma2
-2001 56.4346 322.055
-2004 55.7558 302.082
-2007 57.0825 294.922
-2010 57.3505 275.264
-2013 59.2751 329.078
-2016 59.7975 362.473
-2019 53.1370 338.499
+2001 57.5487 275.404
+2002 56.1627 276.307
+2003 56.1302 260.428
+2004 56.6929 313.530
+2005 57.0918 278.690
+2006 59.3460 297.571
+2007 55.3065 345.699
 
 [[2]]
 Markov Chain Monte Carlo (MCMC) output:
 Start = 2001 
-End = 2019 
-Thinning interval = 3 
+End = 2007 
+Thinning interval = 1 
           mu  sigma2
-2001 56.7285 336.352
-2004 59.2102 268.094
-2007 55.3093 273.147
-2010 56.8089 289.722
-2013 55.5229 292.251
-2016 60.4916 342.525
-2019 58.2862 323.886
+2001 56.1130 303.682
+2002 58.3842 270.347
+2003 56.8063 300.842
+2004 56.4171 308.145
+2005 59.4194 271.694
+2006 55.9829 332.392
+2007 55.1499 351.244
 
 [[3]]
 Markov Chain Monte Carlo (MCMC) output:
 Start = 2001 
-End = 2019 
-Thinning interval = 3 
+End = 2007 
+Thinning interval = 1 
           mu  sigma2
-2001 58.8261 307.332
-2004 56.3974 279.926
-2007 56.8411 323.768
-2010 58.7210 256.224
-2013 57.1755 297.657
-2016 59.9428 363.201
-2019 54.5624 305.659
+2001 57.8272 286.992
+2002 61.0377 274.274
+2003 57.6024 273.526
+2004 57.8438 235.769
+2005 54.4078 248.104
+2006 60.0294 337.741
+2007 57.9692 332.634
 
 attr(,&quot;class&quot;)
 [1] &quot;mcmc.list&quot;</code></pre>
 </div>
+<h2 id="rjags-packages">rjags packages</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mcmc-jags.sourceforge.io'>rjags</a></span><span class='op'>)</span>
+<span class='va'>dataList</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>y<span class='op'>=</span><span class='va'>dat</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, n<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>init1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mu<span class='op'>=</span><span class='fl'>50</span>, tau<span class='op'>=</span><span class='fl'>0.1</span><span class='op'>)</span>
+<span class='va'>init2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mu<span class='op'>=</span><span class='fl'>30</span>, tau<span class='op'>=</span><span class='fl'>0.01</span><span class='op'>)</span>
+<span class='va'>init3</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mu<span class='op'>=</span><span class='fl'>90</span>, tau<span class='op'>=</span><span class='fl'>0.05</span><span class='op'>)</span>
+<span class='va'>initsList</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>init1</span>, <span class='va'>init2</span>, <span class='va'>init3</span><span class='op'>)</span>
+
+<span class='va'>model</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/rjags/man/jags.model.html'>jags.model</a></span><span class='op'>(</span>file<span class='op'>=</span><span class='st'>"/Users/siwachoat/Documents/myblog/myblog/_site/posts/2022-02-05-jags/model1.txt"</span>,
+                  data <span class='op'>=</span> <span class='va'>dataList</span>,
+                  inits <span class='op'>=</span> <span class='va'>initsList</span>,
+                  n.chains <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Compiling model graph
+   Resolving undeclared variables
+   Allocating nodes
+Graph information:
+   Observed stochastic nodes: 100
+   Unobserved stochastic nodes: 2
+   Total graph size: 108
+
+Initializing model</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># sampling posterior samples</span>
+<span class='va'>samples</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/rjags/man/coda.samples.html'>coda.samples</a></span><span class='op'>(</span><span class='va'>model</span>,
+                      variable.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mu"</span>,<span class='st'>"sigma2"</span><span class='op'>)</span>,
+                      n.iter <span class='op'>=</span> <span class='fl'>10000</span>,
+                      thin <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+Markov Chain Monte Carlo (MCMC) output:
+Start = 1003 
+End = 1021 
+Thinning interval = 3 
+           mu   sigma2
+[1,] 57.34737 240.9543
+[2,] 57.76166 350.2274
+[3,] 57.51731 376.2769
+[4,] 57.13501 299.5402
+[5,] 56.61046 285.8832
+[6,] 57.71678 283.4233
+[7,] 59.15487 256.3204
+
+[[2]]
+Markov Chain Monte Carlo (MCMC) output:
+Start = 1003 
+End = 1021 
+Thinning interval = 3 
+           mu   sigma2
+[1,] 59.68764 226.6262
+[2,] 58.26544 236.8657
+[3,] 55.85105 222.6479
+[4,] 60.14749 209.6911
+[5,] 55.52599 312.2547
+[6,] 58.86395 264.9162
+[7,] 58.24241 292.8658
+
+[[3]]
+Markov Chain Monte Carlo (MCMC) output:
+Start = 1003 
+End = 1021 
+Thinning interval = 3 
+           mu   sigma2
+[1,] 54.44243 366.7963
+[2,] 56.46555 285.7804
+[3,] 58.53672 230.0021
+[4,] 55.68155 277.9133
+[5,] 57.73368 303.1974
+[6,] 57.99630 276.1643
+[7,] 59.01244 294.8693
+
+attr(,&quot;class&quot;)
+[1] &quot;mcmc.list&quot;</code></pre>
+</div>
+<h2 id="การตรวจสอบคณสมบตของตวอยางจาก-mcmc-algorithm">การตรวจสอบคุณสมบัติของตัวอย่างจาก MCMC algorithm</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Iterations = 1003:10999
+Thinning interval = 3 
+Number of chains = 3 
+Sample size per chain = 3333 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+         Mean     SD Naive SE Time-series SE
+mu      57.14  1.705  0.01705        0.01729
+sigma2 298.14 43.044  0.43047        0.45148
+
+2. Quantiles for each variable:
+
+         2.5%    25%    50%   75%  97.5%
+mu      53.74  55.97  57.13  58.3  60.43
+sigma2 225.15 267.50 293.62 324.6 392.77</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="jags_files/figure-html5/unnamed-chunk-16-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/caseyyoungflesh/MCMCvis'>MCMCvis</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCtrace.html'>MCMCtrace</a></span><span class='op'>(</span><span class='va'>samples</span>,  pdf <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="jags_files/figure-html5/unnamed-chunk-16-2.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCtrace.html'>MCMCtrace</a></span><span class='op'>(</span><span class='va'>samples</span>,  pdf <span class='op'>=</span> <span class='cn'>FALSE</span>, iter<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span> <span class='co'>#plot last 100 iterations</span>
+</code></pre>
+</div>
+<img src="jags_files/figure-html5/unnamed-chunk-16-3.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>prior</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span>,<span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCtrace.html'>MCMCtrace</a></span><span class='op'>(</span><span class='va'>samples</span>,  pdf <span class='op'>=</span> <span class='cn'>FALSE</span>, 
+          param<span class='op'>=</span><span class='st'>"mu"</span>,
+          priors<span class='op'>=</span><span class='va'>prior</span>, 
+          n.eff<span class='op'>=</span><span class='cn'>TRUE</span>, 
+          Rhat<span class='op'>=</span><span class='cn'>TRUE</span>,
+          post_zm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="jags_files/figure-html5/unnamed-chunk-16-4.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/coda/man/autocorr.diag.html'>autocorr.diag</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                  mu       sigma2
+Lag 0    1.000000000  1.000000000
+Lag 3    0.011004135  0.015620913
+Lag 15   0.002266789  0.001606799
+Lag 30  -0.003010521  0.001017228
+Lag 150 -0.006209084 -0.004619363</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/coda/man/autocorr.plot.html'>autocorr.plot</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="jags_files/figure-html5/unnamed-chunk-17-1.png" width="624" /><img src="jags_files/figure-html5/unnamed-chunk-17-2.png" width="624" /><img src="jags_files/figure-html5/unnamed-chunk-17-3.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/coda/man/gelman.diag.html'>gelman.diag</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Potential scale reduction factors:
+
+       Point est. Upper C.I.
+mu              1          1
+sigma2          1          1
+
+Multivariate psrf
+
+1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/coda/man/gelman.plot.html'>gelman.plot</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="jags_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>[[1]]
+
+Fraction in 1st window = 0.1
+Fraction in 2nd window = 0.5 
+
+     mu  sigma2 
+-0.4773 -0.6180 
+
+
+[[2]]
+
+Fraction in 1st window = 0.1
+Fraction in 2nd window = 0.5 
+
+     mu  sigma2 
+ 1.1457 -0.7003 
+
+
+[[3]]
+
+Fraction in 1st window = 0.1
+Fraction in 2nd window = 0.5 
+
+     mu  sigma2 
+-1.6166 -0.1384 </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='va'>theta_sim_posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>theta_sim_posterior</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mu"</span>,  <span class='st'>"sigma2"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>theta_sim_posterior</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>mu</span>, <span class='va'>sigma2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"skyblue"</span>, alpha <span class='op'>=</span> <span class='fl'>0.4</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density_2d.html'>geom_density_2d</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"orange"</span>, size <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="jags_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
+</div>
 <h2 id="การอนมานเชงสถตแบบเบสโดยใชตวอยางจาก-mcmc-algorithm">การอนุมานเชิงสถิติแบบเบส์โดยใช้ตัวอย่างจาก MCMC algorithm</h2>
+<h4 id="summary">summary</h4>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Iterations = 1003:10999
+Thinning interval = 3 
+Number of chains = 3 
+Sample size per chain = 3333 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+         Mean     SD Naive SE Time-series SE
+mu      57.14  1.705  0.01705        0.01729
+sigma2 298.14 43.044  0.43047        0.45148
+
+2. Quantiles for each variable:
+
+         2.5%    25%    50%   75%  97.5%
+mu      53.74  55.97  57.13  58.3  60.43
+sigma2 225.15 267.50 293.62 324.6 392.77</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>theta_sim_posterior</span><span class='op'>$</span><span class='va'>mu</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>49</span>,<span class='fl'>65</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span><span class='op'>(</span><span class='va'>theta_sim_posterior</span><span class='op'>$</span><span class='va'>mu</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.025</span>, <span class='fl'>0.975</span><span class='op'>)</span><span class='op'>)</span>, lty<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="jags_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+</div>
+<h4 id="mcmcsummary">MCMCsummary</h4>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/caseyyoungflesh/MCMCvis'>MCMCvis</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html'>MCMCsummary</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>            mean       sd      2.5%       50%     97.5% Rhat n.eff
+mu      57.13683  1.70463  53.73839  57.13484  60.42744    1  9735
+sigma2 298.14196 43.04437 225.14609 293.62443 392.76572    1  9247</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html'>MCMCsummary</a></span><span class='op'>(</span><span class='va'>samples</span>, params<span class='op'>=</span><span class='st'>"mu"</span>, round<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    mean  sd  2.5%   50% 97.5% Rhat n.eff
+mu 57.14 1.7 53.74 57.13 60.43    1  9735</code></pre>
+</div>
+<h4 id="mcmcplot">MCMCplot</h4>
+<p>MCMCplot is used to create caterpillar plots from MCMC output. Points represent posterior medians. Thick and thin lines represent credible intervals specified by the user using the ci argument, where the default is 50% and 95% credible intervals, respectively. Note, that the first element in ci should be less than or equal to the second element. By default, MCMCplot plots equal-tailed credible intervals (HPD = FALSE). However, highest posterior density intervals can be visualized using HPD = TRUE. As with the other functions in the package, particular parameters of interest can be specified.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="jags_files/figure-html5/unnamed-chunk-23-1.png" width="624" /><img src="jags_files/figure-html5/unnamed-chunk-23-2.png" width="624" /><img src="jags_files/figure-html5/unnamed-chunk-23-3.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## HPD interval</span>
+<span class='fu'><a href='https://rdrr.io/pkg/coda/man/HPDinterval.html'>HPDinterval</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+           lower     upper
+mu      53.57906  60.24913
+sigma2 219.32954 386.88690
+attr(,&quot;Probability&quot;)
+[1] 0.949895
+
+[[2]]
+           lower     upper
+mu      53.84288  60.49948
+sigma2 223.98087 390.10538
+attr(,&quot;Probability&quot;)
+[1] 0.949895
+
+[[3]]
+           lower     upper
+mu      53.86939  60.42728
+sigma2 224.17333 389.09147
+attr(,&quot;Probability&quot;)
+[1] 0.949895</code></pre>
+</div>
 <hr />
 <p>Distill is a publication format for scientific and technical writing, native to the web.</p>
 <p>Learn more about using Distill at <a href="https://rstudio.github.io/distill" class="uri">https://rstudio.github.io/distill</a>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
