@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["priors_files/anchor-4.2.2/anchor.min.js","priors_files/bowser-1.9.3/bowser.min.js","priors_files/distill-2.2.21/template.v2.js","priors_files/figure-html5/unnamed-chunk-1-1.png","priors_files/figure-html5/unnamed-chunk-2-1.png","priors_files/figure-html5/unnamed-chunk-3-1.png","priors_files/header-attrs-2.11/header-attrs.js","priors_files/jquery-3.6.0/jquery-3.6.0.js","priors_files/jquery-3.6.0/jquery-3.6.0.min.js","priors_files/jquery-3.6.0/jquery-3.6.0.min.map","priors_files/popper-2.6.0/popper.min.js","priors_files/tippy-6.2.7/tippy-bundle.umd.min.js","priors_files/tippy-6.2.7/tippy-light-border.css","priors_files/tippy-6.2.7/tippy.css","priors_files/tippy-6.2.7/tippy.umd.min.js","priors_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["priors_files/anchor-4.2.2/anchor.min.js","priors_files/bowser-1.9.3/bowser.min.js","priors_files/distill-2.2.21/template.v2.js","priors_files/figure-html5/unnamed-chunk-1-1.png","priors_files/figure-html5/unnamed-chunk-2-1.png","priors_files/figure-html5/unnamed-chunk-3-1.png","priors_files/figure-html5/unnamed-chunk-4-1.png","priors_files/header-attrs-2.11/header-attrs.js","priors_files/jquery-3.6.0/jquery-3.6.0.js","priors_files/jquery-3.6.0/jquery-3.6.0.min.js","priors_files/jquery-3.6.0/jquery-3.6.0.min.map","priors_files/popper-2.6.0/popper.min.js","priors_files/tippy-6.2.7/tippy-bundle.umd.min.js","priors_files/tippy-6.2.7/tippy-light-border.css","priors_files/tippy-6.2.7/tippy.css","priors_files/tippy-6.2.7/tippy.umd.min.js","priors_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2119,14 +2119,14 @@ h3, .h3{
 }
 
 h4, .h4{
-  font-size: 20px;
+  font-size: 22px;
   @include mobile {
     font-size: 18px;
   }
 }
 
 h5, .h5{
-  font-size: 18px;
+  font-size: 22px;
   @include mobile {
     font-size: 16px;
   }
@@ -2190,30 +2190,38 @@ h6, .h6{
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#การระบ-priors">การระบุ priors</a>
+<li><a href="#ประเภทของ-priors">ประเภทของ priors</a></li>
+<li><a href="#noninformative-priors">Noninformative priors</a>
 <ul>
-<li><a href="#diffuse-priors">Diffuse priors</a></li>
+<li><a href="#uniform-distribution">Uniform Distribution</a></li>
 <li><a href="#jeffreys-prior">Jeffrey’s prior</a></li>
+<li><a href="#การกำหนด-priors-ใหพารามเตอรประเภทตาง-ๆ">การกำหนด priors ให้พารามิเตอร์ประเภทต่าง ๆ</a></li>
 <li><a href="#conjugacy-priors">Conjugacy priors</a></li>
 <li><a href="#informative-priors">Informative priors</a></li>
 </ul></li>
 </ul>
 </nav>
 </div>
-<h2 id="การระบ-priors">การระบุ priors</h2>
-<p>การระบุการแจกแจงความน่าจะเป็นก่อนหน้าในโมเดลการวิเคราะห์เป็นประเด็นสำคัญประเด็นหนึ่งสำหรับการวิเคราะห์ข้อมูลด้วยสถิติแบบเบส์ ทั้งนี้ในแต่ละการวิเคราะห์ ผู้วิเคราะห์จะต้องระบุการแจกแจงความน่าจะเป็นก่อนหน้าที่สารสนเทศของการแจกแจงสะท้อนความเชื่อเบื้องต้น (initial beliefs) ที่มีต่อค่าพารามิเตอร์แต่ละตัวภายในโมเดล หัวข้อนี้จะกล่าวถึง prior distribution ประเภทต่าง ๆ รายละเอียดมีดังนี้</p>
-<h3 id="diffuse-priors">Diffuse priors</h3>
-<p>หรืออาจเรียกว่า การแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่มีสารสนเทศ (noninformative priors) หรือ flat priors การแจกแจงความน่าจะเป็นก่อนหน้าประเภทนี้มีลักษณะเด่นคือเป็นการแจกแจงที่ให้น้ำหนักกับความเป็นไปได้ต่าง ๆ ของค่าพารามิเตอร์ที่เท่าเทียมกัน กล่าวคือเป็น prior ที่มีฟังก์ชันความน่าจะเป็นอยู่ในรูปแบบ</p>
+<p>การแจกแจงความน่าจะเป็นก่อนหน้า (prior distribution) เป็นส่วนประกอบสำตัญในการวิเคราะห์ข้อมูลด้วยสถิติแบบเบส์ ทั้งนี้เป็นเพราะการแจกแจงความน่าจะเป็นก่อนหน้าทำให้ผู้วิเคราะห์สามารถสร้าง statement ความน่าจะเป็นของพารามิเตอร์ภายในโมเดลสถิติที่ใช้ในการวิเคราะห์ข้อมูลได้ นอกจากนี้การแจกแจงความน่าจะเป็นก่อนหน้ายังมีส่วนช่วยเพิ่มเติมสารสนเทศจากแหล่งอื่น ๆ นอกเหนือจากข้อมูลเชิงประจักษ์ให้กับผลการวิเคราะห์ได้อีกด้วย บทเรียนนี้จะกล่าวถึงมโนทัศน์และการกำหนดการแจกแจงความน่าจะเป็นก่อนหน้าในโมเดลการวิเคราะห์ รายละเอียดมีดังนี้</p>
+<h2 id="ประเภทของ-priors">ประเภทของ priors</h2>
+<p>โดยทั่วไปแล้วอาจจำแนกการแจกแจงความน่าจะเป็นก่อนหน้าออกได้เป็น 2 ประเภท ได้แก่ การแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศ (noninformative priors) และการแจกแจงความน่าจะเป็นก่อนหน้าแบบให้สารสนเทศ (informative priors)</p>
+<p>ในกรณีที่ผู้วิเคราะห์เลือกใช้การแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศ ผลการวิเคราะห์ที่ได้ในสถานการณ์นี้จะมีความเป็นปรนัย (objective) ทั้งนี้เป็นเพราะ noninformative priors เป็นการแจกแจงที่ไม่ได้ให้สารสนเทศใด ๆ เกี่ยวกับพารามิเตอร์ในโมเดลเพิ่มเติม ทำให้ผลการวิเคราะห์ต่าง ๆ ทั้งการประมาณค่า การทำนาย การเปรียบเทียบโมเดล จะขึ้นกับสารสนเทศที่ได้จากข้อมูลตัวอย่างเท่านั้น การที่ผู้วิเคราะห์เลือกใช้การแจกแจงความน่าจะเป็นก่อนหน้าประเภทนี้ในการวิเคราะห์ แสดงว่าผู้วิเคราะห์ต้องการให้ผลการวิเคราะห์ที่ได้มีความเป็นปรนัยมากที่สุด</p>
+<p>หนังสือหลายเล่มใช้คำว่า vague หรือ diffuse priors แทนคำว่า noninformative priors เพราะต้องการหลีกเลี่ยงการเข้าใจผิดว่า noninformative priors ไม่มีสารสนเทศ แต่ในความเป็นจริงการแจกแจงทุกตัวนั้นมีสารสนเทศเสมอ เพียงแต่ว่าเป็นการแจกแจงที่มีการกระจายค่อนข้างมากจึงไม่ได้ช่วยให้การวิเคราะห์มีสารสนเทศเพิ่มเติมไปจากสารสนเทศในข้อมูลตัวอย่าง</p>
+<p>ในทางกลับกันหากผู้วิเคราะห์เลือกใช้ informative priors ในการวิเคราะห์ นั่นหมายความว่าผู้วิเคราะห์ดำเนินการวิเคราะห์โดยไม่ได้ใช้แต่สารสนเทศที่อยู่ภายในข้อมูลตัวอย่างเท่านั้น แต่ยังใช้สารสนเทศที่อยู่ภายในการแจกแจงความน่าจะเป็นก่อนหน้ามาร่วมประมวลผลด้วย ผลการวิเคราะห์ที่ได้ในกรณีนี้จะมีความเป็นอัตวิสัยมากกว่า</p>
+<h2 id="noninformative-priors">Noninformative priors</h2>
+<p>การแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศในโมเดลมักใช้ในกรณีที่ผู้วิเคราะห์ไม่ได้มีความรู้หรือสารสนเทศเพิ่มเติมเกี่ยวกับพารามิเตอร์ต่าง ๆ ภายในโมเดลการวิเคราะห์ หรืออีกกรณีคือใช้ผลการวิเคราะห์ดังกล่าวเป็นผลการวิเคราะห์อ้างอิง (reference output) สำหรับการวิเคราะห์ผลกระทบที่เกิดจากการกำหนด informative priors หัวข้อนี้จะกล่าวถึงการแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศบางตัวที่มักใช้เป็นการแจกแจงมาตรฐานในโปรแกรม JAGs รายละเอียดมีดังนี้</p>
+<h3 id="uniform-distribution">Uniform Distribution</h3>
+<p>การแจกแจงแบบสม่ำเสมอ (uniform) เป็นการแจกแจงหนึ่งที่นิยมใช้เป็นการแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศการแจกแจงหนึ่ง ซึ่งมีลักษณะเด่นคือ เป็นการแจกแจงที่ให้น้ำหนักกับความเป็นไปได้ต่าง ๆ ของค่าพารามิเตอร์ที่เท่าเทียมกัน กล่าวคือเป็น prior ที่มีฟังก์ชันความน่าจะเป็นอยู่ในรูปแบบ</p>
 <p><span class="math inline">\(p(\theta)=Const.\)</span> เมื่อ <span class="math inline">\(\theta \in A\)</span> โดยที่ <span class="math inline">\(A\)</span> คือช่วงที่เป็นไปได้ของพารามิเตอร์ <span class="math inline">\(\theta\)</span></p>
-<p>รูปต่อไปนี้แสดงตัวอย่างการแจกแจงของ diffuse priors</p>
+<p>จากตัวอย่างการวิเคราะห์ความเที่ยงตรงของเหรียญ หากกำหนดการแจกแจงความน่าจะเป็นก่อนหน้าของพารามิเตอร์ความลำเอียงเป็น uniform(0,1) จะได้ <span class="math inline">\(p(\theta)=1\)</span> เมื่อ <span class="math inline">\(\theta \in [0,1]\)</span> รูปต่อไปนี้แสดงฟังก์ชันความน่าจะเป็นแบบ uniform บนช่วง 0,1</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="priors_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
 </div>
-<p>จากรูปจะเห็นว่า diffuse priors เป็นการแจกแจงความน่าจะเป็นก่อนหน้าที่ ไม่ได้ให้น้ำหนักกับค่าพารามิเตอร์ค่าใด หรือช่วงใดช่วงหนึ่งเป็นพิเศษ​diffuse priors เป็น priors ที่มีความเป็นปรนัยสูง และส่งผลหรือมีอิทธิพลต่อการแจกแจงความน่าจะเป็นภายหลังน้อยที่สุด ทำให้การแจกแจงความน่าจะเป็นภายหลังที่คำนวณได้ถูกพัฒนาขึ้นจากสารสนเทศของข้อมูลเชิงประจักษ์แต่เพียงอย่างเดียว จากสมการด้านล่างจะเห็นว่า posterior distribution ที่ได้จะขึ้นอยู่กับส่วนของ likelihood function แต่เพียงอย่างเดียว</p>
-<p><span class="math inline">\(p(\theta|D) = \frac{p(D|\theta)p(\theta)}{p(D)} =\frac{p(D|\theta) \times Const.}{P(D)}\varpropto p(D|\theta)\)</span></p>
-<p>จากสมการในข้างต้นจะเห็นว่าการกำหนด prior ให้เป็น diffuse priors จะทำให้การแจกแจงความน่าจะเป็นภายหลังแปรผันตรงกับฟังก์ชันภาวะความควรจะเป็น ซึ่งทำให้ผลการวิเคราะห์เช่น ผลการประมาณค่าพารามิเตอร์ หรือการทำนายจะมีค่าที่เท่าหรือใกล้เคียงกับผลการวิเคราะห์ที่ได้จากการวิเคราะห์ข้อมูลแบบดั้งเดิม</p>
+<p>จากรูปการกำหนดการแจกแจงความน่าจะเป็นก่อนหน้าในข้างต้นไม่ได้ให้น้ำหนักกับค่าหรือช่วงใดช่วงหนึ่งของพารามิเตอร์ความลำเอียงเป็นพิเศษ ซึ่งทำให้การแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ความลำเอียงถูกพัฒนาขึ้นโดยใช้สารสนเทศจากฟังก์ชันภาวะความควรจะเป็นเกือบทั้งหมด ดังจะเห็นจากสมการด้านล่าง</p>
+<p><span class="math inline">\(p(\theta|D) = \frac{p(D|\theta)p(\theta)}{p(D)} =\frac{p(D|\theta) \times 1}{P(D)}\varpropto p(D|\theta)\)</span></p>
+<p>ข้อควรระวังในการใช้การแจกแจงแบบ uniform เป็นการแจกแจงความน่าจะเป็นก่อนหน้าคือ การแจกแจงแบบ uniform ไม่มีคุณสมบัติ invariant กล่าวคือ ถ้า <span class="math inline">\(\theta \sim Uniform(a,b)\)</span> แต่ <span class="math inline">\(\theta^2\)</span> ไม่ได้มีการแจกแจงแบบ <span class="math inline">\(Uniform(a,b)\)</span> ดังกล่าว</p>
 <h3 id="jeffreys-prior">Jeffrey’s prior</h3>
-<p>พัฒนาขึ้นโดย Jeffrey (1961) การแจกแจงความน่าจะเป็นก่อนหน้านี้เป็นการแจกแจงแบบไม่มีสารสนเทศเช่นเดียวกับ diffuse prior ฟังก์ชันความน่าจะเป็นของการแจกแจงนี้แปรผันตรงกับรากที่สองของ determinant ของเมทริกซ์สารสนเทศของ Fisher (Fisher information matrix) ดังนี้</p>
+<p>จากปัญหาข้างต้น Harold Jeffrey (1961) ได้เสนอการแจกแจงความน่าจะเป็นก่อนหน้าแบบไม่ให้สารสนเทศที่มีคุณสมบัติ invariant ชื่อว่า Jeffrey’s prior ฟังก์ชันความน่าจะเป็นของการแจกแจงนี้แปรผันตรงกับรากที่สองของ determinant ของเมทริกซ์สารสนเทศของ Fisher (Fisher information matrix) ดังนี้</p>
 <p><span class="math inline">\(p(\theta) \varpropto |J(\theta)|^{1/2}\)</span></p>
 <p>เมื่อ <span class="math inline">\(J(\theta)\)</span> คือ Fisher information matrix ที่คำนวณได้จาก</p>
 <p><span class="math inline">\(J(\theta)=Var(\frac{\partial}{\partial \theta}ln \ p(\theta|y))\)</span></p>
@@ -2240,11 +2248,41 @@ h6, .h6{
 <p><img src="priors_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
 <p>หมายเหตุ ในปัญหาที่ใช้ฟังก์ชันภาวะความควรจะเป็นแบบ binomial จะได้ว่า Jeffrey’s prior จะมีการแจกแจงเทียบเท่ากับการแจกแจง beta ที่มีพารามิเตอร์ a = 0.5 และ b = 0.5</p>
-<p>จากการกำหนดข้างต้นจะได้ว่า ฟังก์ชันการแจกแจงความน่าจะเป็นภายหลังคือ</p>
+<p>ตัวอย่างต่อไปนี้แสดงการเปรียบเทียบการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ความลำเอียง เมื่อกำหนดการแจกแจงความน่าจะเป็นก่อนหน้าเป็นแบบ uniform(0,1) และเป็นแบบ Jeffrey’s prior</p>
 <div class="layout-chunk" data-layout="l-body">
+<pre><code>Compiling rjags model...
+Calling the simulation using the rjags method...
+Note: the model did not require adaptation
+Burning in the model for 4000 iterations...
+Running the model for 5000 iterations...
+Simulation complete
+Calculating summary statistics...
+Calculating the Gelman-Rubin statistic for 2 variables....
+Finished running the simulation</code></pre>
 <p><img src="priors_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+<pre><code>
+Iterations = 5001:10000
+Thinning interval = 1 
+Number of chains = 3 
+Sample size per chain = 5000 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+         Mean     SD  Naive SE Time-series SE
+theta1 0.3645 0.1007 0.0008219      0.0008105
+theta2 0.3576 0.1014 0.0008283      0.0008282
+
+2. Quantiles for each variable:
+
+         2.5%    25%    50%    75%  97.5%
+theta1 0.1803 0.2935 0.3611 0.4317 0.5715
+theta2 0.1750 0.2851 0.3527 0.4260 0.5684</code></pre>
 </div>
-<p>คุณสมบัติเด่่นของ Jeffrey priors คือมีคุณสมบัติ invariant to transformation กล่าวคือ หาก <span class="math inline">\(\psi=f(\theta)\)</span> จะได้ว่า <span class="math inline">\(p(\psi) \varpropto |J(\psi)|^{0.5}\)</span></p>
+<p>คุณสมบัติเด่นของ Jeffrey priors คือมีคุณสมบัติ invariant to transformation กล่าวคือ หาก <span class="math inline">\(\psi=f(\theta)\)</span> จะได้ว่า <span class="math inline">\(p(\psi) \varpropto |J(\psi)|^{0.5}\)</span></p>
+<h3 id="การกำหนด-priors-ใหพารามเตอรประเภทตาง-ๆ">การกำหนด priors ให้พารามิเตอร์ประเภทต่าง ๆ</h3>
+<p>พารามิเตอร์ในโมเดลการวิเคราะห์อาจจำแนกได้หลากหลายประเภท ขึ้นอยู่กับโมเดลการวิเคราะห์และตัวแปรในการวิเคราะห์ ทั้งนี้ธรรมชาติของพารามิเตอร์ดังกล่าวก็มีความแตกต่างกัน การกำหนดการแจกแจงความน่าจะเป็นก่อนหน้าของพารามิเตอร์แต่ละประเภทจึงมีความแตกต่างกันตามธรรมชาติดังกล่าว</p>
+<h4 id="การกำหนด-noninformative-prior-ใหกบ-location-parameters">การกำหนด noninformative prior ให้กับ location parameters</h4>
 <h3 id="conjugacy-priors">Conjugacy priors</h3>
 <p>การแจกแจงความน่าจะเป็นก่อนหน้าจะเป็นการแจกแจงแบบ conjugacy prior ถ้าการแจกแจงความน่าจะเป็นก่อนหน้าและภายหลังเป็นการแจกแจงภายใน family เดียวกัน ด้วยคุณสมบัติดังกล่าวจึงทำให้การพิสูจน์หาสูตรหรือรูปแบบปิดของการแจกแจงความน่าจะเป็นภายหลังสามารถทำได้โดยที่ไม่ต้องหาเทอม <span class="math inline">\(p(D)\)</span> ที่เป็นตัวส่วนใน Bayes’s rule</p>
 <p>ตัวอย่างการแจกแจงก่อนหน้าแบบ conjugacy prior เช่น</p>
@@ -2260,7 +2298,7 @@ h6, .h6{
 <hr />
 <p>Distill is a publication format for scientific and technical writing, native to the web.</p>
 <p>Learn more about using Distill at <a href="https://rstudio.github.io/distill" class="uri">https://rstudio.github.io/distill</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
