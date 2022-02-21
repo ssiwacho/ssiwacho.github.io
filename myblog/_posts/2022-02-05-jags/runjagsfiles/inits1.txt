@@ -1,0 +1,5 @@
+"mu" <- 50
+"tau" <- 0.1
+
+".RNG.name" <- "base::Wichmann-Hill"
+

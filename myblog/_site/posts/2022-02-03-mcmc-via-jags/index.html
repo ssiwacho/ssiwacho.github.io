@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+<title>My Blog: Markov Chain Monte Carlo (MCMC)</title>
+
+<meta property="description" itemprop="description" content="มโนทัศน์ของลูกโซ่มาร์คอฟมอนติคาร์โล"/>
+
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2022-02-03"/>
+<meta property="article:created" itemprop="dateCreated" content="2022-02-03"/>
+<meta name="article:author" content="Siwachoat Srisuttiyakorn"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="My Blog: Markov Chain Monte Carlo (MCMC)"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="มโนทัศน์ของลูกโซ่มาร์คอฟมอนติคาร์โล"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="My Blog"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary"/>
+<meta property="twitter:title" content="My Blog: Markov Chain Monte Carlo (MCMC)"/>
+<meta property="twitter:description" content="มโนทัศน์ของลูกโซ่มาร์คอฟมอนติคาร์โล"/>
+
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","categories","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Markov Chain Monte Carlo (MCMC)"]},{"type":"character","attributes":{},"value":["Bayesian Statistics","MCMC","JAGs"]},{"type":"character","attributes":{},"value":["มโนทัศน์ของลูกโซ่มาร์คอฟมอนติคาร์โล"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Siwachoat Srisuttiyakorn"]},{"type":"NULL"}]}]},{"type":"character","attributes":{},"value":["2022-02-03"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["mcmc-via-jags_files/anchor-4.2.2/anchor.min.js","mcmc-via-jags_files/bowser-1.9.3/bowser.min.js","mcmc-via-jags_files/crosstalk-1.2.0/css/crosstalk.min.css","mcmc-via-jags_files/crosstalk-1.2.0/js/crosstalk.js","mcmc-via-jags_files/crosstalk-1.2.0/js/crosstalk.js.map","mcmc-via-jags_files/crosstalk-1.2.0/js/crosstalk.min.js","mcmc-via-jags_files/crosstalk-1.2.0/js/crosstalk.min.js.map","mcmc-via-jags_files/crosstalk-1.2.0/scss/crosstalk.scss","mcmc-via-jags_files/distill-2.2.21/template.v2.js","mcmc-via-jags_files/figure-html5/unnamed-chunk-1-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-10-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-11-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-12-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-13-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-13-2.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-14-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-15-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-15-2.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-16-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-16-2.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-17-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-17-2.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-18-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-18-2.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-18-3.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-18-4.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-19-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-3-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-4-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-5-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-6-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-7-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-8-1.png","mcmc-via-jags_files/figure-html5/unnamed-chunk-9-1.png","mcmc-via-jags_files/header-attrs-2.11/header-attrs.js","mcmc-via-jags_files/htmlwidgets-1.5.4/htmlwidgets.js","mcmc-via-jags_files/jquery-3.6.0/jquery-3.6.0.js","mcmc-via-jags_files/jquery-3.6.0/jquery-3.6.0.min.js","mcmc-via-jags_files/jquery-3.6.0/jquery-3.6.0.min.map","mcmc-via-jags_files/plotly-binding-4.10.0/plotly.js","mcmc-via-jags_files/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css","mcmc-via-jags_files/plotly-main-2.5.1/plotly-latest.min.js","mcmc-via-jags_files/popper-2.6.0/popper.min.js","mcmc-via-jags_files/tippy-6.2.7/tippy-bundle.umd.min.js","mcmc-via-jags_files/tippy-6.2.7/tippy-light-border.css","mcmc-via-jags_files/tippy-6.2.7/tippy.css","mcmc-via-jags_files/tippy-6.2.7/tippy.umd.min.js","mcmc-via-jags_files/typedarray-0.1/typedarray.min.js","mcmc-via-jags_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-top: 2.5rem;
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: auto;
+}
+
+d-article div.sourceCode {
+  background-color: white;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+d-article pre {
+  font-size: 12px;
+  color: black;
+  background: none;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+d-article details {
+  grid-column: text;
+  margin-bottom: 0.8em;
+}
+
+@media(min-width: 768px) {
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+d-article pre {
+  font-size: 14px;
+}
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
+  }
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
+
+/* Citation hover box */
+
+.tippy-box[data-theme~=light-border] {
+  background-color: rgba(250, 250, 250, 0.95);
+}
+
+.tippy-content > p {
+  margin-bottom: 0;
+  padding: 2px;
+}
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+  }
+
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme
+  $('code.sourceCode a:empty').remove();
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
+    });
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // hoverable references
+    $('span.citation[data-cites]').each(function() {
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        return "<p>" + $('#ref-' + ref).html() + "</p>";
+      }).join("\n");
+      window.tippy(this, {
+        allowHTML: true,
+        content: refHtml,
+        maxWidth: 500,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start'
+      });
+    });
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-contents').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.11/header-attrs.js"></script>
+  <script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="../../site_libs/plotly-binding-4.10.0/plotly.js"></script>
+  <script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+  <script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+  <link href="../../site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+  <script src="../../site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;600&family=Poppins:wght@600&family=Sarabun&family=Thasadith:wght@400;700&family=Trirong&display=swap');
+
+.main-container {
+  max-width: 100%;
+  margin-left: 500px;
+  margin-right: auto;
+  background-color: "white";
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Futura-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  line-height: 1.5;
+  font-family: 'Tohoma';
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  color: "black";
+}
+
+p, .paragraph {
+  font-weight: 400;
+  color: "black";
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: 'Tohoma';
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: #004D80;
+  font-family: 'Poppins';
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1, .h1{
+  font-size: 35px;
+  font-family: 'futura-bold';
+  @include mobile {
+    font-size: 30px;
+  }
+}
+
+h2, .h2{
+  font-size: 25px;
+  @include mobile {
+    font-size: 20px;
+  }
+}
+
+h3, .h3{
+  font-size: 25px;
+  @include mobile {
+    font-size: 20px;
+  }
+}
+
+h4, .h4{
+  font-size: 22px;
+  @include mobile {
+    font-size: 18px;
+  }
+}
+
+h5, .h5{
+  font-size: 22px;
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+h6, .h6{
+  font-size: 16px;
+  @include mobile {
+    font-size: 14px;
+  }
+}
+
+</style>
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Markov Chain Monte Carlo (MCMC)","description":"มโนทัศน์ของลูกโซ่มาร์คอฟมอนติคาร์โล","authors":[{"author":"Siwachoat Srisuttiyakorn","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-02-03T00:00:00.000+07:00","citationText":"Srisuttiyakorn, 2022"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">My Blog</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../about.html">About</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Markov Chain Monte Carlo (MCMC)</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../index.html#category:Bayesian_Statistics" class="dt-tag">Bayesian Statistics</a>
+  <a href="../../index.html#category:MCMC" class="dt-tag">MCMC</a>
+  <a href="../../index.html#category:JAGs" class="dt-tag">JAGs</a>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>มโนทัศน์ของลูกโซ่มาร์คอฟมอนติคาร์โล</p></p>
+</div>
+
+<div class="d-byline">
+  Siwachoat Srisuttiyakorn  
+  
+<br/>2022-02-03
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#mcmc-algorithm">MCMC algorithm</a></li>
+<li><a href="#metropolis-algorithm">Metropolis algorithm</a>
+<ul>
+<li><a href="#example-1-tossing-coin"><a id="MCMC3"></a>Example 1: Tossing coin</a></li>
+<li><a href="#example-2-one-sample-mean-and-sd">Example 2: One-sample Mean and SD</a></li>
+</ul></li>
+<li><a href="#gibbs-sampling-algorithm">Gibbs Sampling algorithm</a></li>
+<li><a href="#assessing-mcmc-samples">Assessing MCMC samples</a>
+<ul>
+<li><a href="#convergence">Convergence</a></li>
+<li><a href="#การตรวจสอบแนวโนมการลเขาดวย-trace-plot-และ-density-plot">การตรวจสอบแนวโน้มการลู่เข้าด้วย Trace plot และ Density plot</a></li>
+<li><a href="#autocorrelation">Autocorrelation</a>
+<ul>
+<li><a href="#thining">Thining</a></li>
+<li><a href="#effective-sample-size-ess">Effective Sample Size (ESS)</a></li>
+</ul></li>
+<li><a href="#monte-carlo-standard-error">Monte Carlo Standard Error</a></li>
+<li><a href="#potential-scale-reduction-hatr-หรอ-rsrf">Potential Scale Reduction (<span class="math inline">\(\hat{R}\)</span> หรือ RSRF)</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<h1 id="mcmc-algorithm">MCMC algorithm</h1>
+<p>หัวข้อนี้จะกล่าวถึงมโนทัศน์ของลูกโซ่มาร์คอฟมอนติคาร์โล (Monte Carlo Markov Chain: MCMC) ที่เป็นเครื่องมือสำคัญสำหรับประมาณการแจกแจงความน่าจะเป็นภายหลัง (posterior distribution) สำหรับการวิเคราะห์ข้อมูลที่อาศัยแนวคิดแบบเบส์</p>
+<p>แนวคิดเกี่ยวกับ MCMC มีมาค่อนข้างยาวนานประมาณ 40 ปีแล้ว แต่ด้วยข้อจำกัดทั้งด้านโปรแกรมและประสิทธิภาพของคอมพิวเตอร์ทำให้การใช้งานอัลกอริทึม ในสมัยก่อนทำได้ยาก และเกือบจะเป็นไปไม่ได้ที่จะใช้งานอัลกอริทึม MCMC กับปัญหาทางสถิติที่มีความซับซ้อน แต่ด้วยความก้าวหน้าทางเทคโนโลยีในยุคปัจจุบันทำให้ข้อจำกัดดังกล่าวลดลงจนแทบไม่มีอีกต่อไป</p>
+<p>อัลกอริทึม MCMC เป็นอัลกอริทึมที่ใช้สำหรับประมาณการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ โดยใช้ตัวอย่างสุ่มที่สร้างจากเทคนิคการจำลองแบบมอนติคาร์โล แทนการพิสูจน์หรือการทดลองแทนค่าเพื่อหาค่าที่ดีที่สุดทางคณิตศาสตร์ คำตอบที่ได้จากอัลกอริทึม MCMC นี้จึงไม่ใช่สูตรหรือฟังก์ชันทางคณิตศาสตร์ แต่จะเป็นตัวอย่างสุ่มของพารามิเตอร์ที่สร้างขึ้น ตัวอย่างดังกล่าวหากมีจำนวนที่มากเพียงพอ จะสามารถใช้เป็นตัวแทนของการแจกแจงความน่าจะเป็นภายหลังที่ต้องการ และสามารถนำตัวอย่างดังกล่าวมาผ่านกระบวนการทางสถิติเพื่อสร้างข้อสรุปเกี่ยวกับพารามิเตอร์ในโมเดลได้โดยตรง กล่าวโดยสรุปได้ว่าอัลกอริทึม MCMC เป็นเทคนิคที่นำมาประยุกต์ใช้ในการวิเคราะห์ข้อมูลแบบเบส์ เพื่อประมาณการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ต่าง ๆ ภายในโมเดล ด้วยตัวอย่างสุ่มของพารามิเตอร์</p>
+<p>รูปต่อไปนี้แสดงการเปรียบเทียบระหว่างการแจกแจงความน่าจะเป็นเชิงทฤษฎี (theoretical/exact distribution) กับการแจกแจงความน่าจะเป็นที่ประมาณด้วยตัวอย่างสุ่มที่สร้างจากเทคนิคการจำลองแบบมอนติคาร์โล</p>
+<p>ด้วยเทคนิคการจำลองแบบมอนติคาร์โล ผู้วิเคราะห์สามารถจำลองตัวอย่างสุ่มจากการแจกแจงความน่าจะเป็นใดก็ได้ แต่มีเงื่อนไขว่าต้องทราบฟังก์ชันความน่าจะเป็นของการแจกแจงดังกล่าวก่อน เงื่อนไขนี้เป็นข้อจำกัดที่ทำให้ไม่สามารถใช้เทคนิคการจำลองแบบมอนติคาร์โลแบบปกติได้โดยตรง ทั้งนี้เป็นเพราะในโมเดลที่มีความซับซ้อนระดับหนึ่ง เป็นการยากมากที่ผู้วิเคราะห์จะทราบรูปแบบหรือฟังก์ชันของการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ในโมเดลที่ต้องการใช้งาน</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://scales.r-lib.org'>scales</a></span><span class='op'>)</span>
+<span class='va'>x</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>0.01</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span>, mar<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>x</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>,type<span class='op'>=</span><span class='st'>"l"</span>, main<span class='op'>=</span><span class='st'>"exact distribution N(0,1)"</span>, xlab<span class='op'>=</span><span class='st'>"X"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>500</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, freq<span class='op'>=</span><span class='cn'>F</span>, nclass<span class='op'>=</span><span class='fl'>30</span>, col<span class='op'>=</span><span class='fu'><a href='https://scales.r-lib.org/reference/alpha.html'>alpha</a></span><span class='op'>(</span><span class='st'>"#004D80"</span>,<span class='fl'>0.7</span><span class='op'>)</span>,
+     main<span class='op'>=</span><span class='st'>"sample distribution n=500"</span>, xlab<span class='op'>=</span><span class='st'>"X"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, freq<span class='op'>=</span><span class='cn'>F</span>, nclass<span class='op'>=</span><span class='fl'>30</span>, col<span class='op'>=</span><span class='fu'><a href='https://scales.r-lib.org/reference/alpha.html'>alpha</a></span><span class='op'>(</span><span class='st'>"#004D80"</span>,<span class='fl'>0.7</span><span class='op'>)</span>,
+     main<span class='op'>=</span><span class='st'>"sample distribution n=1000"</span>, xlab<span class='op'>=</span><span class='st'>"X"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>5000</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, freq<span class='op'>=</span><span class='cn'>F</span>, nclass<span class='op'>=</span><span class='fl'>30</span>, col<span class='op'>=</span><span class='fu'><a href='https://scales.r-lib.org/reference/alpha.html'>alpha</a></span><span class='op'>(</span><span class='st'>"#004D80"</span>,<span class='fl'>0.7</span><span class='op'>)</span>,
+     main<span class='op'>=</span><span class='st'>"sample distribution n=5000"</span>, xlab<span class='op'>=</span><span class='st'>"X"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, freq<span class='op'>=</span><span class='cn'>F</span>, nclass<span class='op'>=</span><span class='fl'>30</span>, col<span class='op'>=</span><span class='fu'><a href='https://scales.r-lib.org/reference/alpha.html'>alpha</a></span><span class='op'>(</span><span class='st'>"#004D80"</span>,<span class='fl'>0.7</span><span class='op'>)</span>,
+     main<span class='op'>=</span><span class='st'>"sample distribution n=10000"</span>, xlab<span class='op'>=</span><span class='st'>"X"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>50000</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>, freq<span class='op'>=</span><span class='cn'>F</span>, nclass<span class='op'>=</span><span class='fl'>30</span>, col<span class='op'>=</span><span class='fu'><a href='https://scales.r-lib.org/reference/alpha.html'>alpha</a></span><span class='op'>(</span><span class='st'>"#004D80"</span>,<span class='fl'>0.7</span><span class='op'>)</span>,
+     main<span class='op'>=</span><span class='st'>"sample distribution n=50000"</span>, xlab<span class='op'>=</span><span class='st'>"X"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-1-1.png" width="864" /></p>
+</div>
+<h1 id="metropolis-algorithm">Metropolis algorithm</h1>
+<p>Metropolis algorithm เป็นกระบวนการสุ่ม (random process/stochastic process) ประเภทหนึ่ง ตั้งชื่ออัลกอริทึมตามคณะผู้พัฒนาได้แก่ Metropolis, Rosenbluth, Rosenbluth, Teller &amp; Teller (1953)</p>
+<p>อัลกอริทึมนี้สามารถนำมาประยุกต์ใช้เพื่อหาการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ โดยปริภูมิของพารามิเตอร์ (parameters space) ดังกล่าวนั้นเป็นไปได้ทั้งแบบไม่ต่อเนื่อง (discrete) และแบบต่อเนื่อง (continuous) และสามารถใช้ได้กับปริภูมิพารามิเตอร์ที่มีมิติตั้งแต่หนึ่งมิติ (unidimensional) ไปจนถึงหลายมิติ (multidimensional) อัลกอริทึม Metropolis มีลักษณะการทำงานแบบทวนซ้ำ (interative) มีรายละเอียดของขั้นตอนวิธีดังนี้</p>
+<p>กำหนดให้ <span class="math inline">\(p(\theta)\)</span> เป็นการแจกแจงความน่าจะเป็นภายหลังที่ต้องการประมาณ</p>
+<ol type="1">
+<li><p>สุ่ม/เลือกค่าตั้งต้น (initial values) ของพารามิเตอร์ในการแจกแจงความน่าจะเป็นภายหลัง เขียนแทนด้วย <span class="math inline">\(\theta_0\)</span> ทั้งนี้ค่าพารามิเตอร์ที่สุ่มมามีเงื่อนไขคือต้องอยู่ภายใต้ปริภูมิของพารามิเตอร์ กล่าวคือ <span class="math inline">\(p(\theta_0)&gt;0\)</span></p></li>
+<li><p>สร้างค่า proposal jump เพื่อใช้เป็นตัวปรับค่าตั้งต้นของพารามิเตอร์ เขียนแทนด้วย <span class="math inline">\(\Delta\theta\)</span> จากการแจกแจงความน่าจะเป็นโครงร่าง (proposal distribution) ที่กำหนดไว้ เช่นอาจกำหนดให้ <span class="math inline">\(\Delta\theta \sim N(0, \sigma)\)</span> ซึ่งจะได้ proposed values ของพารามิเตอร์ค่าใหม่เขียนแทนด้วย <span class="math inline">\(\theta_{pro}\)</span> โดยที่ <span class="math inline">\(\theta_{pro}=\theta_{i-1}+\Delta\theta\)</span> เมื่อ <span class="math inline">\(i=1,2,3,...,m\)</span></p></li>
+<li><p>คำนวณค่าความน่าจะเป็นในการเดิน/เปลี่ยนแปลงของ proposed values ดังนี้ <span class="math inline">\(p_{move}=min(1,\frac{p(\theta_{pro})}{p(\theta_{i-1})})\)</span> โดยที่ <span class="math inline">\(p(\theta_{pro})=p(D|\theta_{pro}p(\theta_{pro}))\)</span> และ <span class="math inline">\(p(\theta_{i-1})=p(D|\theta_{i-1})p(\theta_{i-1})\)</span> จากความน่าจะเป็นข้างต้น จะเห็นว่า ถ้า <span class="math inline">\(\theta_{pro}\)</span> มีค่าอยู่นอกเหนือค่าที่เป็นไปได้หรือค่าที่ควรจะเป็นของพารามิเตอร์ <span class="math inline">\(\theta\)</span> ในโมเดล ค่าความน่าจะเป็นก่อนหน้า <span class="math inline">\(p(\theta_{pro})\)</span> และ/หรือค่าของฟังก์ชันภาวะความควรจะเป็น <span class="math inline">\(p(D|\theta_{pro})\)</span> จะมีค่าเท่ากับ 0 ซึ่งทำให้ค่า <span class="math inline">\(p_{move}=0\)</span></p></li>
+<li><p>เกณฑ์การพิจารณายอมรับค่า proposed value <span class="math inline">\(\theta_{pro}\)</span> จะยอมรับด้วยความน่าจะเป็นเท่ากับ <span class="math inline">\(p_{move}\)</span> ในทางปฏิบัติจะสุ่มเลขสุ่มจากการแจกแจงแบบ uniform [0,1] ขึ้นมา 1 ค่า เขียนแทนด้วย <span class="math inline">\(u\)</span> หาก <span class="math inline">\(u&lt;p_{move}\)</span> จะยอมรับค่า <span class="math inline">\(theta_{pro}\)</span> ดังกล่าว แต่ถ้าหาก <span class="math inline">\(u &gt; p_{move}\)</span> จะปฏิเสธค่า <span class="math inline">\(\theta_{pro}\)</span> ในกรณีนี้ค่าพารามิเตอร์ <span class="math inline">\(\theta_{i-1}\)</span> ก็จะไม่ได้มีการเปลี่ยนแปลงสถานะ</p></li>
+</ol>
+<p>อัลกอริทึมข้างต้นเป็นกระบวนการทวนซ้ำโดยจะดำเนินการทวนซ้ำในขั้นตอนที่ 2-4 จนกระทั่งตัวอย่างพารามิเตอร์ <span class="math inline">\(\theta\)</span> มีจำนวนเพียงพอ และมีคุณสมบัติที่เหมาะสม</p>
+<h2 id="example-1-tossing-coin"><a id="MCMC3"></a>Example 1: Tossing coin</h2>
+<p>จากตัวอย่างปัญหาการวิเคราะห์ความเที่ยงตรงของเหรียญ หากต้องการทำ MCMC เพื่อประมาณการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ความลำเอียง อาจดำเนินการดังนี้</p>
+<p>กำหนดให้ <span class="math inline">\(y_i\)</span> คือค่าสังเกตของการโยนเหรียญ โดยที่ <span class="math inline">\(i=1,2,3...,n\)</span> และโมเดลของค่าสังเกตดังกล่าวคือ <span class="math inline">\(p(y_i|\theta)=\theta^y_i(1-\theta)^{n-y_i}\)</span> จากการกำหนดนี้จะได้ฟังก์ชันภาวะความควรจะเป็นคือ</p>
+<center>
+<span class="math inline">\(p(y|\theta)=\theta^{\sum y_i}(1-\theta)^{n-\sum y_i}\)</span>
+</center>
+<p>และกำหนดให้พารามิเตอร์ <span class="math inline">\(\theta\)</span> มีการแจกแจงความน่าจะเป็นก่อนหน้าเป็น</p>
+<center>
+<span class="math inline">\(p(\theta)=Beta(\theta|a,b)\)</span>
+</center>
+<p>การแจกแจงความน่าจะเป็นแบบ Beta มีธรรมชาติของการแจกแจงคือ ค่าที่เป็นไปได้ของโดเมนอยู่บนช่วง [0,1] ซึ่งสอดคล้องกับธรรมชาติของพารามิเตอร์ความลำเอียงในโมเดลค่าสังเกต</p>
+<figure>
+<img src="/Users/siwachoat/Documents/myblog/myblog/beta.png" alt="Kruschke, 2015" /><figcaption aria-hidden="true">Kruschke, 2015</figcaption>
+</figure>
+<p>ในกรณีนี้เลือกการแจกแจงความน่าจะเป็นก่อนหน้าเป็น <span class="math inline">\(Beta(1,1)\)</span> ซึ่งจะเห็นว่าเทียบเท่ากับการแจกแจงแบบ uniform ที่หมายถึงผู้วิเคราะห์ไม่ได้มีสารสนเทศเบื้องต้นใด ๆ เกี่ยวกับความลำเอียงของเหรียญที่ทำการศึกษา นอกจากขอบเขตที่เป็นไปได้ของค่าพารามิเตอร์</p>
+<p>จากการกำหนดเงื่อนไขของการศึกษาในข้างต้น จะค่าความน่าจะเป็นในการเปลี่ยนแปลงสถานะหรือ <span class="math inline">\(p_{move}\)</span> เป็น</p>
+<p><span class="math inline">\(p_{move}=min(1,\frac{p(\theta_{pro})}{p(\theta{i-1})})\)</span></p>
+<p><span class="math inline">\(=min(1, \frac{[\theta_{pro}^{\sum y_i}(1-\theta_{pro})^{n-\sum y_i}] \times Beta(\theta_{pro}|1,1)}{[\theta_{i-1}^{\sum y_i}(1-\theta_{i-1})^{n-\sum y_i}] \times Beta(\theta_{i-1}|1,1)})\)</span></p>
+<p>เนื่องจากการแจกแจงความน่าจะเป็นแบบ Beta มีฟังก์ชันความน่าจะเป็นคือ <span class="math inline">\(p(\theta|a,b)=\frac{1}{B(a,b)} \theta^{a-1}(1-\theta)^{b-1}\)</span> โดยที่ <span class="math inline">\(B(a,b)=\frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}\)</span> และ <span class="math inline">\(\Gamma(.)\)</span> คือฟังก์ชันแกมมา (Gamma function)</p>
+<p>ดังนั้นความน่าจะเป็นในการเปลี่ยนสถานะของ proposed values จะมีค่าเท่ากับ</p>
+<p><span class="math inline">\(p_{move}=min(1,\frac{\theta_{pro}^{\sum y_i+a-1}(1-\theta_{pro})^{n-\sum y_i+b-1}/B(a,b)}{\theta_{i-1}^{\sum y_i+a-1}(1-\theta_{i-1})^{n-\sum y_i+b-1}/B(a,b)})\)</span></p>
+<p>สมมุติว่าผู้วิเคราะห์ทำการทดสอบโยนเหรียญ 20 ครั้ง และได้หน้าหัวเท่ากับ 7 ครั้ง</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>theta</span><span class='op'>&lt;-</span><span class='fl'>0.99</span> <span class='co'>#initial value</span>
+<span class='va'>m</span><span class='op'>&lt;-</span><span class='fl'>5000</span> <span class='co'>#iteration number</span>
+<span class='va'>theta.dat</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>nrow<span class='op'>=</span><span class='va'>m</span>,ncol<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>sd.pro</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.02</span>,<span class='fl'>0.2</span>,<span class='fl'>2</span><span class='op'>)</span> <span class='co'>#learning rate</span>
+<span class='va'>count</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>nrow<span class='op'>=</span><span class='va'>m</span>, ncol<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>sd.pro</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>{</span>
+  <span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>m</span><span class='op'>)</span>
+    <span class='op'>{</span>
+<span class='va'>delta.theta</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='va'>sd.pro</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span><span class='op'>)</span> <span class='co'>#proposal jump (change)</span>
+<span class='va'>theta.pro</span><span class='op'>&lt;-</span><span class='va'>theta</span><span class='op'>+</span><span class='va'>delta.theta</span> <span class='co'>#proposed bias parameter</span>
+
+<span class='va'>nom</span><span class='op'>&lt;-</span><span class='va'>theta.pro</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>7</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='va'>theta.pro</span><span class='op'>)</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>20</span><span class='op'>-</span><span class='fl'>7</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>denom</span><span class='op'>&lt;-</span><span class='va'>theta</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>7</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='va'>theta</span><span class='op'>)</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>20</span><span class='op'>-</span><span class='fl'>7</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span>
+
+<span class='va'>p.move</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='va'>nom</span><span class='op'>/</span><span class='va'>denom</span><span class='op'>)</span>
+
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>&lt;</span><span class='va'>p.move</span><span class='op'>)</span>
+<span class='op'>{</span><span class='va'>theta</span><span class='op'>&lt;-</span><span class='va'>theta.pro</span>
+<span class='va'>count</span><span class='op'>[</span><span class='va'>i</span>,<span class='va'>j</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fl'>1</span>
+<span class='op'>}</span><span class='kw'>else</span><span class='op'>{</span>
+
+<span class='va'>theta</span><span class='op'>&lt;-</span><span class='va'>theta</span>  
+<span class='va'>count</span><span class='op'>[</span><span class='va'>i</span>,<span class='va'>j</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fl'>0</span>
+<span class='op'>}</span>
+<span class='va'>theta.dat</span><span class='op'>[</span><span class='va'>i</span>,<span class='va'>j</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='va'>theta</span>
+  <span class='op'>}</span> <span class='co'># end of m iteration</span>
+<span class='op'>}</span> <span class='co'># end of sd loop</span>
+</code></pre>
+</div>
+</div>
+<p>จากการดำเนินอัลกอริทึมในข้างต้น พบว่าได้ผลการวิเคราะห์ดังต่อไปนี้</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-3-1.png" width="864" /></p>
+</div>
+<p>เราอาจพิจารณาประสิทธิภาพของอัลกอริทึมในข้างต้นจากสัดส่วนของจำนวนค่าพารามิเตอร์ผ่านการยอมรับต่อจำนวน proposed values ของพารามิเตอร์ ซึ่งจะพบว่ามีค่าเท่ากับ</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>count</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>5000</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.9410 0.5086 0.0658</code></pre>
+</div>
+<h2 id="example-2-one-sample-mean-and-sd">Example 2: One-sample Mean and SD</h2>
+<p>สมมุตินักวิจัยต้องการประมาณค่าเฉลี่ย IQ ของนักเรียนในโรงเรียนสังกัด สพฐ. ว่ามีค่าสูงกว่าเกณฑ์มาตรฐานคือ 90 คะแนน หรือไม่ ในการวิจัยนักวิจัยได้สร้างแบบวัด IQ และนำไปเก็บรวบรวมข้อมูลจากนักเรียนดังกล่าวจำนวน 3000 คน พบว่ามีคะแนนดังนี้</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>iq</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>3000</span>,<span class='fl'>99</span>,<span class='fl'>10</span><span class='op'>)</span> <span class='co'>#IQ sample data</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>iq</span>, nclass<span class='op'>=</span><span class='fl'>30</span>, xlab<span class='op'>=</span><span class='st'>"IQ score"</span>,col<span class='op'>=</span><span class='fu'><a href='https://scales.r-lib.org/reference/alpha.html'>alpha</a></span><span class='op'>(</span><span class='st'>"#004D80"</span>,<span class='fl'>0.7</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<p>จากปัญหาในข้างต้น นักวิจัยได้กำหนดโมเดลของค่าสังเกตด้วยการแจกแจงความน่าจะเป็นแบบปกติ ดังนี้ <span class="math inline">\(y_i \sim N(\mu,\ \sigma)\)</span> ที่มีฟังก์ชันความน่าจะเป็นคือ</p>
+<p><span class="math inline">\(p(y_i|\mu,\ \sigma)=\frac{1}{\sqrt{2\pi\sigma^2}}exp\{-\frac{1}{2\sigma^2}(y_i-\mu)^2\}\)</span></p>
+<p>ซึ่งทำให้ได้ว่าฟังก์ชันภาวะความควรจะเป็นของข้อมูลค่าสังเกตเมื่อกำหนดพารามิเตอร์ <span class="math inline">\(\mu\)</span> และ <span class="math inline">\(\sigma\)</span> คือ</p>
+<p><span class="math inline">\(\Pi_{i=1}^n p(y_i|\mu,\sigma)=(\frac{1}{\sqrt{2\pi\sigma^2}})^nexp\{-\frac{1}{\sqrt{2\pi\sigma^2}}\sum_{i=1}^n(y_i-\mu)^2 \}\)</span></p>
+<p>เนื่องจากพารามิเตอร์ทั้งสองเป็นอิสระซึ่งกันและกัน การกำหนดการแจกแจงความน่าจะเป็นก่อนหน้าให้กับพารามิเตอร์ดังกล่าวจึงสามารถกำหนดแยกจากการได้อย่างอิสระ โดยในตัวอย่างนี้จะกำหนดให้การแจกแจงความน่าจะเป็นก่อนหน้าของพารามิเตอร์ค่าเฉลี่ยมีการแจกแจงแบบปกติ ที่มีค่าเฉลี่ยเท่ากับ 90 และส่วนเเบี่ยงเบนมาตรฐานเท่ากับ 30 ดังนี้</p>
+<p><span class="math inline">\(p(\mu|\mu_p=90, \sigma_p=30)=\frac{1}{\sqrt{2\pi\times30^2}}exp\{-\frac{1}{2\times30^2}(\mu-90)^2 \}\)</span></p>
+<p>และกำหนดให้พารามิเตอร์ความแปรปรวน (<span class="math inline">\(\sigma^2\)</span> ) มีการแจกแจงความน่าจะเป็นก่อนหน้าเป็นแบบ uniform บนช่วง [0,10000] ซึ่งมีฟังก์ชันความน่าจะเป็นดังนี้</p>
+<p><span class="math inline">\(p(\sigma^2)=\frac{1}{10000}\)</span></p>
+<p>รูปด้านล่างแสดงโค้งความหนาแน่นของการแจกแจงความน่าจะเป็นก่อนหน้าของ <span class="math inline">\(\mu \sim N(90,30)\)</span> และ <span class="math inline">\(\sigma^2 \sim U(0,10000)\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-6-1.png" width="960" /></p>
+</div>
+<p>จากการกำหนดในข้างต้นจะได้ว่าความน่าจะเป็นในการเปลี่ยนสถานะของพารามิเตอร์ทั้งสองมีค่าเท่ากับ</p>
+<p><span class="math inline">\(p.move=min(1,\frac{p(y|\mu_{pro},\sigma_{pro})p(\mu_{pro},\sigma_{pro})}{p(y|mu_{i-1},\sigma_{i-1})p(\mu_{i-1},\sigma_{i-1})})\)</span></p>
+<p><span class="math inline">\(=min(1,\frac{p(y|\mu_{pro},\sigma_{pro})\times N(mu_{pro}|90,30) \times (1/10000)}{p(y|\mu_{i-1},\sigma_{i-1})\times N(mu_{i-1}|90,30) \times (1/10000)})\)</span></p>
+<p>อย่างไรก็ตามจะเห็นว่าความน่าจะเป็นข้างต้นมีสูตรค่อนข้างซับซ้อนและการคำนวณตรง ๆ อาจมีปัญหา ผู้วิเคราะห์จึง take log เข้าที่ความน่าจะเป็นดังกล่าวจึงทำให้เกณฑ์การพิจารณากลายเป็น</p>
+<p><span class="math inline">\(p.move = min(0, [lnp(y|\mu_{pro},\sigma_{pro})+lnN(mu_{pro}|90,30)+0]-[lnp(y|\mu_{i-1},\sigma_{i-1})+lnN(mu_{i-1}|90,30)+0]\)</span></p>
+<p>จากเงื่อนไขข้างต้นสามารถเขียนอัลกอริทึม Metropolis เพื่อประมาณพารามิเตอร์ <span class="math inline">\(\mu\)</span> และ <span class="math inline">\(\sigma\)</span> ได้ดังนี้</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#initial value</span>
+<span class='va'>mu</span><span class='op'>&lt;-</span><span class='fl'>50</span>
+<span class='va'>sigma</span><span class='op'>&lt;-</span><span class='fl'>30</span>
+
+<span class='co'>#iteration number</span>
+<span class='va'>m</span><span class='op'>&lt;-</span><span class='fl'>5000</span> 
+<span class='va'>theta.dat</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>nrow<span class='op'>=</span><span class='va'>m</span>,ncol<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>sd.pro</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>,<span class='fl'>0.2</span>,<span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>count</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>nrow<span class='op'>=</span><span class='va'>m</span>, ncol<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>sd.pro</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>{</span>
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>m</span><span class='op'>)</span>
+<span class='op'>{</span>
+
+<span class='va'>delta.mu</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='va'>sd.pro</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>delta.sigma</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='va'>sd.pro</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span><span class='op'>)</span>
+
+<span class='co'>#proposed values</span>
+<span class='va'>mu.pro</span><span class='op'>&lt;-</span><span class='va'>mu</span><span class='op'>+</span><span class='va'>delta.mu</span> 
+<span class='va'>sigma.pro</span><span class='op'>&lt;-</span><span class='va'>sigma</span><span class='op'>+</span><span class='va'>delta.sigma</span>
+
+<span class='va'>nom</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>iq</span>,mean <span class='op'>=</span> <span class='va'>mu.pro</span>,sd <span class='op'>=</span> <span class='va'>sigma.pro</span>, log<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>mu.pro</span>,<span class='fl'>90</span>,<span class='fl'>30</span>, log<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>denom</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>iq</span>,mean <span class='op'>=</span> <span class='va'>mu</span>,sd <span class='op'>=</span> <span class='va'>sigma</span>, log<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>mu</span>,<span class='fl'>90</span>,<span class='fl'>30</span>, log<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='va'>p.move</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>nom</span><span class='op'>-</span><span class='va'>denom</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='kw'>if</span><span class='op'>(</span><span class='va'>p.move</span><span class='op'>==</span><span class='st'>"NaN"</span><span class='op'>)</span>
+<span class='op'>{</span>
+<span class='va'>mu</span><span class='op'>&lt;-</span><span class='va'>mu</span>
+<span class='va'>sigma</span><span class='op'>&lt;-</span><span class='va'>sigma</span>
+<span class='va'>count</span><span class='op'>[</span><span class='va'>i</span>,<span class='va'>j</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fl'>0</span>
+<span class='op'>}</span> <span class='kw'>else</span> <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>&lt;</span><span class='va'>p.move</span><span class='op'>)</span>
+<span class='op'>{</span>
+<span class='va'>mu</span><span class='op'>&lt;-</span><span class='va'>mu.pro</span>
+<span class='va'>sigma</span><span class='op'>&lt;-</span><span class='va'>sigma.pro</span>
+<span class='va'>count</span><span class='op'>[</span><span class='va'>i</span>,<span class='va'>j</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fl'>1</span>
+<span class='op'>}</span>
+<span class='kw'>else</span>
+<span class='op'>{</span>
+<span class='va'>mu</span><span class='op'>&lt;-</span><span class='va'>mu</span>
+<span class='va'>sigma</span><span class='op'>&lt;-</span><span class='va'>sigma</span>
+<span class='va'>count</span><span class='op'>[</span><span class='va'>i</span>,<span class='va'>j</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fl'>0</span>
+<span class='op'>}</span>
+
+<span class='va'>theta.dat</span><span class='op'>[</span><span class='va'>i</span>,<span class='fl'>2</span><span class='op'>*</span><span class='va'>j</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='va'>mu</span>
+<span class='va'>theta.dat</span><span class='op'>[</span><span class='va'>i</span>,<span class='fl'>2</span><span class='op'>*</span><span class='va'>j</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='va'>sigma</span>
+  <span class='op'>}</span> <span class='co'># end of m iteration</span>
+<span class='op'>}</span><span class='co'>#end of sd loop</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>theta.dat</span><span class='op'>)</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mu_sdpro1"</span>,<span class='st'>"sigma_sdpro1"</span>,<span class='st'>"mu_sdpro2"</span>,<span class='st'>"sigma_sdpro2"</span>,<span class='st'>"mu_sdpro3"</span>,<span class='st'>"sigma_sdpro3"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>ประสิทธิภาพในด้านการยอมรับ proposed value ในแต่ละเงื่อนไขเป็นดังนี้</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>count</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 3355 2245   52</code></pre>
+</div>
+<p>การแจกแจงความน่าจะเป็นภายหลังที่ประมาณได้ในตัวอย่างนี้เป็นการแจกแจงความน่าจะเป็นร่วม (joint probability distribution) เนื่องจากมีพารามิเตอร์ 2 ตัวที่ต้องการประมาณค่า รูปต่อไปนี้แสดงการประมาณการแจกแจงความน่าจะเป็นภายหลังจากตัวอย่างสุ่มของพารามิเตอร์ทั้งสองที่สร้างจากอัลอริทึม Metropolis</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>theta.dat</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>,<span class='va'>theta.dat</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"l"</span>,xlab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>mu</span><span class='op'>)</span>,ylab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>sigma</span><span class='op'>)</span>, main<span class='op'>=</span><span class='st'>"sd.pro=0.005"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>theta.dat</span><span class='op'>[</span>,<span class='fl'>3</span><span class='op'>]</span>,<span class='va'>theta.dat</span><span class='op'>[</span>,<span class='fl'>4</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"l"</span>,xlab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>mu</span><span class='op'>)</span>,ylab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>sigma</span><span class='op'>)</span>, main<span class='op'>=</span><span class='st'>"sd.pro=0.02"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>theta.dat</span><span class='op'>[</span>,<span class='fl'>5</span><span class='op'>]</span>,<span class='va'>theta.dat</span><span class='op'>[</span>,<span class='fl'>6</span><span class='op'>]</span>, type<span class='op'>=</span><span class='st'>"l"</span>,xlab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>mu</span><span class='op'>)</span>,ylab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>sigma</span><span class='op'>)</span>, main<span class='op'>=</span><span class='st'>"sd.pro=2"</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://www.stats.ox.ac.uk/pub/MASS4/'>MASS</a></span><span class='op'>)</span>
+<span class='va'>den3d</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/MASS/man/kde2d.html'>kde2d</a></span><span class='op'>(</span><span class='va'>theta.dat</span><span class='op'>[</span><span class='fl'>1000</span><span class='op'>:</span><span class='fl'>5000</span>,<span class='fl'>1</span><span class='op'>]</span>,<span class='va'>theta.dat</span><span class='op'>[</span><span class='fl'>1000</span><span class='op'>:</span><span class='fl'>5000</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/persp.html'>persp</a></span><span class='op'>(</span><span class='va'>den3d</span>, box<span class='op'>=</span><span class='cn'>T</span>,phi<span class='op'>=</span><span class='fl'>20</span>,theta<span class='op'>=</span><span class='op'>-</span><span class='fl'>30</span>, xlab<span class='op'>=</span><span class='st'>"mu"</span>, ylab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>sigma</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>den3d</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/MASS/man/kde2d.html'>kde2d</a></span><span class='op'>(</span><span class='va'>theta.dat</span><span class='op'>[</span><span class='fl'>1000</span><span class='op'>:</span><span class='fl'>5000</span>,<span class='fl'>3</span><span class='op'>]</span>,<span class='va'>theta.dat</span><span class='op'>[</span><span class='fl'>1000</span><span class='op'>:</span><span class='fl'>5000</span>,<span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/persp.html'>persp</a></span><span class='op'>(</span><span class='va'>den3d</span>, box<span class='op'>=</span><span class='cn'>T</span>,phi<span class='op'>=</span><span class='fl'>20</span>,theta<span class='op'>=</span><span class='fl'>50</span>, xlab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>mu</span><span class='op'>)</span>, ylab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>sigma</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>den3d</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/MASS/man/kde2d.html'>kde2d</a></span><span class='op'>(</span><span class='va'>theta.dat</span><span class='op'>[</span><span class='fl'>1000</span><span class='op'>:</span><span class='fl'>5000</span>,<span class='fl'>5</span><span class='op'>]</span>,<span class='va'>theta.dat</span><span class='op'>[</span><span class='fl'>1000</span><span class='op'>:</span><span class='fl'>5000</span>,<span class='fl'>6</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/persp.html'>persp</a></span><span class='op'>(</span><span class='va'>den3d</span>, box<span class='op'>=</span><span class='cn'>T</span>,phi<span class='op'>=</span><span class='fl'>20</span>,theta<span class='op'>=</span><span class='fl'>50</span>, xlab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>mu</span><span class='op'>)</span>, ylab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>sigma</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-9-1.png" width="1152" /></p>
+</div>
+<p>จากตัวอย่างในข้างต้น ผู้อ่านจะเห็นว่าตัวอย่างที่สุ่มจากอัลกอริทึม Metropolis ข้างต้นมีลักษณะที่แตกต่างกันออกไปตามลักษณะของ proposal distribution ที่กำหนด</p>
+<p>ถ้า proposal distribution มีลักษณะการกระจายที่แคบกว่าการแจกแจงความน่าจะเป็นภายหลัง/การแจกแจงเป้าหมาย ที่ต้องการประมาณมาก กระบวนการสุ่มที่สร้างขึ้นจากอัลกอริทึม Metropolis ในข้างต้นจะสร้างตัวอย่างสุ่มของพารามิเตอร์ที่เป็นตัวแทน ครอบคลุมการแจกแจงความน่าจะเป็นภายหลังที่ต้องการได้ช้า ภายใต้สถานการณ์ดังกล่าว ผู้วิเคราะห์จึงต้องใช้จำนวนการทวนซ้ำที่เพ่ิมจึ้นกว่าปกติเพื่อที่จะได้ตัวอย่างของพารามิเตอร์ที่เป็นตัวแทนของการแจกแจงความน่าจะเป็นภายหลังดังกล่าวได้ ในทางกลับกันหาก proposal distribution มีการกระจายที่กว้างเมื่อเปรียบเทียบกับการแจกแจงความน่าจะเป็นภายหลัง จะทำให้การพัฒนาค่าของพารามิเตอร์ในแต่ละรอบมีการเปลี่ยนแปลงมากเกินไป และอาจไม่สามารถลู่เข้าไปสู่การแจกแจงความน่าจะเป็นภายหลังที่ต้องการได้</p>
+<p>ปัจจัยในข้างต้นส่งผลโดยตรงต่อประสิทธิภาพของอัลกอริทึม Metropolis การพิจารณาว่า proposal distribution ดังกล่าวมีความเหมาะสมแล้วหรือไม่ อาจพิจารณาได้จากอัตราส่วนการยอมรับ ซึ่งคำนวณได้จาก จำนวนพารามิเตอร์ที่ได้รับการยอมรับต่อจำนวนการทวนซ้ำทั้งหมด รูปต่อไปนี้แสดงการเปรียบเทียบกระบวนการสุ่มที่สร้างจากอัลกอริทึม MCMC ภายใต้สถานการณ์ที่มีการกำหนดการกระจายของ proposal distribution แตกต่างกัน</p>
+<p>ปัจจัยในข้างต้นส่งผลโดยตรงต่อประสิทธิภาพของอัลกอริทึม Metropolis การพิจารณาว่า proposal distribution ดังกล่าวมีความเหมาะสมแล้วหรือไม่ อาจพิจารณาได้จากอัตราส่วนการยอมรับ ซึ่งคำนวณได้จาก จำนวนพารามิเตอร์ที่ได้รับการยอมรับต่อจำนวนการทวนซ้ำทั้งหมด</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>count</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>5000</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.6710 0.4490 0.0104</code></pre>
+</div>
+<h1 id="gibbs-sampling-algorithm">Gibbs Sampling algorithm</h1>
+<p>อัลกอริทึม Metropolis ที่กล่าวในหัวก่อนหน้านี้เป็นอัลกอริทึมที่มีประโยชน์มากสำหรับหาการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ที่ไม่สามารถพิสูจน์หรือหารูปแบบปิดได้ อย่างไรก็ตามอัลกอริทึมดังกล่าวอาจมีประสิทธิภาพต่ำในหลายกรณีดังจะเห็นในตัวอย่างก่อนหน้านี้ที่หลายกรณีมีการ reject ค่า proposed value จำนวนมากจน ตัวอย่างที่เหลืออาจมีปริมาณน้อยเกินไปจนไม่เพียงพอที่จะนำไปใช้อนุมานเกี่ยวกับพารามิเตอร์ที่ต้องการ</p>
+<p>ปัจจัยสำคัญที่มีผลต่ออัตราการยอมรับหรือปฏิเสธค่า proposed values คือการแจงแจงโครงร่าง การกำหนดการแจกแจงโครงร่างที่มีขอบเขตแคบมากเกินไป ถึงแม้ว่าในกรณีนี้อัตราการยอมรับค่า proposed value จะมีสูง แต่จะเห็นว่าอัลกอริทึมต้องใช้จำนวนรอบการทวนซ้ำที่มากขึ้น เพื่อให้ได้ตัวอย่างของพารามิเตอร์ที่ครอบคลุมและเป็นตัวแทนของการแจกแจงความน่าจะเป็นภายหลังที่ต้องการ</p>
+<p>ในทางกลับกันหากกำหนดการแจกแจงความน่าจะเป็นโครงร่างที่มีขอบเขตกว้างมากเกินไป จะเห็นว่าอัตราการยอมรับ proposed value มีแนวโน้มต่ำลงมา ทั้งนี้เป็นเพราะมีโอกาสสูงขึ้นที่ proposed value ที่ได้จะถูกสุ่มมาแล้วอยู่นอกเหนือขอบเขตที่เป็นไปได้จริงของพารามิเตอร์ที่ต้องการประมาณ</p>
+<p>รูปด้านล่างแสดงการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ <span class="math inline">\(\mu\)</span> และ <span class="math inline">\(\sigma\)</span> ใน mean model <span class="math inline">\(y_i=\mu+\epsilon_i\)</span> ภายใต้สถานการณ์ที่มีการกำหนดการแจกแจงโครงร่างแตกต่างกัน</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-11-1.png" width="1152" /></p>
+</div>
+<p>จากข้อจำกัดนี้จึงมีการพัฒนาอัลกอริทึมตัวอื่น ๆ ขึ้นมาเพิ่มเติม อัลกอริทึม Gibbs Sampling พัฒนาขึ้นโดย Geman และ Geman (1984) เป็นอัลกอริทึมหนึ่งที่มีจุดเด่นในการนำมาใช้ประมาณการแจกแจงความน่าจะเป็นภายหลังของโมเดลการวิเคราะห์ที่มีพารามิเตอร์จำนวนมาก</p>
+<p>Gibbs sampling เป็นแนวเดินสุ่ม (random walk) ประเภทหนึ่งเหมือนกับอัลกอริทึม Metropolis ความแตกต่างระหว่าง Gibbs กับ Metropolis ของในแต่ละขั้นของการทวนซ้ำ Metropolis จะสุ่มตัวอย่างของพารามิเตอร์ทุกตัวขึ้นมาพร้อมกันจากการแจกแจงความน่าจะเป็นภายหลัง <span class="math inline">\(p(\theta_1, \theta_2, \theta_3,...,\theta_k|D)\)</span></p>
+<p>ในขณะที่แต่ละรอบการทวนซ้ำของอัลกอริทึม Gibbs sampling จะแบ่งสุ่มพารามิเตอร์ทีละค่า จากการแจกแจงความน่าจะเป็นภายหลังแบบมีเงื่อนไข</p>
+<ul>
+<li><p><span class="math inline">\(p(\theta_1|D,\theta_2, \theta_3, ...,\theta_k)\)</span></p></li>
+<li><p><span class="math inline">\(p(\theta_2|D,\theta_1, \theta_3, ...,\theta_k)\)</span></p></li>
+<li><p><span class="math inline">\(p(\theta_3|D,\theta_1, \theta_2, ...,\theta_k)\)</span></p></li>
+<li><p>…</p></li>
+<li><p><span class="math inline">\(p(\theta_k|D,\theta_1, \theta_2, ...,\theta_{k-1})\)</span></p></li>
+</ul>
+<p>ดังนั้นจะเห็นว่าอัลกอริทึม Gibbs sampling จะใช้เวลาในแต่ละรอบของการทวนซ้ำมากกว่าอัลกอริทึม Metropolis เพราะต้องเสียเวลาในการสุ่มพารามิเตอร์ในโมเดลทีละค่าจนครบก่อน และจึงเริ่มรอบการทวนซ้ำรอบต่อไป</p>
+<p>อัลกอริทึม Gibbs sampling เป็นอัลกอริทึมที่ดำเนินการได้ง่ายกว่า Metropolis ในทางปฏิบัติทั้งสองอัลกอริทึมจะไม่ทราบรูปแบบ (functional form) ของการแจกแจงความน่าจะเป็นร่วมภายหลังของพารามิเตอร์ทั้งหมดภายในโมเดล แต่อัลกอริทึม Gibbs sampling มีการระบุเงื่อนไขเพิ่มเติมคือจำเป็นจะต้องทราบต้องทราบรูปแบบของการแจกแจงความน่าจะเป็นแบบมีเงื่อนไขของพารามิเตอร์แต่ละตัว เมื่อกำหนดข้อมูลและพารามิเตอร์ตัวที่เหลือ การจำลองตัวอย่างพารามิเตอร์แต่ละตัวจากการแจกแจงความน่าจะเป็นแบบที่เงื่อนไขดังกล่าวด้วยจำนวนรอบทวนซ้ำที่มากเพียงพอ จะทำให้ผู้วิเคราะห์ได้ตัวอย่างจำลองที่ใช้เป็นตัวแทนการแจกแจงความน่าจะเป็นภายหลังร่วมที่ต้องการได้</p>
+<p>จากที่กล่าวในข้างต้นทำให้พอจะเห็นได้ว่า Gibbs sampling เป็นกรณีเฉพาะของอัลกอริทึม Metropolis โดยเป็นกรณีที่การแจกแจงโครงร่างเป็นฟังก์ชันที่ขึ้นกับปริภูมิของพารามิเตอร์ภายในโมเดล และค่าตัวอย่างของพารามิเตอร์อื่น ๆ ที่เหลือ กล่าวคือ การแจกแจงโครงร่างของพารามิเตอร์ <span class="math inline">\(\theta_j\)</span> คือการแจกแจงความน่าจะเป็นภายหลังแบบมีเงื่อนไขของพารามิเตอร์ <span class="math inline">\(\theta_j\)</span> เมื่อกำหนดข้อมูลตัวอย่าง และพารามิเตอร์ส่วนที่เหลือในโมเดล <span class="math inline">\(p(\theta_j|D,\theta_1,\theta_2,...,\theta_{j-1},\theta_{j+1},...,\theta_k)\)</span></p>
+<p>เนื่องจากการแจกแจงโครงร่างดังกล่าวเป็นการแจกแจงเดียวกันกับการแจกแจงความน่าจะเป็นภายหลังแบบมีเงื่อนไขของพารามิเตอร์ ดังนั้นอัตราการยอมรับในอัลกอริทึม Gibbs sampling จึงมีค่าเท่ากับ 100% เสมอ ดังนั้น Gibbs sampling จึงมีประสิทธิภาพสูงกว่า Metropolis ในแง่ความเร็วของการประมวลผล อย่างไรก็ตามในกรณีที่เงื่อนไขของ Gibbs sampling ไม่เป็นจริง อัลกอริทึม Metropolis ก็ยังมีความจำเป็นอยู่เช่นเดียวกัน</p>
+<div class="layout-chunk" data-layout="l-body">
+<div id="htmlwidget-c5b0b6ee7e7c84c99f7d" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c5b0b6ee7e7c84c99f7d">{"x":{"visdat":{"e73c152ea392":["function () ","plotlyVisDat"]},"cur_data":"e73c152ea392","attrs":{"e73c152ea392":{"z":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"surface","showlegend":false,"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"title":"mu"},"yaxis":{"title":"sigma"},"hoverlabel":{"bgcolor":"#FFFFFF99"},"scene":{"zaxis":{"title":"res"}},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"scrollZoom":false},"data":[{"colorbar":{"title":"res","ticklen":2},"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666667","rgba(70,19,97,1)"],["0.0833333333333333","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"z":[[3.21408403718971e-06,3.91752109822229e-06,4.74186872166605e-06,5.69995956449911e-06,6.80421596012514e-06,8.06619041339657e-06,9.49604833691972e-06,1.11020052764101e-05,1.28897355790431e-05,1.48617740170699e-05,1.70169359562755e-05,1.93497848991313e-05,2.18501782820052e-05,2.45029229422816e-05,2.72875704349673e-05,3.0178379202322e-05,3.3144465436485e-05,3.61501574149851e-05,3.91555593722571e-05,4.21173209837202e-05,4.49895978018586e-05,4.77251771200216e-05,5.0276733438604e-05,5.25981686758998e-05,5.4645985171118e-05,5.63806349465947e-05,5.77677870641453e-05,5.8779456476219e-05,5.93949425725652e-05,5.96015334692439e-05,5.93949425725652e-05,5.8779456476219e-05,5.77677870641453e-05,5.63806349465947e-05,5.4645985171118e-05,5.25981686758998e-05,5.0276733438604e-05,4.77251771200216e-05,4.49895978018586e-05,4.21173209837202e-05,3.91555593722571e-05,3.61501574149851e-05,3.3144465436485e-05,3.0178379202322e-05,2.72875704349673e-05,2.45029229422816e-05,2.18501782820052e-05,1.93497848991313e-05,1.70169359562755e-05,1.48617740170699e-05,1.28897355790431e-05,1.11020052764101e-05,9.49604833691972e-06,8.06619041339657e-06,6.80421596012514e-06,5.69995956449911e-06,4.74186872166605e-06,3.91752109822229e-06,3.21408403718971e-06,2.61870861989146e-06],[3.91752109822229e-06,4.77491296974167e-06,5.77967798824878e-06,6.94745737652323e-06,8.29339223001709e-06,9.83156344424305e-06,1.15743612423243e-05,1.35317992310307e-05,1.57107936498014e-05,1.81144340332153e-05,2.07412764770443e-05,2.35846946474647e-05,2.66323261710725e-05,2.98656526972564e-05,3.32597504176278e-05,3.67832439560669e-05,4.03984902492659e-05,4.40620104323993e-05,4.77251771200215e-05,5.13351523000597e-05,5.48360579717204e-05,5.81703484167626e-05,6.12803404380319e-05,6.41098468899587e-05,6.66058501781364e-05,6.87201468221651e-05,7.04108921866515e-05,7.16439763936501e-05,7.23941682804207e-05,7.26459738297078e-05,7.23941682804207e-05,7.16439763936501e-05,7.04108921866515e-05,6.87201468221651e-05,6.66058501781364e-05,6.41098468899587e-05,6.12803404380319e-05,5.81703484167626e-05,5.48360579717204e-05,5.13351523000597e-05,4.77251771200215e-05,4.40620104323993e-05,4.03984902492659e-05,3.67832439560669e-05,3.32597504176278e-05,2.98656526972564e-05,2.66323261710725e-05,2.35846946474647e-05,2.07412764770443e-05,1.81144340332153e-05,1.57107936498014e-05,1.35317992310307e-05,1.15743612423243e-05,9.83156344424305e-06,8.29339223001709e-06,6.94745737652323e-06,5.77967798824878e-06,4.77491296974167e-06,3.91752109822229e-06,3.19184133016366e-06],[4.74186872166605e-06,5.77967798824878e-06,6.99587151839852e-06,8.40938185215977e-06,1.00385361625421e-05,1.19003783291651e-05,1.40099057981198e-05,1.6379239297679e-05,1.90167504226969e-05,2.19261788256264e-05,2.51057767674959e-05,2.85475235626955e-05,3.22364554751534e-05,3.61501574149851e-05,4.02584609607684e-05,4.45233885468631e-05,4.88993760371714e-05,5.3333795490707e-05,5.77677870641453e-05,6.21373942629379e-05,6.63749809116695e-05,7.04108921866516e-05,7.41753068561679e-05,7.76002145479816e-05,8.06214413964487e-05,8.31806406638612e-05,8.52271625227473e-05,8.67197194958292e-05,8.76277711320385e-05,8.79325630726992e-05,8.76277711320385e-05,8.67197194958292e-05,8.52271625227473e-05,8.31806406638612e-05,8.06214413964487e-05,7.76002145479816e-05,7.41753068561679e-05,7.04108921866516e-05,6.63749809116695e-05,6.21373942629379e-05,5.77677870641453e-05,5.3333795490707e-05,4.88993760371714e-05,4.45233885468631e-05,4.02584609607684e-05,3.61501574149851e-05,3.22364554751534e-05,2.85475235626955e-05,2.51057767674959e-05,2.19261788256264e-05,1.90167504226969e-05,1.6379239297679e-05,1.40099057981198e-05,1.19003783291651e-05,1.00385361625421e-05,8.40938185215977e-06,6.99587151839852e-06,5.77967798824878e-06,4.74186872166605e-06,3.86348718706127e-06],[5.69995956449911e-06,6.94745737652323e-06,8.40938185215977e-06,1.01084908362672e-05,1.20668144927362e-05,1.43048404036478e-05,1.68405962372715e-05,1.96886517054869e-05,2.28590698772992e-05,2.6356345998996e-05,3.0178379202322e-05,3.43155282284531e-05,3.87498059302222e-05,4.3454268266477e-05,4.83926513099927e-05,5.35193041578842e-05,5.8779456476219e-05,6.41098468899587e-05,6.94397229707644e-05,7.46922058647048e-05,7.97859935603593e-05,8.46373575317392e-05,8.91623692222171e-05,9.32792768173774e-05,9.69109401725347e-05,9.99872236375526e-05,0.000102447243627186,0.00010424137056187,0.000105332893316438,0.000105699268228803,0.000105332893316438,0.00010424137056187,0.000102447243627186,9.99872236375526e-05,9.69109401725347e-05,9.32792768173774e-05,8.91623692222171e-05,8.46373575317392e-05,7.97859935603593e-05,7.46922058647048e-05,6.94397229707644e-05,6.41098468899587e-05,5.8779456476219e-05,5.35193041578842e-05,4.83926513099927e-05,4.3454268266477e-05,3.87498059302222e-05,3.43155282284531e-05,3.0178379202322e-05,2.6356345998996e-05,2.28590698772992e-05,1.96886517054869e-05,1.68405962372715e-05,1.43048404036478e-05,1.20668144927362e-05,1.01084908362672e-05,8.40938185215977e-06,6.94745737652323e-06,5.69995956449911e-06,4.64410173221167e-06],[6.80421596012514e-06,8.29339223001709e-06,1.00385361625421e-05,1.20668144927362e-05,1.44045253006211e-05,1.70761252391615e-05,2.01031344870138e-05,2.35029453545942e-05,2.72875704349673e-05,3.14623758410308e-05,3.60248537021319e-05,4.09634949529126e-05,4.62568277859949e-05,5.18726882758693e-05,5.77677870641453e-05,6.38876292726592e-05,7.01668338796569e-05,7.65298838480742e-05,8.28923198415467e-05,8.9162369222217e-05,9.5242979293932e-05,0.000101034200755928,0.000106435845524756,0.000111350323960676,0.000115685551515073,0.000119357805118574,0.000122294406174473,0.00012443611033664,0.000125739094412829,0.00012617644734453,0.000125739094412829,0.00012443611033664,0.000122294406174473,0.000119357805118574,0.000115685551515073,0.000111350323960676,0.000106435845524756,0.000101034200755928,9.5242979293932e-05,8.9162369222217e-05,8.28923198415467e-05,7.65298838480742e-05,7.01668338796569e-05,6.38876292726592e-05,5.77677870641453e-05,5.18726882758693e-05,4.62568277859949e-05,4.09634949529126e-05,3.60248537021319e-05,3.14623758410308e-05,2.72875704349673e-05,2.35029453545942e-05,2.01031344870138e-05,1.70761252391615e-05,1.44045253006211e-05,1.20668144927362e-05,1.00385361625421e-05,8.29339223001709e-06,6.80421596012514e-06,5.54380619181398e-06],[8.06619041339657e-06,9.83156344424305e-06,1.19003783291651e-05,1.43048404036478e-05,1.70761252391615e-05,2.02432254515847e-05,2.38316525561e-05,2.78620246060391e-05,3.23485821639572e-05,3.72976865929657e-05,4.27063648889249e-05,4.85609734060124e-05,5.48360579717205e-05,6.14934892337295e-05,6.84819489784938e-05,7.5736835190675e-05,8.31806406638612e-05,9.07238422547564e-05,9.8266315997088e-05,0.000105699268228803,0.000112907645939844,0.000119772962283764,0.00012617644734453,0.000132002411581847,0.000137141691572972,0.000141495036173689,0.00014497628712514,0.000147515212062625,0.000149059859928855,0.00014957832848506,0.000149059859928855,0.000147515212062625,0.00014497628712514,0.000141495036173689,0.000137141691572972,0.000132002411581847,0.00012617644734453,0.000119772962283764,0.000112907645939844,0.000105699268228803,9.8266315997088e-05,9.07238422547564e-05,8.31806406638612e-05,7.5736835190675e-05,6.84819489784938e-05,6.14934892337295e-05,5.48360579717205e-05,4.85609734060124e-05,4.27063648889249e-05,3.72976865929657e-05,3.23485821639572e-05,2.78620246060391e-05,2.38316525561e-05,2.02432254515847e-05,1.70761252391615e-05,1.43048404036478e-05,1.19003783291651e-05,9.83156344424305e-06,8.06619041339657e-06,6.57201309014831e-06],[9.49604833691972e-06,1.15743612423243e-05,1.40099057981198e-05,1.68405962372715e-05,2.01031344870138e-05,2.38316525561e-05,2.80561842732531e-05,3.2801002562991e-05,3.80828723494522e-05,4.3909282646471e-05,5.02767334386039e-05,5.71691625312361e-05,6.45566036032019e-05,7.23941682804207e-05,8.06214413964486e-05,8.9162369222217e-05,9.79257051914008e-05,0.000106806056788768,0.000115685551515073,0.00012443611033664,0.000132922285304829,0.000141004585933616,0.000148543188488892,0.000155401895656881,0.000161452193097372,0.000166577235854486,0.00017067559277562,0.000173664581715198,0.000175483042481617,0.000176093417667247,0.000175483042481617,0.000173664581715198,0.00017067559277562,0.000166577235854486,0.000161452193097372,0.000155401895656881,0.000148543188488892,0.000141004585933616,0.000132922285304829,0.00012443611033664,0.000115685551515073,0.000106806056788768,9.79257051914008e-05,8.9162369222217e-05,8.06214413964486e-05,7.23941682804207e-05,6.45566036032019e-05,5.71691625312361e-05,5.02767334386039e-05,4.3909282646471e-05,3.80828723494522e-05,3.2801002562991e-05,2.80561842732531e-05,2.38316525561e-05,2.01031344870138e-05,1.68405962372715e-05,1.40099057981198e-05,1.15743612423243e-05,9.49604833691972e-06,7.73700480356479e-06],[1.11020052764101e-05,1.35317992310307e-05,1.6379239297679e-05,1.96886517054869e-05,2.35029453545942e-05,2.78620246060391e-05,3.2801002562991e-05,3.8348257149246e-05,4.45233885468631e-05,5.13351523000598e-05,5.8779456476219e-05,6.68375224673307e-05,7.54743160945561e-05,8.46373575317391e-05,9.42560142933618e-05,0.00010424137056187,0.000114486748293424,0.000124868931154376,0.000135250112231564,0.000145480551964149,0.000155401895656881,0.000164851062409484,0.000173664581715198,0.000181683222782168,0.000188756737124659,0.000194748519149408,0.000199539983824892,0.000203034465929549,0.000205160461955206,0.000205874062843809,0.000205160461955206,0.000203034465929549,0.000199539983824892,0.000194748519149408,0.000188756737124659,0.000181683222782168,0.000173664581715198,0.000164851062409484,0.000155401895656881,0.000145480551964149,0.000135250112231564,0.000124868931154376,0.000114486748293424,0.00010424137056187,9.42560142933618e-05,8.46373575317391e-05,7.54743160945561e-05,6.68375224673307e-05,5.8779456476219e-05,5.13351523000598e-05,4.45233885468631e-05,3.8348257149246e-05,3.2801002562991e-05,2.78620246060391e-05,2.35029453545942e-05,1.96886517054869e-05,1.6379239297679e-05,1.35317992310307e-05,1.11020052764101e-05,9.04547503394966e-06],[1.28897355790431e-05,1.57107936498014e-05,1.90167504226969e-05,2.28590698772992e-05,2.72875704349673e-05,3.23485821639572e-05,3.80828723494522e-05,4.45233885468631e-05,5.16928871103578e-05,5.96015334692439e-05,6.82445767764334e-05,7.76002145479816e-05,8.76277711320385e-05,9.8266315997088e-05,0.000109433842871385,0.00012102711802836,0.000132922285304829,0.00014497628712514,0.000157029125846758,0.000168906949692739,0.000180425904476507,0.000191396648756564,0.000201629388747495,0.000210939253090302,0.000219151799132142,0.000226108423996155,0.00023167144717671,0.000235728637674578,0.000238196977936588,0.000239025488330347,0.000238196977936588,0.000235728637674578,0.00023167144717671,0.000226108423996155,0.000219151799132142,0.000210939253090302,0.000201629388747495,0.000191396648756564,0.000180425904476507,0.000168906949692739,0.000157029125846758,0.00014497628712514,0.000132922285304829,0.00012102711802836,0.000109433842871385,9.8266315997088e-05,8.76277711320385e-05,7.76002145479816e-05,6.82445767764334e-05,5.96015334692439e-05,5.16928871103578e-05,4.45233885468631e-05,3.80828723494522e-05,3.23485821639572e-05,2.72875704349673e-05,2.28590698772992e-05,1.90167504226969e-05,1.57107936498014e-05,1.28897355790431e-05,1.0502047015073e-05],[1.48617740170699e-05,1.81144340332153e-05,2.19261788256264e-05,2.6356345998996e-05,3.14623758410308e-05,3.72976865929657e-05,4.3909282646471e-05,5.13351523000598e-05,5.96015334692439e-05,6.87201468221652e-05,7.86855146657106e-05,8.94724988899932e-05,0.000101034200755928,0.00011330036779134,0.00012617644734453,0.00013954341165843,0.000153258455452311,0.000167156634352589,0.000181053472208294,0.000194748519149408,0.000208029792598302,0.000220678983211207,0.000232477260095017,0.000243211467879491,0.000252680475418874,0.000260701414717162,0.000267115541124499,0.00027179345309203,0.000274639431967723,0.000275594698595757,0.000274639431967723,0.00027179345309203,0.000267115541124499,0.000260701414717162,0.000252680475418874,0.000243211467879491,0.000232477260095017,0.000220678983211207,0.000208029792598302,0.000194748519149408,0.000181053472208294,0.000167156634352589,0.000153258455452311,0.00013954341165843,0.00012617644734453,0.00011330036779134,0.000101034200755928,8.94724988899932e-05,7.86855146657106e-05,6.87201468221652e-05,5.96015334692439e-05,5.13351523000598e-05,4.3909282646471e-05,3.72976865929657e-05,3.14623758410308e-05,2.6356345998996e-05,2.19261788256264e-05,1.81144340332153e-05,1.48617740170699e-05,1.21087859791647e-05],[1.70169359562755e-05,2.07412764770443e-05,2.51057767674959e-05,3.0178379202322e-05,3.60248537021319e-05,4.27063648889249e-05,5.02767334386039e-05,5.8779456476219e-05,6.82445767764334e-05,7.86855146657106e-05,9.00959981099861e-05,0.000102447243627186,0.000115685551515073,0.000129730481725344,0.000144473770169435,0.000159779128426005,0.000175483042481618,0.000191396648756564,0.000207308719517003,0.000222989736900759,0.000238196977936588,0.000252680475418874,0.000266189664960822,0.000278480480727496,0.000289322624786617,0.000298506710763929,0.000305850973848789,0.000311207247485378,0.000314465932498685,0.000315559725945668,0.000314465932498685,0.000311207247485378,0.000305850973848789,0.000298506710763929,0.000289322624786617,0.000278480480727496,0.000266189664960822,0.000252680475418874,0.000238196977936588,0.000222989736900759,0.000207308719517003,0.000191396648756564,0.000175483042481618,0.000159779128426005,0.000144473770169435,0.000129730481725344,0.000115685551515073,0.000102447243627186,9.00959981099861e-05,7.86855146657106e-05,6.82445767764334e-05,5.8779456476219e-05,5.02767334386039e-05,4.27063648889249e-05,3.60248537021319e-05,3.0178379202322e-05,2.51057767674959e-05,2.07412764770443e-05,1.70169359562755e-05,1.38647267330955e-05],[1.93497848991313e-05,2.35846946474647e-05,2.85475235626955e-05,3.43155282284531e-05,4.09634949529126e-05,4.85609734060124e-05,5.71691625312361e-05,6.68375224673307e-05,7.76002145479816e-05,8.94724988899932e-05,0.000102447243627186,0.000116491719354677,0.000131544864686908,0.000147515212062625,0.000164279655487224,0.000181683222782168,0.000199539983824891,0.000217635183758703,0.000235728637674578,0.000253559363144478,0.000270851362345075,0.000287320400107775,0.000302681562215334,0.000316657323887768,0.000328985815687258,0.000339428946496043,0.000347780033395578,0.000353870597701349,0.000357576015305525,0.000358819756715705,0.000357576015305525,0.000353870597701349,0.000347780033395578,0.000339428946496043,0.000328985815687258,0.000316657323887768,0.000302681562215334,0.000287320400107775,0.000270851362345075,0.000253559363144478,0.000235728637674578,0.000217635183758703,0.000199539983824891,0.000181683222782168,0.000164279655487224,0.000147515212062625,0.000131544864686908,0.000116491719354677,0.000102447243627186,8.94724988899932e-05,7.76002145479816e-05,6.68375224673307e-05,5.71691625312361e-05,4.85609734060124e-05,4.09634949529126e-05,3.43155282284531e-05,2.85475235626955e-05,2.35846946474647e-05,1.93497848991313e-05,1.57654398335851e-05],[2.18501782820052e-05,2.66323261710725e-05,3.22364554751534e-05,3.87498059302222e-05,4.62568277859949e-05,5.48360579717205e-05,6.45566036032019e-05,7.54743160945561e-05,8.76277711320385e-05,0.000101034200755928,0.000115685551515073,0.000131544864686908,0.000148543188488893,0.000166577235854486,0.000185507992942257,0.000205160461955206,0.000225324686744092,0.000245758161672284,0.000266189664960822,0.000286324489841087,0.000305850973848789,0.000324448152738576,0.00034179429546929,0.000357576015305525,0.000371497603848827,0.000383290203672741,0.000392720424140542,0.000399598015628657,0.000403782250010723,0.000405186708597256,0.000403782250010723,0.000399598015628657,0.000392720424140542,0.000383290203672741,0.000371497603848827,0.000357576015305525,0.00034179429546929,0.000324448152738576,0.000305850973848789,0.000286324489841087,0.000266189664960822,0.000245758161672284,0.000225324686744092,0.000205160461955206,0.000185507992942257,0.000166577235854486,0.000148543188488893,0.000131544864686908,0.000115685551515073,0.000101034200755928,8.76277711320385e-05,7.54743160945561e-05,6.45566036032019e-05,5.48360579717205e-05,4.62568277859949e-05,3.87498059302222e-05,3.22364554751534e-05,2.66323261710725e-05,2.18501782820052e-05,1.78026615207246e-05],[2.45029229422816e-05,2.98656526972564e-05,3.61501574149851e-05,4.3454268266477e-05,5.18726882758693e-05,6.14934892337295e-05,7.23941682804207e-05,8.46373575317391e-05,9.8266315997088e-05,0.00011330036779134,0.000129730481725344,0.000147515212062625,0.000166577235854486,0.000186800726355729,0.000208029792598302,0.000230068190987318,0.000252680475418874,0.000275594698595757,0.000298506710763929,0.00032108602595898,0.000342983143996156,0.000363838133616793,0.000383290203672741,0.000400987920371117,0.000416599674513718,0.000429823967745801,0.000440399074386536,0.000448111647349867,0.000452803873258186,0.000454378841667015,0.000452803873258186,0.000448111647349867,0.000440399074386536,0.000429823967745801,0.000416599674513718,0.000400987920371117,0.000383290203672741,0.000363838133616793,0.000342983143996156,0.00032108602595898,0.000298506710763929,0.000275594698595757,0.000252680475418874,0.000230068190987318,0.000208029792598302,0.000186800726355729,0.000166577235854486,0.000147515212062625,0.000129730481725344,0.00011330036779134,9.8266315997088e-05,8.46373575317391e-05,7.23941682804207e-05,6.14934892337295e-05,5.18726882758693e-05,4.3454268266477e-05,3.61501574149851e-05,2.98656526972564e-05,2.45029229422816e-05,1.99640130062044e-05],[2.72875704349673e-05,3.32597504176278e-05,4.02584609607684e-05,4.83926513099927e-05,5.77677870641453e-05,6.84819489784938e-05,8.06214413964486e-05,9.42560142933618e-05,0.000109433842871385,0.00012617644734453,0.000144473770169435,0.000164279655487224,0.000185507992942257,0.000208029792598302,0.00023167144717671,0.000256214410876621,0.000281396480198517,0.000306914802252365,0.00033243066202626,0.000357576015305525,0.000381961642774123,0.000405186708597256,0.00042684941932805,0.000446558402296434,0.000463944362403443,0.000478671537356126,0.000490448457521777,0.000499037529873165,0.000504263006248846,0.000506016962766197,0.000504263006248846,0.000499037529873165,0.000490448457521777,0.000478671537356126,0.000463944362403443,0.000446558402296434,0.00042684941932805,0.000405186708597256,0.000381961642774123,0.000357576015305525,0.00033243066202626,0.000306914802252365,0.000281396480198517,0.000256214410876621,0.00023167144717671,0.000208029792598302,0.000185507992942257,0.000164279655487224,0.000144473770169435,0.00012617644734453,0.000109433842871385,9.42560142933618e-05,8.06214413964486e-05,6.84819489784938e-05,5.77677870641453e-05,4.83926513099927e-05,4.02584609607684e-05,3.32597504176278e-05,2.72875704349673e-05,2.22328337053766e-05],[3.0178379202322e-05,3.67832439560669e-05,4.45233885468631e-05,5.35193041578842e-05,6.38876292726592e-05,7.5736835190675e-05,8.9162369222217e-05,0.00010424137056187,0.00012102711802836,0.00013954341165843,0.000159779128426005,0.000181683222782168,0.000205160461955206,0.000230068190987318,0.000256214410876621,0.000283357423371997,0.000311207247485378,0.000339428946496043,0.000367647922376107,0.000395457140798338,0.000422426149072188,0.000448111647349867,0.000472069276723363,0.000493866203024644,0.000513094008525181,0.000529381360723144,0.000542405912082214,0.00055190489928718,0.000557683955651099,0.000559623723979362,0.000557683955651099,0.00055190489928718,0.000542405912082214,0.000529381360723144,0.000513094008525181,0.000493866203024644,0.000472069276723363,0.000448111647349867,0.000422426149072188,0.000395457140798338,0.000367647922376107,0.000339428946496043,0.000311207247485378,0.000283357423371997,0.000256214410876621,0.000230068190987318,0.000205160461955206,0.000181683222782168,0.000159779128426005,0.00013954341165843,0.00012102711802836,0.00010424137056187,8.9162369222217e-05,7.5736835190675e-05,6.38876292726592e-05,5.35193041578842e-05,4.45233885468631e-05,3.67832439560669e-05,3.0178379202322e-05,2.45881504145653e-05],[3.3144465436485e-05,4.03984902492659e-05,4.88993760371714e-05,5.8779456476219e-05,7.01668338796569e-05,8.31806406638612e-05,9.79257051914008e-05,0.000114486748293424,0.000132922285304829,0.000153258455452311,0.000175483042481618,0.000199539983824891,0.000225324686744092,0.000252680475418874,0.000281396480198517,0.000311207247485378,0.00034179429546929,0.000372789768126945,0.000403782250010723,0.000434324701367435,0.000463944362403443,0.00049215436348322,0.000518466671821133,0.000542405912082214,0.000563523525144183,0.000581411682038166,0.000595716353255009,0.000606148949750197,0.000612496001479691,0.000614626420210262,0.000612496001479691,0.000606148949750197,0.000595716353255009,0.000581411682038166,0.000563523525144183,0.000542405912082214,0.000518466671821133,0.00049215436348322,0.000463944362403443,0.000434324701367435,0.000403782250010723,0.000372789768126945,0.00034179429546929,0.000311207247485378,0.000281396480198517,0.000252680475418874,0.000225324686744092,0.000199539983824891,0.000175483042481618,0.000153258455452311,0.000132922285304829,0.000114486748293424,9.79257051914008e-05,8.31806406638612e-05,7.01668338796569e-05,5.8779456476219e-05,4.88993760371714e-05,4.03984902492659e-05,3.3144465436485e-05,2.70048002279708e-05],[3.61501574149851e-05,4.40620104323993e-05,5.3333795490707e-05,6.41098468899587e-05,7.65298838480742e-05,9.07238422547564e-05,0.000106806056788768,0.000124868931154376,0.00014497628712514,0.000167156634352589,0.000191396648756564,0.000217635183758703,0.000245758161672284,0.000275594698595757,0.000306914802252365,0.000339428946496043,0.000372789768126945,0.000406596052252216,0.000440399074386536,0.00047371125516376,0.000506016962766197,0.000536785175989159,0.000565483604998067,0.000591593765244629,0.000614626420210262,0.000634136757126711,0.000649738641466932,0.00066111731360967,0.00066803994506927,0.00067036355993093,0.00066803994506927,0.00066111731360967,0.000649738641466932,0.000634136757126711,0.000614626420210262,0.000591593765244629,0.000565483604998067,0.000536785175989159,0.000506016962766197,0.00047371125516376,0.000440399074386536,0.000406596052252216,0.000372789768126945,0.000339428946496043,0.000306914802252365,0.000275594698595757,0.000245758161672284,0.000217635183758703,0.000191396648756564,0.000167156634352589,0.00014497628712514,0.000124868931154376,0.000106806056788768,9.07238422547564e-05,7.65298838480742e-05,6.41098468899587e-05,5.3333795490707e-05,4.40620104323993e-05,3.61501574149851e-05,2.94537192362364e-05],[3.91555593722571e-05,4.77251771200215e-05,5.77677870641453e-05,6.94397229707644e-05,8.28923198415467e-05,9.8266315997088e-05,0.000115685551515073,0.000135250112231564,0.000157029125846758,0.000181053472208294,0.000207308719517003,0.000235728637674578,0.000266189664960822,0.000298506710763929,0.00033243066202626,0.000367647922376107,0.000403782250010723,0.000440399074386536,0.000477012365580488,0.000513094008525181,0.00054808550351562,0.000581411682038166,0.000612496001479691,0.000640776872238212,0.000665724384323837,0.000686856744737517,0.000703755717032154,0.000716080373534971,0.000723578529186605,0.000726095321537729,0.000723578529186605,0.000716080373534971,0.000703755717032154,0.000686856744737517,0.000665724384323837,0.000640776872238212,0.000612496001479691,0.000581411682038166,0.00054808550351562,0.000513094008525181,0.000477012365580488,0.000440399074386536,0.000403782250010723,0.000367647922376107,0.00033243066202626,0.000298506710763929,0.000266189664960822,0.000235728637674578,0.000207308719517003,0.000181053472208294,0.000157029125846758,0.000135250112231564,0.000115685551515073,9.8266315997088e-05,8.28923198415467e-05,6.94397229707644e-05,5.77677870641453e-05,4.77251771200215e-05,3.91555593722571e-05,3.19024019466699e-05],[4.21173209837202e-05,5.13351523000597e-05,6.21373942629379e-05,7.46922058647048e-05,8.9162369222217e-05,0.000105699268228803,0.00012443611033664,0.000145480551964149,0.000168906949692739,0.000194748519149408,0.000222989736900759,0.000253559363144478,0.000286324489841087,0.00032108602595898,0.000357576015305525,0.000395457140798338,0.000434324701367435,0.00047371125516376,0.000513094008525181,0.00055190489928718,0.000589543182326414,0.000625390182867271,0.000658825748096529,0.000689245809271282,0.000716080373534971,0.000738811204634201,0.000756988430342091,0.000770245334911076,0.000778310657777834,0.000781017822558546,0.000778310657777834,0.000770245334911076,0.000756988430342091,0.000738811204634201,0.000716080373534971,0.000689245809271282,0.000658825748096529,0.000625390182867271,0.000589543182326414,0.00055190489928718,0.000513094008525181,0.00047371125516376,0.000434324701367435,0.000395457140798338,0.000357576015305525,0.00032108602595898,0.000286324489841087,0.000253559363144478,0.000222989736900759,0.000194748519149408,0.000168906949692739,0.000145480551964149,0.00012443611033664,0.000105699268228803,8.9162369222217e-05,7.46922058647048e-05,6.21373942629379e-05,5.13351523000597e-05,4.21173209837202e-05,3.4315528228453e-05],[4.49895978018586e-05,5.48360579717204e-05,6.63749809116695e-05,7.97859935603593e-05,9.5242979293932e-05,0.000112907645939844,0.000132922285304829,0.000155401895656881,0.000180425904476507,0.000208029792598302,0.000238196977936588,0.000270851362345075,0.000305850973848789,0.000342983143996156,0.000381961642774123,0.000422426149072188,0.000463944362403443,0.000506016962766197,0.00054808550351562,0.000589543182326414,0.00062974828503326,0.00066803994506927,0.000703755717032154,0.000736250336475995,0.000764914938715965,0.000789195945317777,0.000808612804098222,0.000822773790379538,0.000831389144429665,0.000834280929847704,0.000831389144429665,0.000822773790379538,0.000808612804098222,0.000789195945317777,0.000764914938715965,0.000736250336475995,0.000703755717032154,0.00066803994506927,0.00062974828503326,0.000589543182326414,0.00054808550351562,0.000506016962766197,0.000463944362403443,0.000422426149072188,0.000381961642774123,0.000342983143996156,0.000305850973848789,0.000270851362345075,0.000238196977936588,0.000208029792598302,0.000180425904476507,0.000155401895656881,0.000132922285304829,0.000112907645939844,9.5242979293932e-05,7.97859935603593e-05,6.63749809116695e-05,5.48360579717204e-05,4.49895978018586e-05,3.66557458379932e-05],[4.77251771200216e-05,5.81703484167626e-05,7.04108921866516e-05,8.46373575317392e-05,0.000101034200755928,0.000119772962283764,0.000141004585933616,0.000164851062409484,0.000191396648756564,0.000220678983211207,0.000252680475418874,0.000287320400107775,0.000324448152738576,0.000363838133616793,0.000405186708597256,0.000448111647349867,0.00049215436348322,0.000536785175989159,0.000581411682038166,0.000625390182867271,0.00066803994506927,0.000708659918279228,0.000746547377296177,0.000781017822558547,0.000811425367542667,0.000837182773639683,0.000857780268831626,0.000872802309736425,0.000881941517866377,0.000885009137449838,0.000881941517866377,0.000872802309736425,0.000857780268831626,0.000837182773639683,0.000811425367542667,0.000781017822558547,0.000746547377296177,0.000708659918279228,0.00066803994506927,0.000625390182867271,0.000581411682038166,0.000536785175989159,0.00049215436348322,0.000448111647349867,0.000405186708597256,0.000363838133616793,0.000324448152738576,0.000287320400107775,0.000252680475418874,0.000220678983211207,0.000191396648756564,0.000164851062409484,0.000141004585933616,0.000119772962283764,0.000101034200755928,8.46373575317392e-05,7.04108921866516e-05,5.81703484167626e-05,4.77251771200216e-05,3.88845877282426e-05],[5.0276733438604e-05,6.12803404380319e-05,7.41753068561679e-05,8.91623692222171e-05,0.000106435845524756,0.00012617644734453,0.000148543188488892,0.000173664581715198,0.000201629388747495,0.000232477260095017,0.000266189664960822,0.000302681562215334,0.00034179429546929,0.000383290203672741,0.00042684941932805,0.000472069276723363,0.000518466671821133,0.000565483604998067,0.000612496001479691,0.000658825748096529,0.000703755717032154,0.000746547377296177,0.000786460433519536,0.000822773790379538,0.000854807029980605,0.000881941517866376,0.000903640227808592,0.000919465400010154,0.000929093222445134,0.000932324847792503,0.000929093222445134,0.000919465400010154,0.000903640227808592,0.000881941517866376,0.000854807029980605,0.000822773790379538,0.000786460433519536,0.000746547377296177,0.000703755717032154,0.000658825748096529,0.000612496001479691,0.000565483604998067,0.000518466671821133,0.000472069276723363,0.00042684941932805,0.000383290203672741,0.00034179429546929,0.000302681562215334,0.000266189664960822,0.000232477260095017,0.000201629388747495,0.000173664581715198,0.000148543188488892,0.00012617644734453,0.000106435845524756,8.91623692222171e-05,7.41753068561679e-05,6.12803404380319e-05,5.0276733438604e-05,4.09634949529126e-05],[5.25981686758998e-05,6.41098468899587e-05,7.76002145479816e-05,9.32792768173774e-05,0.000111350323960676,0.000132002411581847,0.000155401895656881,0.000181683222782168,0.000210939253090302,0.000243211467879491,0.000278480480727496,0.000316657323887768,0.000357576015305525,0.000400987920371117,0.000446558402296434,0.000493866203024644,0.000542405912082214,0.000591593765244629,0.000640776872238212,0.000689245809271282,0.000736250336475995,0.000781017822558547,0.000822773790379538,0.00086076384937259,0.00089427616460345,0.000922663537313192,0.00094536414508008,0.000961920015357519,0.000971992384697803,0.000975373224372397,0.000971992384697803,0.000961920015357519,0.00094536414508008,0.000922663537313192,0.00089427616460345,0.00086076384937259,0.000822773790379538,0.000781017822558547,0.000736250336475995,0.000689245809271282,0.000640776872238212,0.000591593765244629,0.000542405912082214,0.000493866203024644,0.000446558402296434,0.000400987920371117,0.000357576015305525,0.000316657323887768,0.000278480480727496,0.000243211467879491,0.000210939253090302,0.000181683222782168,0.000155401895656881,0.000132002411581847,0.000111350323960676,9.32792768173774e-05,7.76002145479816e-05,6.41098468899587e-05,5.25981686758998e-05,4.28549086172989e-05],[5.4645985171118e-05,6.66058501781364e-05,8.06214413964487e-05,9.69109401725347e-05,0.000115685551515073,0.000137141691572972,0.000161452193097372,0.000188756737124659,0.000219151799132142,0.000252680475418874,0.000289322624786617,0.000328985815687258,0.000371497603848827,0.000416599674513718,0.000463944362403443,0.000513094008525181,0.000563523525144183,0.000614626420210262,0.000665724384323837,0.000716080373534971,0.000764914938715965,0.000811425367542667,0.000854807029980605,0.00089427616460345,0.000929093222445134,0.000958585807209864,0.000982170222915445,0.000999370666665693,0.00100983518585834,0.00101334765253493,0.00100983518585834,0.000999370666665693,0.000982170222915445,0.000958585807209864,0.000929093222445134,0.00089427616460345,0.000854807029980605,0.000811425367542667,0.000764914938715965,0.000716080373534971,0.000665724384323837,0.000614626420210262,0.000563523525144183,0.000513094008525181,0.000463944362403443,0.000416599674513718,0.000371497603848827,0.000328985815687258,0.000289322624786617,0.000252680475418874,0.000219151799132142,0.000188756737124659,0.000161452193097372,0.000137141691572972,0.000115685551515073,9.69109401725347e-05,8.06214413964487e-05,6.66058501781364e-05,5.4645985171118e-05,4.45233885468631e-05],[5.63806349465947e-05,6.87201468221651e-05,8.31806406638612e-05,9.99872236375526e-05,0.000119357805118574,0.000141495036173689,0.000166577235854486,0.000194748519149408,0.000226108423996155,0.000260701414717162,0.000298506710763929,0.000339428946496043,0.000383290203672741,0.000429823967745801,0.000478671537356126,0.000529381360723144,0.000581411682038166,0.000634136757126711,0.000686856744737517,0.000738811204634201,0.000789195945317777,0.000837182773639683,0.000881941517866376,0.000922663537313192,0.000958585807209864,0.000989014587110983,0.00101334765253493,0.00103109409698031,0.00104189079566998,0.00104551476000761,0.00104189079566998,0.00103109409698031,0.00101334765253493,0.000989014587110983,0.000958585807209864,0.000922663537313192,0.000881941517866376,0.000837182773639683,0.000789195945317777,0.000738811204634201,0.000686856744737517,0.000634136757126711,0.000581411682038166,0.000529381360723144,0.000478671537356126,0.000429823967745801,0.000383290203672741,0.000339428946496043,0.000298506710763929,0.000260701414717162,0.000226108423996155,0.000194748519149408,0.000166577235854486,0.000141495036173689,0.000119357805118574,9.99872236375526e-05,8.31806406638612e-05,6.87201468221651e-05,5.63806349465947e-05,4.59367126127471e-05],[5.77677870641453e-05,7.04108921866515e-05,8.52271625227473e-05,0.000102447243627186,0.000122294406174473,0.00014497628712514,0.00017067559277562,0.000199539983824892,0.00023167144717671,0.000267115541124499,0.000305850973848789,0.000347780033395578,0.000392720424140542,0.000440399074386536,0.000490448457521777,0.000542405912082214,0.000595716353255009,0.000649738641466932,0.000703755717032154,0.000756988430342091,0.000808612804098222,0.000857780268831626,0.000903640227808592,0.00094536414508008,0.000982170222915445,0.00101334765253493,0.00103827939272126,0.00105646245903184,0.00106752479260597,0.00107123791858233,0.00106752479260597,0.00105646245903184,0.00103827939272126,0.00101334765253493,0.000982170222915445,0.00094536414508008,0.000903640227808592,0.000857780268831626,0.000808612804098222,0.000756988430342091,0.000703755717032154,0.000649738641466932,0.000595716353255009,0.000542405912082214,0.000490448457521777,0.000440399074386536,0.000392720424140542,0.000347780033395578,0.000305850973848789,0.000267115541124499,0.00023167144717671,0.000199539983824892,0.00017067559277562,0.00014497628712514,0.000122294406174473,0.000102447243627186,8.52271625227473e-05,7.04108921866515e-05,5.77677870641453e-05,4.70669093236292e-05],[5.8779456476219e-05,7.16439763936501e-05,8.67197194958292e-05,0.00010424137056187,0.00012443611033664,0.000147515212062625,0.000173664581715198,0.000203034465929549,0.000235728637674578,0.00027179345309203,0.000311207247485378,0.000353870597701349,0.000399598015628657,0.000448111647349867,0.000499037529873165,0.00055190489928718,0.000606148949750197,0.00066111731360967,0.000716080373534971,0.000770245334911076,0.000822773790379538,0.000872802309736425,0.000919465400010154,0.000961920015357519,0.000999370666665693,0.00103109409698031,0.00105646245903184,0.00107496395976649,0.00108622002457167,0.00108999817737639,0.00108622002457167,0.00107496395976649,0.00105646245903184,0.00103109409698031,0.000999370666665693,0.000961920015357519,0.000919465400010154,0.000872802309736425,0.000822773790379538,0.000770245334911076,0.000716080373534971,0.00066111731360967,0.000606148949750197,0.00055190489928718,0.000499037529873165,0.000448111647349867,0.000399598015628657,0.000353870597701349,0.000311207247485378,0.00027179345309203,0.000235728637674578,0.000203034465929549,0.000173664581715198,0.000147515212062625,0.00012443611033664,0.00010424137056187,8.67197194958292e-05,7.16439763936501e-05,5.8779456476219e-05,4.78911775690215e-05],[5.93949425725652e-05,7.23941682804207e-05,8.76277711320385e-05,0.000105332893316438,0.000125739094412829,0.000149059859928855,0.000175483042481617,0.000205160461955206,0.000238196977936588,0.000274639431967723,0.000314465932498685,0.000357576015305525,0.000403782250010723,0.000452803873258186,0.000504263006248846,0.000557683955651099,0.000612496001479691,0.00066803994506927,0.000723578529186605,0.000778310657777834,0.000831389144429665,0.000881941517866377,0.000929093222445134,0.000971992384697803,0.00100983518585834,0.00104189079566998,0.00106752479260597,0.00108622002457167,0.00109759395285846,0.00110141166711305,0.00109759395285846,0.00108622002457167,0.00106752479260597,0.00104189079566998,0.00100983518585834,0.000971992384697803,0.000929093222445134,0.000881941517866377,0.000831389144429665,0.000778310657777834,0.000723578529186605,0.00066803994506927,0.000612496001479691,0.000557683955651099,0.000504263006248846,0.000452803873258186,0.000403782250010723,0.000357576015305525,0.000314465932498685,0.000274639431967723,0.000238196977936588,0.000205160461955206,0.000175483042481617,0.000149059859928855,0.000125739094412829,0.000105332893316438,8.76277711320385e-05,7.23941682804207e-05,5.93949425725652e-05,4.83926513099926e-05],[5.96015334692439e-05,7.26459738297078e-05,8.79325630726992e-05,0.000105699268228803,0.00012617644734453,0.00014957832848506,0.000176093417667247,0.000205874062843809,0.000239025488330347,0.000275594698595757,0.000315559725945668,0.000358819756715705,0.000405186708597256,0.000454378841667015,0.000506016962766197,0.000559623723979362,0.000614626420210262,0.00067036355993093,0.000726095321537729,0.000781017822558546,0.000834280929847704,0.000885009137449838,0.000932324847792503,0.000975373224372397,0.00101334765253493,0.00104551476000761,0.00107123791858233,0.00108999817737639,0.00110141166711305,0.00110524266036038,0.00110141166711305,0.00108999817737639,0.00107123791858233,0.00104551476000761,0.00101334765253493,0.000975373224372397,0.000932324847792503,0.000885009137449838,0.000834280929847704,0.000781017822558546,0.000726095321537729,0.00067036355993093,0.000614626420210262,0.000559623723979362,0.000506016962766197,0.000454378841667015,0.000405186708597256,0.000358819756715705,0.000315559725945668,0.000275594698595757,0.000239025488330347,0.000205874062843809,0.000176093417667247,0.00014957832848506,0.00012617644734453,0.000105699268228803,8.79325630726992e-05,7.26459738297078e-05,5.96015334692439e-05,4.85609734060124e-05],[5.93949425725652e-05,7.23941682804207e-05,8.76277711320385e-05,0.000105332893316438,0.000125739094412829,0.000149059859928855,0.000175483042481617,0.000205160461955206,0.000238196977936588,0.000274639431967723,0.000314465932498685,0.000357576015305525,0.000403782250010723,0.000452803873258186,0.000504263006248846,0.000557683955651099,0.000612496001479691,0.00066803994506927,0.000723578529186605,0.000778310657777834,0.000831389144429665,0.000881941517866377,0.000929093222445134,0.000971992384697803,0.00100983518585834,0.00104189079566998,0.00106752479260597,0.00108622002457167,0.00109759395285846,0.00110141166711305,0.00109759395285846,0.00108622002457167,0.00106752479260597,0.00104189079566998,0.00100983518585834,0.000971992384697803,0.000929093222445134,0.000881941517866377,0.000831389144429665,0.000778310657777834,0.000723578529186605,0.00066803994506927,0.000612496001479691,0.000557683955651099,0.000504263006248846,0.000452803873258186,0.000403782250010723,0.000357576015305525,0.000314465932498685,0.000274639431967723,0.000238196977936588,0.000205160461955206,0.000175483042481617,0.000149059859928855,0.000125739094412829,0.000105332893316438,8.76277711320385e-05,7.23941682804207e-05,5.93949425725652e-05,4.83926513099926e-05],[5.8779456476219e-05,7.16439763936501e-05,8.67197194958292e-05,0.00010424137056187,0.00012443611033664,0.000147515212062625,0.000173664581715198,0.000203034465929549,0.000235728637674578,0.00027179345309203,0.000311207247485378,0.000353870597701349,0.000399598015628657,0.000448111647349867,0.000499037529873165,0.00055190489928718,0.000606148949750197,0.00066111731360967,0.000716080373534971,0.000770245334911076,0.000822773790379538,0.000872802309736425,0.000919465400010154,0.000961920015357519,0.000999370666665693,0.00103109409698031,0.00105646245903184,0.00107496395976649,0.00108622002457167,0.00108999817737639,0.00108622002457167,0.00107496395976649,0.00105646245903184,0.00103109409698031,0.000999370666665693,0.000961920015357519,0.000919465400010154,0.000872802309736425,0.000822773790379538,0.000770245334911076,0.000716080373534971,0.00066111731360967,0.000606148949750197,0.00055190489928718,0.000499037529873165,0.000448111647349867,0.000399598015628657,0.000353870597701349,0.000311207247485378,0.00027179345309203,0.000235728637674578,0.000203034465929549,0.000173664581715198,0.000147515212062625,0.00012443611033664,0.00010424137056187,8.67197194958292e-05,7.16439763936501e-05,5.8779456476219e-05,4.78911775690215e-05],[5.77677870641453e-05,7.04108921866515e-05,8.52271625227473e-05,0.000102447243627186,0.000122294406174473,0.00014497628712514,0.00017067559277562,0.000199539983824892,0.00023167144717671,0.000267115541124499,0.000305850973848789,0.000347780033395578,0.000392720424140542,0.000440399074386536,0.000490448457521777,0.000542405912082214,0.000595716353255009,0.000649738641466932,0.000703755717032154,0.000756988430342091,0.000808612804098222,0.000857780268831626,0.000903640227808592,0.00094536414508008,0.000982170222915445,0.00101334765253493,0.00103827939272126,0.00105646245903184,0.00106752479260597,0.00107123791858233,0.00106752479260597,0.00105646245903184,0.00103827939272126,0.00101334765253493,0.000982170222915445,0.00094536414508008,0.000903640227808592,0.000857780268831626,0.000808612804098222,0.000756988430342091,0.000703755717032154,0.000649738641466932,0.000595716353255009,0.000542405912082214,0.000490448457521777,0.000440399074386536,0.000392720424140542,0.000347780033395578,0.000305850973848789,0.000267115541124499,0.00023167144717671,0.000199539983824892,0.00017067559277562,0.00014497628712514,0.000122294406174473,0.000102447243627186,8.52271625227473e-05,7.04108921866515e-05,5.77677870641453e-05,4.70669093236292e-05],[5.63806349465947e-05,6.87201468221651e-05,8.31806406638612e-05,9.99872236375526e-05,0.000119357805118574,0.000141495036173689,0.000166577235854486,0.000194748519149408,0.000226108423996155,0.000260701414717162,0.000298506710763929,0.000339428946496043,0.000383290203672741,0.000429823967745801,0.000478671537356126,0.000529381360723144,0.000581411682038166,0.000634136757126711,0.000686856744737517,0.000738811204634201,0.000789195945317777,0.000837182773639683,0.000881941517866376,0.000922663537313192,0.000958585807209864,0.000989014587110983,0.00101334765253493,0.00103109409698031,0.00104189079566998,0.00104551476000761,0.00104189079566998,0.00103109409698031,0.00101334765253493,0.000989014587110983,0.000958585807209864,0.000922663537313192,0.000881941517866376,0.000837182773639683,0.000789195945317777,0.000738811204634201,0.000686856744737517,0.000634136757126711,0.000581411682038166,0.000529381360723144,0.000478671537356126,0.000429823967745801,0.000383290203672741,0.000339428946496043,0.000298506710763929,0.000260701414717162,0.000226108423996155,0.000194748519149408,0.000166577235854486,0.000141495036173689,0.000119357805118574,9.99872236375526e-05,8.31806406638612e-05,6.87201468221651e-05,5.63806349465947e-05,4.59367126127471e-05],[5.4645985171118e-05,6.66058501781364e-05,8.06214413964487e-05,9.69109401725347e-05,0.000115685551515073,0.000137141691572972,0.000161452193097372,0.000188756737124659,0.000219151799132142,0.000252680475418874,0.000289322624786617,0.000328985815687258,0.000371497603848827,0.000416599674513718,0.000463944362403443,0.000513094008525181,0.000563523525144183,0.000614626420210262,0.000665724384323837,0.000716080373534971,0.000764914938715965,0.000811425367542667,0.000854807029980605,0.00089427616460345,0.000929093222445134,0.000958585807209864,0.000982170222915445,0.000999370666665693,0.00100983518585834,0.00101334765253493,0.00100983518585834,0.000999370666665693,0.000982170222915445,0.000958585807209864,0.000929093222445134,0.00089427616460345,0.000854807029980605,0.000811425367542667,0.000764914938715965,0.000716080373534971,0.000665724384323837,0.000614626420210262,0.000563523525144183,0.000513094008525181,0.000463944362403443,0.000416599674513718,0.000371497603848827,0.000328985815687258,0.000289322624786617,0.000252680475418874,0.000219151799132142,0.000188756737124659,0.000161452193097372,0.000137141691572972,0.000115685551515073,9.69109401725347e-05,8.06214413964487e-05,6.66058501781364e-05,5.4645985171118e-05,4.45233885468631e-05],[5.25981686758998e-05,6.41098468899587e-05,7.76002145479816e-05,9.32792768173774e-05,0.000111350323960676,0.000132002411581847,0.000155401895656881,0.000181683222782168,0.000210939253090302,0.000243211467879491,0.000278480480727496,0.000316657323887768,0.000357576015305525,0.000400987920371117,0.000446558402296434,0.000493866203024644,0.000542405912082214,0.000591593765244629,0.000640776872238212,0.000689245809271282,0.000736250336475995,0.000781017822558547,0.000822773790379538,0.00086076384937259,0.00089427616460345,0.000922663537313192,0.00094536414508008,0.000961920015357519,0.000971992384697803,0.000975373224372397,0.000971992384697803,0.000961920015357519,0.00094536414508008,0.000922663537313192,0.00089427616460345,0.00086076384937259,0.000822773790379538,0.000781017822558547,0.000736250336475995,0.000689245809271282,0.000640776872238212,0.000591593765244629,0.000542405912082214,0.000493866203024644,0.000446558402296434,0.000400987920371117,0.000357576015305525,0.000316657323887768,0.000278480480727496,0.000243211467879491,0.000210939253090302,0.000181683222782168,0.000155401895656881,0.000132002411581847,0.000111350323960676,9.32792768173774e-05,7.76002145479816e-05,6.41098468899587e-05,5.25981686758998e-05,4.28549086172989e-05],[5.0276733438604e-05,6.12803404380319e-05,7.41753068561679e-05,8.91623692222171e-05,0.000106435845524756,0.00012617644734453,0.000148543188488892,0.000173664581715198,0.000201629388747495,0.000232477260095017,0.000266189664960822,0.000302681562215334,0.00034179429546929,0.000383290203672741,0.00042684941932805,0.000472069276723363,0.000518466671821133,0.000565483604998067,0.000612496001479691,0.000658825748096529,0.000703755717032154,0.000746547377296177,0.000786460433519536,0.000822773790379538,0.000854807029980605,0.000881941517866376,0.000903640227808592,0.000919465400010154,0.000929093222445134,0.000932324847792503,0.000929093222445134,0.000919465400010154,0.000903640227808592,0.000881941517866376,0.000854807029980605,0.000822773790379538,0.000786460433519536,0.000746547377296177,0.000703755717032154,0.000658825748096529,0.000612496001479691,0.000565483604998067,0.000518466671821133,0.000472069276723363,0.00042684941932805,0.000383290203672741,0.00034179429546929,0.000302681562215334,0.000266189664960822,0.000232477260095017,0.000201629388747495,0.000173664581715198,0.000148543188488892,0.00012617644734453,0.000106435845524756,8.91623692222171e-05,7.41753068561679e-05,6.12803404380319e-05,5.0276733438604e-05,4.09634949529126e-05],[4.77251771200216e-05,5.81703484167626e-05,7.04108921866516e-05,8.46373575317392e-05,0.000101034200755928,0.000119772962283764,0.000141004585933616,0.000164851062409484,0.000191396648756564,0.000220678983211207,0.000252680475418874,0.000287320400107775,0.000324448152738576,0.000363838133616793,0.000405186708597256,0.000448111647349867,0.00049215436348322,0.000536785175989159,0.000581411682038166,0.000625390182867271,0.00066803994506927,0.000708659918279228,0.000746547377296177,0.000781017822558547,0.000811425367542667,0.000837182773639683,0.000857780268831626,0.000872802309736425,0.000881941517866377,0.000885009137449838,0.000881941517866377,0.000872802309736425,0.000857780268831626,0.000837182773639683,0.000811425367542667,0.000781017822558547,0.000746547377296177,0.000708659918279228,0.00066803994506927,0.000625390182867271,0.000581411682038166,0.000536785175989159,0.00049215436348322,0.000448111647349867,0.000405186708597256,0.000363838133616793,0.000324448152738576,0.000287320400107775,0.000252680475418874,0.000220678983211207,0.000191396648756564,0.000164851062409484,0.000141004585933616,0.000119772962283764,0.000101034200755928,8.46373575317392e-05,7.04108921866516e-05,5.81703484167626e-05,4.77251771200216e-05,3.88845877282426e-05],[4.49895978018586e-05,5.48360579717204e-05,6.63749809116695e-05,7.97859935603593e-05,9.5242979293932e-05,0.000112907645939844,0.000132922285304829,0.000155401895656881,0.000180425904476507,0.000208029792598302,0.000238196977936588,0.000270851362345075,0.000305850973848789,0.000342983143996156,0.000381961642774123,0.000422426149072188,0.000463944362403443,0.000506016962766197,0.00054808550351562,0.000589543182326414,0.00062974828503326,0.00066803994506927,0.000703755717032154,0.000736250336475995,0.000764914938715965,0.000789195945317777,0.000808612804098222,0.000822773790379538,0.000831389144429665,0.000834280929847704,0.000831389144429665,0.000822773790379538,0.000808612804098222,0.000789195945317777,0.000764914938715965,0.000736250336475995,0.000703755717032154,0.00066803994506927,0.00062974828503326,0.000589543182326414,0.00054808550351562,0.000506016962766197,0.000463944362403443,0.000422426149072188,0.000381961642774123,0.000342983143996156,0.000305850973848789,0.000270851362345075,0.000238196977936588,0.000208029792598302,0.000180425904476507,0.000155401895656881,0.000132922285304829,0.000112907645939844,9.5242979293932e-05,7.97859935603593e-05,6.63749809116695e-05,5.48360579717204e-05,4.49895978018586e-05,3.66557458379932e-05],[4.21173209837202e-05,5.13351523000597e-05,6.21373942629379e-05,7.46922058647048e-05,8.9162369222217e-05,0.000105699268228803,0.00012443611033664,0.000145480551964149,0.000168906949692739,0.000194748519149408,0.000222989736900759,0.000253559363144478,0.000286324489841087,0.00032108602595898,0.000357576015305525,0.000395457140798338,0.000434324701367435,0.00047371125516376,0.000513094008525181,0.00055190489928718,0.000589543182326414,0.000625390182867271,0.000658825748096529,0.000689245809271282,0.000716080373534971,0.000738811204634201,0.000756988430342091,0.000770245334911076,0.000778310657777834,0.000781017822558546,0.000778310657777834,0.000770245334911076,0.000756988430342091,0.000738811204634201,0.000716080373534971,0.000689245809271282,0.000658825748096529,0.000625390182867271,0.000589543182326414,0.00055190489928718,0.000513094008525181,0.00047371125516376,0.000434324701367435,0.000395457140798338,0.000357576015305525,0.00032108602595898,0.000286324489841087,0.000253559363144478,0.000222989736900759,0.000194748519149408,0.000168906949692739,0.000145480551964149,0.00012443611033664,0.000105699268228803,8.9162369222217e-05,7.46922058647048e-05,6.21373942629379e-05,5.13351523000597e-05,4.21173209837202e-05,3.4315528228453e-05],[3.91555593722571e-05,4.77251771200215e-05,5.77677870641453e-05,6.94397229707644e-05,8.28923198415467e-05,9.8266315997088e-05,0.000115685551515073,0.000135250112231564,0.000157029125846758,0.000181053472208294,0.000207308719517003,0.000235728637674578,0.000266189664960822,0.000298506710763929,0.00033243066202626,0.000367647922376107,0.000403782250010723,0.000440399074386536,0.000477012365580488,0.000513094008525181,0.00054808550351562,0.000581411682038166,0.000612496001479691,0.000640776872238212,0.000665724384323837,0.000686856744737517,0.000703755717032154,0.000716080373534971,0.000723578529186605,0.000726095321537729,0.000723578529186605,0.000716080373534971,0.000703755717032154,0.000686856744737517,0.000665724384323837,0.000640776872238212,0.000612496001479691,0.000581411682038166,0.00054808550351562,0.000513094008525181,0.000477012365580488,0.000440399074386536,0.000403782250010723,0.000367647922376107,0.00033243066202626,0.000298506710763929,0.000266189664960822,0.000235728637674578,0.000207308719517003,0.000181053472208294,0.000157029125846758,0.000135250112231564,0.000115685551515073,9.8266315997088e-05,8.28923198415467e-05,6.94397229707644e-05,5.77677870641453e-05,4.77251771200215e-05,3.91555593722571e-05,3.19024019466699e-05],[3.61501574149851e-05,4.40620104323993e-05,5.3333795490707e-05,6.41098468899587e-05,7.65298838480742e-05,9.07238422547564e-05,0.000106806056788768,0.000124868931154376,0.00014497628712514,0.000167156634352589,0.000191396648756564,0.000217635183758703,0.000245758161672284,0.000275594698595757,0.000306914802252365,0.000339428946496043,0.000372789768126945,0.000406596052252216,0.000440399074386536,0.00047371125516376,0.000506016962766197,0.000536785175989159,0.000565483604998067,0.000591593765244629,0.000614626420210262,0.000634136757126711,0.000649738641466932,0.00066111731360967,0.00066803994506927,0.00067036355993093,0.00066803994506927,0.00066111731360967,0.000649738641466932,0.000634136757126711,0.000614626420210262,0.000591593765244629,0.000565483604998067,0.000536785175989159,0.000506016962766197,0.00047371125516376,0.000440399074386536,0.000406596052252216,0.000372789768126945,0.000339428946496043,0.000306914802252365,0.000275594698595757,0.000245758161672284,0.000217635183758703,0.000191396648756564,0.000167156634352589,0.00014497628712514,0.000124868931154376,0.000106806056788768,9.07238422547564e-05,7.65298838480742e-05,6.41098468899587e-05,5.3333795490707e-05,4.40620104323993e-05,3.61501574149851e-05,2.94537192362364e-05],[3.3144465436485e-05,4.03984902492659e-05,4.88993760371714e-05,5.8779456476219e-05,7.01668338796569e-05,8.31806406638612e-05,9.79257051914008e-05,0.000114486748293424,0.000132922285304829,0.000153258455452311,0.000175483042481618,0.000199539983824891,0.000225324686744092,0.000252680475418874,0.000281396480198517,0.000311207247485378,0.00034179429546929,0.000372789768126945,0.000403782250010723,0.000434324701367435,0.000463944362403443,0.00049215436348322,0.000518466671821133,0.000542405912082214,0.000563523525144183,0.000581411682038166,0.000595716353255009,0.000606148949750197,0.000612496001479691,0.000614626420210262,0.000612496001479691,0.000606148949750197,0.000595716353255009,0.000581411682038166,0.000563523525144183,0.000542405912082214,0.000518466671821133,0.00049215436348322,0.000463944362403443,0.000434324701367435,0.000403782250010723,0.000372789768126945,0.00034179429546929,0.000311207247485378,0.000281396480198517,0.000252680475418874,0.000225324686744092,0.000199539983824891,0.000175483042481618,0.000153258455452311,0.000132922285304829,0.000114486748293424,9.79257051914008e-05,8.31806406638612e-05,7.01668338796569e-05,5.8779456476219e-05,4.88993760371714e-05,4.03984902492659e-05,3.3144465436485e-05,2.70048002279708e-05],[3.0178379202322e-05,3.67832439560669e-05,4.45233885468631e-05,5.35193041578842e-05,6.38876292726592e-05,7.5736835190675e-05,8.9162369222217e-05,0.00010424137056187,0.00012102711802836,0.00013954341165843,0.000159779128426005,0.000181683222782168,0.000205160461955206,0.000230068190987318,0.000256214410876621,0.000283357423371997,0.000311207247485378,0.000339428946496043,0.000367647922376107,0.000395457140798338,0.000422426149072188,0.000448111647349867,0.000472069276723363,0.000493866203024644,0.000513094008525181,0.000529381360723144,0.000542405912082214,0.00055190489928718,0.000557683955651099,0.000559623723979362,0.000557683955651099,0.00055190489928718,0.000542405912082214,0.000529381360723144,0.000513094008525181,0.000493866203024644,0.000472069276723363,0.000448111647349867,0.000422426149072188,0.000395457140798338,0.000367647922376107,0.000339428946496043,0.000311207247485378,0.000283357423371997,0.000256214410876621,0.000230068190987318,0.000205160461955206,0.000181683222782168,0.000159779128426005,0.00013954341165843,0.00012102711802836,0.00010424137056187,8.9162369222217e-05,7.5736835190675e-05,6.38876292726592e-05,5.35193041578842e-05,4.45233885468631e-05,3.67832439560669e-05,3.0178379202322e-05,2.45881504145653e-05],[2.72875704349673e-05,3.32597504176278e-05,4.02584609607684e-05,4.83926513099927e-05,5.77677870641453e-05,6.84819489784938e-05,8.06214413964486e-05,9.42560142933618e-05,0.000109433842871385,0.00012617644734453,0.000144473770169435,0.000164279655487224,0.000185507992942257,0.000208029792598302,0.00023167144717671,0.000256214410876621,0.000281396480198517,0.000306914802252365,0.00033243066202626,0.000357576015305525,0.000381961642774123,0.000405186708597256,0.00042684941932805,0.000446558402296434,0.000463944362403443,0.000478671537356126,0.000490448457521777,0.000499037529873165,0.000504263006248846,0.000506016962766197,0.000504263006248846,0.000499037529873165,0.000490448457521777,0.000478671537356126,0.000463944362403443,0.000446558402296434,0.00042684941932805,0.000405186708597256,0.000381961642774123,0.000357576015305525,0.00033243066202626,0.000306914802252365,0.000281396480198517,0.000256214410876621,0.00023167144717671,0.000208029792598302,0.000185507992942257,0.000164279655487224,0.000144473770169435,0.00012617644734453,0.000109433842871385,9.42560142933618e-05,8.06214413964486e-05,6.84819489784938e-05,5.77677870641453e-05,4.83926513099927e-05,4.02584609607684e-05,3.32597504176278e-05,2.72875704349673e-05,2.22328337053766e-05],[2.45029229422816e-05,2.98656526972564e-05,3.61501574149851e-05,4.3454268266477e-05,5.18726882758693e-05,6.14934892337295e-05,7.23941682804207e-05,8.46373575317391e-05,9.8266315997088e-05,0.00011330036779134,0.000129730481725344,0.000147515212062625,0.000166577235854486,0.000186800726355729,0.000208029792598302,0.000230068190987318,0.000252680475418874,0.000275594698595757,0.000298506710763929,0.00032108602595898,0.000342983143996156,0.000363838133616793,0.000383290203672741,0.000400987920371117,0.000416599674513718,0.000429823967745801,0.000440399074386536,0.000448111647349867,0.000452803873258186,0.000454378841667015,0.000452803873258186,0.000448111647349867,0.000440399074386536,0.000429823967745801,0.000416599674513718,0.000400987920371117,0.000383290203672741,0.000363838133616793,0.000342983143996156,0.00032108602595898,0.000298506710763929,0.000275594698595757,0.000252680475418874,0.000230068190987318,0.000208029792598302,0.000186800726355729,0.000166577235854486,0.000147515212062625,0.000129730481725344,0.00011330036779134,9.8266315997088e-05,8.46373575317391e-05,7.23941682804207e-05,6.14934892337295e-05,5.18726882758693e-05,4.3454268266477e-05,3.61501574149851e-05,2.98656526972564e-05,2.45029229422816e-05,1.99640130062044e-05],[2.18501782820052e-05,2.66323261710725e-05,3.22364554751534e-05,3.87498059302222e-05,4.62568277859949e-05,5.48360579717205e-05,6.45566036032019e-05,7.54743160945561e-05,8.76277711320385e-05,0.000101034200755928,0.000115685551515073,0.000131544864686908,0.000148543188488893,0.000166577235854486,0.000185507992942257,0.000205160461955206,0.000225324686744092,0.000245758161672284,0.000266189664960822,0.000286324489841087,0.000305850973848789,0.000324448152738576,0.00034179429546929,0.000357576015305525,0.000371497603848827,0.000383290203672741,0.000392720424140542,0.000399598015628657,0.000403782250010723,0.000405186708597256,0.000403782250010723,0.000399598015628657,0.000392720424140542,0.000383290203672741,0.000371497603848827,0.000357576015305525,0.00034179429546929,0.000324448152738576,0.000305850973848789,0.000286324489841087,0.000266189664960822,0.000245758161672284,0.000225324686744092,0.000205160461955206,0.000185507992942257,0.000166577235854486,0.000148543188488893,0.000131544864686908,0.000115685551515073,0.000101034200755928,8.76277711320385e-05,7.54743160945561e-05,6.45566036032019e-05,5.48360579717205e-05,4.62568277859949e-05,3.87498059302222e-05,3.22364554751534e-05,2.66323261710725e-05,2.18501782820052e-05,1.78026615207246e-05],[1.93497848991313e-05,2.35846946474647e-05,2.85475235626955e-05,3.43155282284531e-05,4.09634949529126e-05,4.85609734060124e-05,5.71691625312361e-05,6.68375224673307e-05,7.76002145479816e-05,8.94724988899932e-05,0.000102447243627186,0.000116491719354677,0.000131544864686908,0.000147515212062625,0.000164279655487224,0.000181683222782168,0.000199539983824891,0.000217635183758703,0.000235728637674578,0.000253559363144478,0.000270851362345075,0.000287320400107775,0.000302681562215334,0.000316657323887768,0.000328985815687258,0.000339428946496043,0.000347780033395578,0.000353870597701349,0.000357576015305525,0.000358819756715705,0.000357576015305525,0.000353870597701349,0.000347780033395578,0.000339428946496043,0.000328985815687258,0.000316657323887768,0.000302681562215334,0.000287320400107775,0.000270851362345075,0.000253559363144478,0.000235728637674578,0.000217635183758703,0.000199539983824891,0.000181683222782168,0.000164279655487224,0.000147515212062625,0.000131544864686908,0.000116491719354677,0.000102447243627186,8.94724988899932e-05,7.76002145479816e-05,6.68375224673307e-05,5.71691625312361e-05,4.85609734060124e-05,4.09634949529126e-05,3.43155282284531e-05,2.85475235626955e-05,2.35846946474647e-05,1.93497848991313e-05,1.57654398335851e-05],[1.70169359562755e-05,2.07412764770443e-05,2.51057767674959e-05,3.0178379202322e-05,3.60248537021319e-05,4.27063648889249e-05,5.02767334386039e-05,5.8779456476219e-05,6.82445767764334e-05,7.86855146657106e-05,9.00959981099861e-05,0.000102447243627186,0.000115685551515073,0.000129730481725344,0.000144473770169435,0.000159779128426005,0.000175483042481618,0.000191396648756564,0.000207308719517003,0.000222989736900759,0.000238196977936588,0.000252680475418874,0.000266189664960822,0.000278480480727496,0.000289322624786617,0.000298506710763929,0.000305850973848789,0.000311207247485378,0.000314465932498685,0.000315559725945668,0.000314465932498685,0.000311207247485378,0.000305850973848789,0.000298506710763929,0.000289322624786617,0.000278480480727496,0.000266189664960822,0.000252680475418874,0.000238196977936588,0.000222989736900759,0.000207308719517003,0.000191396648756564,0.000175483042481618,0.000159779128426005,0.000144473770169435,0.000129730481725344,0.000115685551515073,0.000102447243627186,9.00959981099861e-05,7.86855146657106e-05,6.82445767764334e-05,5.8779456476219e-05,5.02767334386039e-05,4.27063648889249e-05,3.60248537021319e-05,3.0178379202322e-05,2.51057767674959e-05,2.07412764770443e-05,1.70169359562755e-05,1.38647267330955e-05],[1.48617740170699e-05,1.81144340332153e-05,2.19261788256264e-05,2.6356345998996e-05,3.14623758410308e-05,3.72976865929657e-05,4.3909282646471e-05,5.13351523000598e-05,5.96015334692439e-05,6.87201468221652e-05,7.86855146657106e-05,8.94724988899932e-05,0.000101034200755928,0.00011330036779134,0.00012617644734453,0.00013954341165843,0.000153258455452311,0.000167156634352589,0.000181053472208294,0.000194748519149408,0.000208029792598302,0.000220678983211207,0.000232477260095017,0.000243211467879491,0.000252680475418874,0.000260701414717162,0.000267115541124499,0.00027179345309203,0.000274639431967723,0.000275594698595757,0.000274639431967723,0.00027179345309203,0.000267115541124499,0.000260701414717162,0.000252680475418874,0.000243211467879491,0.000232477260095017,0.000220678983211207,0.000208029792598302,0.000194748519149408,0.000181053472208294,0.000167156634352589,0.000153258455452311,0.00013954341165843,0.00012617644734453,0.00011330036779134,0.000101034200755928,8.94724988899932e-05,7.86855146657106e-05,6.87201468221652e-05,5.96015334692439e-05,5.13351523000598e-05,4.3909282646471e-05,3.72976865929657e-05,3.14623758410308e-05,2.6356345998996e-05,2.19261788256264e-05,1.81144340332153e-05,1.48617740170699e-05,1.21087859791647e-05],[1.28897355790431e-05,1.57107936498014e-05,1.90167504226969e-05,2.28590698772992e-05,2.72875704349673e-05,3.23485821639572e-05,3.80828723494522e-05,4.45233885468631e-05,5.16928871103578e-05,5.96015334692439e-05,6.82445767764334e-05,7.76002145479816e-05,8.76277711320385e-05,9.8266315997088e-05,0.000109433842871385,0.00012102711802836,0.000132922285304829,0.00014497628712514,0.000157029125846758,0.000168906949692739,0.000180425904476507,0.000191396648756564,0.000201629388747495,0.000210939253090302,0.000219151799132142,0.000226108423996155,0.00023167144717671,0.000235728637674578,0.000238196977936588,0.000239025488330347,0.000238196977936588,0.000235728637674578,0.00023167144717671,0.000226108423996155,0.000219151799132142,0.000210939253090302,0.000201629388747495,0.000191396648756564,0.000180425904476507,0.000168906949692739,0.000157029125846758,0.00014497628712514,0.000132922285304829,0.00012102711802836,0.000109433842871385,9.8266315997088e-05,8.76277711320385e-05,7.76002145479816e-05,6.82445767764334e-05,5.96015334692439e-05,5.16928871103578e-05,4.45233885468631e-05,3.80828723494522e-05,3.23485821639572e-05,2.72875704349673e-05,2.28590698772992e-05,1.90167504226969e-05,1.57107936498014e-05,1.28897355790431e-05,1.0502047015073e-05],[1.11020052764101e-05,1.35317992310307e-05,1.6379239297679e-05,1.96886517054869e-05,2.35029453545942e-05,2.78620246060391e-05,3.2801002562991e-05,3.8348257149246e-05,4.45233885468631e-05,5.13351523000598e-05,5.8779456476219e-05,6.68375224673307e-05,7.54743160945561e-05,8.46373575317391e-05,9.42560142933618e-05,0.00010424137056187,0.000114486748293424,0.000124868931154376,0.000135250112231564,0.000145480551964149,0.000155401895656881,0.000164851062409484,0.000173664581715198,0.000181683222782168,0.000188756737124659,0.000194748519149408,0.000199539983824892,0.000203034465929549,0.000205160461955206,0.000205874062843809,0.000205160461955206,0.000203034465929549,0.000199539983824892,0.000194748519149408,0.000188756737124659,0.000181683222782168,0.000173664581715198,0.000164851062409484,0.000155401895656881,0.000145480551964149,0.000135250112231564,0.000124868931154376,0.000114486748293424,0.00010424137056187,9.42560142933618e-05,8.46373575317391e-05,7.54743160945561e-05,6.68375224673307e-05,5.8779456476219e-05,5.13351523000598e-05,4.45233885468631e-05,3.8348257149246e-05,3.2801002562991e-05,2.78620246060391e-05,2.35029453545942e-05,1.96886517054869e-05,1.6379239297679e-05,1.35317992310307e-05,1.11020052764101e-05,9.04547503394966e-06],[9.49604833691972e-06,1.15743612423243e-05,1.40099057981198e-05,1.68405962372715e-05,2.01031344870138e-05,2.38316525561e-05,2.80561842732531e-05,3.2801002562991e-05,3.80828723494522e-05,4.3909282646471e-05,5.02767334386039e-05,5.71691625312361e-05,6.45566036032019e-05,7.23941682804207e-05,8.06214413964486e-05,8.9162369222217e-05,9.79257051914008e-05,0.000106806056788768,0.000115685551515073,0.00012443611033664,0.000132922285304829,0.000141004585933616,0.000148543188488892,0.000155401895656881,0.000161452193097372,0.000166577235854486,0.00017067559277562,0.000173664581715198,0.000175483042481617,0.000176093417667247,0.000175483042481617,0.000173664581715198,0.00017067559277562,0.000166577235854486,0.000161452193097372,0.000155401895656881,0.000148543188488892,0.000141004585933616,0.000132922285304829,0.00012443611033664,0.000115685551515073,0.000106806056788768,9.79257051914008e-05,8.9162369222217e-05,8.06214413964486e-05,7.23941682804207e-05,6.45566036032019e-05,5.71691625312361e-05,5.02767334386039e-05,4.3909282646471e-05,3.80828723494522e-05,3.2801002562991e-05,2.80561842732531e-05,2.38316525561e-05,2.01031344870138e-05,1.68405962372715e-05,1.40099057981198e-05,1.15743612423243e-05,9.49604833691972e-06,7.73700480356479e-06],[8.06619041339657e-06,9.83156344424305e-06,1.19003783291651e-05,1.43048404036478e-05,1.70761252391615e-05,2.02432254515847e-05,2.38316525561e-05,2.78620246060391e-05,3.23485821639572e-05,3.72976865929657e-05,4.27063648889249e-05,4.85609734060124e-05,5.48360579717205e-05,6.14934892337295e-05,6.84819489784938e-05,7.5736835190675e-05,8.31806406638612e-05,9.07238422547564e-05,9.8266315997088e-05,0.000105699268228803,0.000112907645939844,0.000119772962283764,0.00012617644734453,0.000132002411581847,0.000137141691572972,0.000141495036173689,0.00014497628712514,0.000147515212062625,0.000149059859928855,0.00014957832848506,0.000149059859928855,0.000147515212062625,0.00014497628712514,0.000141495036173689,0.000137141691572972,0.000132002411581847,0.00012617644734453,0.000119772962283764,0.000112907645939844,0.000105699268228803,9.8266315997088e-05,9.07238422547564e-05,8.31806406638612e-05,7.5736835190675e-05,6.84819489784938e-05,6.14934892337295e-05,5.48360579717205e-05,4.85609734060124e-05,4.27063648889249e-05,3.72976865929657e-05,3.23485821639572e-05,2.78620246060391e-05,2.38316525561e-05,2.02432254515847e-05,1.70761252391615e-05,1.43048404036478e-05,1.19003783291651e-05,9.83156344424305e-06,8.06619041339657e-06,6.57201309014831e-06],[6.80421596012514e-06,8.29339223001709e-06,1.00385361625421e-05,1.20668144927362e-05,1.44045253006211e-05,1.70761252391615e-05,2.01031344870138e-05,2.35029453545942e-05,2.72875704349673e-05,3.14623758410308e-05,3.60248537021319e-05,4.09634949529126e-05,4.62568277859949e-05,5.18726882758693e-05,5.77677870641453e-05,6.38876292726592e-05,7.01668338796569e-05,7.65298838480742e-05,8.28923198415467e-05,8.9162369222217e-05,9.5242979293932e-05,0.000101034200755928,0.000106435845524756,0.000111350323960676,0.000115685551515073,0.000119357805118574,0.000122294406174473,0.00012443611033664,0.000125739094412829,0.00012617644734453,0.000125739094412829,0.00012443611033664,0.000122294406174473,0.000119357805118574,0.000115685551515073,0.000111350323960676,0.000106435845524756,0.000101034200755928,9.5242979293932e-05,8.9162369222217e-05,8.28923198415467e-05,7.65298838480742e-05,7.01668338796569e-05,6.38876292726592e-05,5.77677870641453e-05,5.18726882758693e-05,4.62568277859949e-05,4.09634949529126e-05,3.60248537021319e-05,3.14623758410308e-05,2.72875704349673e-05,2.35029453545942e-05,2.01031344870138e-05,1.70761252391615e-05,1.44045253006211e-05,1.20668144927362e-05,1.00385361625421e-05,8.29339223001709e-06,6.80421596012514e-06,5.54380619181398e-06],[5.69995956449911e-06,6.94745737652323e-06,8.40938185215977e-06,1.01084908362672e-05,1.20668144927362e-05,1.43048404036478e-05,1.68405962372715e-05,1.96886517054869e-05,2.28590698772992e-05,2.6356345998996e-05,3.0178379202322e-05,3.43155282284531e-05,3.87498059302222e-05,4.3454268266477e-05,4.83926513099927e-05,5.35193041578842e-05,5.8779456476219e-05,6.41098468899587e-05,6.94397229707644e-05,7.46922058647048e-05,7.97859935603593e-05,8.46373575317392e-05,8.91623692222171e-05,9.32792768173774e-05,9.69109401725347e-05,9.99872236375526e-05,0.000102447243627186,0.00010424137056187,0.000105332893316438,0.000105699268228803,0.000105332893316438,0.00010424137056187,0.000102447243627186,9.99872236375526e-05,9.69109401725347e-05,9.32792768173774e-05,8.91623692222171e-05,8.46373575317392e-05,7.97859935603593e-05,7.46922058647048e-05,6.94397229707644e-05,6.41098468899587e-05,5.8779456476219e-05,5.35193041578842e-05,4.83926513099927e-05,4.3454268266477e-05,3.87498059302222e-05,3.43155282284531e-05,3.0178379202322e-05,2.6356345998996e-05,2.28590698772992e-05,1.96886517054869e-05,1.68405962372715e-05,1.43048404036478e-05,1.20668144927362e-05,1.01084908362672e-05,8.40938185215977e-06,6.94745737652323e-06,5.69995956449911e-06,4.64410173221167e-06],[4.74186872166605e-06,5.77967798824878e-06,6.99587151839852e-06,8.40938185215977e-06,1.00385361625421e-05,1.19003783291651e-05,1.40099057981198e-05,1.6379239297679e-05,1.90167504226969e-05,2.19261788256264e-05,2.51057767674959e-05,2.85475235626955e-05,3.22364554751534e-05,3.61501574149851e-05,4.02584609607684e-05,4.45233885468631e-05,4.88993760371714e-05,5.3333795490707e-05,5.77677870641453e-05,6.21373942629379e-05,6.63749809116695e-05,7.04108921866516e-05,7.41753068561679e-05,7.76002145479816e-05,8.06214413964487e-05,8.31806406638612e-05,8.52271625227473e-05,8.67197194958292e-05,8.76277711320385e-05,8.79325630726992e-05,8.76277711320385e-05,8.67197194958292e-05,8.52271625227473e-05,8.31806406638612e-05,8.06214413964487e-05,7.76002145479816e-05,7.41753068561679e-05,7.04108921866516e-05,6.63749809116695e-05,6.21373942629379e-05,5.77677870641453e-05,5.3333795490707e-05,4.88993760371714e-05,4.45233885468631e-05,4.02584609607684e-05,3.61501574149851e-05,3.22364554751534e-05,2.85475235626955e-05,2.51057767674959e-05,2.19261788256264e-05,1.90167504226969e-05,1.6379239297679e-05,1.40099057981198e-05,1.19003783291651e-05,1.00385361625421e-05,8.40938185215977e-06,6.99587151839852e-06,5.77967798824878e-06,4.74186872166605e-06,3.86348718706127e-06],[3.91752109822229e-06,4.77491296974167e-06,5.77967798824878e-06,6.94745737652323e-06,8.29339223001709e-06,9.83156344424305e-06,1.15743612423243e-05,1.35317992310307e-05,1.57107936498014e-05,1.81144340332153e-05,2.07412764770443e-05,2.35846946474647e-05,2.66323261710725e-05,2.98656526972564e-05,3.32597504176278e-05,3.67832439560669e-05,4.03984902492659e-05,4.40620104323993e-05,4.77251771200215e-05,5.13351523000597e-05,5.48360579717204e-05,5.81703484167626e-05,6.12803404380319e-05,6.41098468899587e-05,6.66058501781364e-05,6.87201468221651e-05,7.04108921866515e-05,7.16439763936501e-05,7.23941682804207e-05,7.26459738297078e-05,7.23941682804207e-05,7.16439763936501e-05,7.04108921866515e-05,6.87201468221651e-05,6.66058501781364e-05,6.41098468899587e-05,6.12803404380319e-05,5.81703484167626e-05,5.48360579717204e-05,5.13351523000597e-05,4.77251771200215e-05,4.40620104323993e-05,4.03984902492659e-05,3.67832439560669e-05,3.32597504176278e-05,2.98656526972564e-05,2.66323261710725e-05,2.35846946474647e-05,2.07412764770443e-05,1.81144340332153e-05,1.57107936498014e-05,1.35317992310307e-05,1.15743612423243e-05,9.83156344424305e-06,8.29339223001709e-06,6.94745737652323e-06,5.77967798824878e-06,4.77491296974167e-06,3.91752109822229e-06,3.19184133016366e-06],[3.21408403718971e-06,3.91752109822229e-06,4.74186872166605e-06,5.69995956449911e-06,6.80421596012514e-06,8.06619041339657e-06,9.49604833691972e-06,1.11020052764101e-05,1.28897355790431e-05,1.48617740170699e-05,1.70169359562755e-05,1.93497848991313e-05,2.18501782820052e-05,2.45029229422816e-05,2.72875704349673e-05,3.0178379202322e-05,3.3144465436485e-05,3.61501574149851e-05,3.91555593722571e-05,4.21173209837202e-05,4.49895978018586e-05,4.77251771200216e-05,5.0276733438604e-05,5.25981686758998e-05,5.4645985171118e-05,5.63806349465947e-05,5.77677870641453e-05,5.8779456476219e-05,5.93949425725652e-05,5.96015334692439e-05,5.93949425725652e-05,5.8779456476219e-05,5.77677870641453e-05,5.63806349465947e-05,5.4645985171118e-05,5.25981686758998e-05,5.0276733438604e-05,4.77251771200216e-05,4.49895978018586e-05,4.21173209837202e-05,3.91555593722571e-05,3.61501574149851e-05,3.3144465436485e-05,3.0178379202322e-05,2.72875704349673e-05,2.45029229422816e-05,2.18501782820052e-05,1.93497848991313e-05,1.70169359562755e-05,1.48617740170699e-05,1.28897355790431e-05,1.11020052764101e-05,9.49604833691972e-06,8.06619041339657e-06,6.80421596012514e-06,5.69995956449911e-06,4.74186872166605e-06,3.91752109822229e-06,3.21408403718971e-06,2.61870861989146e-06],[2.61870861989146e-06,3.19184133016366e-06,3.86348718706127e-06,4.64410173221167e-06,5.54380619181398e-06,6.57201309014831e-06,7.73700480356479e-06,9.04547503394966e-06,1.0502047015073e-05,1.21087859791647e-05,1.38647267330955e-05,1.57654398335851e-05,1.78026615207246e-05,1.99640130062044e-05,2.22328337053766e-05,2.45881504145653e-05,2.70048002279708e-05,2.94537192362364e-05,3.19024019466699e-05,3.4315528228453e-05,3.66557458379932e-05,3.88845877282426e-05,4.09634949529126e-05,4.28549086172989e-05,4.45233885468631e-05,4.59367126127471e-05,4.70669093236292e-05,4.78911775690215e-05,4.83926513099926e-05,4.85609734060124e-05,4.83926513099926e-05,4.78911775690215e-05,4.70669093236292e-05,4.59367126127471e-05,4.45233885468631e-05,4.28549086172989e-05,4.09634949529126e-05,3.88845877282426e-05,3.66557458379932e-05,3.4315528228453e-05,3.19024019466699e-05,2.94537192362364e-05,2.70048002279708e-05,2.45881504145653e-05,2.22328337053766e-05,1.99640130062044e-05,1.78026615207246e-05,1.57654398335851e-05,1.38647267330955e-05,1.21087859791647e-05,1.0502047015073e-05,9.04547503394966e-06,7.73700480356479e-06,6.57201309014831e-06,5.54380619181398e-06,4.64410173221167e-06,3.86348718706127e-06,3.19184133016366e-06,2.61870861989146e-06,2.13362026522802e-06]],"type":"surface","showlegend":false,"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<h1 id="assessing-mcmc-samples">Assessing MCMC samples</h1>
+<p>หัวข้อนี้จะกล่าวถึงการประเมินประสิทธิภาพของลูกโซ่มาร์คอฟที่จำลองขึ้นจากอัลกอริทึมในข้างต้นว่า มีคุณสมบัติที่ดีเพียงพอจะใช้เป็นตัวอย่างสำหรับอนุมานไปยังพารามิเตอร์ภายในโมเดลการวิเคราะห์ได้หรือไม่ การตรวจสอบในส่วนนี้เป็นการดำเนินงานที่จะไม่พบในการวิเคราะห์ข้อมูลด้วยสถิติแบบดั้งเดิม คำถามสำคัญที่ผู้วิเคราะห์ต้องการคำตอบในส่วนนี้คือ กระบวนการสุ่มที่สร้างจากอัลกอริทึม MCMC มีคุณสมบัติลู่เข้าสู่การแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์แล้วหรือไม่ หรือตัวอย่างพารามิเตอร์ที่จำลองขึ้นจากอัลกอริทึมดังกล่าว มีความเป็นตัวแทนของการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ดังกล่าวแล้วหรือไม่นั่นเอง</p>
+<p>การตรวจสอบดังกล่าวประกอบด้วยการตรวจสอบการลู่เข้า (convergence) อัตราการยอมรับ (acceptance rates) อัตสหสัมพันธ์ระหว่างลูกโซ่ (autocorrelation)</p>
+<h2 id="convergence">Convergence</h2>
+<p>การลู่เข้าของกระบวนการ MCMC คือการที่ตัวอย่างสุ่มของพารามิเตอร์ที่จำลองจากอัลกอริทึมอยู่ในสถานะที่ถูกสุ่่มจากการแจกแจงความน่าจะเป็นเป้าหมาย (target distribution) หรือการแจกแจงความน่าจะเป็นภายหลัง (posterior distribution) ที่ต้องการ การลู่เข้าดังกล่าวแตกต่างจากการลู่เข้าทั่ว ๆ ไป กล่าวคือแทนที่จะเป็นการลู่เข้าไปสู่คำตอบที่เป็นค่าคงที่ การลู่เข้าของกระบวนการ MCMC เป็นการลู่เข้าสู่การแจกแจงความน่าจะเป็น</p>
+<p>โดยธรรมชาติของกระบวนการ MCMC เมื่อกำหนดค่าเริ่มต้นแล้ว กระบวนการจะต้องการเวลาต้องดำเนินการทวนซ้ำไปจำนวนหนึ่ง ตัวอย่างที่สุ่มจากกระบวนการจึงจะถูกสุ่มจากการแจกแจงที่เป็นสถานะคงที่ของกระบวนการ การแจกแจงสถานะคงที่นี้อาจะเป็นการแจกแจงความน่าจะเป็นภายหลังหรือไม่ก็ได้ (ประเด็นนี้จะกล่าวถึงอีกครั้งภายหลัง)</p>
+<h2 id="การตรวจสอบแนวโนมการลเขาดวย-trace-plot-และ-density-plot">การตรวจสอบแนวโน้มการลู่เข้าด้วย Trace plot และ Density plot</h2>
+<p><strong>แผนภาพร่องรอย (trace plot)</strong> และแผนภาพโค้งความหนาแน่น (density plot) เป็นเครื่องมือพื้นฐานอย่างแรก ๆ ที่ผู้วิเคราะห์มักใช้พิจารณาแนวโน้มการลู่เข้าของกระบวนการสุ่มที่สร้างจากอัลกอริทึม MCMC รูปด้านล่างแสดงตัวอย่าง Trace plot ในลักษณะที่มีแนวโน้มลู่เข้าและไม่ลู่เข้าสู่การแจกแจงความน่าจะเป็นภายหลัง</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-13-1.png" width="1152" /></p>
+</div>
+<p><strong>Density plot (และ Histogram)</strong> เป็นทัศนภาพอีกประเภทหนึ่งที่ให้สารสนเทศคล้ายคลึงกับ trace plot จุดเด่นคือเป็นแผนภาพที่แสดงรูปทรงการแจกแจงของการแจกแจงความน่าจะเป็นภายหลังที่สร้างขึ้นจากกระบวนการสุ่มด้วย รูปด้านล่างแสดงตัวอย่าง density plot ของตัวอย่างสุ่มพารามิเตอร์ <span class="math inline">\(\mu\)</span> และ <span class="math inline">\(\sigma\)</span></p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-14-1.png" width="1152" /></p>
+</div>
+<p>ในโปรแกรม R มี package-coda ที่ช่วยอำนวยความสะดวกแก่ผู้วิเคราะห์ในการตรวจสอบ/วินิจฉัยการลู่เข้าของลูกโซ่มาร์คอฟที่สร้างขึ้นจากอัลกอริทึม MCMC</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>หากตัวอย่างสุ่มของพารามิเตอร์ (ลูกโซ่มาร์คอฟ) ไม่ได้บันทึกไว้ในรูปแบบ mcmc object ผู้วิเคราะห์จำเป็นต้องเปลี่ยนตัวแปรที่บันทึกข้อมูลดังกล่าวให้อยู่ในรูปแบบดังกล่าวด้วยฟังก์ชัน <code>mcmc(x, start=1, end=numeric(0), thin=1)</code></p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-16-1.png" width="1152" /><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-16-2.png" width="1152" /></p>
+</div>
+<p>อย่างที่กล่าวไว้ในข้างต้น แผนภาพร่องรอย และแผนภาพความหนาแน่น เป็นเครื่องมือที่ใช้สำหรับตรวจสอบพฤติกรรมของตัวอย่างหรือลูกโซ่มาร์คอฟที่จำลองขึ้นว่ามีแนวโน้มที่จะลู่เข้าไปสู่การแจกแจงสถานะคงที่หรือไม่ อย่างไรก็ตามเครื่องมือดังกล่าวไม่สามารถที่จะใช้ยืนยันได้ 100% ว่าการแจกแจงสถานะคงที่ดังกล่าวนั้นเป็นการแจกแจงความน่าจะเป็นภายหลังที่แท้จริงหรือไม่ การจะยืนยันหรือพิสูจน์ข้อสงสัยดังกล่าว ผู้วิเคราะห์จำเป็นต้องมีหลักฐานอื่น ๆ มาเพิ่มเติมเพื่อสร้างข้อสรุปในประเด็นดังกล่าว</p>
+<h2 id="autocorrelation">Autocorrelation</h2>
+<p>กระบวนการสุ่มที่สร้างขึ้นจากอัลกอริทึม MCMC จะให้ตัวอย่างสุ่มที่มีความสัมพันธ์ระหว่างกัน ทั้งนี้เป็นเพราะตัวอย่างสุ่มที่สร้างขึ้นใหม่นั้น จะขึ้นกับตัวอย่างที่ถูกสร้างไว้ในรอบก่อนหน้าเสมอ ลักษณะดังกล่าวจึงทำให้เกิดอัตสหสัมพันธ์ขึ้นระหว่างตัวอย่างขึ้น ซึ่งมีมากน้อยต่างกันไปตามปัจจัยต่าง ๆ ที่เกี่ยวข้อง</p>
+<p>ในการอนุมานเชิงสถิติต่าง ๆ เกี่ยวกับพารามิเตอร์ในโมเดล ผู้วิเคราะห์จะใช้ตัวอย่างสุ่มของพารามิเตอร์ที่จำลองขึ้นจากกระบวนการ MCMC ดังกล่าว เพื่อวิเคราะห์และสร้างข้อสรุปซึ่งการวิเคราะห์ต่าง ๆ นี้ต้องการความเป็นอิสระของตัวอย่างสุ่มเป็นเงื่อนไขจำเป็นในการวิเคราะห์ การเกิดอัตสหสัมพันธ์ดังกล่าวจึงอาจเป็นปัญหาในการขั้นตอนของการอนุมานเชิงสถิติได้</p>
+<p>นอกจากนี้หากกระบวนการสุ่มดังกล่าวมีอัตสหสัมพันธ์ที่สูงในช่วงที่กว้าง ตัวอย่างที่สุ่มได้ในแต่ละรอบของการทวนซ้ำจะมีความสัมพันธ์กันสูงและย่อมมีค่าอยู่ในบริเวณที่ใกล้เคียงกัน ส่งผลให้พฤติกรรมของกระบวนการสุ่มดังกล่าวมีแนวโน้มการเดินที่ช้าและใช้เวลานานกว่ากระบวนการดังกล่าวจะลู่เข้าไปสู่การแจกแจงสถานะคงตัว</p>
+<p>จากเหตุผลในข้างต้น ปัญหาอัตสหสัมพันธ์ของกระบวนการ MCMC จึงเป็นปัญหาที่ต้องตรวจสอบและแก้ไขก่อนที่จะนำตัวอย่างสุ่มดังกล่าวไปใช้ในขั้นการอนุมานเชิงสถิติ</p>
+<p>ค่าอัตสหสัมพันธ์สามารถคำนวณได้โดยใช้สูตรเดียวกับสหสัมพันธ์ของเพียร์สัน โดยเป็นการหาสหสัมพันธ์ระหว่างข้อมูลสองชุด ชุดแรกคือตัวอย่างของพารามิเตอร์ <span class="math inline">\(\theta_m, \theta_{m-1}, \theta_{m-2}, ...,\theta_{2}\)</span> และชุดที่สองคือตัวอย่างของพารามิเตอร์ที่มีการเหลื่อมค่า 1 ช่วงเวลา <span class="math inline">\(\theta_{m-1}, \theta_{m-2},...,\theta_{1}\)</span> สหสัมพันธ์ระหว่างชุดข้อมูลทั้งสองนี้เรียกว่า อัตสหสัมพันธ์อันดับที่ 1 (lag-1 autocorrelation)</p>
+<p>ในทำนองเดียวกัน อัตสหสัมพันธ์ในอันดับที่สูงกว่า 1 สามารถหาได้โดยการเหลื่อมข้อมูลเพิ่มขึ้นเป็น 2, 3, 4 ,… ช่วงเวลา ข้อสังเกตคือยิ่งมีการเหลื่อมช่วงเวลามากขึ้น จำนวนตัวอย่างที่นำมาคำนวณค่าอัตสหสัมพันธ์ก็จะลดลงทีละ 1 หน่วยไปเรื่อย ๆ การวิเคราะห์อัตสหสัมพันธ์ของกระบวนการสุ่มสามารถทำได้สองลักษณะ ลักษณะแรกคือวิเคราะห์จากค่าสถิติโดยตรง และลักษณะที่สองคือใช้แผนภาพอัตสหสัมพันธ์ โดยทั้งสองแบบสามารถทำได้ในโปรแกรม R ด้วย package-coda โดยเขียนคำสั่งดังนี้</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<pre><code>       mu_sdpro1 sigma_sdpro1   mu_sdpro2 sigma_sdpro2 mu_sdpro3
+Lag 0  1.0000000    1.0000000  1.00000000   1.00000000 1.0000000
+Lag 1  0.9994292    0.9998234  0.82152505   0.72753970 0.9860251
+Lag 5  0.9971468    0.9990995  0.39664748   0.18920770 0.9336869
+Lag 10 0.9942847    0.9981647  0.17519306   0.04112503 0.8774738
+Lag 50 0.9709985    0.9898665 -0.02851881  -0.02866540 0.5591402
+       sigma_sdpro3
+Lag 0     1.0000000
+Lag 1     0.9832460
+Lag 5     0.9159518
+Lag 10    0.8293820
+Lag 50    0.4494689</code></pre>
+<p><img src="mcmc-via-jags_files/figure-html5/unnamed-chunk-17-1.png" width="1152" /></p>
+</div>
+<h3 id="thining">Thining</h3>
+<p>การแก้ปัญหาอัตสหสัมพันธ์สามารถทำได้โดยการกำหนดรอบการทวนซ้ำให้มากขึ้น เขียนแทนด้วย <span class="math inline">\(\theta_1, \theta_2, \theta_3, ...,\theta_m\)</span> หาก <span class="math inline">\(n_0\)</span> คือระยะห่าง (lag) ที่น้อยที่สุดระหว่างตัวอย่างที่มีค่าอัตสหสัมพันธ์เท่ากับหรือใกล้เคียง 0 ผู้วิเคราะห์จะเลือกเฉพาะตัวอย่าง <span class="math inline">\(\theta_{n_0}, \theta_{2n_0}, \theta_{3n_0},...,\theta_{T}\)</span> ซึ่งมีแนวโน้มเป็นอิสระซึ่งกันและกัน ไปดำเนินการต่อในขั้นการอนุมานเชิงสถิติ เรียกการดำเนินการในข้างต้นว่า thinning</p>
+<h3 id="effective-sample-size-ess">Effective Sample Size (ESS)</h3>
+<p>จากที่กล่าวในข้างต้นจะเห็นว่า ในสถานการณ์ที่กระบวนการสุ่มที่สร้างขึ้นมีอัตสหสัมพันธ์สูง ตัวอย่างสุ่มของพารามิเตอร์จะมีแนวโน้มซ้ำซ้อนกันมาก และทำให้การทวนซ้ำของกระบวนการสุ่มมีประสิทธิภาพต่ำกว่าจำนวนการทวนซ้ำที่กำหนดไว้ กล่าวคือจำนวนรอบทวนซ้ำที่กำหนดไว้อาจไม่เพียงพอที่จะนำไปประมาณการแจกแจงความน่าจะเป็นภายหลัง สถิติที่ช่วยวัดประสิทธิภาพในด้านนี้คือ effective sample size (ESS)</p>
+<p>กำหนดให้ <span class="math inline">\(\theta_1, \theta_2, \theta_3, ...,\theta_m\)</span> เป็นตัวอย่างสุ่มของพารามิเตอร์ที่สร้างขึ้นจากอัลกอริทึม MCMC และ <span class="math inline">\(n_0\)</span> เป็นระยะห่าง (lag) ที่น้อยที่สุดที่ตัวอย่างสุ่มของพารามิเตอร์มีอัตสหสัมพันธ์เท่ากับหรือใกล้เคียง 0 จากการกำหนดในข้างต้นจะได้ว่า ตัวอย่างสุ่มที่สร้างจากกระบวนการสุ่มข้างต้น และเป็นอิสระซึ่งกันและกันคือ</p>
+<p><span class="math inline">\(\theta_{n_0}, \theta_{2n_0}, \theta_{3n_0},...,\theta_{T}\)</span></p>
+<p>จะเห็นว่าในกรณีที่เกิดอัตสหสัมพันธ์ขึ้น ตัวอย่างที่เป็นอิสระซึ่งกันและกันจะมีจำนวนน้อยกว่าจำนวนตัวอย่างรวม ค่า ESS จึงมีค่าเท่ากับ <span class="math inline">\(m/n_0\)</span></p>
+<p>การคำนวณค่า ESS ใน R สามารถทำได้โดยใช้ฟังก์ชัน <code>effectiveSize()</code></p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>   mu_sdpro1 sigma_sdpro1    mu_sdpro2 sigma_sdpro2    mu_sdpro3 
+   1.4270665    0.4414857  489.8072701  788.4212271   28.6767087 
+sigma_sdpro3 
+  41.3083142 </code></pre>
+</div>
+<h2 id="monte-carlo-standard-error">Monte Carlo Standard Error</h2>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+Iterations = 1:5000
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 5000 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+               Mean      SD Naive SE Time-series SE
+mu_sdpro1    85.068 15.8021 0.223475      13.227925
+sigma_sdpro1 21.291 10.9451 0.154787      16.472555
+mu_sdpro2    99.119  0.1826 0.002582       0.008250
+sigma_sdpro2  9.944  0.1291 0.001825       0.004596
+mu_sdpro3    99.134  0.1512 0.002138       0.028234
+sigma_sdpro3  9.941  0.1132 0.001601       0.017609
+
+2. Quantiles for each variable:
+
+               2.5%    25%    50%   75% 97.5%
+mu_sdpro1    51.757 72.609 91.524 99.09 99.49
+sigma_sdpro1  9.753 10.005 19.253 33.43 36.84
+mu_sdpro2    98.770 99.002 99.116 99.25 99.47
+sigma_sdpro2  9.697  9.855  9.940 10.03 10.20
+mu_sdpro3    98.823 99.077 99.176 99.24 99.38
+sigma_sdpro3  9.693  9.879  9.948 10.01 10.15</code></pre>
+</div>
+<p><span class="math inline">\(SE_{naive}=\sqrt{\frac{Var(\theta)}{m}}\)</span></p>
+<p><span class="math inline">\(SE_{ts}=\sqrt{\frac{Var_{ts}(\theta)}{m}}\)</span> โดยที่ <span class="math inline">\(Var(\theta)=\frac{\sigma^2}{(1-\sum_{k=1}^K\rho_k)^2}\)</span></p>
+<p><span class="math inline">\(\sigma^2\)</span> เป็นความแปรปรวนของความคลาดเคลื่อนสุ่มที่ประมาณจากโมเดล autoregressive (AR) อันดับที่ K ส่วน <span class="math inline">\(\rho_k\)</span> คือค่าสัมประสิทธิ์อัตสหสัมพันธ์อันดับที่ <span class="math inline">\(k\)</span></p>
+<h2 id="potential-scale-reduction-hatr-หรอ-rsrf">Potential Scale Reduction (<span class="math inline">\(\hat{R}\)</span> หรือ RSRF)</h2>
+<p>การตรวจสอบการลู่เข้าของลูกโซ่มาร์คอฟด้วยวิธีการที่กล่าวมา แม้จะได้ผลลัพธ์ว่ามีแนวโน้มที่ตัวอย่างลูกโซ่จะลู่เข้าไปสู่การแจกแจงใดการแจกแจงหนึ่ง แต่ก็ยังไม่สามารถยืนยันได้ว่าการแจกแจงดังกล่าวเป็นการแจกแจงเป้าหมายที่แท้จริงหรือไม่</p>
+<p>วิธีการหนึ่งที่ช่วยเพิ่มหลักฐานและเสริมความมั่นใจให้กับผู้วิเคราะห์ว่า ตัวอย่างลูกโซ่ที่สร้างขึ้นมีการแจกแจงที่ลู่เข้าไปหาการแจกแจงความน่าจะเป็นภายหลังที่ต้องการจริง ๆ คือ การสร้างตัวอย่างลูกโซ่หลาย ๆ ชุด โดยกำหนดค่าเริ่มต้นให้แตกต่างกัน จากนั้นสังเกตผลลัพธ์ที่ได้ หากตัวอย่างทุกชุดมีแนวโน้มที่ลู่เข้าไปหาการแจกแจงเดียวกัน ผู้วิเคราะห์จะมีหลักฐานที่สนับสนุนให้เชื่อได้ว่าตัวอย่างสุ่มที่สร้างขึ้นจากอัลกอริทึม MCMC ลู่เข้าไปหาการแจกแจงความน่าจะเป็นภายหลังที่ต้องการ</p>
+<p>การวิเคราะห์การลู่เข้านี้สามารถวิเคราะห์ได้จากทั้ง trace plot และ density plot และใช้ค่าสถิติ potential scale reduction (<span class="math inline">\(\hat{R}\)</span>) สถิตินี้มีค่าเท่ากับอัตราส่วนระหว่างความแปรปรวนรวม (total variance) ของตัวอย่างลูกโซ่ต่อความแปรปรวนภายลูกโซ่ (within-chain variance) ดังนี้</p>
+<p><span class="math inline">\(\hat{R}=\sqrt{\frac{Var(\theta)}{W}}\)</span></p>
+<p>โดยที่ <span class="math inline">\(Var(\theta)=(1-\frac{1}{m}W+\frac{1}{m}B)\)</span></p>
+<p><span class="math inline">\(W=\frac{1}{C}\sum_{j=1}^CS^2_j\)</span></p>
+<p><span class="math inline">\(S^2_j=\frac{1}{n-1}\sum_{i=1}^n(\theta_{ij}-\overline{\theta}_{.j})^2\)</span></p>
+<p><span class="math inline">\(B = \frac{n}{C-n}\sum_{j=1}^C(\overline{\theta}_j-\overline{\theta}_{..})\)</span></p>
+<p>จากสูตรของ <span class="math inline">\(\hat{R}\)</span> ข้างต้นจะเห็นว่า ถ้า <span class="math inline">\(\hat{R} \approx 1\)</span> นั่นหมายความว่าตัวอย่างลูกโซ่ที่สร้างขึ้นแต่ละชุด มีการแจกแจงที่ใกล้เคียงกัน กล่าวคือตัวอย่างลูกโซ่ที่สร้างขึ้นมีคุณสมบัติลู่เข้าไปยังการแจกแจงความน่าจะเป็นภายหลังที่ต้องการ แต่ถ้าหาก <span class="math inline">\(\hat{R}&gt;1\)</span> บ่งชี้ว่าตัวอย่างลูกโซ่ที่สร้างขึ้นมีการลู่ออก</p>
+<p>เกณฑ์การพิจารณา <span class="math inline">\(\hat{R}&lt;1.1\)</span></p>
+<hr />
+<p>นอกจากอัลกอริทึมที่กล่าวไว้ในบทเรียนนี้ยังมีอัลกอริทึม MCMC อีกหลายตัวที่สามารถใช้ประมาณการแจกแจงความน่าจะเป็นภายหลังได้ อีกอัลกอริทึมหนึ่งที่น่าสนใจคือ อัลกอริทึม Hamiltonial Monte Carlo ที่มีประสิทธิภาพสูงกว่า Metropilis และ Gibbs sampling ในแง่ของการลู่เข้าสู่การแจกแจงความน่าจะเป็นภายหลังที่ทำได้รวดเร็วกว่า ทำให้ไม่จำเป็นต้องใช้จำนวนรอบของการทวนซ้ำที่มากเท่ากับทั้งสองอัลกอริทึมข้างต้น แต่ก็มีข้อจำกัดคือในแต่ละรอบการทวนซ้ำอัลกอริทึม Hammiltoniam MCMC มีแนวโน้มที่จะใช้เวลาประมวลผลนานกว่าอัลกอริทึมทั้งสอง รายละเอียดของอัลกอริทึมนี้จะกล่าวในบทเรียนที่สอนการใช้งานโปรแกรม Stan</p>
+<p>บทเรียนต่อไปจะกล่าวถึงการใช้งานโปรแกรม JAGs ที่เป็นโปรแกรมสำเร็จรูปโปรแกรมหนึ่งที่ใช้สำหรับประมาณการแจกแจงความน่าจะเป็นภายหลังโดยอาศัยอัลกอริทึม Gibbs sampling ในข้างต้น</p>
+<p>next –&gt; <a href="https://ssiwacho.github.io/myblog/posts/2022-02-05-jags/">Introduction to JAGs</a></p>
+<hr />
+<p>Distill is a publication format for scientific and technical writing, native to the web.</p>
+<p>Learn more about using Distill at <a href="https://rstudio.github.io/distill" class="uri">https://rstudio.github.io/distill</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

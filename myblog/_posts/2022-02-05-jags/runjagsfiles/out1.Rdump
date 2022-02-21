@@ -1,0 +1,7 @@
+`.RNG.name` <- "base::Wichmann-Hill"
+`.RNG.state` <- 
+c(24893L,30151L,12376L)
+`mu` <- 
+55.8093
+`tau` <- 
+0.00278321
