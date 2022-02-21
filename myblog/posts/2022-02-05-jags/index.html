@@ -113,7 +113,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Introduction to JAGS"]},{"type":"character","attributes":{},"value":["การใช้งาน JAGS เบื้องต้น"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Siwachoat Srisuttiyakorn"]},{"type":"NULL"}]}]},{"type":"character","attributes":{},"value":["2022-02-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","categories","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Introduction to JAGS"]},{"type":"character","attributes":{},"value":["Bayesian Statistics","MCMC","JAGs"]},{"type":"character","attributes":{},"value":["การใช้งาน JAGS เบื้องต้น"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Siwachoat Srisuttiyakorn"]},{"type":"NULL"}]}]},{"type":"character","attributes":{},"value":["2022-02-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2056,6 +2056,13 @@ document.addEventListener('DOMContentLoaded', function() {
   <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+<script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-VB8ZKKB63V"></script>
+<script type="text/javascript" cookie-consent="tracking">
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-VB8ZKKB63V');
+</script>
 <style type="text/css">
 @import url('https://fonts.googleapis.com/css2?family=Krub&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;600&family=Poppins:wght@600&family=Sarabun&family=Thasadith:wght@400;700&family=Trirong&display=swap');
 
@@ -2175,6 +2182,11 @@ h6, .h6{
 <div class="d-title">
 <h1>Introduction to JAGS</h1>
 <!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../index.html#category:Bayesian_Statistics" class="dt-tag">Bayesian Statistics</a>
+  <a href="../../index.html#category:MCMC" class="dt-tag">MCMC</a>
+  <a href="../../index.html#category:JAGs" class="dt-tag">JAGs</a>
+</div>
 <!--/radix_placeholder_categories-->
 <p><p>การใช้งาน JAGS เบื้องต้น</p></p>
 </div>
@@ -2407,7 +2419,7 @@ model{
 <pre><code>Calling 3 simulations using the parallel method...
 Following the progress of chain 1 (the program will wait for
 all chains to finish before continuing):
-Welcome to JAGS 4.3.0 on Sat Feb 12 11:44:12 2022
+Welcome to JAGS 4.3.0 on Mon Feb 21 22:51:46 2022
 JAGS is free software and comes with ABSOLUTELY NO WARRANTY
 Loading module: basemod: ok
 Loading module: bugs: ok
@@ -2447,14 +2459,14 @@ Finished running the simulation</code></pre>
 JAGS model summary statistics from 30000 samples (chains = 3; adapt+burnin = 2000):
                                                                  
        Lower95 Median Upper95   Mean     SD Mode    MCerr MC%ofSD
-mu      53.772 57.168  60.512 57.152 1.7191   -- 0.010201     0.6
-sigma2   218.2 294.86  383.64 299.03 43.271   --  0.32807     0.8
-                               
-       SSeff      AC.10    psrf
-mu     28403   0.008448 0.99998
-sigma2 17397 -0.0020839  1.0004
+mu       53.76 57.155  60.486 57.148 1.7142   -- 0.009897     0.6
+sigma2  220.78 294.38  386.98  298.7 43.365   --   0.3183     0.7
+                              
+       SSeff     AC.10    psrf
+mu     30000 0.0010623 0.99998
+sigma2 18561 0.0020924  1.0001
 
-Total time taken: 1.1 seconds</code></pre>
+Total time taken: 0.8 seconds</code></pre>
 </div>
 <p>สำหรับการตรวจสอบและวิเคราะห์ในเชิงลึกอื่น ๆ ผู้วิเคราะห์สามารถดึงกระบวนการสุ่มหรือลูกโซ่ของพารามิเตอร์ <span class="math inline">\(\mu\)</span> และ <span class="math inline">\(\sigma^2\)</span> ที่จำลองขึ้นมาอยู่ในโปรแกรม R เพื่อดำเนินการวิเคราะห์ในขั้นตอนต่อไปได้โดยใช้คำสั่ง <code>as.mcmc.list()</code> ดังนี้</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2470,13 +2482,13 @@ Start = 2001
 End = 2007 
 Thinning interval = 1 
           mu  sigma2
-2001 57.5487 275.404
-2002 56.1627 276.307
-2003 56.1302 260.428
-2004 56.6929 313.530
-2005 57.0918 278.690
-2006 59.3460 297.571
-2007 55.3065 345.699
+2001 57.7183 254.932
+2002 58.5496 243.467
+2003 57.9328 293.119
+2004 57.5600 294.991
+2005 56.2513 293.347
+2006 58.8261 269.252
+2007 56.7390 394.889
 
 [[2]]
 Markov Chain Monte Carlo (MCMC) output:
@@ -2484,13 +2496,13 @@ Start = 2001
 End = 2007 
 Thinning interval = 1 
           mu  sigma2
-2001 56.1130 303.682
-2002 58.3842 270.347
-2003 56.8063 300.842
-2004 56.4171 308.145
-2005 59.4194 271.694
-2006 55.9829 332.392
-2007 55.1499 351.244
+2001 56.1406 257.030
+2002 60.0052 267.742
+2003 54.6358 297.965
+2004 61.1648 276.278
+2005 57.2437 266.714
+2006 56.3080 269.413
+2007 55.9064 293.455
 
 [[3]]
 Markov Chain Monte Carlo (MCMC) output:
@@ -2498,13 +2510,13 @@ Start = 2001
 End = 2007 
 Thinning interval = 1 
           mu  sigma2
-2001 57.8272 286.992
-2002 61.0377 274.274
-2003 57.6024 273.526
-2004 57.8438 235.769
-2005 54.4078 248.104
-2006 60.0294 337.741
-2007 57.9692 332.634
+2001 58.2742 234.981
+2002 56.8457 379.848
+2003 60.4932 411.175
+2004 52.4721 358.486
+2005 57.9276 279.754
+2006 57.9101 271.696
+2007 55.6369 355.024
 
 attr(,&quot;class&quot;)
 [1] &quot;mcmc.list&quot;</code></pre>
@@ -2556,13 +2568,13 @@ Start = 1003
 End = 1021 
 Thinning interval = 3 
            mu   sigma2
-[1,] 57.34737 240.9543
-[2,] 57.76166 350.2274
-[3,] 57.51731 376.2769
-[4,] 57.13501 299.5402
-[5,] 56.61046 285.8832
-[6,] 57.71678 283.4233
-[7,] 59.15487 256.3204
+[1,] 56.43256 260.1827
+[2,] 58.08109 240.6020
+[3,] 57.15929 309.9268
+[4,] 57.81921 305.7733
+[5,] 53.12747 297.9870
+[6,] 57.77474 256.4704
+[7,] 55.10281 338.0285
 
 [[2]]
 Markov Chain Monte Carlo (MCMC) output:
@@ -2570,13 +2582,13 @@ Start = 1003
 End = 1021 
 Thinning interval = 3 
            mu   sigma2
-[1,] 59.68764 226.6262
-[2,] 58.26544 236.8657
-[3,] 55.85105 222.6479
-[4,] 60.14749 209.6911
-[5,] 55.52599 312.2547
-[6,] 58.86395 264.9162
-[7,] 58.24241 292.8658
+[1,] 58.06828 275.2967
+[2,] 56.13325 301.8069
+[3,] 58.43187 362.6531
+[4,] 59.48585 336.4785
+[5,] 54.42154 286.7141
+[6,] 57.87049 296.4444
+[7,] 56.62374 250.7779
 
 [[3]]
 Markov Chain Monte Carlo (MCMC) output:
@@ -2584,13 +2596,13 @@ Start = 1003
 End = 1021 
 Thinning interval = 3 
            mu   sigma2
-[1,] 54.44243 366.7963
-[2,] 56.46555 285.7804
-[3,] 58.53672 230.0021
-[4,] 55.68155 277.9133
-[5,] 57.73368 303.1974
-[6,] 57.99630 276.1643
-[7,] 59.01244 294.8693
+[1,] 58.75184 289.5539
+[2,] 59.20780 242.4779
+[3,] 60.23269 334.7610
+[4,] 55.07300 294.2167
+[5,] 56.58239 404.0100
+[6,] 58.43708 290.1907
+[7,] 58.62258 335.7425
 
 attr(,&quot;class&quot;)
 [1] &quot;mcmc.list&quot;</code></pre>
@@ -2611,14 +2623,14 @@ Sample size per chain = 3333
    plus standard error of the mean:
 
          Mean     SD Naive SE Time-series SE
-mu      57.14  1.705  0.01705        0.01729
-sigma2 298.14 43.044  0.43047        0.45148
+mu      57.14  1.714  0.01714         0.0169
+sigma2 299.23 43.918  0.43921         0.4617
 
 2. Quantiles for each variable:
 
-         2.5%    25%    50%   75%  97.5%
-mu      53.74  55.97  57.13  58.3  60.43
-sigma2 225.15 267.50 293.62 324.6 392.77</code></pre>
+         2.5%   25%    50%   75%  97.5%
+mu      53.71  56.0  57.15  58.3  60.43
+sigma2 226.06 268.1 294.94 325.8 398.87</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2656,10 +2668,10 @@ sigma2 225.15 267.50 293.62 324.6 392.77</code></pre>
 </div>
 <pre><code>                  mu       sigma2
 Lag 0    1.000000000  1.000000000
-Lag 3    0.011004135  0.015620913
-Lag 15   0.002266789  0.001606799
-Lag 30  -0.003010521  0.001017228
-Lag 150 -0.006209084 -0.004619363</code></pre>
+Lag 3   -0.013854327  0.031131352
+Lag 15  -0.005109261 -0.003313333
+Lag 30   0.003374236 -0.004582291
+Lag 150 -0.002278163 -0.008102540</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/coda/man/autocorr.plot.html'>autocorr.plot</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
 </code></pre>
@@ -2692,8 +2704,8 @@ Multivariate psrf
 Fraction in 1st window = 0.1
 Fraction in 2nd window = 0.5 
 
-     mu  sigma2 
--0.4773 -0.6180 
+    mu sigma2 
+2.0851 0.5484 
 
 
 [[2]]
@@ -2702,7 +2714,7 @@ Fraction in 1st window = 0.1
 Fraction in 2nd window = 0.5 
 
      mu  sigma2 
- 1.1457 -0.7003 
+0.03287 0.40353 
 
 
 [[3]]
@@ -2711,7 +2723,7 @@ Fraction in 1st window = 0.1
 Fraction in 2nd window = 0.5 
 
      mu  sigma2 
--1.6166 -0.1384 </code></pre>
+ 0.9664 -0.8700 </code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2744,14 +2756,14 @@ Sample size per chain = 3333
    plus standard error of the mean:
 
          Mean     SD Naive SE Time-series SE
-mu      57.14  1.705  0.01705        0.01729
-sigma2 298.14 43.044  0.43047        0.45148
+mu      57.14  1.714  0.01714         0.0169
+sigma2 299.23 43.918  0.43921         0.4617
 
 2. Quantiles for each variable:
 
-         2.5%    25%    50%   75%  97.5%
-mu      53.74  55.97  57.13  58.3  60.43
-sigma2 225.15 267.50 293.62 324.6 392.77</code></pre>
+         2.5%   25%    50%   75%  97.5%
+mu      53.71  56.0  57.15  58.3  60.43
+sigma2 226.06 268.1 294.94 325.8 398.87</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>theta_sim_posterior</span><span class='op'>$</span><span class='va'>mu</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>49</span>,<span class='fl'>65</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span><span class='op'>(</span><span class='va'>theta_sim_posterior</span><span class='op'>$</span><span class='va'>mu</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.025</span>, <span class='fl'>0.975</span><span class='op'>)</span><span class='op'>)</span>, lty<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
@@ -2766,15 +2778,15 @@ sigma2 225.15 267.50 293.62 324.6 392.77</code></pre>
 <span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html'>MCMCsummary</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>            mean       sd      2.5%       50%     97.5% Rhat n.eff
-mu      57.13683  1.70463  53.73839  57.13484  60.42744    1  9735
-sigma2 298.14196 43.04437 225.14609 293.62443 392.76572    1  9247</code></pre>
+<pre><code>            mean        sd      2.5%       50%     97.5% Rhat n.eff
+mu      57.13614  1.714003  53.71186  57.15313  60.42819    1 10305
+sigma2 299.22542 43.918370 226.06284 294.93688 398.87008    1  9056</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html'>MCMCsummary</a></span><span class='op'>(</span><span class='va'>samples</span>, params<span class='op'>=</span><span class='st'>"mu"</span>, round<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>    mean  sd  2.5%   50% 97.5% Rhat n.eff
-mu 57.14 1.7 53.74 57.13 60.43    1  9735</code></pre>
+<pre><code>    mean   sd  2.5%   50% 97.5% Rhat n.eff
+mu 57.14 1.71 53.71 57.15 60.43    1 10305</code></pre>
 </div>
 <h4 id="mcmcplot">MCMCplot</h4>
 <p>MCMCplot is used to create caterpillar plots from MCMC output. Points represent posterior medians. Thick and thin lines represent credible intervals specified by the user using the ci argument, where the default is 50% and 95% credible intervals, respectively. Note, that the first element in ci should be less than or equal to the second element. By default, MCMCplot plots equal-tailed credible intervals (HPD = FALSE). However, highest posterior density intervals can be visualized using HPD = TRUE. As with the other functions in the package, particular parameters of interest can be specified.</p>
@@ -2789,22 +2801,22 @@ mu 57.14 1.7 53.74 57.13 60.43    1  9735</code></pre>
 </div>
 <pre><code>[[1]]
            lower     upper
-mu      53.57906  60.24913
-sigma2 219.32954 386.88690
+mu      53.80359  60.55682
+sigma2 220.22488 386.86409
 attr(,&quot;Probability&quot;)
 [1] 0.949895
 
 [[2]]
            lower     upper
-mu      53.84288  60.49948
-sigma2 223.98087 390.10538
+mu      53.74889  60.19107
+sigma2 220.10985 386.38192
 attr(,&quot;Probability&quot;)
 [1] 0.949895
 
 [[3]]
            lower     upper
-mu      53.86939  60.42728
-sigma2 224.17333 389.09147
+mu      53.79186  60.57281
+sigma2 217.05962 383.50001
 attr(,&quot;Probability&quot;)
 [1] 0.949895</code></pre>
 </div>
