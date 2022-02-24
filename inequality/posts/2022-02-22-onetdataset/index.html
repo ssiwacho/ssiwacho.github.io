@@ -1,0 +1,2861 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+<title>My Website: Onet Dataset</title>
+
+<meta property="description" itemprop="description" content="การดำเนินการข้างต้นทำให้ได้ชุดข้อมูล 3 ชุดได้แก่ ชุดข้อมูลคะแนนสอบ onet ระดับโรงเรียนของนักเรียนในระดับชั้น ป.6 ม.3 และ ม.6 ผู้วิเคราะห์ได้ปรับเปลี่ยนโครงสร้างของข้อมูลให้อยู่ในรูปแบบ tidy data แล้ว และมีการลดทอนข้อมูลคะแนนสอบ onet โดยนำค่าเฉลี่ยคะแนนสอบในระดับโรงเรียนของแต่ละรายวิชามาวิเคราะห์องค์ประกอบหลัก ซึ่งทำให้สามารถลดทอนตัวแปรคะแนนสอบ onet ได้เหลือตัวแปรเดียว เรียกว่า คะแนนผลสัมฤทธิ์โดยรวมของนักเรียนในโรงเรียน ไฟล์ข้อมูลที่จัดการเรียบร้อยแล้วจะถูกเก็บไว้เป็น .csv ชื่อ `onet_p6.csv`, `onet_m3.csv` และ `onet_m6.csv`"/>
+
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2022-02-22"/>
+<meta property="article:created" itemprop="dateCreated" content="2022-02-22"/>
+<meta name="article:author" content="Siwachoat Srisuttiyakorn"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="My Website: Onet Dataset"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="การดำเนินการข้างต้นทำให้ได้ชุดข้อมูล 3 ชุดได้แก่ ชุดข้อมูลคะแนนสอบ onet ระดับโรงเรียนของนักเรียนในระดับชั้น ป.6 ม.3 และ ม.6 ผู้วิเคราะห์ได้ปรับเปลี่ยนโครงสร้างของข้อมูลให้อยู่ในรูปแบบ tidy data แล้ว และมีการลดทอนข้อมูลคะแนนสอบ onet โดยนำค่าเฉลี่ยคะแนนสอบในระดับโรงเรียนของแต่ละรายวิชามาวิเคราะห์องค์ประกอบหลัก ซึ่งทำให้สามารถลดทอนตัวแปรคะแนนสอบ onet ได้เหลือตัวแปรเดียว เรียกว่า คะแนนผลสัมฤทธิ์โดยรวมของนักเรียนในโรงเรียน ไฟล์ข้อมูลที่จัดการเรียบร้อยแล้วจะถูกเก็บไว้เป็น .csv ชื่อ `onet_p6.csv`, `onet_m3.csv` และ `onet_m6.csv`"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="My Website"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary"/>
+<meta property="twitter:title" content="My Website: Onet Dataset"/>
+<meta property="twitter:description" content="การดำเนินการข้างต้นทำให้ได้ชุดข้อมูล 3 ชุดได้แก่ ชุดข้อมูลคะแนนสอบ onet ระดับโรงเรียนของนักเรียนในระดับชั้น ป.6 ม.3 และ ม.6 ผู้วิเคราะห์ได้ปรับเปลี่ยนโครงสร้างของข้อมูลให้อยู่ในรูปแบบ tidy data แล้ว และมีการลดทอนข้อมูลคะแนนสอบ onet โดยนำค่าเฉลี่ยคะแนนสอบในระดับโรงเรียนของแต่ละรายวิชามาวิเคราะห์องค์ประกอบหลัก ซึ่งทำให้สามารถลดทอนตัวแปรคะแนนสอบ onet ได้เหลือตัวแปรเดียว เรียกว่า คะแนนผลสัมฤทธิ์โดยรวมของนักเรียนในโรงเรียน ไฟล์ข้อมูลที่จัดการเรียบร้อยแล้วจะถูกเก็บไว้เป็น .csv ชื่อ `onet_p6.csv`, `onet_m3.csv` และ `onet_m6.csv`"/>
+
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Onet Dataset"]},{"type":"character","attributes":{},"value":["การดำเนินการข้างต้นทำให้ได้ชุดข้อมูล 3 ชุดได้แก่ ชุดข้อมูลคะแนนสอบ onet ระดับโรงเรียนของนักเรียนในระดับชั้น ป.6 ม.3 และ ม.6 ผู้วิเคราะห์ได้ปรับเปลี่ยนโครงสร้างของข้อมูลให้อยู่ในรูปแบบ tidy data แล้ว และมีการลดทอนข้อมูลคะแนนสอบ onet โดยนำค่าเฉลี่ยคะแนนสอบในระดับโรงเรียนของแต่ละรายวิชามาวิเคราะห์องค์ประกอบหลัก ซึ่งทำให้สามารถลดทอนตัวแปรคะแนนสอบ onet ได้เหลือตัวแปรเดียว เรียกว่า คะแนนผลสัมฤทธิ์โดยรวมของนักเรียนในโรงเรียน ไฟล์ข้อมูลที่จัดการเรียบร้อยแล้วจะถูกเก็บไว้เป็น .csv ชื่อ `onet_p6.csv`, `onet_m3.csv` และ `onet_m6.csv`"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Siwachoat Srisuttiyakorn"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2022-02-22"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","draft","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["O-NET_2561.xlsx","onet_m3.csv","onet_m6.csv","onet_p6.csv","onet.csv","onetdataset_files/anchor-4.2.2/anchor.min.js","onetdataset_files/bowser-1.9.3/bowser.min.js","onetdataset_files/distill-2.2.21/template.v2.js","onetdataset_files/figure-html5/unnamed-chunk-10-1.png","onetdataset_files/figure-html5/unnamed-chunk-11-1.png","onetdataset_files/figure-html5/unnamed-chunk-12-1.png","onetdataset_files/figure-html5/unnamed-chunk-13-1.png","onetdataset_files/figure-html5/unnamed-chunk-14-1.png","onetdataset_files/figure-html5/unnamed-chunk-15-1.png","onetdataset_files/figure-html5/unnamed-chunk-16-1.png","onetdataset_files/figure-html5/unnamed-chunk-17-1.png","onetdataset_files/figure-html5/unnamed-chunk-18-1.png","onetdataset_files/figure-html5/unnamed-chunk-19-1.png","onetdataset_files/figure-html5/unnamed-chunk-20-1.png","onetdataset_files/figure-html5/unnamed-chunk-21-1.png","onetdataset_files/figure-html5/unnamed-chunk-22-1.png","onetdataset_files/figure-html5/unnamed-chunk-23-1.png","onetdataset_files/figure-html5/unnamed-chunk-24-1.png","onetdataset_files/figure-html5/unnamed-chunk-5-1.png","onetdataset_files/figure-html5/unnamed-chunk-6-1.png","onetdataset_files/figure-html5/unnamed-chunk-7-1.png","onetdataset_files/figure-html5/unnamed-chunk-8-1.png","onetdataset_files/figure-html5/unnamed-chunk-9-1.png","onetdataset_files/header-attrs-2.11/header-attrs.js","onetdataset_files/jquery-3.6.0/jquery-3.6.0.js","onetdataset_files/jquery-3.6.0/jquery-3.6.0.min.js","onetdataset_files/jquery-3.6.0/jquery-3.6.0.min.map","onetdataset_files/popper-2.6.0/popper.min.js","onetdataset_files/tippy-6.2.7/tippy-bundle.umd.min.js","onetdataset_files/tippy-6.2.7/tippy-light-border.css","onetdataset_files/tippy-6.2.7/tippy.css","onetdataset_files/tippy-6.2.7/tippy.umd.min.js","onetdataset_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-top: 2.5rem;
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: auto;
+}
+
+d-article div.sourceCode {
+  background-color: white;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+d-article pre {
+  font-size: 12px;
+  color: black;
+  background: none;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+d-article details {
+  grid-column: text;
+  margin-bottom: 0.8em;
+}
+
+@media(min-width: 768px) {
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+d-article pre {
+  font-size: 14px;
+}
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
+  }
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
+
+/* Citation hover box */
+
+.tippy-box[data-theme~=light-border] {
+  background-color: rgba(250, 250, 250, 0.95);
+}
+
+.tippy-content > p {
+  margin-bottom: 0;
+  padding: 2px;
+}
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+  }
+
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme
+  $('code.sourceCode a:empty').remove();
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
+    });
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // hoverable references
+    $('span.citation[data-cites]').each(function() {
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        return "<p>" + $('#ref-' + ref).html() + "</p>";
+      }).join("\n");
+      window.tippy(this, {
+        allowHTML: true,
+        content: refHtml,
+        maxWidth: 500,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start'
+      });
+    });
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-contents').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/header-attrs-2.11/header-attrs.js"></script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Onet Dataset","description":"การดำเนินการข้างต้นทำให้ได้ชุดข้อมูล 3 ชุดได้แก่ ชุดข้อมูลคะแนนสอบ onet ระดับโรงเรียนของนักเรียนในระดับชั้น ป.6 ม.3 และ ม.6 ผู้วิเคราะห์ได้ปรับเปลี่ยนโครงสร้างของข้อมูลให้อยู่ในรูปแบบ tidy data แล้ว และมีการลดทอนข้อมูลคะแนนสอบ onet โดยนำค่าเฉลี่ยคะแนนสอบในระดับโรงเรียนของแต่ละรายวิชามาวิเคราะห์องค์ประกอบหลัก ซึ่งทำให้สามารถลดทอนตัวแปรคะแนนสอบ onet ได้เหลือตัวแปรเดียว เรียกว่า คะแนนผลสัมฤทธิ์โดยรวมของนักเรียนในโรงเรียน ไฟล์ข้อมูลที่จัดการเรียบร้อยแล้วจะถูกเก็บไว้เป็น .csv ชื่อ `onet_p6.csv`, `onet_m3.csv` และ `onet_m6.csv`","authors":[{"author":"Siwachoat Srisuttiyakorn","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-02-22T00:00:00.000+07:00","citationText":"Srisuttiyakorn, 2022"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">My Website</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../about.html">About</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Onet Dataset</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>การดำเนินการข้างต้นทำให้ได้ชุดข้อมูล 3 ชุดได้แก่ ชุดข้อมูลคะแนนสอบ onet ระดับโรงเรียนของนักเรียนในระดับชั้น ป.6 ม.3 และ ม.6 ผู้วิเคราะห์ได้ปรับเปลี่ยนโครงสร้างของข้อมูลให้อยู่ในรูปแบบ tidy data แล้ว และมีการลดทอนข้อมูลคะแนนสอบ onet โดยนำค่าเฉลี่ยคะแนนสอบในระดับโรงเรียนของแต่ละรายวิชามาวิเคราะห์องค์ประกอบหลัก ซึ่งทำให้สามารถลดทอนตัวแปรคะแนนสอบ onet ได้เหลือตัวแปรเดียว เรียกว่า คะแนนผลสัมฤทธิ์โดยรวมของนักเรียนในโรงเรียน ไฟล์ข้อมูลที่จัดการเรียบร้อยแล้วจะถูกเก็บไว้เป็น .csv ชื่อ <code>onet_p6.csv</code>, <code>onet_m3.csv</code> และ <code>onet_m6.csv</code></p></p>
+</div>
+
+<div class="d-byline">
+  Siwachoat Srisuttiyakorn true 
+  
+<br/>2022-02-22
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#importing-data">Importing data</a></li>
+<li><a href="#tidying-data">Tidying data</a></li>
+<li><a href="#exploring-data">Exploring data</a></li>
+<li><a href="#principal-component-analysis-pca">Principal Component Analysis (PCA)</a>
+<ul>
+<li><a href="#pca-on-p6-dataset">PCA on p6 dataset</a></li>
+<li><a href="#pca-on-m3-dataset">PCA on m3 dataset</a></li>
+<li><a href="#pca-on-m6-dataset">PCA on m6 dataset</a></li>
+</ul></li>
+<li><a href="#merge-three-dataset-together">Merge three dataset together</a></li>
+<li><a href="#สรป">สรุป</a></li>
+</ul>
+</nav>
+</div>
+<p>ฐานข้อมูลสถิติพื้นฐาน onet ระดับโรงเรียน ปีการศึกษา 2561 โดยมีชุดข้อมูล 3 ชุด ได้แก่ ชุดข้อมูลของ ป.6 ม.3 และ ม.6 ข้อมูลทั้งหมดอยู่ในไฟล์ข้อมูล <code>O-NET_2561.xlsx</code></p>
+<h1 id="importing-data">Importing data</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span>
+<span class='co'># check the excel sheet</span>
+<span class='fu'><a href='https://readxl.tidyverse.org/reference/excel_sheets.html'>excel_sheets</a></span><span class='op'>(</span><span class='st'>"/Users/siwachoat/Documents/distill website/myresearch/_posts/2022-02-22-onetdataset/O-NET_2561.xlsx"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;ONET_P6_2561&quot; &quot;ONET_M3_2561&quot; &quot;ONET_M6_2561&quot;</code></pre>
+</div>
+<p>ผลการสำรวจข้างต้นจะเห็นว่าไฟล์ข้อมูลมี 3 sheets ซึ่งบันทึกข้อมูลคะแนน onet ในระดับชั้น ป.6 ม.3 และ ม.6 ตามลำดับ</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># onetscore (from onet database)</span>
+<span class='va'>onet_p6</span><span class='op'>&lt;-</span><span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/siwachoat/Documents/distill website/myresearch/_posts/2022-02-22-onetdataset/O-NET_2561.xlsx"</span>, sheet<span class='op'>=</span><span class='st'>"ONET_P6_2561"</span><span class='op'>)</span>
+<span class='va'>onet_m3</span><span class='op'>&lt;-</span><span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/siwachoat/Documents/distill website/myresearch/_posts/2022-02-22-onetdataset/O-NET_2561.xlsx"</span>, sheet<span class='op'>=</span><span class='st'>"ONET_M3_2561"</span><span class='op'>)</span>
+<span class='va'>onet_m6</span><span class='op'>&lt;-</span><span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"/Users/siwachoat/Documents/distill website/myresearch/_posts/2022-02-22-onetdataset/O-NET_2561.xlsx"</span>, sheet<span class='op'>=</span><span class='st'>"ONET_M6_2561"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>เมื่อพิจารณาชุดข้อมูลทั้งสามชุด จะพบว่า ทั้งสามชุดมีตัวแปรเหมือนกันกัน แต่เป็นชุดข้อมูลที่อยู่ในรูปแบบ long format ซึ่งยังไม่พร้อมที่จะนำไปวิเคราะห์ ต้องดำเนินการจัดกระทำข้อมูลให้อยู่ในรูปแบบ tidy data ก่อน ตัวแปรที่สำคัญในชุดข้อมูลทั้ง 3 ได้แก่ ชื่อโรงเรียน (<code>SCHOOL_NAME</code>) สังกัดโรงเรียน (<code>AREA_NAME_XX</code>) อำเภอ (<code>AMPH_NAME</code>) จังหวัด (<code>PROV_NAME</code>) ขนาดโรงเรียน (<code>SCHOOL_SIZE</code>) รายวิชา (<code>SBJ_NAME</code>) และค่าสถิติของคะแนนสอบ onet ในแต่ละโรงเรียน ได้แก่ ค่าต่ำสุด ค่าสูงสุด ค่าเฉลี่ย มัธยฐาน และ ส่วนเบี่ยงเบนมาตรฐาน</p>
+<h1 id="tidying-data">Tidying data</h1>
+<p>ขั้นแรกดำเนินการแปลงชุดข้อมูล onet ทั้ง 3 ชุด จากเดิมที่อยู่ในรูปแบบ long format ให้อยู่ในรูป wide format dataset โดยใช้ฟังก์ชัน <code>select()</code> เพื่อเลือกตัวแปรที่คาดว่าจะได้ใช้ในการวิเคราะห์ และใช้ฟังก์ชัน <code>pivot_wider()</code> เพื่อแปลงข้อมูลให้เป็น wide format โดยใช้ชุดคำสั่งด้านล่าง</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
+<span class='co'>## ชุดข้อมูลระดับชั้น ป.6</span>
+<span class='va'>onet_p6</span><span class='op'>&lt;-</span><span class='va'>onet_p6</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>SCHOOL_CODE</span>,<span class='va'>SCHOOL_NAME</span>,<span class='va'>AMPH_ID</span>,<span class='va'>AMPH_NAME</span>,<span class='va'>PROV_ID</span>,<span class='va'>PROV_NAME</span>,<span class='va'>REGION_NAME</span>,<span class='va'>URBAN_ZONE</span>,
+         <span class='va'>AREA_CODE_P6</span>,<span class='va'>AREA_NAME_P6</span>,<span class='va'>BUREA_CODE</span>,<span class='va'>BUREA_NAME</span>,<span class='va'>SCHOOL_SIZE</span>,
+         <span class='va'>SBJ_NAME</span>,<span class='va'>AVG_SCORE</span>,<span class='va'>SD_SCORE</span>,<span class='va'>MIN_SCORE</span>, <span class='va'>MAX_SCORE</span><span class='op'>)</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='co'>#spread(key="SBJ_NAME", value=c("AVG_SCORE"))</span>
+   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from<span class='op'>=</span><span class='va'>SBJ_NAME</span>, values_from<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AVG_SCORE"</span>,<span class='st'>"SD_SCORE"</span>,<span class='st'>"MIN_SCORE"</span>,<span class='st'>"MAX_SCORE"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>## ชุดข้อมูลระดับชั้น ม.3</span>
+<span class='va'>onet_m3</span><span class='op'>&lt;-</span><span class='va'>onet_m3</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>SCHOOL_CODE</span>,<span class='va'>SCHOOL_NAME</span>,<span class='va'>AMPH_ID</span>,<span class='va'>AMPH_NAME</span>,<span class='va'>PROV_ID</span>,<span class='va'>PROV_NAME</span>,<span class='va'>REGION_NAME</span>,<span class='va'>URBAN_ZONE</span>,
+         <span class='va'>AREA_CODE_M3</span>,<span class='va'>AREA_NAME_M3</span>,<span class='va'>BUREA_CODE</span>,<span class='va'>BUREA_NAME</span>,<span class='va'>SCHOOL_SIZE</span>,
+         <span class='va'>SBJ_NAME</span>,<span class='va'>AVG_SCORE</span>,<span class='va'>SD_SCORE</span>,<span class='va'>MIN_SCORE</span>, <span class='va'>MAX_SCORE</span><span class='op'>)</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from<span class='op'>=</span><span class='va'>SBJ_NAME</span>, values_from<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AVG_SCORE"</span>,<span class='st'>"SD_SCORE"</span>,<span class='st'>"MIN_SCORE"</span>,<span class='st'>"MAX_SCORE"</span><span class='op'>)</span><span class='op'>)</span>
+  
+<span class='co'>## ชุดข้อมูลระดับชั้น ม.6</span>
+<span class='va'>onet_m6</span><span class='op'>&lt;-</span><span class='va'>onet_m6</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>SCHOOL_CODE</span>,<span class='va'>SCHOOL_NAME</span>,<span class='va'>AMPH_ID</span>,<span class='va'>AMPH_NAME</span>,<span class='va'>PROV_ID</span>,<span class='va'>PROV_NAME</span>,<span class='va'>REGION_NAME</span>,<span class='va'>URBAN_ZONE</span>,
+         <span class='va'>AREA_CODE_M6</span>,<span class='va'>AREA_NAME_M6</span>,<span class='va'>BUREA_CODE</span>,<span class='va'>BUREA_NAME</span>,<span class='va'>SCHOOL_SIZE</span>,
+         <span class='va'>SBJ_NAME</span>,<span class='va'>AVG_SCORE</span>,<span class='va'>SD_SCORE</span>,<span class='va'>MIN_SCORE</span>, <span class='va'>MAX_SCORE</span><span class='op'>)</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from<span class='op'>=</span><span class='va'>SBJ_NAME</span>, values_from<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AVG_SCORE"</span>,<span class='st'>"SD_SCORE"</span>,<span class='st'>"MIN_SCORE"</span>,<span class='st'>"MAX_SCORE"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>#เปลี่ยนชื่อคอลัมน์คะแนนในแต่ละรายวิชาให้เป็นภาษาอังกฤษจะได้เรียกง่าย ๆ </span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>onet_p6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>29</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span>,<span class='st'>"eng"</span><span class='op'>)</span>, <span class='st'>"_avg"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span>,<span class='st'>"eng"</span><span class='op'>)</span>, <span class='st'>"_sd"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span>,<span class='st'>"eng"</span><span class='op'>)</span>, <span class='st'>"_min"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span>,<span class='st'>"eng"</span><span class='op'>)</span>, <span class='st'>"_max"</span><span class='op'>)</span><span class='op'>)</span>
+                         
+
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>onet_m3</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>29</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_avg"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_sd"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_min"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_max"</span><span class='op'>)</span><span class='op'>)</span>
+                         
+
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>onet_m6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>33</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"soc"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_avg"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"soc"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_sd"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"soc"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_min"</span><span class='op'>)</span>,
+                         <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"thai"</span>,<span class='st'>"soc"</span>,<span class='st'>"eng"</span>,<span class='st'>"math"</span>,<span class='st'>"sci"</span><span class='op'>)</span>, <span class='st'>"_max"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>ตรวจสอบข้อมูลซ้ำซ้อนกับค่าสูญหายในชุดข้อมูลท้ังสาม ผลการวิเคราะห์ด้านล่างจะเห็นว่าชุดข้อมูลทั้งสามไม่ได้มีค่าซ้ำซ้อน และพบว่าค่าสูญหายที่เกิดขึ้นส่วนใหญ่เกิดในตัวแปรเขตพื้นที่ทางการศึกษา ซึ่งไม่ใช่สิ่งผิดปกติ ทั้งนี้เป็นเพราะโรงเรียนในชุดข้อมูลมีหลายโรงเรียนที่ไม่ได้สังกัดเขตพื้นที่ของสพฐ. ส่วนค่าของตัวแปรที่มีการสูญหายพบว่าในแต่ละชุดข้อมูลมีเพียง 1 โรงเรียนเท่านั้น การแก้ไขค่าสูญหายในดังกล่าวจึงใช้การตัดทิ้ง</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># identify duplicate data</span>
+<span class='va'>schooid_p6</span><span class='op'>&lt;-</span><span class='va'>onet_p6</span><span class='op'>$</span><span class='va'>SCHOOL_CODE</span>
+<span class='va'>schooid_m3</span><span class='op'>&lt;-</span><span class='va'>onet_m3</span><span class='op'>$</span><span class='va'>SCHOOL_CODE</span>
+<span class='va'>schooid_m6</span><span class='op'>&lt;-</span><span class='va'>onet_m6</span><span class='op'>$</span><span class='va'>SCHOOL_CODE</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/duplicated.html'>duplicated</a></span><span class='op'>(</span><span class='va'>schooid_p6</span><span class='op'>)</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>.
+FALSE 
+30692 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/duplicated.html'>duplicated</a></span><span class='op'>(</span><span class='va'>schooid_m3</span><span class='op'>)</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>.
+FALSE 
+11919 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/duplicated.html'>duplicated</a></span><span class='op'>(</span><span class='va'>schooid_m6</span><span class='op'>)</span><span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>.
+FALSE 
+ 3898 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># identify missing data</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/njtierney/naniar'>naniar</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/naniar/man/miss_var_summary.html'>miss_var_summary</a></span><span class='op'>(</span><span class='va'>onet_p6</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 29 × 3
+   variable     n_miss pct_miss
+   &lt;chr&gt;         &lt;int&gt;    &lt;dbl&gt;
+ 1 AREA_CODE_P6   2429  7.91   
+ 2 AREA_NAME_P6   2429  7.91   
+ 3 math_avg          1  0.00326
+ 4 math_sd           1  0.00326
+ 5 math_min          1  0.00326
+ 6 math_max          1  0.00326
+ 7 SCHOOL_CODE       0  0      
+ 8 SCHOOL_NAME       0  0      
+ 9 AMPH_ID           0  0      
+10 AMPH_NAME         0  0      
+# … with 19 more rows</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/naniar/man/miss_var_summary.html'>miss_var_summary</a></span><span class='op'>(</span><span class='va'>onet_m3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 29 × 3
+   variable     n_miss pct_miss
+   &lt;chr&gt;         &lt;int&gt;    &lt;dbl&gt;
+ 1 AREA_CODE_M3   1091     9.15
+ 2 AREA_NAME_M3   1091     9.15
+ 3 SCHOOL_CODE       0     0   
+ 4 SCHOOL_NAME       0     0   
+ 5 AMPH_ID           0     0   
+ 6 AMPH_NAME         0     0   
+ 7 PROV_ID           0     0   
+ 8 PROV_NAME         0     0   
+ 9 REGION_NAME       0     0   
+10 URBAN_ZONE        0     0   
+# … with 19 more rows</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/naniar/man/miss_var_summary.html'>miss_var_summary</a></span><span class='op'>(</span><span class='va'>onet_m6</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 33 × 3
+   variable     n_miss pct_miss
+   &lt;chr&gt;         &lt;int&gt;    &lt;dbl&gt;
+ 1 AREA_CODE_M6    502  12.9   
+ 2 AREA_NAME_M6    502  12.9   
+ 3 eng_avg           1   0.0257
+ 4 sci_avg           1   0.0257
+ 5 eng_sd            1   0.0257
+ 6 sci_sd            1   0.0257
+ 7 eng_min           1   0.0257
+ 8 sci_min           1   0.0257
+ 9 eng_max           1   0.0257
+10 sci_max           1   0.0257
+# … with 23 more rows</code></pre>
+</div>
+<p>ตัดโรงเรียนที่มีค่าสูญหายออกจากชุดข้อมูลที่จะนำไปวิเคราะห์</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>onet_p6_nomiss</span><span class='op'>&lt;-</span><span class='va'>onet_p6</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>math_avg</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>onet_m3_nomiss</span><span class='op'>&lt;-</span><span class='va'>onet_m3</span>
+<span class='va'>onet_m6_nomiss</span><span class='op'>&lt;-</span><span class='va'>onet_m6</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>eng_avg</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h1 id="exploring-data">Exploring data</h1>
+<p>ผลการวิเคราะห์ข้อมูลเบื้องต้นพบว่า ในชุดข้อมูล onet มีข้อมูลคะแนนสอบจากโรงเรียนต่าง ๆ โดยมีโรงเรียนในระดับชั้นป.6 เป็นส่วนใหญ่จำนวน 30692 โรงเรียน รองลงมาคือระดับชั้นม.3 จำนวน 11919 โรงเรียน และระดับม.6 จำนวน 3898 โรงเรียน</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+
+<span class='co'># จำนวนโรงเรียนจำแนกตามระดับชั้น</span>
+<span class='va'>temp</span><span class='op'>&lt;-</span><span class='va'>onet_p6</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>PROV_NAME</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>PROV_NAME</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>temp</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='st'>"p6"</span>
+<span class='va'>m3</span><span class='op'>&lt;-</span><span class='va'>onet_m3</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>PROV_NAME</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>PROV_NAME</span><span class='op'>)</span>
+<span class='va'>m6</span><span class='op'>&lt;-</span><span class='va'>onet_m6</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>PROV_NAME</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>PROV_NAME</span><span class='op'>)</span>
+<span class='va'>temp</span><span class='op'>$</span><span class='va'>m3</span><span class='op'>&lt;-</span><span class='va'>m3</span><span class='op'>$</span><span class='va'>n</span>
+<span class='va'>temp</span><span class='op'>$</span><span class='va'>m6</span><span class='op'>&lt;-</span><span class='va'>m6</span><span class='op'>$</span><span class='va'>n</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>temp</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   p6    m3    m6 
+30692 11919  3898 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='va'>temp</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<p>จำนวนโรงเรียนจำแนกตามสังกัด พบว่าโรงเรียนส่วนใหญ่เป็นโรงเรียนสังกัด สพฐ. รองลงมาคือ สช. อทป. และกรุงเทพมหานคร</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#ระดับชั้น ป.6</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>onet_p6</span><span class='op'>$</span><span class='va'>BUREA_NAME</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+            กรมส่งเสริมการปกครองท้องถิ่น 
+                                860 
+        กองบัญชาการตำรวจตระเวนชายแดน 
+                                206 
+                        สถาบันพลศึกษา 
+                                  1 
+           สำนักการศึกษา กรุงเทพมหานคร 
+                                431 
+                สำนักการศึกษาเมืองพัทยา 
+                                 10 
+    สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน 
+                              26815 
+        สำนักงานคณะกรรมการการอุดมศึกษา 
+                                 40 
+สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน 
+                               2274 
+           สำนักงานพระพุทธศาสนาแห่งชาติ 
+                                  1 
+            สำนักบริหารงานการศึกษาพิเศษ 
+                                 50 
+                             โฮมสคูล 
+                                  4 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#ระดับชั้น ม.3</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>onet_m3</span><span class='op'>$</span><span class='va'>BUREA_NAME</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+            กรมส่งเสริมการปกครองท้องถิ่น 
+                                631 
+        กองบัญชาการตำรวจตระเวนชายแดน 
+                                  3 
+              สถาบันบัณฑิตพัฒนศิลป์ (ม.6) 
+                                 12 
+                        สถาบันพลศึกษา 
+                                 11 
+           สำนักการศึกษา กรุงเทพมหานคร 
+                                109 
+                สำนักการศึกษาเมืองพัทยา 
+                                 11 
+    สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน 
+                               9336 
+        สำนักงานคณะกรรมการการอุดมศึกษา 
+                                 35 
+สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน 
+                               1319 
+           สำนักงานพระพุทธศาสนาแห่งชาติ 
+                                402 
+            สำนักบริหารงานการศึกษาพิเศษ 
+                                 50 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#ระดับชั้น ม.6</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>onet_m6</span><span class='op'>$</span><span class='va'>BUREA_NAME</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+  กรมยุทธศึกษาทหาร กองบัญชาการทหารสูงสุด 
+                                  1 
+            กรมส่งเสริมการปกครองท้องถิ่น 
+                                345 
+              ในกำกับกระทรวงศึกษาธิการ 
+                                  1 
+              สถาบันบัณฑิตพัฒนศิลป์ (ม.6) 
+                                 11 
+                        สถาบันพลศึกษา 
+                                 11 
+           สำนักการศึกษา กรุงเทพมหานคร 
+                                  9 
+                สำนักการศึกษาเมืองพัทยา 
+                                  1 
+    สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน 
+                               2452 
+        สำนักงานคณะกรรมการการอุดมศึกษา 
+                                 31 
+สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน 
+                                711 
+           สำนักงานพระพุทธศาสนาแห่งชาติ 
+                                274 
+            สำนักบริหารงานการศึกษาพิเศษ 
+                                 50 
+          สำนักพัฒนาสังคม กรุงเทพมหานคร 
+                                  1 </code></pre>
+</div>
+<p>เมื่อพิจารณาจำแนกตามจังหวัด พบว่า จังหวัดนครราชสีมาเป็นจังหวัดที่มีโรงเรียนมากที่สุด รองลงมาคือจังหวัดกรุงเทพฯ อุบลราชธานี และขอนแก่น ส่วนจังหวัดที่มีโรงเรียนน้อยที่สุดคือจังหวัดระนอง</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># generate barplot</span>
+<span class='va'>temp</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>cols<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p6"</span>,<span class='st'>"m3"</span>,<span class='st'>"m6"</span><span class='op'>)</span>, 
+                    names_to<span class='op'>=</span><span class='st'>"level"</span>, 
+                    values_to<span class='op'>=</span><span class='st'>"freq"</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+       <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>level<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>level</span>, levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p6"</span>,<span class='st'>"m3"</span>,<span class='st'>"m6"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>PROV_NAME</span>, <span class='va'>freq</span><span class='op'>)</span>, 
+               y<span class='op'>=</span><span class='va'>freq</span>, fill<span class='op'>=</span><span class='va'>level</span><span class='op'>)</span>, 
+                stat<span class='op'>=</span><span class='st'>"identity"</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"จังหวัด \n"</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"จำนวนโรงเรียน"</span><span class='op'>)</span><span class='op'>+</span>
+                <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
+                <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>text<span class='op'>=</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>family<span class='op'>=</span><span class='st'>"ChulaCharasNew"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<p>ผลการวิเคราะห์ต่อไปนี้แสดงการแจกแจงของคะแนนสอบ onet ในระดับโรงเรียน ในแต่ละรายวิชาโดยจำแนกตามระดับชั้นของนักเรียน</p>
+<p>คะแนน onet ของนักเรียนระดับชั้น ป.6 จำแนกตามรายวิชา</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>gridExtra</span><span class='op'>)</span>
+
+<span class='co'># ระดับชั้น ป.6</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>onet_p6_nomiss</span><span class='op'>[</span>,<span class='fl'>15</span><span class='op'>:</span><span class='fl'>18</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    math_avg        sci_avg         eng_avg         thai_sd      
+ Min.   : 0.00   Min.   : 6.00   Min.   : 7.50   Min.   : 0.000  
+ 1st Qu.:27.73   1st Qu.:34.25   1st Qu.:28.75   1st Qu.: 9.677  
+ Median :33.12   Median :38.00   Median :32.50   Median :12.139  
+ Mean   :34.68   Mean   :38.28   Mean   :34.46   Mean   :11.602  
+ 3rd Qu.:40.00   3rd Qu.:41.97   3rd Qu.:37.97   3rd Qu.:14.055  
+ Max.   :95.00   Max.   :74.50   Max.   :97.50   Max.   :31.125  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_p6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>thai_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_p6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>math_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p3</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_p6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>sci_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p4</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_p6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>eng_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html'>grid.arrange</a></span><span class='op'>(</span><span class='va'>p1</span>,<span class='va'>p2</span>,<span class='va'>p3</span>,<span class='va'>p4</span>, nrow<span class='op'>=</span><span class='fl'>2</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div>
+<p>คะแนน onet ของนักเรียนระดับชั้น ม.3 จำแนกตามรายวิชา</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># ระดับชั้น ม.3</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>onet_m3_nomiss</span><span class='op'>[</span>,<span class='fl'>15</span><span class='op'>:</span><span class='fl'>18</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    eng_avg         math_avg        sci_avg         thai_sd     
+ Min.   :15.00   Min.   : 8.00   Min.   :16.00   Min.   : 0.00  
+ 1st Qu.:25.09   1st Qu.:23.19   1st Qu.:31.37   1st Qu.:11.06  
+ Median :26.22   Median :25.27   Median :33.50   Median :12.79  
+ Mean   :26.93   Mean   :26.25   Mean   :33.96   Mean   :12.42  
+ 3rd Qu.:27.50   3rd Qu.:27.73   3rd Qu.:35.99   3rd Qu.:14.18  
+ Max.   :84.19   Max.   :93.28   Max.   :72.65   Max.   :23.16  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m3_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>thai_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m3_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>math_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p3</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m3_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>sci_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p4</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m3_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>eng_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html'>grid.arrange</a></span><span class='op'>(</span><span class='va'>p1</span>,<span class='va'>p2</span>,<span class='va'>p3</span>,<span class='va'>p4</span>, nrow<span class='op'>=</span><span class='fl'>2</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<p>คะแนน onet ของนักเรียนระดับชั้น ม.6 จำแนกตามรายวิชา</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># ระดับชั้น ม.6</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>onet_m6_nomiss</span><span class='op'>[</span>,<span class='fl'>15</span><span class='op'>:</span><span class='fl'>19</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    soc_avg         eng_avg         math_avg        sci_avg     
+ Min.   :17.00   Min.   :12.50   Min.   : 7.50   Min.   : 9.60  
+ 1st Qu.:30.74   1st Qu.:22.09   1st Qu.:18.86   1st Qu.:25.13  
+ Median :32.34   Median :23.75   Median :21.20   Median :26.80  
+ Mean   :32.64   Mean   :26.14   Mean   :23.76   Mean   :27.44  
+ 3rd Qu.:34.02   3rd Qu.:26.41   3rd Qu.:25.07   3rd Qu.:28.68  
+ Max.   :57.36   Max.   :86.12   Max.   :97.31   Max.   :76.32  
+    thai_sd     
+ Min.   : 0.00  
+ 1st Qu.:10.83  
+ Median :12.38  
+ Mean   :11.99  
+ 3rd Qu.:13.58  
+ Max.   :21.99  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>thai_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>math_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p3</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>sci_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p4</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>eng_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>p5</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>soc_avg</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>100</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html'>grid.arrange</a></span><span class='op'>(</span><span class='va'>p1</span>,<span class='va'>p2</span>,<span class='va'>p3</span>,<span class='va'>p4</span>,<span class='va'>p5</span>, nrow<span class='op'>=</span><span class='fl'>3</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<h1 id="principal-component-analysis-pca">Principal Component Analysis (PCA)</h1>
+<p>นอกจากค่าเฉลี่ยคะแนน onet ของแต่ละโรงเรียนแล้ว ยังมีค่าสถิติของคะแนนอื่น ๆ ได้แก่ sd, min และ max ซึ่งให้สารสนเทศในมิติต่าง ๆ เกี่ยวกับการแจกแจงของคะแนน onet ในแต่ละโรงเรียนด้วย อย่างไรก็ตามข้อมูลมีปริมาณค่อนข้างมาก และหลายระดับชั้น หากนำตัวแปรทั้งหมดมาวิเคราะห์จะทำให้มีความซับซ้อนเกินไป วิธีการหนึ่งที่สามารถลดทอนข้อมูลดังกล่าวได้คือการใช้เทคนิค PCA ซึ่งเป็นการยุบรวมตัวแปรหลาย ๆ ตัวเข้าด้วยกันเพื่อสร้างสเกลของตัวแปรใหม่โดยใช้ความสัมพันธ์ระหว่างตัวแปร</p>
+<p>ก่อนการวิเคราะห์ PCA ผู้วิเคราะห์ดำเนินการตรวจสอบความสัมพันธ์ระหว่างค่าสถิติดังกล่าวโดยใช้แผนภาพการกระจายและสัมประสิทธิ์สหสัมพันธ์ก่อน โดยจำแนกตามระดับชั้นของนักเรียน ได้ผลการวิเคราะห์ดังนี้</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggobi.github.io/ggally/'>GGally</a></span><span class='op'>)</span>
+<span class='va'>cor_p6</span><span class='op'>&lt;-</span><span class='va'>onet_p6_nomiss</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"avg"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>cor_m3</span><span class='op'>&lt;-</span><span class='va'>onet_m3_nomiss</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"avg"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span>use<span class='op'>=</span><span class='st'>"complete.obs"</span><span class='op'>)</span>
+<span class='va'>cor_m6</span><span class='op'>&lt;-</span><span class='va'>onet_m6_nomiss</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"avg"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span>use<span class='op'>=</span><span class='st'>"complete.obs"</span><span class='op'>)</span>
+
+<span class='co'>#correlation p6</span>
+<span class='va'>cor_p6</span>
+</code></pre>
+</div>
+<pre><code>          thai_avg  math_avg   sci_avg   eng_avg
+thai_avg 1.0000000 0.7249939 0.7471793 0.6088336
+math_avg 0.7249939 1.0000000 0.7084016 0.6460727
+sci_avg  0.7471793 0.7084016 1.0000000 0.6017332
+eng_avg  0.6088336 0.6460727 0.6017332 1.0000000</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#correlation m3</span>
+<span class='va'>cor_m3</span>
+</code></pre>
+</div>
+<pre><code>          thai_avg   eng_avg  math_avg   sci_avg
+thai_avg 1.0000000 0.4754923 0.6683351 0.7822189
+eng_avg  0.4754923 1.0000000 0.6603974 0.5139788
+math_avg 0.6683351 0.6603974 1.0000000 0.7151848
+sci_avg  0.7822189 0.5139788 0.7151848 1.0000000</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#correlation m6</span>
+<span class='va'>cor_m6</span>
+</code></pre>
+</div>
+<pre><code>          thai_avg   soc_avg   eng_avg  math_avg   sci_avg
+thai_avg 1.0000000 0.8982477 0.7483392 0.8335856 0.8269468
+soc_avg  0.8982477 1.0000000 0.7389249 0.8298790 0.8280027
+eng_avg  0.7483392 0.7389249 1.0000000 0.8714466 0.8029595
+math_avg 0.8335856 0.8298790 0.8714466 1.0000000 0.9007536
+sci_avg  0.8269468 0.8280027 0.8029595 0.9007536 1.0000000</code></pre>
+</div>
+<h2 id="pca-on-p6-dataset">PCA on p6 dataset</h2>
+<ul>
+<li>var$coord: coordinates of variables to create a scatter plot</li>
+<li>var$cos2: represents the quality of representation for variables on the factor map. It’s calculated as the squared coordinates: - - - var.cos2 = var.coord * var.coord.</li>
+<li>var$contrib: contains the contributions (in percentage) of the variables to the principal components. The contribution of a variable (var) to a given principal component is (in percentage) : (var.cos2 * 100) / (total cos2 of the component)</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://www.sthda.com/english/rpkgs/factoextra'>factoextra</a></span><span class='op'>)</span>
+<span class='va'>pca_p6_fit</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/princomp.html'>princomp</a></span><span class='op'>(</span><span class='va'>onet_p6_nomiss</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"avg"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://ggobi.github.io/ggally/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span>, scores<span class='op'>=</span><span class='cn'>TRUE</span>, cor<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/factoextra/man/eigenvalue.html'>fviz_screeplot</a></span><span class='op'>(</span><span class='va'>pca_p6_fit</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="onetdataset_files/figure-html5/unnamed-chunk-13-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/factoextra/man/eigenvalue.html'>get_eig</a></span><span class='op'>(</span><span class='va'>pca_p6_fit</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>      eigenvalue variance.percent cumulative.variance.percent
+Dim.1  3.0220158        75.550395                    75.55039
+Dim.2  0.4406782        11.016955                    86.56735
+Dim.3  0.2869393         7.173482                    93.74083
+Dim.4  0.2503668         6.259169                   100.00000</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/factoextra/man/get_pca.html'>get_pca_var</a></span><span class='op'>(</span><span class='va'>pca_p6_fit</span><span class='op'>)</span>
+<span class='va'>var</span><span class='op'>$</span><span class='va'>coord</span> <span class='co'>#factor loadings</span>
+</code></pre>
+</div>
+<pre><code>             Dim.1       Dim.2       Dim.3       Dim.4
+thai_avg 0.8896884  0.23051132  0.07507016  0.38688952
+math_avg 0.8882723  0.04449422 -0.44394055 -0.10913034
+sci_avg  0.8822783  0.24809599  0.26758744 -0.29737235
+eng_avg  0.8142651 -0.56921996  0.11232759  0.01853388</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#var$cos2 # squared loadings</span>
+<span class='co'>#var$contrib #prop. squared loadings</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/factoextra/man/fviz_pca.html'>fviz_pca_var</a></span><span class='op'>(</span><span class='va'>pca_p6_fit</span>, repel<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<p>ผลการวิเคราะห์ข้างต้นแสดงให้เห็นว่าการใช้ PCA สามารถลดทอนตัวแปรเดิมที่เป็นคะแนน onet จาก 4 รายวิชา ให้เหลือเพียงตัวแปรเดียวเรียกว่า คะแนนผลสัมฤทธิ์ onet โดยรวม โดยตัวแปรดังกล่าวสามารถอธิบายความแปรปรวนของตัวแปรเดิมทั้ง 4 ได้คิดเป็นร้อยละ 75.55</p>
+<p>แผนภาพต่อไปนี้แสดงการแจกแจงของคะแนนผลสัมฤทธิ์ onet โดยรวมระดับโรงเรียน ของนักเรียนระดับชั้นประถมศึกษาปีที่ 6 โดยการแจกแจงในภาพรวมแสดงด้วยแผนภาพ histogram และใช้ boxplot แสดงการแจกแจงของคะแนนจำแนกตามสังกัดของโรงเรียน</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>onet_p6_nomiss</span><span class='op'>$</span><span class='va'>com1</span><span class='op'>&lt;-</span><span class='va'>pca_p6_fit</span><span class='op'>$</span><span class='va'>scores</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>onet_p6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>com1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"P6 Ach component"</span><span class='op'>)</span>
+<span class='va'>p1</span>
+</code></pre>
+</div>
+<img src="onetdataset_files/figure-html5/unnamed-chunk-15-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>onet_p6_nomiss</span><span class='op'>$</span><span class='va'>com1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-5.7595 -1.1640 -0.1689  0.0000  0.9826 10.7712 </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_p6_nomiss</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>com1</span>, y<span class='op'>=</span><span class='va'>BUREA_NAME</span>, fill<span class='op'>=</span><span class='va'>BUREA_NAME</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span>,
+        text<span class='op'>=</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>family<span class='op'>=</span><span class='st'>"ChulaCharasNew"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"P6 Ach component"</span><span class='op'>)</span>
+<span class='va'>p1</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<h2 id="pca-on-m3-dataset">PCA on m3 dataset</h2>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+<pre><code>      eigenvalue variance.percent cumulative.variance.percent
+Dim.1  2.9176275        72.940687                    72.94069
+Dim.2  0.6031477        15.078693                    88.01938
+Dim.3  0.2685367         6.713417                    94.73280
+Dim.4  0.2106881         5.267203                   100.00000</code></pre>
+<pre><code>             Dim.1      Dim.2        Dim.3       Dim.4
+thai_avg 0.8635889  0.3649334  0.223128029  0.26693036
+eng_avg  0.7608661 -0.6095065  0.220469519 -0.03126968
+math_avg 0.8949234 -0.1216248 -0.412371593  0.11945371
+sci_avg  0.8899644  0.2892760  0.009665917 -0.35240508</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>onet_m3_nomiss</span><span class='op'>$</span><span class='va'>com1</span><span class='op'>&lt;-</span><span class='va'>pca_m3_fit</span><span class='op'>$</span><span class='va'>scores</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>onet_m3_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>com1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"M3 Ach component"</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>6</span>,<span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>p1</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/factoextra/man/fviz_pca.html'>fviz_pca_var</a></span><span class='op'>(</span><span class='va'>pca_m3_fit</span>, repel<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
+</div>
+<p>ผลการวิเคราะห์ข้างต้นแสดงให้เห็นว่าการใช้ PCA สามารถลดทอนตัวแปรเดิมที่เป็นคะแนน onet ในระดับมัธยมศึกษาปีที่ 3 ได้เหลือ 1 องค์ประกอบ เรียกองค์ประกอบนี้ว่าผลสัมฤทธิ์ onet โดยรวม เช่นเดียวกับที่วิเคราะห์ในระดับชั้น ป.6 โดยองค์ประกอบดังกล่าวสามารถอธิบายความแปรปรวนของตัวแปรเดิมได้คิดเป็นร้อยละ 72.94</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m3_nomiss</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>com1</span>, y<span class='op'>=</span><span class='va'>BUREA_NAME</span>, fill<span class='op'>=</span><span class='va'>BUREA_NAME</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span>,
+        text<span class='op'>=</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>family<span class='op'>=</span><span class='st'>"ChulaCharasNew"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"M3 Ach component"</span><span class='op'>)</span>
+<span class='va'>p1</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
+</div>
+<h2 id="pca-on-m6-dataset">PCA on m6 dataset</h2>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+<pre><code>      eigenvalue variance.percent cumulative.variance.percent
+Dim.1 4.31357346        86.271469                    86.27147
+Dim.2 0.33038711         6.607742                    92.87921
+Dim.3 0.17199471         3.439894                    96.31911
+Dim.4 0.10146913         2.029383                    98.34849
+Dim.5 0.08257558         1.651512                   100.00000</code></pre>
+<pre><code>             Dim.1      Dim.2       Dim.3        Dim.4        Dim.5
+thai_avg 0.9277860  0.2765852  0.11073757  0.224218975  0.013300204
+soc_avg  0.9251801  0.2943146  0.08104849 -0.225466624  0.004082051
+eng_avg  0.8948587 -0.3765740  0.22177892 -0.015571887  0.089395775
+math_avg 0.9558159 -0.1514528 -0.08895745  0.007435426 -0.235604288
+sci_avg  0.9394001 -0.0502069 -0.30994149  0.007874978  0.137408289</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>onet_m6_nomiss</span><span class='op'>$</span><span class='va'>com1</span><span class='op'>&lt;-</span><span class='va'>pca_m6_fit</span><span class='op'>$</span><span class='va'>scores</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>onet_m6_nomiss</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>com1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"M6 Ach Component"</span><span class='op'>)</span>
+<span class='va'>p1</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/factoextra/man/fviz_pca.html'>fviz_pca_var</a></span><span class='op'>(</span><span class='va'>pca_m6_fit</span>, repel<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
+</div>
+<p>ผลการวิเคราะห์ข้างต้นแสดงให้เห็นว่าการใช้ PCA สามารถลดทอนตัวแปรเดิมที่เป็นคะแนน onet ในระดับมัธยมศึกษาปีที่ 6 ได้เหลือ 1 องค์ประกอบ เรียกองค์ประกอบนี้ว่า ผลสัมฤทธิ์ onet โดยรวม โดยองค์ประกอบนี้สามารถอธิบายความแปรปรวนของตัวแปรเดิมได้คิดเป็นร้อยละ 86.27</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>onet_m6_nomiss</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>com1</span>, y<span class='op'>=</span><span class='va'>BUREA_NAME</span>, fill<span class='op'>=</span><span class='va'>BUREA_NAME</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span>,
+        text<span class='op'>=</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>family<span class='op'>=</span><span class='st'>"ChulaCharasNew"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span><span class='op'>(</span><span class='st'>"M6 Ach Component"</span><span class='op'>)</span>
+
+<span class='va'>p1</span>
+</code></pre>
+</div>
+<p><img src="onetdataset_files/figure-html5/unnamed-chunk-24-1.png" width="624" /></p>
+</div>
+<h1 id="merge-three-dataset-together">Merge three dataset together</h1>
+<p>ขั้นตอนสุดท้ายคือการรวมชุดข้อมูลทั้งสามเข้าด้วยกันเป็นชุดข้อมูลเดียว ทั้งนี้ชุดข้อมูลที่รวมเสร็จแล้วจำเป็นต้องอยู่ในรูปแบบ tidy data ด้วย</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p6</span><span class='op'>&lt;-</span><span class='va'>onet_p6_nomiss</span>
+<span class='va'>p6</span><span class='op'>$</span><span class='va'>class</span><span class='op'>&lt;-</span><span class='st'>"p6"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>p6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>29</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>p6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>29</span><span class='op'>]</span>,<span class='st'>"p6"</span>,sep<span class='op'>=</span><span class='st'>"_"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>p6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>30</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='st'>"ach_p6"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>p6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>9</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AREA_CODE"</span>,<span class='st'>"AREA_NAME"</span><span class='op'>)</span>
+<span class='va'>m3</span><span class='op'>&lt;-</span><span class='va'>onet_m3_nomiss</span>
+<span class='va'>m3</span><span class='op'>$</span><span class='va'>class</span><span class='op'>&lt;-</span><span class='st'>"m3"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m3</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>29</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m3</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>29</span><span class='op'>]</span>,<span class='st'>"m3"</span>,sep<span class='op'>=</span><span class='st'>"_"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m3</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>30</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='st'>"ach_m3"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m3</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>9</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AREA_CODE"</span>,<span class='st'>"AREA_NAME"</span><span class='op'>)</span>
+<span class='va'>m6</span><span class='op'>&lt;-</span><span class='va'>onet_m6_nomiss</span>
+<span class='va'>m6</span><span class='op'>$</span><span class='va'>class</span><span class='op'>&lt;-</span><span class='st'>"m6"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>33</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>14</span><span class='op'>:</span><span class='fl'>33</span><span class='op'>]</span>,<span class='st'>"m6"</span>,sep<span class='op'>=</span><span class='st'>"_"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>34</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='st'>"ach_m6"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>m6</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>9</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AREA_CODE"</span>,<span class='st'>"AREA_NAME"</span><span class='op'>)</span>
+
+<span class='va'>onet</span><span class='op'>&lt;-</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='va'>p6</span>,<span class='va'>m3</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>p6</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>13</span>,<span class='fl'>31</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>onet</span><span class='op'>&lt;-</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='va'>onet</span>,<span class='va'>m6</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>onet</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>13</span>,<span class='fl'>31</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>onet</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Rows: 46,507
+Columns: 69
+$ SCHOOL_CODE &lt;chr&gt; &quot;3023200101&quot;, &quot;3024100101&quot;, &quot;3035200102&quot;, &quot;30403…
+$ SCHOOL_NAME &lt;chr&gt; &quot;เทศบาลชุมชนวิมลวิทยา&quot;, &quot;วัดสัมปทวน (บางแก้วพุทธิยาคาร)&quot;…
+$ AMPH_ID     &lt;chr&gt; &quot;2301&quot;, &quot;2401&quot;, &quot;3501&quot;, &quot;4006&quot;, &quot;5301&quot;, &quot;5709&quot;, …
+$ AMPH_NAME   &lt;chr&gt; &quot;เมืองตราด&quot;, &quot;เมืองฉะเชิงเทรา&quot;, &quot;เมืองยโสธร&quot;, &quot;สีชมพู&quot;…
+$ PROV_ID     &lt;chr&gt; &quot;23&quot;, &quot;24&quot;, &quot;35&quot;, &quot;40&quot;, &quot;53&quot;, &quot;57&quot;, &quot;64&quot;, &quot;15&quot;, …
+$ PROV_NAME   &lt;chr&gt; &quot;ตราด&quot;, &quot;ฉะเชิงเทรา&quot;, &quot;ยโสธร&quot;, &quot;ขอนแก่น&quot;, &quot;อุตรดิตถ์&quot;…
+$ REGION_NAME &lt;chr&gt; &quot;ตะวันออก&quot;, &quot;ตะวันออก&quot;, &quot;ตะวันออกเฉียงเหนือ&quot;, &quot;ตะวันออ…
+$ URBAN_ZONE  &lt;chr&gt; &quot;URBAN&quot;, &quot;URBAN&quot;, &quot;URBAN&quot;, &quot;SUBURB&quot;, &quot;URBAN&quot;, &quot;S…
+$ AREA_CODE   &lt;chr&gt; &quot;3023&quot;, &quot;3024&quot;, &quot;3035&quot;, &quot;3040&quot;, &quot;3053&quot;, &quot;3057&quot;, …
+$ AREA_NAME   &lt;chr&gt; &quot;ท้องถิ่นจังหวัดตราด&quot;, &quot;ท้องถิ่นจังหวัดฉะเชิงเทรา&quot;, &quot;ท้องถิ่นจั…
+$ BUREA_CODE  &lt;chr&gt; &quot;30&quot;, &quot;30&quot;, &quot;30&quot;, &quot;30&quot;, &quot;30&quot;, &quot;30&quot;, &quot;30&quot;, &quot;30&quot;, …
+$ BUREA_NAME  &lt;chr&gt; &quot;กรมส่งเสริมการปกครองท้องถิ่น&quot;, &quot;กรมส่งเสริมการปกครองท้อ…
+$ SCHOOL_SIZE &lt;chr&gt; &quot;L&quot;, &quot;M&quot;, &quot;L&quot;, &quot;S&quot;, &quot;XL&quot;, &quot;M&quot;, &quot;S&quot;, &quot;S&quot;, &quot;L&quot;, &quot;S…
+$ thai_avg_p6 &lt;dbl&gt; 56.96341, 54.30921, 57.08975, 37.80000, 59.77416…
+$ math_avg_p6 &lt;dbl&gt; 32.25610, 29.07895, 41.98020, 19.00000, 42.15613…
+$ sci_avg_p6  &lt;dbl&gt; 34.02439, 34.06579, 39.73153, 34.00000, 43.65741…
+$ eng_avg_p6  &lt;dbl&gt; 33.41463, 34.60526, 40.32020, 23.00000, 39.19444…
+$ thai_sd_p6  &lt;dbl&gt; 11.380286, 11.599746, 16.025261, 10.482008, 14.8…
+$ math_sd_p6  &lt;dbl&gt; 14.695121, 11.801832, 22.548947, 10.677078, 21.9…
+$ sci_sd_p6   &lt;dbl&gt; 9.993871, 10.845914, 12.311258, 7.211102, 12.070…
+$ eng_sd_p6   &lt;dbl&gt; 12.275497, 14.807163, 17.203388, 5.454356, 15.81…
+$ thai_min_p6 &lt;dbl&gt; 25.25, 22.00, 15.00, 19.75, 25.00, 24.00, 25.00,…
+$ math_min_p6 &lt;dbl&gt; 5, 15, 5, 5, 0, 10, 15, 15, 5, 5, 5, 10, 10, 10,…
+$ sci_min_p6  &lt;dbl&gt; 2.5, 11.0, 14.0, 23.5, 19.5, 17.0, 11.5, 23.5, 1…
+$ eng_min_p6  &lt;dbl&gt; 7.5, 10.0, 7.5, 17.5, 10.0, 17.5, 17.5, 17.5, 7.…
+$ thai_max_p6 &lt;dbl&gt; 85.75, 71.50, 86.75, 52.50, 89.50, 83.75, 72.00,…
+$ math_max_p6 &lt;dbl&gt; 80, 60, 100, 40, 100, 80, 45, 55, 95, 80, 85, 75…
+$ sci_max_p6  &lt;dbl&gt; 58.5, 58.5, 76.0, 46.5, 76.5, 73.5, 46.5, 53.0, …
+$ eng_max_p6  &lt;dbl&gt; 97.5, 85.0, 92.5, 35.0, 95.0, 65.0, 40.0, 52.5, …
+$ ach_p6      &lt;dbl&gt; -0.3571698, -0.6103090, 0.9877122, -2.7404489, 1…
+$ class       &lt;chr&gt; &quot;p6&quot;, &quot;p6&quot;, &quot;p6&quot;, &quot;p6&quot;, &quot;p6&quot;, &quot;p6&quot;, &quot;p6&quot;, &quot;p6&quot;, …
+$ thai_avg_m3 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_avg_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_avg_m3 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_avg_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ thai_sd_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_sd_m3   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_sd_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_sd_m3   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ thai_min_m3 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_min_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_min_m3 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_min_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ thai_max_m3 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_max_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_max_m3 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_max_m3  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ ach_m3      &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ thai_avg_m6 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ soc_avg_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_avg_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_avg_m6 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_avg_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ thai_sd_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ soc_sd_m6   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_sd_m6   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_sd_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_sd_m6   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ thai_min_m6 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ soc_min_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_min_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_min_m6 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_min_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ thai_max_m6 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ soc_max_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ eng_max_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ math_max_m6 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ sci_max_m6  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ ach_m6      &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
+</div>
+<h1 id="สรป">สรุป</h1>
+<p>การดำเนินการข้างต้นทำให้ได้ชุดข้อมูล <code>onet</code> ที่มีตัวแปรสำคัญคือคะแนนผลสัมฤทธิ์ onet ระดับโรงเรียนของนักเรียนในระดับชั้น ป.6 ม.3 และ ม.6 โดยที่คะแนนผลสัมฤทธิ์ onet ดังกล่าวสร้างจากเทคนิคการวิเคราะห์องค์ประกอบหลัก (PCA) และสามารถอธิบายความแปรปรวนในตัวแปรเดิมคือ คะแนนสอบ onet ทุกรายวิชา ได้ตั้งแต่ประมาณร้อยละ 72 ถึง 86 ซึ่งอยู่ในระดับที่สูงมาก ผู้วิเคราะห์จึงจะใช้คะแนนผลสัมฤทธิ์ onet ดังกล่าวเป็นตัวแทนผลสัมฤทธิ์ onet จากทุกรายวิชาของนักเรียน</p>
+<p>ไฟล์ข้อมูลที่จัดการเรียบร้อยแล้วจะถูกเก็บไว้เป็น .csv ชื่อ <code>onet.csv</code></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/write.table.html'>write.csv</a></span><span class='op'>(</span><span class='va'>onet</span>, file<span class='op'>=</span><span class='st'>"onet.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<hr />
+<style>
+html {
+  scroll-behavior: smooth;
+}
+d-article {
+    contain: none;
+  }
+#TOC {
+  position: fixed;
+  z-index: 50;
+  background: "white";     /* or   background: white; */
+  padding: -5px;           /* optional */
+  border-radius: 5px;      /* optional */
+  }
+
+/* Hide the ToC when resized to mobile or tablet:  480px, 768px, 900px */
+@media screen and (max-width: 900px) {
+#TOC {
+    position: relative;
+  }
+}
+</style>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
