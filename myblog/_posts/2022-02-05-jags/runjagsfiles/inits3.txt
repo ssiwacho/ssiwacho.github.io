@@ -1,5 +1,0 @@
-"mu" <- 90
-"tau" <- 0.05
-
-".RNG.name" <- "base::Super-Duper"
-

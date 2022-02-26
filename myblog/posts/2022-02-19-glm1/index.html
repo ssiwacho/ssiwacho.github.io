@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["bnova.png","glm1_files/anchor-4.2.2/anchor.min.js","glm1_files/bowser-1.9.3/bowser.min.js","glm1_files/distill-2.2.21/template.v2.js","glm1_files/figure-html5/unnamed-chunk-10-1.png","glm1_files/figure-html5/unnamed-chunk-11-1.png","glm1_files/figure-html5/unnamed-chunk-12-1.png","glm1_files/figure-html5/unnamed-chunk-2-1.png","glm1_files/figure-html5/unnamed-chunk-4-1.png","glm1_files/figure-html5/unnamed-chunk-5-1.png","glm1_files/figure-html5/unnamed-chunk-6-1.png","glm1_files/figure-html5/unnamed-chunk-9-1.png","glm1_files/header-attrs-2.11/header-attrs.js","glm1_files/jquery-3.6.0/jquery-3.6.0.js","glm1_files/jquery-3.6.0/jquery-3.6.0.min.js","glm1_files/jquery-3.6.0/jquery-3.6.0.min.map","glm1_files/popper-2.6.0/popper.min.js","glm1_files/tippy-6.2.7/tippy-bundle.umd.min.js","glm1_files/tippy-6.2.7/tippy-light-border.css","glm1_files/tippy-6.2.7/tippy.css","glm1_files/tippy-6.2.7/tippy.umd.min.js","glm1_files/webcomponents-2.0.0/webcomponents.js","model1.png","model2.png"]}
+  {"type":"character","attributes":{},"value":["bnova.png","glm1_files/anchor-4.2.2/anchor.min.js","glm1_files/bowser-1.9.3/bowser.min.js","glm1_files/distill-2.2.21/template.v2.js","glm1_files/figure-html5/unnamed-chunk-10-1.png","glm1_files/figure-html5/unnamed-chunk-11-1.png","glm1_files/figure-html5/unnamed-chunk-12-1.png","glm1_files/figure-html5/unnamed-chunk-15-1.png","glm1_files/figure-html5/unnamed-chunk-15-2.png","glm1_files/figure-html5/unnamed-chunk-16-1.png","glm1_files/figure-html5/unnamed-chunk-17-1.png","glm1_files/figure-html5/unnamed-chunk-17-2.png","glm1_files/figure-html5/unnamed-chunk-18-1.png","glm1_files/figure-html5/unnamed-chunk-19-1.png","glm1_files/figure-html5/unnamed-chunk-2-1.png","glm1_files/figure-html5/unnamed-chunk-20-1.png","glm1_files/figure-html5/unnamed-chunk-24-1.png","glm1_files/figure-html5/unnamed-chunk-4-1.png","glm1_files/figure-html5/unnamed-chunk-5-1.png","glm1_files/figure-html5/unnamed-chunk-6-1.png","glm1_files/figure-html5/unnamed-chunk-9-1.png","glm1_files/header-attrs-2.11/header-attrs.js","glm1_files/jquery-3.6.0/jquery-3.6.0.js","glm1_files/jquery-3.6.0/jquery-3.6.0.min.js","glm1_files/jquery-3.6.0/jquery-3.6.0.min.map","glm1_files/kePrint-0.0.1/kePrint.js","glm1_files/lightable-0.0.1/lightable.css","glm1_files/popper-2.6.0/popper.min.js","glm1_files/tippy-6.2.7/tippy-bundle.umd.min.js","glm1_files/tippy-6.2.7/tippy-light-border.css","glm1_files/tippy-6.2.7/tippy.css","glm1_files/tippy-6.2.7/tippy.umd.min.js","glm1_files/webcomponents-2.0.0/webcomponents.js","manova.sav","MCMCtrace.pdf","model1.png","model2.png","regression_dat1.csv","Screen Shot 2565-02-26 at 06.59.01.png","Screen Shot 2565-02-26 at 09.37.07.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2046,6 +2046,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!--/radix_placeholder_distill-->
   <script src="../../site_libs/header-attrs-2.11/header-attrs.js"></script>
+  <script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2213,8 +2215,14 @@ h6, .h6{
 <ul>
 <li><a href="#posterior-predictive-p-value-ppp">Posterior Predictive P-value (PPP)</a></li>
 </ul></li>
-<li><a href="#bayesian-alternative-to-anova">Bayesian Alternative to ANOVA</a></li>
-<li><a href="#multiple-regression">Multiple Regression</a></li>
+<li><a href="#bayesian-alternative-to-anova-banova">Bayesian Alternative to ANOVA (BANOVA)</a>
+<ul>
+<li><a href="#one-way-banova">One-Way BANOVA</a></li>
+<li><a href="#two-way-banova">Two-Way BANOVA</a></li>
+<li><a href="#banova-package">BANOVA package</a></li>
+</ul></li>
+<li><a href="#bayesian-regression">Bayesian Regression</a></li>
+<li><a href="#bayes-factor">Bayes Factor</a></li>
 </ul>
 </nav>
 </div>
@@ -2468,6 +2476,14 @@ Finished running the simulation</code></pre>
 </div>
 <p>การใช้งาน posterior predictive distribution คือการพิจารณาว่าการแจกแจง predictive ดังกล่าวมีความลำเอียงไปจากการแจกแจงของข้อมูลค่าสังเกตอย่างมีนัยสำคัญหรือไม่ รูปต่อไปนี้แสดงการเปรียบเทียบระหว่าง posterior predictive ที่สร้างขึ้นกับข้อมูลจริง</p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>Ach</span>, col<span class='op'>=</span><span class='st'>"skyblue"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, main<span class='op'>=</span><span class='st'>""</span>, nclass<span class='op'>=</span><span class='fl'>30</span>, xlab<span class='op'>=</span><span class='st'>"Ach"</span>, freq<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span><span class='op'>(</span><span class='va'>y.rep</span><span class='op'>[</span>,<span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>, type<span class='op'>=</span><span class='st'>"l"</span>, lty<span class='op'>=</span><span class='fl'>2</span>, cex<span class='op'>=</span><span class='fl'>0.5</span>, col<span class='op'>=</span><span class='st'>"black"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
 <p><img src="glm1_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
 </div>
 <p>นอกจากการตรวจสอบด้วย visualization ในข้างต้นแล้ว ยังสามารถเปรียบเทียบ posterior predictve กับข้อมูลจริงด้วยค่าสถิติ เช่น</p>
@@ -2476,17 +2492,44 @@ Finished running the simulation</code></pre>
 <p><span class="math inline">\(PPP = P(T(y^{rep}) \geq T(y))\)</span></p>
 <p>เมื่อ <span class="math inline">\(T(.)\)</span> คือ discrepancy measures หรือ test quantiles ที่จะใช้เป็นตัวเปรียบเทียบระหว่างการแจกแจงของ posterior predictive กับ observed value การกำหนด test quantile ดังกล่าวสามารถทำได้หลายลักษณะและไม่ได้มีกฎเกณฑ์ตายตัว ขึ้นอยู่กับว่าผู้วิเคราะห์ต้องการสารสนเทศในเชิงการเปรียบเทียบแบบใด ค่า test quantile ที่มักใช้ได้แก่ ค่าต่ำสุด ค่าสูงสุด ค่าเฉลี่ย และส่วนเบี่ยงเบนมาตรฐาน ตัวอย่างต่อไปนี้แสดงการคำนวณค่า PPP ข้างต้น</p>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="glm1_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>Tmax.y</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>Ach</span><span class='op'>)</span>
+<span class='va'>Tmax.yrep</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y.rep</span>,<span class='fl'>2</span>,<span class='va'>max</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>Tmax.yrep</span>, col<span class='op'>=</span><span class='st'>"skyblue"</span>, xlab<span class='op'>=</span><span class='st'>"max Y.rep"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, nclass<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>Tmax.y</span>, col<span class='op'>=</span><span class='st'>"red"</span>, lty<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="glm1_files/figure-html5/unnamed-chunk-11-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ppp</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>Tmax.yrep</span><span class='op'>&gt;</span><span class='va'>Tmax.y</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/proportions.html'>prop.table</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>ppp</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='co'>#PPP value</span>
+</code></pre>
+</div>
 <pre><code> TRUE 
-0.254 </code></pre>
+0.301 </code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="glm1_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
-<pre><code>TRUE 
-0.13 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Tmin.y</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>Ach</span><span class='op'>)</span>
+<span class='va'>Tmin.yrep</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y.rep</span>,<span class='fl'>2</span>,<span class='va'>min</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>Tmin.yrep</span>, col<span class='op'>=</span><span class='st'>"skyblue"</span>, xlab<span class='op'>=</span><span class='st'>"max Y.rep"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, nclass<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>Tmin.y</span>, col<span class='op'>=</span><span class='st'>"red"</span>, lty<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="glm1_files/figure-html5/unnamed-chunk-12-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ppp</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>Tmin.yrep</span><span class='op'>&gt;</span><span class='va'>Tmin.y</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/proportions.html'>prop.table</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>ppp</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='co'>#PPP value</span>
+</code></pre>
+</div>
+<pre><code> TRUE 
+0.137 </code></pre>
 </div>
 <p>จากนิยามของ PPP ข้างต้นจะเห็นว่าหาก PPP มีค่าเข้าใกล้ 0 หรือ 1 นั่นหมายความว่าโมเดลการวิเคราะห์สร้าง predictive value ที่มีความแตกต่าง/ลำเอียง ไปจากข้อมูลจริงอย่างมาก ดังนั้น PPP = 0.5 จึงหมายความว่าโมเดลมีความสอดคล้องกับข้อมูลจริงอย่างสมบูรณ์ ในทางปฏิบัติไม่ได้มีการกำหนด cut-off ไว้แน่นอน แต่ค่า cut-off ที่มักใช้กันคือ PPP&lt;0.05,0.1 หรือ PPP&gt;0.90,0.95</p>
-<h2 id="bayesian-alternative-to-anova">Bayesian Alternative to ANOVA</h2>
+<h2 id="bayesian-alternative-to-anova-banova">Bayesian Alternative to ANOVA (BANOVA)</h2>
+<p>หัวข้อนี้จะกล่าวถึงการวิเคราะห์ความแปรปรวนแบบเบส์ รายละเอียดมีดังนี้</p>
+<h3 id="one-way-banova">One-Way BANOVA</h3>
 <p>นักวิจัยทดลองใช้วิธีการสอน 4 วิธี กับนักเรียนจำนวน 4 กลุ่มที่มีการวิเคราะห์แล้วว่ามีพื้นฐานใกล้เคียงกัน เมื่อสอนจบตามแผนแล้วมีการวัดผลการเรียนรู้ภายหลัง ได้ผลดังนี้</p>
 <div class="layout-chunk" data-layout="l-body">
 <table>
@@ -2622,22 +2665,574 @@ dem
 </tbody>
 </table>
 </div>
-<p>โมเดลการวิเคราะห์ความแปรรปวนทางเดียวสามารถเขียนได้สองลักษณะ ลักษณะแรกเรียกว่า mean model เขียนได้ดังนี้</p>
+<p>โมเดลการวิเคราะห์ความแปรปรวนทางเดียวสามารถเขียนได้สองลักษณะ ลักษณะแรกเรียกว่า mean model เขียนได้ดังนี้</p>
 <p><span class="math inline">\(y_{ij}=\mu_j+\epsilon_{ij}\)</span></p>
 <p>อีกลักษณะหนึ่งคือ effect model</p>
-<p><span class="math inline">\(y_{ij}=\mu+\alpha_j+\epsilon_{ij}\)</span> เมื่อ <span class="math inline">\(\sum_{j=1}^J\alpha_j=0\)</span></p>
+<p><span class="math inline">\(y_{ij}=\alpha+\beta_j+\epsilon_{ij}\)</span> เมื่อ <span class="math inline">\(\sum_{j=1}^J\beta_j=0\)</span> และ <span class="math inline">\(\alpha\)</span> คือ grand mean ดังนั้น <span class="math inline">\(alpha+beta_j=\mu_j\)</span> ก็คือ group mean</p>
 <p>รูปด้านล่างแสดงโมเดลค่าสังเกตแบบ effect model</p>
-<p><img src="bnova.png" style="width:40.0%" /> ### กิจกรรม 3</p>
+<p><img src="bnova.png" style="width:40.0%" /> #### กิจกรรม 3</p>
 <ul>
 <li><p>วิเคราะห์ ANOVA เพื่อเปรียบเทียบค่าเฉลี่ยของชุดข้อมูลข้างต้น</p></li>
 <li><p>วิเคราะห์ BANOVA เพื่อเปรียบเทียบค่าเฉลี่ยของชุดข้อมูลข้างต้น</p></li>
 <li><p>ผลการวิเคราะห์จากทั้งสองวิธีให้สารสนเทศที่เหมือนหรือแตกต่างกันอย่างไร?</p></li>
 </ul>
-<h2 id="multiple-regression">Multiple Regression</h2>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Calling 3 simulations using the parallel method...
+Following the progress of chain 1 (the program will wait for
+all chains to finish before continuing):
+Welcome to JAGS 4.3.0 on Sat Feb 26 12:49:55 2022
+JAGS is free software and comes with ABSOLUTELY NO WARRANTY
+Loading module: basemod: ok
+Loading module: bugs: ok
+. . Reading data file data.txt
+. Compiling model graph
+   Resolving undeclared variables
+   Allocating nodes
+Graph information:
+   Observed stochastic nodes: 32
+   Unobserved stochastic nodes: 5
+   Total graph size: 83
+. Reading parameter file inits1.txt
+. Initializing model
+. Adaptation skipped: model is not in adaptive mode.
+. Updating 4000
+-------------------------------------------------| 4000
+************************************************** 100%
+. . . . Updating 30000
+-------------------------------------------------| 30000
+************************************************** 100%
+. . . . Updating 0
+. Deleting model
+. 
+All chains have finished
+Note: the model did not require adaptation
+Simulation complete.  Reading coda files...
+Coda files loaded successfully
+Calculating summary statistics...
+Calculating the Gelman-Rubin statistic for 6 variables....
+Finished running the simulation</code></pre>
+</div>
+<h4 id="mornitoring-the-posteriors">Mornitoring the posteriors</h4>
+Using visualization approach
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="glm1_files/figure-html5/unnamed-chunk-15-1.png" width="624" /><img src="glm1_files/figure-html5/unnamed-chunk-15-2.png" width="624" /></p>
+</div>
+Using numerical approach
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/coda/man/gelman.diag.html'>gelman.diag</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Potential scale reduction factors:
+
+        Point est. Upper C.I.
+alpha            1          1
+beta[1]          1          1
+beta[2]          1          1
+beta[3]          1          1
+beta[4]          1          1
+sigma            1          1
+
+Multivariate psrf
+
+1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/coda/man/gelman.plot.html'>gelman.plot</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="glm1_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<h4 id="model-evaluation">Model Evaluation</h4>
+<p>เราสามารถตรวจสอบความเหมาะสมของโมเดลโดยใช้การวิเคราะห์เศษเหลือได้เหมือนกับการวิเคราะห์แบบดั้งเดิม นอกจากนี้ยังสามารถตรวจสอบโดยใช้ posterior predictive check ก็ได ดังตัวอย่างต่อไปนี้</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>  method ach    y.hat      resid
+1      1   5 4.868346  0.1316543
+2      1   6 4.868346  1.1316543
+3      1   7 4.868346  2.1316543
+4      1   3 4.868346 -1.8683457
+5      1   7 4.868346  2.1316543
+6      1   5 4.868346  0.1316543</code></pre>
+<p><img src="glm1_files/figure-html5/unnamed-chunk-17-1.png" width="624" /><img src="glm1_files/figure-html5/unnamed-chunk-17-2.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># generate posterior predictive values</span>
+<span class='va'>y.rep</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>nrow<span class='op'>=</span><span class='fl'>32</span>,ncol<span class='op'>=</span><span class='fl'>1001</span><span class='op'>)</span>
+<span class='va'>y.rep</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='va'>method</span>
+<span class='va'>n</span><span class='op'>&lt;-</span><span class='fl'>8</span>
+
+<span class='va'>mcmc.id</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>30000</span>,<span class='fl'>1000</span><span class='op'>)</span>
+<span class='va'>mcmc</span><span class='op'>&lt;-</span><span class='va'>samples.dat</span><span class='op'>[</span><span class='va'>mcmc.id</span>,<span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>mcmc</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>        alpha    beta.1. beta.2.   beta.3.  beta.4.   sigma
+1151  5.48283  0.0377758 2.52623  0.519778 -3.08379 1.66747
+2520  5.18107 -0.2024250 2.54697  0.657303 -3.00184 2.01510
+28261 5.40228 -1.5621800 3.20962  0.602097 -2.24954 1.64340
+14823 5.54345 -0.9179360 2.83971  0.874861 -2.79664 2.13064
+27203 5.55538  0.4670010 2.49418 -0.448964 -2.51222 1.89682
+19360 5.64050 -0.7782200 2.64814  0.225491 -2.09541 2.00220</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muj</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>mu1<span class='op'>=</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>+</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>,
+                mu2<span class='op'>=</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>+</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>3</span><span class='op'>]</span>,
+                mu3<span class='op'>=</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>+</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>4</span><span class='op'>]</span>,
+                mu4<span class='op'>=</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>+</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>sigma</span><span class='op'>&lt;-</span><span class='va'>mcmc</span><span class='op'>[</span>,<span class='fl'>6</span><span class='op'>]</span>
+
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>m</span> <span class='kw'>in</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>1001</span><span class='op'>)</span>
+<span class='op'>{</span>
+  <span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
+  <span class='op'>{</span>
+  <span class='va'>y.rep</span><span class='op'>[</span><span class='va'>y.rep</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>==</span><span class='va'>j</span>,<span class='va'>m</span><span class='op'>]</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span>,<span class='va'>muj</span><span class='op'>[</span>,<span class='va'>j</span><span class='op'>]</span>,<span class='va'>sigma</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
+
+<span class='co'>## posterior predictive plot vs observed values</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>ach</span>, nclass<span class='op'>=</span><span class='fl'>10</span>, freq<span class='op'>=</span><span class='cn'>F</span>, main<span class='op'>=</span><span class='st'>""</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0.3</span><span class='op'>)</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>15</span><span class='op'>)</span>,col<span class='op'>=</span><span class='st'>"orange"</span>, border<span class='op'>=</span><span class='st'>"white"</span><span class='op'>)</span>
+<span class='va'>sample</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>1000</span>,<span class='fl'>20</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='va'>sample</span><span class='op'>)</span>
+<span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span><span class='op'>(</span><span class='va'>y.rep</span><span class='op'>[</span>,<span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>, type<span class='op'>=</span><span class='st'>"l"</span>, lty<span class='op'>=</span><span class='fl'>2</span>, cex<span class='op'>=</span><span class='fl'>0.5</span>, col<span class='op'>=</span><span class='st'>"black"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+<p><img src="glm1_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Tmax.y</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>ach</span><span class='op'>)</span>
+<span class='va'>Tmax.yrep</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y.rep</span>,<span class='fl'>2</span>,<span class='va'>max</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>Tmax.yrep</span>, col<span class='op'>=</span><span class='st'>"skyblue"</span>, xlab<span class='op'>=</span><span class='st'>"max Y.rep"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, nclass<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>Tmax.y</span>, col<span class='op'>=</span><span class='st'>"red"</span>, lty<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="glm1_files/figure-html5/unnamed-chunk-19-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ppp</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>Tmax.yrep</span><span class='op'>&gt;</span><span class='va'>Tmax.y</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/proportions.html'>prop.table</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>ppp</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='co'>#PPP value</span>
+</code></pre>
+</div>
+<pre><code>     TRUE 
+0.5344655 </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Tmin.y</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>ach</span><span class='op'>)</span>
+<span class='va'>Tmin.yrep</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y.rep</span>,<span class='fl'>2</span>,<span class='va'>min</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>Tmin.yrep</span>, col<span class='op'>=</span><span class='st'>"skyblue"</span>, xlab<span class='op'>=</span><span class='st'>"max Y.rep"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, nclass<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>Tmin.y</span>, col<span class='op'>=</span><span class='st'>"red"</span>, lty<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="glm1_files/figure-html5/unnamed-chunk-20-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ppp</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>Tmin.yrep</span><span class='op'>&gt;</span><span class='va'>Tmin.y</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/r/base/proportions.html'>prop.table</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>ppp</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='co'>#PPP value</span>
+</code></pre>
+</div>
+<pre><code>     TRUE 
+0.1658342 </code></pre>
+</div>
+<h4 id="estimation">Estimation</h4>
+์
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/caseyyoungflesh/MCMCvis'>MCMCvis</a></span><span class='op'>)</span>
+<span class='fu'>kable</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html'>MCMCsummary</a></span><span class='op'>(</span><span class='va'>samples</span>, HPD <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+      digits<span class='op'>=</span><span class='fl'>3</span>, booktabs<span class='op'>=</span><span class='cn'>TRUE</span>,
+      caption<span class='op'>=</span><span class='st'>"สถิติพื้นฐานของการแจกแจงความน่าจะเป็นภายหลัง"</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>kable_styling</span><span class='op'>(</span><span class='op'>)</span><span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>footnote</span><span class='op'>(</span>general<span class='op'>=</span><span class='st'>'ประมาณจากตัวอย่าง MCMC ขนาด 30,000 หน่วย'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption>
+<span id="tab:unnamed-chunk-21">Table 1: </span>สถิติพื้นฐานของการแจกแจงความน่าจะเป็นภายหลัง
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+95%_HPDL
+</th>
+<th style="text-align:right;">
+95%_HPDU
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
+<th style="text-align:right;">
+n.eff
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+alpha
+</td>
+<td style="text-align:right;">
+5.557
+</td>
+<td style="text-align:right;">
+0.302
+</td>
+<td style="text-align:right;">
+4.955
+</td>
+<td style="text-align:right;">
+6.145
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+29444
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+beta[1]
+</td>
+<td style="text-align:right;">
+-0.688
+</td>
+<td style="text-align:right;">
+0.525
+</td>
+<td style="text-align:right;">
+-1.712
+</td>
+<td style="text-align:right;">
+0.365
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+31171
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+beta[2]
+</td>
+<td style="text-align:right;">
+2.802
+</td>
+<td style="text-align:right;">
+0.527
+</td>
+<td style="text-align:right;">
+1.761
+</td>
+<td style="text-align:right;">
+3.825
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+29712
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+beta[3]
+</td>
+<td style="text-align:right;">
+0.558
+</td>
+<td style="text-align:right;">
+0.524
+</td>
+<td style="text-align:right;">
+-0.493
+</td>
+<td style="text-align:right;">
+1.568
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+28977
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+beta[4]
+</td>
+<td style="text-align:right;">
+-2.671
+</td>
+<td style="text-align:right;">
+0.524
+</td>
+<td style="text-align:right;">
+-3.737
+</td>
+<td style="text-align:right;">
+-1.669
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+29108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sigma
+</td>
+<td style="text-align:right;">
+1.698
+</td>
+<td style="text-align:right;">
+0.238
+</td>
+<td style="text-align:right;">
+1.274
+</td>
+<td style="text-align:right;">
+2.182
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+30000
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> ประมาณจากตัวอย่าง MCMC ขนาด 30,000 หน่วย
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<h4 id="multiple-comparison">Multiple Comparison</h4>
+<p>การเปรียบเทียบรายคู่แบบเบส์มีจุดเด่นคือไม่จำเป็นกังวลปัญหาอัตราความคลาดเคลื่อนเฟ้อ ทั้งนี้เป็นเพราะการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ในโมเดลจะไม่เปลี่ยนแปลงไปตามจำนวนคู่การเปรียบเทียบที่เพิ่มขึ้น ตัวอย่างด้านล่างแสดงการเขียนคำสั่งเพื่อสร้าง contrast สำหรับการเปรียบเทียบค่าเฉลี่ยผลสัมฤทธิ์ระหว่างคู่ของวิธีการสอนที่สนใจ ประกอบด้วย</p>
+<p>c1: PBL vs PBL</p>
+<p>c2: LEC vs DEM</p>
+<p>c3: LEC vs COP</p>
+<p>c4: PBL vs average of (LEC, DEM and COP)</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#banova with constrast</span>
+<span class='va'>banova</span><span class='op'>&lt;-</span><span class='st'>"model{
+#likelihood function
+
+for(i in 1:n)
+{
+y[i]~dnorm(mu[i], tau) #homogeneity of variance model
+mu[i]&lt;-alpha+beta[x[i]] #effects model
+}
+
+#prior distribution
+tau ~ dgamma(0.01,0.01)
+sigma&lt;-1/sqrt(tau) #root mean square of the ANOVA model (RMSE)
+alpha~dnorm(0,0.01) #grand mean
+
+for (j in 2:J)
+{
+beta[j]~dnorm(0,0.01)
+}
+beta[1]&lt;- -sum(beta[2:J])
+
+#define contrast
+c1&lt;-beta[2]-beta[1] #pbl vs lec
+c2&lt;-beta[1]-beta[4] #lec vs dem
+c3&lt;-beta[1]-beta[3] #lec vs cop
+c4&lt;-beta[2]-mean(beta[c(1,3,4)]) #pbl vs average of lec dem and cop
+}"</span>
+
+<span class='va'>fit.banova</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/runjags/man/run.jags.html'>run.jags</a></span><span class='op'>(</span>method<span class='op'>=</span><span class='st'>"parallel"</span>,
+                        model<span class='op'>=</span><span class='va'>banova</span>,
+                        monitor<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"alpha"</span>,<span class='st'>"beta"</span>,<span class='st'>"sigma"</span>,<span class='st'>"c1"</span>,<span class='st'>"c2"</span>,<span class='st'>"c3"</span>,<span class='st'>"c4"</span><span class='op'>)</span>,
+                        data<span class='op'>=</span><span class='va'>dataList</span>,
+                        n.chains<span class='op'>=</span><span class='fl'>3</span>,
+                        sample <span class='op'>=</span> <span class='fl'>10000</span>,
+                        thin<span class='op'>=</span><span class='fl'>3</span>,
+                        summarise<span class='op'>=</span><span class='cn'>TRUE</span>,
+                        plots<span class='op'>=</span><span class='cn'>FALSE</span>,
+                        keep.jags.files <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Calling 3 simulations using the parallel method...
+Following the progress of chain 1 (the program will wait for
+all chains to finish before continuing):
+Welcome to JAGS 4.3.0 on Sat Feb 26 12:50:05 2022
+JAGS is free software and comes with ABSOLUTELY NO WARRANTY
+Loading module: basemod: ok
+Loading module: bugs: ok
+. . Reading data file data.txt
+. Compiling model graph
+   Resolving undeclared variables
+   Allocating nodes
+Graph information:
+   Observed stochastic nodes: 32
+   Unobserved stochastic nodes: 5
+   Total graph size: 89
+. Reading parameter file inits1.txt
+. Initializing model
+. Adaptation skipped: model is not in adaptive mode.
+. Updating 4000
+-------------------------------------------------| 4000
+************************************************** 100%
+. . . . . . . . Updating 30000
+-------------------------------------------------| 30000
+************************************************** 100%
+. . . . Updating 0
+. Deleting model
+. 
+All chains have finished
+Note: the model did not require adaptation
+Simulation complete.  Reading coda files...
+Coda files loaded successfully
+Calculating summary statistics...
+Calculating the Gelman-Rubin statistic for 10 variables....
+Finished running the simulation</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>samples</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>as.mcmc.list</a></span><span class='op'>(</span><span class='va'>fit.banova</span><span class='op'>)</span>
+<span class='va'>samples.dat</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>samples</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html'>MCMCsummary</a></span><span class='op'>(</span><span class='va'>samples</span>, params<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>,<span class='st'>"c2"</span>,<span class='st'>"c3"</span>,<span class='st'>"c4"</span><span class='op'>)</span>, HPD <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>        mean        sd  95%_HPDL 95%_HPDU Rhat n.eff
+c1  3.492293 0.8556627  1.850920 5.218860    1 29256
+c2  1.986610 0.8561753  0.278847 3.632840    1 30000
+c3 -1.242349 0.8563063 -2.908460 0.461598    1 32119
+c4  3.740380 0.6961765  2.377870 5.106480    1 28796</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>summary</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/MCMCvis/man/MCMCsummary.html'>MCMCsummary</a></span><span class='op'>(</span><span class='va'>samples</span>, params<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>,<span class='st'>"c2"</span>,<span class='st'>"c3"</span>,<span class='st'>"c4"</span><span class='op'>)</span>, HPD <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c1</span>, col<span class='op'>=</span><span class='st'>"orange"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, main<span class='op'>=</span><span class='st'>""</span>, xlab<span class='op'>=</span><span class='st'>"c1: pbl vs lec"</span>, freq<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='fl'>0</span>, lty<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>summary</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>]</span>,<span class='va'>summary</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.01</span>,<span class='fl'>0.01</span><span class='op'>)</span>, lwd<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c1</span><span class='op'>)</span>,<span class='fl'>0.05</span>, <span class='st'>"95% HDI"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c2</span>, col<span class='op'>=</span><span class='st'>"orange"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, main<span class='op'>=</span><span class='st'>""</span>, xlab<span class='op'>=</span><span class='st'>"c1: lec vs dem"</span>, freq<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='fl'>0</span>, lty<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>summary</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>]</span>,<span class='va'>summary</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.01</span>,<span class='fl'>0.01</span><span class='op'>)</span>, lwd<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c2</span><span class='op'>)</span>,<span class='fl'>0.05</span>, <span class='st'>"95% HDI"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c3</span>, col<span class='op'>=</span><span class='st'>"orange"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, main<span class='op'>=</span><span class='st'>""</span>, xlab<span class='op'>=</span><span class='st'>"c1: lec vs cop"</span>, freq<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='fl'>0</span>, lty<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>summary</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>3</span><span class='op'>]</span>,<span class='va'>summary</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.01</span>,<span class='fl'>0.01</span><span class='op'>)</span>, lwd<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c3</span><span class='op'>)</span>,<span class='fl'>0.05</span>, <span class='st'>"95% HDI"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c4</span>, col<span class='op'>=</span><span class='st'>"orange"</span>, border<span class='op'>=</span><span class='st'>"white"</span>, main<span class='op'>=</span><span class='st'>""</span>, xlab<span class='op'>=</span><span class='st'>"c1: pbl vs average"</span>, freq<span class='op'>=</span><span class='cn'>F</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='fl'>0</span>, lty<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>summary</span><span class='op'>[</span><span class='fl'>4</span>,<span class='fl'>3</span><span class='op'>]</span>,<span class='va'>summary</span><span class='op'>[</span><span class='fl'>4</span>,<span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>, y<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.01</span>,<span class='fl'>0.01</span><span class='op'>)</span>, lwd<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/text.html'>text</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>samples.dat</span><span class='op'>$</span><span class='va'>c4</span><span class='op'>)</span>,<span class='fl'>0.05</span>, <span class='st'>"95% HDI"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="glm1_files/figure-html5/unnamed-chunk-24-1.png" width="864" /></p>
+</div>
+<h3 id="two-way-banova">Two-Way BANOVA</h3>
+<p>การวิเคราะห์ความแปรปรวนสองทางทั้งที่มีและไม่มีอิทธิพลปฏิสัมพันธ์สามารถทำได้โดยขยายแนวคิดของ One-Way ANOVA</p>
+<p><a href="https://drive.google.com/file/d/1DH3L9Hh6gvobtTjCuzMa9HzO9QlWYpUQ/view?usp=sharing">ชุดข้อมูลตัวอย่าง</a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://svn.r-project.org/R-packages/trunk/foreign/'>foreign</a></span><span class='op'>)</span>
+<span class='va'>dat</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/foreign/man/read.spss.html'>read.spss</a></span><span class='op'>(</span><span class='st'>"/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-19-glm1/manova.sav"</span>, to.data.frame<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  id gender     schsize location cognitiveE EmotionalE BehavioralE
+1  1  woman       small  นอกเมือง   3.666667   4.857143         4.0
+2  2  woman       small  นอกเมือง   3.666667   4.428571         3.2
+3  3  woman       large  นอกเมือง   2.916667   3.000000         3.6
+4  4    man       large  นอกเมือง   3.083333   3.000000         3.6
+5  5    man extra large  นอกเมือง   3.000000   3.142857         2.8
+6  6    man       large  นอกเมือง   3.833333   4.000000         4.0</code></pre>
+</div>
+<h3 id="banova-package">BANOVA package</h3>
+<p>การวิเคราะห์ด้วย JAGs ถึงแม้จะมีความยืดหยุ่นสูงแต่ก็อาจมีความลำบากในการเขียน syntax ทั้งในส่วนของโมเดล และส่วนของการวิเคราะห์ ปัจจุบันโปรแกรม R มี package จำนวนมากที่ถูกพัฒนาขึ้นสำหรับการวิเคราะห์เพื่ออนุมานเชิงสถิติแบบเบส์ในโมเดลต่าง ๆ</p>
+<p>BANOVA เป็น pacakge หนึ่งที่มีประโยชน์สำหรับการอนุมานเชิงสถิติแบบเบส์โดยเฉพาะในการวิจัยเชิงทดลองที่มักมีการใช้การวิเคราะหืความแปรปรวนเป็นเครื่องมือหลักในการวิเคราะห์อิทธิพลของปัจจัยในการทดลองที่มีต่อตัวแปรตามที่สนใจ รายละเอียดต่าง ๆ ของ package สามารถอ่านเพิ่มเติมได้จาก <a href="https://www.jstatsoft.org/article/view/v081i09" class="uri">https://www.jstatsoft.org/article/view/v081i09</a></p>
+<h2 id="bayesian-regression">Bayesian Regression</h2>
+<p><a href="https://drive.google.com/file/d/1sLZq4RZ2IywV2O9UEG-ffmcxc0k7-QEu/view?usp=sharing">ชุดข้อมูลตัวอย่าง</a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dat</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-19-glm1/regression_dat1.csv"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  X Hour Class.Behav Home.Status Teach.Qua Score
+1 1    6         3.3        poor       bad  39.8
+2 2   11         3.7        poor       bad  59.6
+3 3    6         4.8        poor      good  50.8
+4 4   11         3.7      normal       bad  50.9
+5 5   10         1.3        poor      good  67.9
+6 6    2         3.1      normal       bad  26.0</code></pre>
+</div>
+<h2 id="bayes-factor">Bayes Factor</h2>
+<p>ในกรณีที่ผู้วิเคราะห์ไม่ได้สนใจที่จะอธิบายค่าอิทธิพลต่าง ๆ ผ่านการประมาณค่าพารามิเตอร์ แต่ต้องการดำเนินการทดสอบเพื่อตัดสินใจเกี่ยวกับนัยสำคัญของอิทธิพลต่าง ๆ หรือเปรียบเทียบโมเดลการวิเคราะห์หลาย ๆ โมเดล ในกรณีนี้จำเป็นต้องใช้การเปรียบเทียบโมเดลแบบเบส์ ซึ่งเครื่องมือหนึ่งที่สามารถนำมาใช้ได้คือ ตัวประกอบเบส์ (Bayes Factor: BF)</p>
+<p>จากตัวอย่างการเปรียบเทียบค่าเฉลี่ยสองกลุ่ม สมมุติว่าต้องการทดสอบว่า</p>
+<p><span class="math inline">\(H_0: \mu_1 =\mu_2\)</span> vs <span class="math inline">\(H_1: \mu_1 \neq \mu_2\)</span></p>
+<p>ในการวิเคราะห์แบบเบส์ผู้วิเคราะห์จำเป็นต้องกำหนดโมเดล 2 โมเดลที่เป็นคู่แข่งขันกัน คือโมเดลตามสมมุติฐาน <span class="math inline">\(H_0\)</span> ที่กำหนดการแจกแจงความน่าจะเป็นเบื้องต้นของผลต่างระหว่างค่าเฉลี่ยทั้งสองกลุ่มมีค่าเป็น 0 ด้วยความน่าเชื่อถือที่สูงมาก และโมเดลตามสมมุติฐาน <span class="math inline">\(H_1\)</span> ที่กำหนดการแจกแจงความน่าจะเป็นเบื้องต้นของพารามิเตอร์ผลต่างดังกล่าวเป็นค่าใด ๆ จากนั้นทำการประมาณการแจกแจงความน่าจะเป็นภายหลังของโมเดลทั้งสองเพื่อประมาณค่า bayes factor</p>
+<p>กำหนดให้ M1 และ M2 แทนโมเดลตามสมมุติฐาน <span class="math inline">\(H_0\)</span> และ <span class="math inline">\(H_1\)</span> ตามลำดับ หากมองว่าโมเดลก็มีความไม่แน่นอน ดังนั้นโมเดลจึงมีความเป็นไปได้ได้มากกว่า 1 โมเดล ตามแนวคิดของเบส์ผู้วิเคราะห์ก็สามารถประมาณการแจกแจง posterior ของแต่ละโมเดลที่ based on ข้อมูลเชิงประจักษ์ได้เหมือนกับการแจกแจง posterior ของพารามิเตอร์ในแต่ละโมเดล ดังนี้</p>
+<p><span class="math inline">\(p(M_1|D)=\frac{p(D|M_1)p(M_1)}{\sum_{m=1}^2 p(D|M_m)p(M_m)}\)</span></p>
+<p><span class="math inline">\(p(M_2|D)=\frac{p(D|M_2)p(M_2)}{\sum_{m=1}^2 p(D|M_m)p(M_m)}\)</span></p>
+<p>จาก posterior ของโมเดลข้างต้นจะได้ว่า posterior odd ของโมเดล มีค่าเท่ากับ</p>
+<p><img src="Screen%20Shot%202565-02-26%20at%2009.37.07.png" style="width:50.0%" /></p>
+<p>การหา bayes factor ด้วย JAGs สามารถทำได้ดังนี้</p>
 <hr />
 <p>Distill is a publication format for scientific and technical writing, native to the web.</p>
 <p>Learn more about using Distill at <a href="https://rstudio.github.io/distill" class="uri">https://rstudio.github.io/distill</a>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<style>
+html {
+  scroll-behavior: smooth;
+}
+d-article {
+    contain: none;
+  }
+#TOC {
+  position: fixed;
+  z-index: 50;
+  background: "white";     /* or   background: white; */
+  padding: -5px;           /* optional */
+  border-radius: 5px;      /* optional */
+  color: "grey";
+  }
+
+/* Hide the ToC when resized to mobile or tablet:  480px, 768px, 900px */
+@media screen and (max-width: 900px) {
+#TOC {
+    position: relative;
+  }
+}
+</style>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
