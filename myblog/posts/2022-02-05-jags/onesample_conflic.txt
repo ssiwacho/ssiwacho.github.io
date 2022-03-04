@@ -1,0 +1,9 @@
+model{
+for (i in 1:n)
+{
+y[i]~dt(mu,tau,4)
+}
+
+mu~dt(0,10,10)
+tau~dgamma(1,10)
+}
