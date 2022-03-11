@@ -1,0 +1,380 @@
+---
+title: "Introduction to JAGS"
+categories:
+  - Bayesian Statistics
+  - MCMC
+  - JAGs
+description: |
+  การใช้งาน JAGS เบื้องต้น
+author:
+  - name: Siwachoat Srisuttiyakorn
+    url: 
+date: 2022-02-04
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_float: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+ผู้อ่านได้ทำความเข้าใจมโนทัศน์เกี่ยวกับอัลกอริทึม MCMC แล้ว อย่างไรก็ตามจะเห็นว่าการเขียนอัลกอริทึมดังกล่าวค่อนข้างลำบาก และมีโอกาสสูงที่จะเกิดความผิดพลาด ปัจจุบันมีโปรแกรมสำเร็จรูปหลายตัวที่ช่วยให้ผู้วิเคราะห์สามารถประมาณการแจกแจงความน่าจะเป็นภายหลังของพารามิเตอร์ภายในโมเดลใด ๆ ได้อย่างสะดวกมากยิ่งขึ้น บทเรียนนี้จะกล่าวถึงโปรแกรม JAGS (Just Another Gibb Sampler) รายละเอียดมีดังนี้
+
+# ติดต้ังโปรแกรม
+
+1. นิสิตสามารถ เข้าไปดาวน์โหลดโปรแกรม JAGS (Just Another Gibb Sampler) ได้ที่ 
+
+https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/
+
+2. การใช้งาน JAGS ในข้างต้นจะไม่ได้ใช้งานแบบ standard alone แต่จะใช้งานผ่านโปรแกรม R ทั้งนี้ปัจจุบันมี package หลายตัวที่ถูกพัฒนาขึ้นเพื่อทำงานบน R ร่วมกับโปรแกรม JAGs เช่น `R2jags`, `rjags` และ `runjags` ในบทเรียนนี้จะกล่าวถึงการใช้งาน package ทั้งสาม โดยก่อนการใช้งานผู้้วิเคราะห์จำเป็นต้องดาวน์โหลด package ดังกล่าวก่อน ด้วยคำสั่งดังนี้
+
+```{r eval=F, echo=T}
+install.packages("R2jags")
+install.packages("rjags", dependencies = TRUE)
+install.packages("runjags", dependencies = TRUE)
+```
+
+ก่อนใช้งาน package ทั้งสองผู้ใช้จำต้องเรียกใช้ package ดังกล่าวก่อนโดยพิมพ์คำสั่งดังนี้
+
+```{r echo=TRUE, message=F}
+library(R2jags)
+library(rjags)
+library(runjags)
+```
+
+
+![กระบวนการทำงานร่วมกันระหว่าง R กับ JAGS](/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-05-jags/jag.png)
+
+
+# การเขียนคำสั่งใน JAGS
+
+การเขียนคำสั่งต่าง ๆ จะทำบนโปรแกรม R ทั้งหมด โดยอาจแบ่งขั้นตอนการดำเนินงานออกเป็น 4 ขั้นตอนได้แก่ การนำเข้าและจัดการข้อมูล การระบุโมเดล การประมวลผล และการตรวจสอบและวิเคราะห์ผลลัพธ์ที่ได้ รายละเอียดมีดังนี้
+
+## การนำเข้าและจัดการข้อมูล
+
+ข้อมูลตัวอย่างผลสัมฤทธิ์ทางการเรียนวิชา calculas ของนิสิตจำนวน 100 คน บันทึกอยู่ในไฟล์ชื่อ [`bayes_exam1.csv`](https://drive.google.com/file/d/0B3lh4V2Mrl14aWJJY0RaSmRVV28/view?resourcekey=0-yyN4RVQWItk6Qxv-_rhBew)  ทั้งนี้เมื่อดาวน์โหลดข้อมูลมาแล้วสามารถนำเข้าสู่ R ได้โดยเขียนคำสั่งดังนี้
+
+```{r echo=TRUE}
+library(dplyr)
+dat<-read.csv("/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-05-jags/bayes_exam1.csv")
+glimpse(dat)
+```
+
+## การระบุโมเดล
+
+วัตถุประสงค์ของการวิเคราะห์มี 2 ข้อ ได้แก่
+
+1. เพื่อวิเคราะห์ระดับผลสัมฤทธิ์ทางการเรียนวิชา calculas ของนิสิต
+
+2. เพื่อวิเคราะห์ว่าค่าเฉลี่ยผลสัมฤทธิ์วิชา calculas ของนิสิตมีค่าสูงกว่า 50 คะแนนหรือไม่
+
+จากวัตถุประสงค์การวิเคราะห์และข้อมูลค่าสังเกตที่มี สามารถระบุโมเดลการวิเคราะห์ได้ดังนี้
+
+### โมเดลของค่าสังเกต
+
+กำหนดให้โมเดลของคะแนนผลสัมฤทธิ์ ($y_i$) มีการแจกแจงแบบปกติที่มีค่าเฉลี่ยและความแปรปรวนเท่ากับ $\mu$ และ $\sigma^2$ ตามลำดับ เขียนแทนด้วย $y_i \sim N(\mu,\sigma^2)$ อย่างไรก็ตามในโปรแกรม JAGS จะไม่ได้ใช้พารามิเตอร์ความแปรปรวนเป็นพารามิเตอร์ของการแจกแจงแบบปกติ แต่ละใช้พารามิเตอร์ความเที่ยงตรง (precision parameter) ซึ่งเป็นส่วนกลับของพารามิเตอร์ความแปรปรวนแทน ดังนั้นโมเดลค่าสังเกตในกรณีนี้สามารถเขียนได้ดังนี้
+
+$y_i \sim N(\mu, \tau=1/\sigma^2)$
+
+จากโมเดลค่าสังเกตข้างต้นจะได้ ฟังก์ชันภาวะความควรจะเป็น (likelihood function) เป็น
+
+$p(D|y)=\Pi_{i=1}^nN(y_i|\mu, \tau=1/\sigma^2)$
+
+### การแจกแจงความน่าจะเป็นก่อนหน้า
+
+จากการระบุโมเดลค่าสังเกตข้างต้น พบว่ามีพารามิเตอร์ 2 ตัวได้แก่ พารามิเตอร์ค่าเฉลี่ย และความเที่ยงตรง  จึงระบุการแจกแจงความน่าจะเป็นก่อนหน้าให้กับพารามิเตอร์ทั้งสองเป็นดังนี้
+
+$\mu \sim N(m, t=1/S^2)$ และ $\tau \sim Uniform(a,b)$
+
+
+![ความสัมพันธ์ระหว่างค่าสังเกต โมเดลความน่าจะเป็น และการแจกแจงความน่าจะเป็นก่อนหน้า](/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-05-jags/normal model.png)
+
+### สภาพแวดล้อมของ JAGs
+
+เมื่อผู้วิเคราะห์ระบุโมเดลเชิงทฤษฎีในข้างต้นแล้ว ขั้นตอนถัดมาคือการระบุโมเดลสำหรับโปรแกรม JAGS  การระบุโมเดลใน JAGs จำเป็นต้องมีความรู้เบื้องต้นเกี่ยวกับสภาพแวดล้อมของโปรแกรม JAGs ก่อน ประเด็นแรกคือเรื่องวัตถุหรือตัวแปรภายต่าง ๆ ภายในโปรแกรม JAGs จะเรียกว่า node จำแนกออกเป็น 3 ประเภทได้แก่
+
+1. ค่าคงที่ (constant nodes)
+
+2. ค่าตัวแปรสุ่ม (Stochastic nodes) เป็นตัวแปรที่มีการแจกแจงความน่าจะเป็นกำกับโดเมนหรือค่าของตัวแปรไว้ การนิยามตัวแปรประเภทนี้จะเขียนอยู่ในรูปแบบ `variable ~ distribution_name(par1, par2, ...)` ยกตัวอย่างเช่น ตัวอย่างข้างต้นกำหนดให้โมเดลของค่าสังเกต $y_i$ มีการแจกแจงแบบปกติ สามารถนิยามตัวแปรนี้บน JAGs ได้เป็น `y[i] ~ dnorm(mu, tau)` ส่วนการแจกแจงความน่าจะเป็นก่อนหน้าของพารามิเตอร์ $\mu$ และ $\tau$ สามารถระบุได้เป็น `mu ~ dnorm(m,t)` และ `tau ~ dunif(a,b)`
+
+
+![](/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-05-jags/distributions.png)
+
+3. ฟังก์ชันเชิงคณิตศาสตร์ (Deterministic nodes) เป็นตัวแปรที่สร้างขึ้นจากฟังก์ชันหรือความสัมพันธ์เชิงคณิตศาสตร์กับ node อื่น ๆ เช่น `mu[i] <- b0+b1*x[i]` 
+
+ประเด็นที่สองเป็นเรื่องเกี่ยวกับโครงสร้างของตัวแปร และการระบุตำแหน่งของสมาชิกภายในโครงการของตัวแปร ตัวแปรอาจจำแนกโดยใช้โครงสร้างของตัวแปรออกได้เป็น 4 ประเภทหลัก ๆ ได้แก่ ค่าคงที่หรือสเกลาร์ เวกเตอร์ เมทริกซ์ และอาร์เรย์ที่มีมิติตั้งแต่ 3 มิติขึ้นไป การระบุตำแหน่งของสมาชิกภายในตัวแปรดังกล่าวทำได้ในวิธีเดียวกับในโปรแกรม R เช่น
+
+- `y[i]` หมายถึงสมาชิกตัวที่ `i` ในเวกเตอร์ `y`
+
+- `mu.p[i,j]` หมายถึงสมาชิกในแถวที่ `i` และคอลัมนท์ที่  `j` 
+
+ประเด็นที่สามเป็นเรื่องการดำเนินการทวนซ้ำ (repeated structures) ในโปรแกรม JAGs ผู้วิเคราะห์ไม่จำเป็นต้องพิสูจน์เพื่อหารูปแบบของฟังก์ชันภาวะความควรจะเป็นด้วยตัวเอง แต่สามารถสั่งให้โปรแกรมประมวลผลได้โดยกำหนดโมเดลของค่าสังเกตเอาไว้ภายใต้ loop เช่น ฟังก์ชันภาวะความควรจะเป็นในตัวอย่างข้างต้นสามารถระบุได้ดังนี้
+
+```{r eval=F, echo=TRUE}
+for (i in 1:n)
+{
+  y[i]~dnorm(mu, tau)
+}
+```
+
+
+ประเด็นสุดท้ายเป็นโครงสร้างของชุดคำสั่งสำหรับระบุโมเดลทั้งหมด แต่ละโมเดลจะมีส่วนประกอบ 3 ส่วนได้แก่
+
+1. ฟังก์ชันภาวะความควรจะเป็น (likelihood function) ระบุภายใต้ for loop ดังตัวอย่างด้านบน
+
+2. การแจกแจงความน่าจะเป็นก่อนหน้า (prior distributions) ของพารามิเตอร์ภายใต้โมเดลการวิเคราะห์
+
+3. ส่วน deterministic function ที่ใช้สำหรับสร้างสารสนเทศที่ต้องการจากพารามิเตอร์ของโมเดล
+
+ตัวอย่างด้านล่างแสดงโครงสร้างของชุดข้อมูลที่ใช้ระบุโมเดลในโปรแกรม JAGs
+
+```{r eval=F, echo=TRUE}
+model{
+  
+  # Likelihood
+  for (i in 1:n)
+  {
+    
+  }
+  
+  # Prior Distributions
+  
+  
+  
+  # Derived quantities 
+  
+  
+
+  } #end of model
+```
+
+
+## การประมวลผล
+
+ตัวอย่างต่อไปนี้แสดงขั้นตอนการสั่งให้ JAGs ประมวลผลเพื่อสร้างตัวอย่างสุ่มของลูกโซ่มาร์คอฟ
+
+### ระบุ JAGs โมเดล
+
+```{r, echo=TRUE}
+mean.model<-"
+model{
+  
+  # Likelihood
+  for (i in 1:n)
+  {
+    y[i]~dnorm(mu, tau)
+  }
+  
+  # Prior Distributions
+  mu~dnorm(0,0.01)
+  tau~dunif(0,5)
+  
+  # Derived quantities 
+  sigma2<-1/tau
+  
+  }"
+# write mean.model to model1.txt
+writeLines(mean.model, con="/Users/siwachoat/Documents/myblog/myblog/_posts/2022-02-05-jags/model1.txt") 
+```
+
+ในบางกรณี ผู้วิเคราะห์อาจไม่ต้องการสร้างไฟล์โมเดลเพิ่ม ก็สามารถเขียนโมเดลให้เก็บอยู่ใน R Console แล้วนำไปใช้ได้เลย โดยเขียนโมเดลเหมือนปกติ และบันทึกไว้ในลักษณะของ character variable ดังนี้
+
+```{r echo=T}
+
+mean.model<- "model{
+  
+  # Likelihood
+  for (i in 1:n)
+  {
+    y[i]~dnorm(mu, tau)
+  }
+  
+  # Prior Distributions
+  mu~dnorm(0,0.01)
+  tau~dunif(0,5)
+  
+  # Derived quantities 
+  sigma2<-1/tau
+
+}"
+```
+
+
+## runjags packages
+
+เป็น package หนึ่งที่สามารถเรียก JAGS จาก R ได้ ซึ่งมีจุดเด่นคือสามารถสั่งประมวลแบบคู่ขนาน (parallel) แยกตาม core ของ CPU ได้ในกรณีที่ผู้วิเคราะห์กำหนดให้สุ่มตัวอย่างจากลูกโซ่มาร์คอฟที่มีจำนวนมากกว่า 1 ลูกโซ่ ตัวอย่างคำสั่งเป็นดังนี้
+
+```{r}
+?run.jags
+```
+
+
+```{r echo=TRUE, message=F}
+library(runjags)
+dataList<-list(y=dat[,2], n=dim(dat)[1])
+init1<-list(mu=50, tau=0.1)
+init2<-list(mu=30, tau=0.01)
+init3<-list(mu=90, tau=0.05)
+initsList<-list(init1, init2, init3)
+
+model.runjags<-run.jags(method="parallel",
+                        model=mean.model,
+                        monitor=c("mu","sigma2"),
+                        data=dataList,
+                        inits=initsList,
+                        n.chains=3,
+                        adapt = 1000,
+                        burnin=1000,
+                        sample = 10000,
+                        thin=1,
+                        summarise=TRUE,
+                        plots=FALSE,
+                        keep.jags.files = FALSE)
+```
+
+เมื่อประมวลผลเสร็จผู้วิเคราะห์สามารถเรียกดูข้อสรุปเบื้องต้นเกี่ยวกับตัวอย่างที่จำลองจากกระบวนการสุ่มข้างต้นได้ โดยพิมพ์ชื่อของตัวแปรที่เก็บผลลัพธ์จาก `run.jags()` ดังนี้
+
+```{r}
+model.runjags
+```
+
+สำหรับการตรวจสอบและวิเคราะห์ในเชิงลึกอื่น ๆ  ผู้วิเคราะห์สามารถดึงกระบวนการสุ่มหรือลูกโซ่ของพารามิเตอร์ $\mu$ และ $\sigma^2$ ที่จำลองขึ้นมาอยู่ในโปรแกรม R เพื่อดำเนินการวิเคราะห์ในขั้นตอนต่อไปได้โดยใช้คำสั่ง `as.mcmc.list()` ดังนี้
+
+
+```{r echo=TRUE}
+# sampling posterior samples
+samples2<-as.mcmc.list(model.runjags)
+head(samples2)
+```
+
+
+## rjags packages
+
+```{r, echo=TRUE, message=F}
+library(rjags)
+dataList<-list(y=dat[,2], n=dim(dat)[1])
+init1<-list(mu=50, tau=0.1)
+init2<-list(mu=30, tau=0.01)
+init3<-list(mu=90, tau=0.05)
+initsList<-list(init1, init2, init3)
+
+model<-jags.model(file="/Users/siwachoat/Documents/myblog/myblog/_site/posts/2022-02-05-jags/model1.txt",
+                  data = dataList,
+                  inits = initsList,
+                  n.chains = 3)
+```
+
+```{r echo=TRUE}
+# sampling posterior samples
+samples<-coda.samples(model,
+                      variable.names = c("mu","sigma2"),
+                      n.iter = 10000,
+                      thin = 3)
+```
+
+```{r echo=TRUE}
+head(samples)
+```
+
+
+## การตรวจสอบคุณสมบัติของตัวอย่างจาก MCMC algorithm
+
+```{r echo=TRUE}
+summary(samples)
+
+```
+
+```{r echo=TRUE}
+plot(samples)
+
+library(MCMCvis)
+MCMCtrace(samples,  pdf = FALSE)
+MCMCtrace(samples,  pdf = FALSE, iter=100) #plot last 100 iterations
+
+prior<-rnorm(10000,0,100)
+MCMCtrace(samples,  pdf = FALSE, 
+          param="mu",
+          priors=prior, 
+          n.eff=TRUE, 
+          Rhat=TRUE,
+          post_zm = TRUE)
+```
+
+```{r echo=TRUE}
+autocorr.diag(samples)
+autocorr.plot(samples)
+
+
+```
+
+```{r echo=TRUE}
+gelman.diag(samples)
+gelman.plot(samples)
+```
+
+```{r}
+geweke.diag(samples)
+```
+
+
+
+```{r echo=TRUE}
+library(ggplot2)
+theta_sim_posterior <- data.frame(as.matrix(samples))
+names(theta_sim_posterior) = c("mu",  "sigma2")
+
+ggplot(theta_sim_posterior, aes(mu, sigma2)) +
+  geom_point(color = "skyblue", alpha = 0.4) +
+  geom_density_2d(color = "orange", size = 1)+
+  theme_minimal()
+```
+
+
+## การอนุมานเชิงสถิติแบบเบส์โดยใช้ตัวอย่างจาก MCMC algorithm
+
+
+#### summary
+
+```{r echo=TRUE}
+summary(samples)
+hist(theta_sim_posterior$mu, xlim=c(49,65))
+abline(v=quantile(theta_sim_posterior$mu, c(0.025, 0.975)), lty=2)
+```
+#### MCMCsummary
+
+```{r echo=TRUE}
+library(MCMCvis)
+MCMCsummary(samples)
+MCMCsummary(samples, params="mu", round=2)
+```
+#### MCMCplot
+
+MCMCplot is used to create caterpillar plots from MCMC output. Points represent posterior medians. Thick and thin lines represent credible intervals specified by the user using the ci argument, where the default is 50% and 95% credible intervals, respectively. Note, that the first element in ci should be less than or equal to the second element. By default, MCMCplot plots equal-tailed credible intervals (HPD = FALSE). However, highest posterior density intervals can be visualized using HPD = TRUE. As with the other functions in the package, particular parameters of interest can be specified.
+
+```{r}
+MCMCplot(samples, params="mu",ci=c(50,95), HPD=FALSE)
+MCMCplot(samples, params="mu",ci=c(50,95), HPD=TRUE)
+MCMCplot(samples, params="sigma2",ci=c(50,95))
+
+```
+
+```{r echo=TRUE}
+## HPD interval
+HPDinterval(samples)
+```
+
+
+
+---
+
+
+
+Distill is a publication format for scientific and technical writing, native to the web.
+
+Learn more about using Distill at <https://rstudio.github.io/distill>.
+
+
