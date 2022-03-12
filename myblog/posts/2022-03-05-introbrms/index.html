@@ -2220,7 +2220,6 @@ h6, .h6{
 <li><a href="#ancova-model">ANCOVA model</a></li>
 <li><a href="#logistic-regression">Logistic Regression</a></li>
 </ul></li>
-<li><a href="#binomial-model">Binomial model</a></li>
 </ul>
 </nav>
 </div>
@@ -2301,21 +2300,21 @@ Formula: Score ~ Hour + Class.Behav + Home.Status + Teach.Qua
 
 Population-Level Effects: 
                 Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept          -3.49      1.01    -5.47    -1.52 1.00     7716
-Hour                3.77      0.10     3.58     3.98 1.00     9089
-Class.Behav         4.68      0.23     4.23     5.14 1.00     8477
-Home.Statuspoor    -1.92      0.68    -3.29    -0.57 1.00     8521
-Teach.Quagood      19.73      0.68    18.40    21.07 1.00     9162
+Intercept          -3.47      1.05    -5.55    -1.45 1.00     8119
+Hour                3.77      0.10     3.57     3.97 1.00     6939
+Class.Behav         4.68      0.23     4.23     5.11 1.00     7469
+Home.Statuspoor    -1.91      0.70    -3.26    -0.52 1.00     8110
+Teach.Quagood      19.75      0.70    18.41    21.11 1.00     8263
                 Tail_ESS
-Intercept           4552
-Hour                3960
-Class.Behav         4411
-Home.Statuspoor     4503
-Teach.Quagood       4465
+Intercept           4364
+Hour                4332
+Class.Behav         4997
+Home.Statuspoor     4519
+Teach.Quagood       4421
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     6.68      0.24     6.24     7.17 1.00     7558     4834
+sigma     6.68      0.24     6.25     7.16 1.00     7914     4619
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2354,8 +2353,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span class='fu'><a href='https://rdrr.io/pkg/brms/man/bayes_R2.brmsfit.html'>bayes_R2</a></span><span class='op'>(</span><span class='va'>fit.reg</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>    Estimate  Est.Error      Q2.5     Q97.5
-R2 0.8693949 0.00442046 0.8597524 0.8769437</code></pre>
+<pre><code>    Estimate   Est.Error      Q2.5     Q97.5
+R2 0.8692808 0.004606708 0.8593363 0.8770362</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#loo index</span>
 <span class='fu'><a href='https://rdrr.io/pkg/brms/man/loo.brmsfit.html'>loo</a></span><span class='op'>(</span><span class='va'>fit.reg</span><span class='op'>)</span>
@@ -2365,9 +2364,9 @@ R2 0.8693949 0.00442046 0.8597524 0.8769437</code></pre>
 Computed from 6000 by 400 log-likelihood matrix
 
          Estimate   SE
-elpd_loo  -1329.9 14.0
-p_loo         6.3  0.5
-looic      2659.7 27.9
+elpd_loo  -1330.0 14.0
+p_loo         6.4  0.5
+looic      2659.9 27.9
 ------
 Monte Carlo SE of elpd_loo is 0.0.
 
@@ -2382,8 +2381,8 @@ Computed from 6000 by 400 log-likelihood matrix
 
           Estimate   SE
 elpd_waic  -1329.9 14.0
-p_waic         6.3  0.5
-waic        2659.7 27.9</code></pre>
+p_waic         6.4  0.5
+waic        2659.9 27.9</code></pre>
 </div>
 <h2 id="prior-distributions">prior distributions</h2>
 <p>เราสามารถปรับเปลี่ยน prior ได้หลายวิธีการ วิธีการหนึ่งคือการเรียกค่าเริ่มต้นของ prior มาก่อน แล้วปรับเปลี่ยนทีละตัวตามต้องการดังนี้</p>
@@ -2461,21 +2460,21 @@ Formula: Score ~ Hour + Class.Behav + Home.Status + Teach.Qua
 
 Population-Level Effects: 
                 Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept          -3.51      1.04    -5.55    -1.45 1.00     8779
-Hour                3.77      0.10     3.57     3.97 1.00     9060
-Class.Behav         4.68      0.24     4.22     5.15 1.00     9496
-Home.Statuspoor    -1.85      0.67    -3.20    -0.53 1.00     8180
-Teach.Quagood      19.73      0.68    18.40    21.08 1.00     8810
+Intercept          -3.53      1.01    -5.53    -1.55 1.00     7311
+Hour                3.77      0.10     3.57     3.97 1.00     8604
+Class.Behav         4.69      0.23     4.24     5.15 1.00     7198
+Home.Statuspoor    -1.84      0.69    -3.19    -0.47 1.00     8076
+Teach.Quagood      19.74      0.66    18.48    21.05 1.00     8119
                 Tail_ESS
-Intercept           4451
-Hour                4634
-Class.Behav         4698
-Home.Statuspoor     4070
-Teach.Quagood       4161
+Intercept           4410
+Hour                5041
+Class.Behav         4573
+Home.Statuspoor     4333
+Teach.Quagood       4264
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     6.68      0.24     6.23     7.18 1.00     8938     4423
+sigma     6.68      0.24     6.22     7.19 1.00     7699     4630
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2489,7 +2488,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <pre><code>Hypothesis Tests for class b:
   Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (Hour) &gt; 0     3.77       0.1     3.61     3.94        Inf
+1 (Hour) &gt; 0     3.77       0.1      3.6     3.94        Inf
   Post.Prob Star
 1         1    *
 ---
@@ -2503,9 +2502,9 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 </div>
 <pre><code>Hypothesis Tests for class b:
              Hypothesis Estimate Est.Error CI.Lower CI.Upper
-1 (Home.Statuspoor) &lt; 0    -1.92      0.68    -3.04     -0.8
+1 (Home.Statuspoor) &lt; 0    -1.91       0.7    -3.04    -0.78
   Evid.Ratio Post.Prob Star
-1     460.54         1    *
+1     284.71         1    *
 ---
 &#39;CI&#39;: 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 &#39;*&#39;: For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -2566,7 +2565,6 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 <ul>
 <li>การแจกแจงในวงศ์ชี้กำลังเป็นกลุ่มของการแจกแจงความน่าจะเป็นที่ฟังก์ชันความน่าจะเป็นอยู่ในรูปของ exponential function เช่น normal distribution, poisson และ binomial</li>
 </ul>
-<h1 id="binomial-model">Binomial model</h1>
 <p>จากนิยามข้างต้นจะเห็นว่า การกำหนด link function <span class="math inline">\(g(.)\)</span> ที่เหมาะสม จะช่วยแปลงพารามิเตอร์ในการแจกแจงของค่าสังเกต <span class="math inline">\(y_i\)</span> ให้อยู่ในรูปแบบของสมการเชิงเส้นตรงได้ เช่นใน binomial model ที่มีพารามิเตอร์กำกับการแจกแจงคือ ความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ <span class="math inline">\(\theta\)</span> สามารถกำหนด link function ได้เป็น logit function <span class="math inline">\(logit(\theta)=log(\theta/(1-\theta))\)</span> หรือ probit function <span class="math inline">\(\Phi^{-1}(\theta)\)</span> ที่เป็น inverse ของ cumulative normal probability function เป็นต้น เรียกอัตราส่วน <span class="math inline">\(\theta/(1-\theta)\)</span> ว่า odd ของการเกิดเหตุการณ์ โดยถ้า</p>
 <ul>
 <li><p>odd &gt; 1 แสดงว่า โอกาสที่จะเกิดเหตุการณ์ <span class="math inline">\(y=1\)</span> มีมากกว่าไม่เกิด</p></li>
