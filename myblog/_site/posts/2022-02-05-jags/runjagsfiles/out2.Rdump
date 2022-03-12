@@ -1,7 +1,0 @@
-`.RNG.name` <- "base::Marsaglia-Multicarry"
-`.RNG.state` <- 
-c(57597245L,333779037L)
-`mu` <- 
-58.1989
-`tau` <- 
-0.00392626

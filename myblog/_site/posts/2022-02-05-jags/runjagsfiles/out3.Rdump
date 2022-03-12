@@ -1,7 +1,0 @@
-`.RNG.name` <- "base::Super-Duper"
-`.RNG.state` <- 
-c(-800397020L,1725459913L)
-`mu` <- 
-57.7285
-`tau` <- 
-0.0037642
