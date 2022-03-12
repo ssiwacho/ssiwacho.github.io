@@ -1,0 +1,5 @@
+"mu" <- 30
+"tau" <- 0.01
+
+".RNG.name" <- "base::Marsaglia-Multicarry"
+

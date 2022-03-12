@@ -1,0 +1,120 @@
+---
+title: "GLMs"
+categories:
+  - Bayesian Statistics
+  - BGLMs
+description: |
+  Generalized Linear Modeling
+author:
+  - name: Siwachoat Srisuttiyakorn
+    url: {}
+date: 2022-02-19
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 2
+    draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+# Bayesian Generalizes Linear Models
+
+การวิเคราะห์โมเดลในกลุ่ม BGLMs สามารถระบุโมเดลและวิเคราะห์ในทำนองเดียวกับการวิเคราะห์ BGLM ความแตกต่างระหว่าง BGLM กับ BGLMs คือ ค่าสังเกตของ BGLMs มีการแจกแจงไม่ใช่การแจกแจงแบบปกติ และจำเป็นต้องใช้ link function เพื่อแปลงค่าของพารามิเตอร์ในการแจกแจงของค่าสังเกต ให้อยู่ในรูปแบบของโมเดลเชิงเส้นเพื่อให้พารามิเตอร์ที่ผ่านการแปลงแล้วมีความหมาย และสามารถใช้บรรยายความสัมพันธ์ระหว่างตัวแปรที่ต้องการได้ 
+
+โมเดล glms สามารถนิยามในรูปแบบทั่วไปได้ดังนี้ กำหนดให้ $y_i$ เมื่อ $i=1,2,3,...,n$ เป็นค่าสังเกตของตัวแปรตามที่มีการแจกแจงอยู่ในวงศ์ชี้กำลัง (exponential family) โดยที่
+
+$E[y_i]=\mu_i=g^{-1}(\eta_i)$, $\eta_i=\beta_0+\beta_1x_{1i}+...+\beta_kx_{ki}$
+
+- การแจกแจงในวงศ์ชี้กำลังเป็นกลุ่มของการแจกแจงความน่าจะเป็นที่ฟังก์ชันความน่าจะเป็นอยู่ในรูปของ exponential function เช่น normal distribution, poisson และ binomial 
+
+# Binomial model
+
+จากนิยามข้างต้นจะเห็นว่า การกำหนด link function $g(.)$ ที่เหมาะสม จะช่วยแปลงพารามิเตอร์ในการแจกแจงของค่าสังเกต $y_i$ ให้อยู่ในรูปแบบของสมการเชิงเส้นตรงได้ เช่นใน binomial model ที่มีพารามิเตอร์กำกับการแจกแจงคือ ความน่าจะเป็นของการเกิดเหตุการณ์ที่สนใจ $\theta$ สามารถกำหนด link function ได้เป็น logit function $logit(\theta)=log(\theta/(1-\theta))$ หรือ probit function $\Phi^{-1}(\theta)$ ที่เป็น inverse ของ cumulative normal probability function เป็นต้น
+
+ใน binomial model เนื่องจาก $y_i$ มีค่าที่เป็นไปได้ 2 ค่าได้แก่ 0, 1 ดังนั้นค่าเฉลี่ยของ $y$ จึงมีค่าเป็นสัดส่วนหรือความน่าจะเป็นของการเกิดค่าสังเกต $y=1$ กล่าวคือ $E[y_i]=\theta$ ดังนั้น
+
+$g(E[y_i])=\eta_i \implies logit(\theta)=\eta_i=\beta_0+\beta_1x_{1i}+...+\beta_kx_{ki}$
+
+สมมุติว่า ผู้วิเคราะห์ต้องการวิเคราะห์ความสำเร็จในการเรียน online ของนักเรียน โดยใช้ตัวแปรได้แก่ จำนวนเวลาที่นักเรียนใช้ในการเข้ามาเรียน online ต่อครั้ง (Hours) ค่าเฉลี่ยของความถี่ในการเข้ามาเรียน online ต่อสัปดาห์ (Freq) และฐานนิยมของคุณภาพชิ้นงานที่นักเรียนทำส่งในระบบ online (Mode_Qua)
+
+```{r}
+dat<-read.csv("/Users/siwachoat/Documents/myblog/myblog/_posts/2022-03-05-glm2/binomial.csv")
+head(dat)
+dim(dat)
+```
+
+กำหนดโมเดลของค่าสังเกตเป็น
+
+$y_i \sim Binomial(\theta_i, n_i)$
+
+และ $logit(\theta_i)=\beta_0+\beta_1hour+\beta_2freq+\beta_3mod.qua$
+
+คำสั่งระบุโมเดลใน JAGs สามารถเขียนได้ดังนี้
+
+```{r echo=TRUE}
+"model{
+# likelihood function
+for (i in 1:N)
+{
+y[i]~dbin(theta[i],n[i])
+logit(theta[i])=b0+b[1]*hour[i]+b[2]*freq[i]+b[3]mode.qua[i]
+n[i]~dunif(0,1000)
+}
+
+b0~dnorm(0,0.01)
+
+for(j in 1:3)
+{
+b[j]~dnorm(0,0.01)
+}
+}"
+
+```
+
+
+```{r}
+logit<-"model{
+
+# likelihood function
+for (i in 1:N)
+{
+y[i]~dbin(theta[i],1)
+logit(theta[i])=b0+b[1]*hour[i]+b[2]*freq[i]
+}
+
+b0~dnorm(0,0.01)
+
+for(j in 1:2)
+{
+b[j]~dnorm(0,0.01)
+}
+
+}"
+
+dataList<-list(y=dat$success, hour=dat$hour, freq=dat$freq, mode.qua=ifelse(dat$mode.qua=="poor",0,1), N=dim(dat)[1])
+fit.logit<-run.jags(model=logit,
+                    data=dataList,
+                    method="rjparallel",
+                    monitor=c("b0","b"),
+                    n.chains = 5,
+                    thin=100,
+                    sample=3000)
+sample<-as.mcmc.list(fit.logit)
+gelman.plot(sample)
+autocorr.diag(sample)
+MCMCsummary(sample, HPD=T)
+```
+
+---
+
+Distill is a publication format for scientific and technical writing, native to the web.
+
+Learn more about using Distill at <https://rstudio.github.io/distill>.
+
+

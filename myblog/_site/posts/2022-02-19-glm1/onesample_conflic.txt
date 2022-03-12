@@ -1,0 +1,8 @@
+model{
+for (i in 1:n)
+{
+y[i]~dt(mu,1,4)
+}
+
+mu~dt(0,1,4)
+}
