@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+    
+    
+    <title>การเรียนรู้เชิงลึก</title>
+
+        <script src="DL2_files/header-attrs-2.8/header-attrs.js"></script>
+        <script src="DL2_files/jquery-1.11.3/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="DL2_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="DL2_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="DL2_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+        <script src="DL2_files/navigation-1.1/tabsets.js"></script>
+        <link href="DL2_files/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="DL2_files/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="DL2_files/robobook-0.1/robobook.css" rel="stylesheet" />
+        <link href="DL2_files/robobook-0.1/robobook_fonts_embed.css" rel="stylesheet" />
+        <script src="DL2_files/robobook-0.1/robobook.js"></script>
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
+    
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+            <!-- robobook start -->   
+   <div class="book with-summary">
+      <div class="book-summary">
+        <ul>
+          <li class="title">การเรียนรู้เชิงลึก</li>
+          <li class="divider"></li>
+        </ul>
+        <nav role="navigation" id="toc">
+          <ul>
+          <li><a href="#introduction"><strong>Introduction</strong></a>
+          <ul>
+          <li><a href="#forward-propagation"><strong>Forward propagation</strong></a></li>
+          <li><a href="#backward-propagation"><strong>Backward propagation</strong></a></li>
+          <li><a href="#activation-function"><strong>Activation function</strong></a></li>
+          <li><a href="#ประเภทของ-dl-model"><strong>ประเภทของ ​DL model</strong></a></li>
+          </ul></li>
+          <li><a href="#the-first-dl-model-mlp-with-keras"><strong>The first DL model (MLP) with Keras</strong></a>
+          <ul>
+          <li><a href="#ติดตั้ง-package">ติดตั้ง package</a></li>
+          <li><a href="#regression">Regression</a></li>
+          <li><a href="#binary-classification">Binary Classification</a></li>
+          <li><a href="#multi-class-classification">Multi-Class Classification</a></li>
+          <li><a href="#multi-label-classification">Multi-label Classification</a></li>
+          </ul></li>
+          <li><a href="#overfitting-and-underfitting">Overfitting and Underfitting</a></li>
+          <li><a href="#ปัญหาเกี่ยวกับการ-train-model">ปัญหาเกี่ยวกับการ train model</a>
+          <ul>
+          <li><a href="#ปัญหาเกี่ยวกับการกำหนดค่าเริ่มต้น">ปัญหาเกี่ยวกับการกำหนดค่าเริ่มต้น</a></li>
+          <li><a href="#การเลือก-activation-function">การเลือก activation function</a></li>
+          <li><a href="#batch-size">Batch Size</a></li>
+          <li><a href="#batch-normalization">Batch normalization</a></li>
+          </ul></li>
+          <li><a href="#tuning-hyperparameter">Tuning hyperparameter</a></li>
+          </ul>
+        </nav>
+        <ul class="authors">
+          <li class="divider"></li>
+                            </ul>     
+      </div>
+      <div class="book-body fixed">
+        <div class="body-inner">
+            <a class="btn pull-left js-toolbar-action toggle-sidebar" aria-label="Toggle Sidebar" title="Toggle Sidebar" href="#">
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </a>
+            <div class="page-inner">
+              <section id="content" class="normal">
+      
+   
+        
+      <h1 class="title">การเรียนรู้เชิงลึก</h1>
+      
+        
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<p style="line-height:1.3; font-size:16px; color: #353b48; text-align:right;">
+สิวะโชติ ศรีสุทธิยากร </br> </br> ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์ </br> จุฬาลงกรณ์มหาวิทยาลัย </br> </font> 13 May 2021 </font>
+</p>
+</body>
+</html>
+<div id="introduction" class="section level1">
+<h1><strong>Introduction</strong></h1>
+<p>DL model กลุ่มของอัลกอริทึมการเรียนรู้ของเครื่องที่มีความสามารถสูงมากในปัจจุบัน โดยสามารถทำนายค่าของตัวแปรเป้าหมายได้อย่างมีประสิทธิภาพ และแม่นยำ DL ถูกนำไปประยุกต์ใช้ในหลากหลายวงการทั้งทางการแพทย์ เช่น การวินิจฉัยโรคจากภาพ X-ray หรือ CT Scan ทางการศึกษา เช่น การตรวจจับใบหน้าหรือเสียงของผู้เรียนเพื่อวินิจฉัยอารมณ์ความรู้สึกหรือความยึดมั่นผูกพันทางการเรียนของนักเรียน เป็นต้น</p>
+<p>อัลกอริทึมหลักของ DL คือ Artificial neural network ซึ่งเป็นอัลกอริทึมที่มีจุดเด่นคือรองรับข้อมูลนำเข้าที่หลากหลายทั้งในรูปแบบข้อมูลที่มีโครงสร้าง และไม่มีโครงสร้าง แตกต่างจาก traditional ML algorithm ที่มักใช้ได้กับข้อมูลที่มีโครงสร้างเท่านั้น</p>
+<p>นอกจากนี้โครงสร้างการเรียนรู้ของ neural network ยังมีประสิทธิภาพและมีความยืดหยุ่น และมีลักษณะการเรียนรู้ที่สอดคล้องใกล้เคียงกับการเรียนรู้ของมนุษย์มากกว่า traditional ML รูปต่อไปนี้แสดงลักษณะการเรียนรู้แบบ traditional ML</p>
+<p><left><img src="Screen%20Shot%202564-05-15%20at%2002.08.01.png" style="width:60.0%" alt="tradition ML algorithm" /></left></p>
+<p><em>tradition ML algorithm</em></p>
+<p>จากรูปจะเห็นว่า traditional ML algorithm ประกอบด้วย 3 ส่วนหลักได้แก่</p>
+<ol style="list-style-type: decimal">
+<li><p>ส่วนข้อมูลนำเข้า (Input)</p></li>
+<li><p>ส่วน Model</p></li>
+<li><p>ส่วนการทำนาย</p></li>
+</ol>
+<p>ส่วน neural network model มีลักษณะการเรียนรู้ดังรูป</p>
+<p><left><img src="Screen%20Shot%202564-05-15%20at%2002.29.19.png" style="width:80.0%" /></left></p>
+<p>จากรูปจะเห็นว่า neural network ประกอบด้วยส่วนประกอบหลักที่เรียกว่า layer จำนวน 3 ส่วนได้แก่</p>
+<ol style="list-style-type: decimal">
+<li><p>input layer</p></li>
+<li><p>hidden layer</p></li>
+<li><p>output layer</p></li>
+</ol>
+<p>จากรูปจะเห็นว่าโมเดลมี input layer ที่ประกอบด้วยหน่วยย่อยหรือที่เรียกว่า นิวรอน (neurons) จำนวน 3 หน่วย โดยนิวรอนใน input layer จะใช้แทนตัวแปรอิสระของโมเดล ในที่นี้จะได้ว่า <span class="math inline">\(X = [x_1, x_2, x_3]\)</span></p>
+<p>โมเดลจะนำข้อมูลนำเข้าใน input layer ที่กำหนดมาประมวลผลร่วมกับพารามิเตอร์ <span class="math inline">\(w[1]\)</span> และ <span class="math inline">\(b[1]\)</span> เพื่อนำส่งไปยัง neuron แต่ละตัวภายใน hidden layer ผู้อ่านจะเห็นว่าการประมวลผลเพื่อให้ได้ neuron ดังกล่าวสามารถเขียนเป็นแผนภาพได้ดังนี้</p>
+<p><left><img src="Screen%20Shot%202564-05-15%20at%2002.32.24.png" style="width:50.0%" /></left></p>
+<p>เมื่อได้ค่าของ neuron แต่ละตัวในชั้นของ hidden layer จึงทำการประมวลผลร่วมกับพารามิเตอร์ <span class="math inline">\(w[2]\)</span> และ <span class="math inline">\(b[2]\)</span> เพื่อคำนวณค่าทำนายใน output layer เรียกกระบวนการนี้ว่า <strong>forward propagation</strong></p>
+<p>การประมวลผลของ neuron ใน hidden layer จะนำข้อมูลของ neuron ที่อยู่ใน layer ก่อนหน้ามาคำนวณผลรวมเชิงเส้นแบบถ่วงน้ำหนัก จากตัวอย่างของ deep learning model ในข้างต้น จะได้ว่าผลรวมเชิงเส้นของแต่ละ neuron ใน hidden layer คำนวณได้ดังนี้</p>
+<p><span class="math inline">\(h_j=b+w_1x_1+w_2x_2\)</span></p>
+<p>เรียก <span class="math inline">\(w_k\)</span> ว่าน้ำหนัก (weight) และ <span class="math inline">\(b\)</span> ว่าค่าความลำเอียง (bias)</p>
+<p>โดยทั่วไปมีความเป็นไปได้ที่ค่าของผลรวมเชิงเส้นที่คำนวณได้ข้างต้นจะมีพิสัยที่ไม่สอดคล้องกับตัวแปรตามที่ต้องการทำนาย จึงมีการนำค่าผลรวมเชิงเส้นดังกล่าวมาแปลงค่าด้วยฟังก์ชันที่เรียกว่า activation function ก่อนที่จะส่งค่าไปยัง neuron ใน layer ถัดไป ดังตัวอย่างในรูปด้านล่าง</p>
+<div id="forward-propagation" class="section level2">
+<h2><strong>Forward propagation</strong></h2>
+<p>โดยปกติแล้วเมื่อเริ่มต้นกระบวนการผู้วิเคราะห์จะยังไม่ทราบค่าพารามิเตอร์ที่เหมาะสมของโมเดลดังนั้นจึงต้องมีการประมาณค่าพารามิเตอร์ดังกล่าวก่อนการใช้งานจริง กระบวนการ forward propagation จะเริ่มจากการสุ่มค่าเริ่มต้นของพารามิเตอร์ทั้งหมดภายในโมเดลขึ้นมาก่อน 1 ชุด และใช้ชุดของพารามิเตอร์นี้ไปใช้กับชุดข้อมูลฝึกหัดเพื่อคำนวณเป็นผลลัพธ์ใน output layer</p>
+<p>เมื่อได้ผลลัพธ์ดังกล่าวจะนำผลลัพธ์นี้ไปเปรียบเทียบกับค่าจริงของผลลัพธ์ในชุดข้อมูลฝึกหัดโดยใช้ cost function จากนั้นจะใช้กระบวนการ <strong>backward propagation</strong> เพื่อปรับค่าพารามิเตอร์ในโมเดลเพื่อให้ค่าของ loss function ลดลง และได้ชุดของพารามิเตอร์ที่มีความสมเหตุสมผลมากยิ่งขึ้น</p>
+<p>กระบวนการทำงานข้างต้นจะดำเนินการแบบทวนซ้ำหลายรอบจนกระทั่งค่า cost function ของโมเดลลดลงอยู่ในระดับที่ต้องการ ในเชิงเทคนิคจะเรียกกระบวนการ forward + backward propagation 1 ชุด นี้ว่า 1 Epoch</p>
+</div>
+<div id="backward-propagation" class="section level2">
+<h2><strong>Backward propagation</strong></h2>
+<p>กระบวนการ forward propagation จะสิ้นสุดลงเมื่อคำนวณค่าทำนายของตัวแปรเป้าหมายในโมเดลได้ เมื่อได้ค่าทำนายดังกล่าวผู้วิเคราะห์จะทำการประเมินความสอดคล้องเชิงประจักษ์ของโมเดลด้วยการเปรียบเทียบค่าทำนายนี้กับค่าจริงในชุดข้อมูลฝึกหัดผ่านฟังก์ชันวัตถุประสงค์หรือฟังก์ชันต้นทุน (cost function) ซึ่งมีหลากหลายตัวขึ้นกับปัญหาของการทำงาน เช่นในปัญหา regression อาจใช้ cost function เป็นค่า mean squares error (MSE) หรือปัญหา binary classification อาจใช้ cost function เป็น cross entropy ดังนี้</p>
+<p><span class="math inline">\(J = -\frac{1}{n}\sum_{i=1}^n (y_ilog(\hat{y}_i)+(1-y_i)log(1-\hat{y}_i))\)</span></p>
+<p>กระบวนการ backward propagation จะปรับค่าพารามิเตอร์ในโมเดลเพื่อให้ได้โมเดลที่มีความสอดคล้่องกับข้อมูลฝึกหัดมากขึ้น โดยพิจารณาชุดของค่าพารามิเตอร์ที่ทำให้ cost function มีค่าต่ำที่สุด โดยใช้อัลกอริทึม gradient descent เป็นเครื่องมือ ดังนี้</p>
+<ol style="list-style-type: decimal">
+<li><p>หา first-order derivative ของ cost function เทียบกับค่าพารามิเตอร์ในโมเดลเขียนแทนด้วย <span class="math inline">\(\frac{\partial J(w)}{\partial w}\)</span></p></li>
+<li><p>นำ <span class="math inline">\(\frac{\partial J(w)}{\partial w}\)</span> ไปหักลบออกจากค่าพารามิเตอร์ในรอบก่อนหน้าโดยควบคุมความเร็วในการเรียนรู้ผ่าน learning rate (<span class="math inline">\(\alpha\)</span>)</p></li>
+<li><p>นำค่าพารามิเตอร์ที่ปรับปรุงใหม่ใน 2 ไปประมวลผลร่วมในกระบวนการ forward propagation ซึ่งจะทำให้ cost function มีค่าลดลง</p></li>
+</ol>
+<p>ทวนซ้ำกระบวนการข้างต้นจนกระทั่ง cost function มีแนวโน้มคงที่</p>
+</div>
+<div id="activation-function" class="section level2">
+<h2><strong>Activation function</strong></h2>
+<p>activation function เป็นฟังก์ชันทางคณิตศาสตร์ ที่ผู้วิเคราะห์ใช้สำหรับแปลงค่าผลรวมเชิงเส้นของข้อมูลนำเข้า ให้มีพิสัยอยู่ในช่วงที่สมเหตุสมผลหรือสอดคล้องกับตัวแปรตามที่ต้องการทำนาย</p>
+<p>activation function ที่ใช้ในการวิเคราะห์มีได้หลากหลาย โดยอาจจำแนกเป็น 2 ประเภทได้แก่ <strong>linear activation function</strong> ซึ่งเขียนในรูปทั่วไปดังนี้</p>
+<p><span class="math inline">\(\sigma(x)=m(x)+c\)</span></p>
+<p>ฟังก์ชันประเภทนี้จะไม่ได้ทำให้พิสัยของข้อมูลนำเข้าเปลี่ยนแปลงไปจากเดิม กล่าวคือหาก <span class="math inline">\(x \in [-\infty, \infty]\)</span> แล้ว <span class="math inline">\(\sigma(x) \in [-\infty, \infty]\)</span> เช่นเดิม แต่อาจช่วยแปลงสเกลของข้อมูลนำเข้าให้เหมาะสมมากหรือใกล้เคียงกับช่วงที่เป็นไปได้ของตัวแปรตามมากขึ้น ดังตัวอย่างในรูปด้านล่าง</p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-1-1.png" width="480" /></p>
+<p>และ <strong>nonlinear activation function</strong> ซึ่งมักใช้ใช้บ่อยกว่า linear activation function ทั้งนี้เป็นเพราะมีความสามารถที่จะแปลงพิสัยของข้อมูลนำเข้าให้อยู่ในช่วงที่เหมาะสมได้ เช่นแปลง <span class="math inline">\(x \in [-\infty, \infty]\)</span> ให้อยู่ในช่วง <span class="math inline">\([0,1]\)</span> หรือ <span class="math inline">\([0, \infty]\)</span> หรือ <span class="math inline">\([-1,1]\)</span></p>
+<div id="ตัวอย่าง-activation-function" class="section level3">
+<h3>ตัวอย่าง activation function</h3>
+<p><strong>Sigmoid function:</strong> <span class="math inline">\(\sigma(x)=\frac{1}{1+exp(-x)}\)</span></p>
+<p>เหมาะสำหรับใช้เป็น activation function ในปัญหา binary classification ฟังก์ชันนี้จะแปลงข้อมูลนำเข้าในอยู่ในพิสัย <span class="math inline">\([0,1]\)</span></p>
+<p><strong>Hyperbolic Tangent function:</strong> <span class="math inline">\(\sigma(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}\)</span></p>
+<p>ฟังก์ชันนี้มีลักษณะคล้ายกับ sigmoid function แต่พิสัยของฟังก์ชันจะอยู่ในช่วง <span class="math inline">\([-1,1]\)</span> บางครั้งเรียกว่า sigmoidal funcion หรือ tanh function</p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-2-1.png" width="384" style="display: block; margin: auto auto auto 0;" /></p>
+<p><strong>Rectified Linear Unit:</strong> <span class="math inline">\(\sigma(x)=max(0,x)\)</span></p>
+<p>เป็น activation function ที่มักใช้บ่อยใน hidden layer โดยพิสัยของฟังก์ชันจะอยู่ในช่วง <span class="math inline">\([0,\infty]\)</span> ดังรูป</p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-3-1.png" width="384" style="display: block; margin: auto auto auto 0;" /></p>
+<p><strong>Leaky Rectified Linear Unit:</strong> <span class="math inline">\(\sigma(x)= \begin{cases} x,&amp; \text{if } x\geq 1\\ax, &amp; \text{otherwise}\end{cases}\)</span></p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-4-1.png" width="384" style="display: block; margin: auto auto auto 0;" /></p>
+<p><strong>Softmax</strong></p>
+<p>softmax activation function เป็น function ที่เหมาะสำหรับใช้ในปัญหา multi-class classification จากสูตรของฟังก์ชันจะเห็นว่าผลลัพธ์ที่ได้จะเป็นความน่าจะเป็นที่มีพิสัยอยู่ในช่วง <span class="math inline">\([0,1]\)</span></p>
+<p>กำหนดให้ <span class="math inline">\(x=(x_1, x_2, x_3, x_4)\)</span> เป็นเวกเตอร์ของข้อมูลนำเข้า และตัวแปรตามเป็นตัวแปรแบบจัดประเภทที่มี 3 ระดับได้แก่ <span class="math inline">\(a, b, c\)</span></p>
+<p>สมมุติว่าต้องการหาความน่าจะเป็นของการเกิดผลลัพธ์ <span class="math inline">\(a, b, c\)</span> เมื่อกำหนดข้อมูลนำเข้า <span class="math inline">\(x\)</span> จะสามารถหาได้โดยใช้ความน่าจะเป็นแบบมีเงื่อนไข (conditional probability) ดังนี้</p>
+<p><span class="math inline">\(P(a|x)=\frac{y_a}{y_a+y_b+y_c}\)</span></p>
+<p><span class="math inline">\(P(b|x)=\frac{y_b}{y_a+y_b+y_c}\)</span></p>
+<p><span class="math inline">\(P(c|x)=\frac{y_c}{y_a+y_b+y_c}\)</span></p>
+<p>เมื่อ</p>
+<p><span class="math inline">\(y_a=w_{1,a}x_1+w_{2,a}x_2+w_{3,a}x_3+w_{4,a}x_4\)</span></p>
+<p><span class="math inline">\(y_b=w_{1,b}x_1+w_{2,b}x_2+w_{3,b}x_3+w_{4,b}x_4\)</span></p>
+<p><span class="math inline">\(y_c=w_{1,c}x_1+w_{2,c}x_2+w_{3,c}x_3+w_{4,c}x_4\)</span></p>
+<p>จะสังเกตเห็นว่า <span class="math inline">\(P(a|x)+P(b|x)+P(c|x)=1\)</span></p>
+<p>เนื่องจากผลรวมเชิงเส้นในข้างต้นมีพิสัยเป็นจำนวนจริง จึงทำให้ผลรวมเชิงเส้นดังกล่าวสามารถมีค่าติดลบได้ ซึ่งอาจส่งผลให้ค่าความน่าจะเป็นแบบมีเงื่อนไขมีค่าอยู่นอกช่วง <span class="math inline">\([0,1]\)</span></p>
+<p>เพื่อแก้ปัญหานี้จึงมีการใช้ฟังก์ชัน exponential แปลงพิสัยของผลรวมเชิงเส้นที่เป็นจำนวนจริงให้อยู่ในช่วง <span class="math inline">\([0, \infty]\)</span> ซึ่งทำให้ sofmax activation function สามารถเขียนในรูปทั่วไปได้ดังนี้</p>
+<p>กำหนดให้ <span class="math inline">\(x = (x_1, x_2, x_3, ..., x_p)^T\)</span> เป็นเวกเตอร์ข้อมูลนำเข้าของตัวแปรอิสระจำนวน <span class="math inline">\(p\)</span> ตัว และ <span class="math inline">\(y\)</span> เป็นตัวแปรตามแบบจัดประเภทที่มีจำนวน <span class="math inline">\(k\)</span> ระดับ softmax activation function นิยามดังนี้</p>
+<p><span class="math inline">\(\sigma(x)=P(y=y_m|x)=\frac{exp(x_i)}{\sum_{j=1}^pexp(x_j)}\)</span></p>
+<p>เมื่อ <span class="math inline">\(i = 1,2,...,p\)</span> และ <span class="math inline">\(m = 1,2,...,k\)</span></p>
+<p>์Note: สังเกตว่า DL model ทำนายตัวแปรตามที่ต้องการด้วยการแยกส่วนการประมวลผลออกเป็นส่วนย่อย ๆ หลาย ๆ ส่วน โดยที่แต่ละส่วนถูกบรรจุอยู่ใน neuron</p>
+</div>
+</div>
+<div id="ประเภทของ-dl-model" class="section level2">
+<h2><strong>ประเภทของ ​DL model</strong></h2>
+<ul>
+<li><p>Multilayer Perceptron Model (MLP models)</p></li>
+<li><p>Convolutional Neural Network (CNNs)</p></li>
+<li><p>Recurrent Neural Network (RNNs)</p></li>
+<li><p>Restricted Boltzmann Machines (RBMs)</p></li>
+<li><p>Deep Belief Networks (DBNs)</p></li>
+</ul>
+</div>
+</div>
+<div id="the-first-dl-model-mlp-with-keras" class="section level1">
+<h1><strong>The first DL model (MLP) with Keras</strong></h1>
+<p>multi-layer perceptron เป็น neural network ประเภทหนึ่งที่เรียกว่า Feedforward neural networks (FFNNs) ซึ่งเป็นโมเดลพื้นฐานที่ใช้ในการทำงานทั่วไป ภายในโมเดลประกอบด้วย input, hidden และ output layers ดังที่กล่าวมาแล้ว โมเดลประเภทนี้สามารถประยุกต์ใช้ได้กับทั้งปัญหา classification และ regression</p>
+<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep%20learning/Screen%20Shot%202564-05-15%20at%2003.15.07.png" /></p>
+<p><em>(a) Single layer perceptron; (b) multi-layer perceptron</em></p>
+<p>หัวข้อนี้จะกล่าวถึงการสร้าง MLP โดยใช้ package-keras</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/j_pJmXJwMLA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<div id="ติดตั้ง-package" class="section level2">
+<h2>ติดตั้ง package</h2>
+<p>keras สามารถติดตั้งและเรียกใช้งานได้ทั้งบน python และ R โดยสำหรับภาษา python ให้ดำเนินการดังนี้</p>
+<ol style="list-style-type: decimal">
+<li>ในหน้าต่าง terminal ให้ดำเนินการดาวน์โหลดและติดตั้ง tensorflow และ keras ดังนี้</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pip install <span class="op">--</span>upgrade tensorflow</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pip install keras</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>ใน python ก่อนการใช้งานแต่ละครั้งจะเป็นต้องเรียกใช้โดยพิมพ์คำสั่งดังนี้</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense</span></code></pre></div>
+<p>สำหรับโปรแกรม R ให้ดำเนินการดาวน์โหลดและติดตั้ง package-keras โดยพิมพ์คำสั่งดังนี้</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;keras&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install_keras</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(keras)</span></code></pre></div>
+</div>
+<div id="regression" class="section level2">
+<h2>Regression</h2>
+<p>จากชุดข้อมูล crimm.csv สมมุติว่่าต้องการสร้าง MLP เพื่อทำนายอัตราการเกิดคดีโจรกรรมของแต่ละพื้นที่</p>
+<p>ใน python สามารถดำเนินการได้ดังนี้ —&gt; <a href="https://161.200.152.253/2758604/DL/DL1/DL_reg_1.html">MLP in Python</a></p>
+<p>ใน R สามารถดำเนินการได้ดังนี้</p>
+<ol style="list-style-type: decimal">
+<li>นำเข้าชุดข้อมูล</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/Machine Learning/เอกสาร/ep2_regression/_02_multiple regression/crimm.csv&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat)</span></code></pre></div>
+<pre><code>Rows: 2,212
+Columns: 17
+$ householdSize          &lt;dbl&gt; 3.10, 2.82, 2.43, 2.40, 2.76, 2.45, 2.60, 2.45,…
+$ pct.lao                &lt;dbl&gt; 1.37, 0.80, 0.74, 1.70, 0.53, 2.51, 1.60, 14.20…
+$ pct.thai               &lt;dbl&gt; 91.78, 95.57, 94.33, 97.35, 89.16, 95.65, 96.57…
+$ pct.myanmar            &lt;dbl&gt; 6.50, 3.44, 3.43, 0.50, 1.17, 0.90, 1.47, 0.40,…
+$ pct.cambodia           &lt;dbl&gt; 1.88, 0.85, 2.35, 0.70, 0.52, 0.95, 1.10, 0.63,…
+$ numPop.urban           &lt;int&gt; 11980, 23123, 29344, 0, 0, 140494, 28700, 59449…
+$ medIncome.household    &lt;int&gt; 75122, 47917, 35669, 20580, 17390, 21577, 42805…
+$ pctWPubAsst            &lt;dbl&gt; 1.03, 2.75, 2.94, 11.71, 11.21, 7.12, 5.41, 8.8…
+$ pctPop.poor            &lt;dbl&gt; 1.96, 3.98, 4.75, 17.23, 29.99, 17.78, 4.01, 17…
+$ pchLessM3              &lt;dbl&gt; 5.81, 5.61, 2.80, 11.05, 12.15, 8.76, 4.49, 10.…
+$ PctUnemployed          &lt;dbl&gt; 2.70, 2.43, 4.01, 9.86, 9.08, 5.72, 4.85, 8.19,…
+$ NumIlllegal.labor      &lt;int&gt; 1277, 1920, 1468, 339, 196, 2091, 2637, 517, 14…
+$ HousVacant             &lt;int&gt; 64, 240, 544, 669, 333, 5119, 566, 2051, 1562, …
+$ Num.HomelessInShelters &lt;int&gt; 11, 0, 16, 0, 2, 327, 0, 21, 125, 43, 1, 20, 28…
+$ Num.HomelessInStreet   &lt;int&gt; 0, 0, 0, 0, 0, 4, 0, 0, 15, 4, 0, 49, 2, 0, 0, …
+$ PopDens                &lt;dbl&gt; 1845.9, 2186.7, 2780.9, 3217.7, 974.2, 1995.7, …
+$ TheifperPop            &lt;dbl&gt; 114.85, 242.37, 758.14, 1301.78, 728.93, 1386.4…</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>normalized ค่าของตัวแปรอิสระ</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>] <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>], <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dat)</span></code></pre></div>
+<pre><code> householdSize        pct.lao           pct.thai        pct.myanmar      
+ Min.   :-3.3118   Min.   :-0.6548   Min.   :-4.9515   Min.   :-0.59018  
+ 1st Qu.:-0.6198   1st Qu.:-0.5945   1st Qu.:-0.4647   1st Qu.:-0.45838  
+ Median :-0.1412   Median :-0.4542   Median : 0.3874   Median :-0.32211  
+ Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.00000  
+ 3rd Qu.: 0.4271   3rd Qu.: 0.1261   3rd Qu.: 0.7451   3rd Qu.: 0.00013  
+ Max.   : 7.6954   Max.   : 6.1265   Max.   : 0.9521   Max.   :12.23910  
+  pct.cambodia        numPop.urban      medIncome.household  pctWPubAsst     
+ Min.   :-0.535563   Min.   :-0.23211   Min.   :-1.8714     Min.   :-1.4079  
+ 1st Qu.:-0.479978   1st Qu.:-0.23211   1st Qu.:-0.7579     1st Qu.:-0.7508  
+ Median :-0.394541   Median :-0.14438   Median :-0.1899     Median :-0.2531  
+ Mean   : 0.000000   Mean   : 0.00000   Mean   : 0.0000     Mean   : 0.0000  
+ 3rd Qu.:-0.008363   3rd Qu.:-0.02843   3rd Qu.: 0.5581     3rd Qu.: 0.4896  
+ Max.   : 5.995335   Max.   :35.35959   Max.   : 6.6748     Max.   : 8.0855  
+  pctPop.poor        pchLessM3       PctUnemployed     NumIlllegal.labor 
+ Min.   :-1.2767   Min.   :-1.3485   Min.   :-1.6314   Min.   :-0.11294  
+ 1st Qu.:-0.8262   1st Qu.:-0.6819   1st Qu.:-0.6918   1st Qu.:-0.10608  
+ Median :-0.2657   Median :-0.2158   Median :-0.2064   Median :-0.09479  
+ Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.00000  
+ 3rd Qu.: 0.6143   3rd Qu.: 0.3985   3rd Qu.: 0.4801   3rd Qu.:-0.05380  
+ Max.   : 5.4002   Max.   : 6.1158   Max.   : 8.7007   Max.   :37.44611  
+   HousVacant       Num.HomelessInShelters Num.HomelessInStreet
+ Min.   :-0.26310   Min.   :-0.11874       Min.   :-0.07266    
+ 1st Qu.:-0.22192   1st Qu.:-0.11874       1st Qu.:-0.07266    
+ Median :-0.18297   Median :-0.11874       Median :-0.07266    
+ Mean   : 0.00000   Mean   : 0.00000       Mean   : 0.00000    
+ 3rd Qu.:-0.08021   3rd Qu.:-0.07978       3rd Qu.:-0.06859    
+ Max.   :26.27786   Max.   :41.29419       Max.   :42.46083    
+    PopDens         TheifperPop      
+ Min.   :-0.9801   Min.   :   16.92  
+ 1st Qu.:-0.5663   1st Qu.:  511.69  
+ Median :-0.2682   Median :  822.72  
+ Mean   : 0.0000   Mean   : 1033.43  
+ 3rd Qu.: 0.1903   3rd Qu.: 1350.23  
+ Max.   :14.6406   Max.   :11881.02  </code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>แบ่งชุดข้อมูลเป็น train and test data โดยให้เก็บค่าไว้ในรูปแบบของเมทริกซ์ (matrix) จำแนกเป็นเมทริกซ์ของตัวแปรอิสระ และเมทริกซ์ของตัวแปรตาม</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>train.id <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(dat<span class="sc">$</span>TheifperPop, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> F)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>train_x <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat[train.id, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>train_y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat[train.id, <span class="dv">17</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>test_x <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat[<span class="sc">-</span>train.id, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>test_y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat[<span class="sc">-</span>train.id, <span class="dv">17</span>])</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove column name</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(train_x) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(train_y) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>สร้างโมเดล MLP ด้วย package-keras</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create a Sequential model</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model.r <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Add input, hidden and output layer</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>model.r <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">32</span>, <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">16</span>), <span class="at">activation =</span> <span class="st">&quot;relu&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">16</span>, <span class="at">activation =</span> <span class="st">&quot;relu&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">1</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. summary the model</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>model.r</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. compile model</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>model.r <span class="sc">%&gt;%</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">compile</span>(<span class="at">optimizer =</span> <span class="st">&quot;adam&quot;</span>, <span class="at">loss =</span> <span class="st">&quot;mse&quot;</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. train the model</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> model.r <span class="sc">%&gt;%</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    keras<span class="sc">::</span><span class="fu">fit</span>(train_x, train_y, <span class="at">epoch =</span> <span class="dv">500</span>, <span class="at">validation_split =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<pre><code>Model
+Model: &quot;sequential_9&quot;
+________________________________________________________________________________
+Layer (type)                        Output Shape                    Param #     
+================================================================================
+dense_36 (Dense)                    (None, 32)                      544         
+________________________________________________________________________________
+dense_35 (Dense)                    (None, 16)                      528         
+________________________________________________________________________________
+dense_34 (Dense)                    (None, 1)                       17          
+================================================================================
+Total params: 1,089
+Trainable params: 1,089
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>ประเมินคุณภาพของโมเดล</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code></pre></div>
+<p><img src="DL2_files/figure-html/unnamed-chunk-13-1.png" width="768" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mse  <span class="co">#MSE</span></span></code></pre></div>
+<pre><code>    loss 
+314415.3 </code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(mse)  <span class="co">#RMSE</span></span></code></pre></div>
+<pre><code>    loss 
+560.7275 </code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pred, test_y)</span></code></pre></div>
+<p><img src="DL2_files/figure-html/unnamed-chunk-13-2.png" width="768" /></p>
+</div>
+<div id="binary-classification" class="section level2">
+<h2>Binary Classification</h2>
+<p>จงสร้างโมเดลตรวจจับการทุจริตบัตรเครดิต (fraud detection model) โดยใช้ชุดข้อมูล creditcard.csv</p>
+<p>ใน python สามารถดำเนินการได้ดังนี้ —&gt; <a href="https://161.200.152.253/2758604/DL/DL1/DL_Class_1.html">MLP in Python</a></p>
+<p>นำข้อมูลเข้า</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/เอกสารประกอบการสอน/Machine Learning/เอกสาร/ep3_classification/creditcard.csv&quot;</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat2[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>train.id <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(dat2<span class="sc">$</span>Class, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> F)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> dat2[train.id, ]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> dat2[<span class="sc">-</span>train.id, ]</span></code></pre></div>
+<p>ตรวจสอบและแก้ไขปัญหา imbalance data</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(train<span class="sc">$</span>Class)</span></code></pre></div>
+<pre><code>
+     0      1 
+199020    345 </code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&#39;smotefamily&#39;)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(smotefamily)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>smote.train <span class="ot">&lt;-</span> <span class="fu">SMOTE</span>(train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">29</span>], train[, <span class="dv">30</span>], <span class="at">K =</span> <span class="dv">3</span>, <span class="at">dup_size =</span> <span class="dv">500</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>smote.train <span class="ot">&lt;-</span> smote.train<span class="sc">$</span>data</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(smote.train<span class="sc">$</span>class)</span></code></pre></div>
+<pre><code>
+     0      1 
+199020 172845 </code></pre>
+<p>เตรียมชุดข้อมูลสำหรับ train MLP</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>train_x <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(smote.train[, <span class="dv">1</span><span class="sc">:</span><span class="dv">29</span>])</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>train_y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(smote.train[, <span class="dv">30</span>])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>test_x <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(test[, <span class="dv">1</span><span class="sc">:</span><span class="dv">29</span>])</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>test_y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(test[, <span class="dv">30</span>])</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove column name</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(train_x) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(train_y) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<p>สร้างโมเดล MLP ด้วย package-keras โดยในกรณีนี้เลือกใช้ sigmoid เป็น activation function ใน output layer</p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-18-1.png" width="384" style="display: block; margin: auto auto auto 0;" /></p>
+<p><left><img src="Screen%20Shot%202564-05-15%20at%2008.53.58.png" style="width:50.0%" /></left></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create a Sequential model</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>model.r <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Add input, hidden and output layer</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>model.r <span class="sc">%&gt;%</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">15</span>, <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">29</span>), <span class="at">activation =</span> <span class="st">&quot;tanh&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">8</span>, <span class="at">activation =</span> <span class="st">&quot;tanh&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">1</span>, <span class="at">activation =</span> <span class="st">&quot;sigmoid&quot;</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. summary the model</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>model.r</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. compile model</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>model.r <span class="sc">%&gt;%</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">compile</span>(<span class="at">optimizer =</span> <span class="st">&quot;adam&quot;</span>, <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">&quot;accuracy&quot;</span>), <span class="at">loss =</span> <span class="st">&quot;binary_crossentropy&quot;</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. train the model</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> model.r <span class="sc">%&gt;%</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    keras<span class="sc">::</span><span class="fu">fit</span>(train_x, train_y, <span class="at">epoch =</span> <span class="dv">20</span>, <span class="at">validation_split =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<pre><code>Model
+Model: &quot;sequential_10&quot;
+________________________________________________________________________________
+Layer (type)                        Output Shape                    Param #     
+================================================================================
+dense_39 (Dense)                    (None, 15)                      450         
+________________________________________________________________________________
+dense_38 (Dense)                    (None, 8)                       128         
+________________________________________________________________________________
+dense_37 (Dense)                    (None, 1)                       9           
+================================================================================
+Total params: 587
+Trainable params: 587
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+<pre><code>     loss  accuracy 
+0.0237521 0.9942885 </code></pre>
+<p>ประเมินประสิทธิภาพของโมเดล</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(verification)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>class.pred <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pred <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(class.pred, test<span class="sc">$</span>Class)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(tab)</span></code></pre></div>
+<pre><code>Confusion Matrix and Statistics
+
+          
+class.pred     0     1
+         0 84826    19
+         1   469   128
+                                          
+               Accuracy : 0.9943          
+                 95% CI : (0.9938, 0.9948)
+    No Information Rate : 0.9983          
+    P-Value [Acc &gt; NIR] : 1               
+                                          
+                  Kappa : 0.3423          
+                                          
+ Mcnemar&#39;s Test P-Value : &lt;2e-16          
+                                          
+            Sensitivity : 0.9945          
+            Specificity : 0.8707          
+         Pos Pred Value : 0.9998          
+         Neg Pred Value : 0.2144          
+             Prevalence : 0.9983          
+         Detection Rate : 0.9928          
+   Detection Prevalence : 0.9930          
+      Balanced Accuracy : 0.9326          
+                                          
+       &#39;Positive&#39; Class : 0               
+                                          </code></pre>
+</div>
+<div id="multi-class-classification" class="section level2">
+<h2>Multi-Class Classification</h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> iris</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>dat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">scale</span>(dat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">center =</span> T, <span class="at">scale =</span> T)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code></pre></div>
+<pre><code>&#39;data.frame&#39;:   150 obs. of  5 variables:
+ $ Sepal.Length: num  -0.898 -1.139 -1.381 -1.501 -1.018 ...
+ $ Sepal.Width : num  1.0156 -0.1315 0.3273 0.0979 1.245 ...
+ $ Petal.Length: num  -1.34 -1.34 -1.39 -1.28 -1.34 ...
+ $ Petal.Width : num  -1.31 -1.31 -1.31 -1.31 -1.31 ...
+ $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(X) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mltools)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>dummy <span class="ot">&lt;-</span> <span class="fu">dummyVars</span>(<span class="st">&quot; ~ .&quot;</span>, <span class="at">data =</span> dat)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>dummy <span class="ot">&lt;-</span> <span class="fu">predict</span>(dummy, <span class="at">newdata =</span> dat)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dummy)</span></code></pre></div>
+<pre><code> num [1:150, 1:7] -0.898 -1.139 -1.381 -1.501 -1.018 ...
+ - attr(*, &quot;dimnames&quot;)=List of 2
+  ..$ : chr [1:150] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+  ..$ : chr [1:7] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot; &quot;Petal.Length&quot; &quot;Petal.Width&quot; ...</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> dummy[, <span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>]</span></code></pre></div>
+<p>สร้าง MLP ที่มี</p>
+<ul>
+<li><p>4 inputs</p></li>
+<li><p>hidden layer1 มี 3 neurons</p></li>
+<li><p>hidden layer2 มี 2 neurons</p></li>
+<li><p>output layer มี 3 neurons</p></li>
+</ul>
+<p>สร้างโมเดล</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create a Sequential model</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>model.r <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>()</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Add input, hidden and output layer</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>model.r <span class="sc">%&gt;%</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">3</span>, <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">4</span>), <span class="at">activation =</span> <span class="st">&quot;tanh&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">3</span>, <span class="at">activation =</span> <span class="st">&quot;softmax&quot;</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. summary the model</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>model.r</span></code></pre></div>
+<pre><code>Model
+Model: &quot;sequential_11&quot;
+________________________________________________________________________________
+Layer (type)                        Output Shape                    Param #     
+================================================================================
+dense_41 (Dense)                    (None, 3)                       15          
+________________________________________________________________________________
+dense_40 (Dense)                    (None, 3)                       12          
+================================================================================
+Total params: 27
+Trainable params: 27
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. compile model</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>model.r <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">compile</span>(<span class="at">optimizer =</span> <span class="st">&quot;adam&quot;</span>, <span class="at">loss =</span> <span class="st">&quot;categorical_crossentropy&quot;</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. train the model</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> model.r <span class="sc">%&gt;%</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    keras<span class="sc">::</span><span class="fu">fit</span>(X, y, <span class="at">epoch =</span> <span class="dv">1000</span>, <span class="at">validation_split =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code></pre></div>
+<p><img src="DL2_files/figure-html/unnamed-chunk-24-1.png" width="768" /></p>
+</div>
+<div id="multi-label-classification" class="section level2">
+<h2>Multi-label Classification</h2>
+<p>Multi-label Classification เป็นโมเดลทำนายที่สามารถจำแนกหน่วยข้อมูลให้อยู่ในหลายกลุ่มพร้อมกันได้ ซึ่งแตกต่างจาก multi-class classfication model ที่จะจำแนกหน่วยข้อมูลให้อยู่ภายในกลุ่มเป้าหมายเพียงกลุ่มเดียวเท่านั้น ดังตัวอย่างในรูปด้านล่าง</p>
+<p><img src="multilabel.png" /></p>
+<p>การสร้างโมเดล Multi-label classification ไม่แตกต่างจากการสร้าง multi-class classification มากนัก โดยสามารถเขียนคำสั่งได้ดังนี้</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">2</span>, input_shape<span class="op">=</span>[<span class="dv">1</span>], activation<span class="op">=</span><span class="st">&quot;relu&quot;</span>))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">3</span>, activation<span class="op">=</span><span class="st">&quot;sigmoid&quot;</span>))</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">&quot;adam&quot;</span>, loss<span class="op">=</span><span class="st">&quot;binary_crossentropy&quot;</span>)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train, </span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>          epochs<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>          validation_split<span class="op">=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<p>จากคำสั่งข้างต้น เราใช้ sigmoid activation function แทนการใช้ softmax ทั้งนี้เพื่อในแต่ละ neuron ของ output layer แสดงผลลัพธ์เป็นค่าความน่าจะเป็นที่จะถูกจำแนกอยู่ในแต่ละ category ดังรูป</p>
+<p><left><img src="Screen%20Shot%202564-05-22%20at%2009.15.09.png" style="width:50.0%" /></left></p>
+<p>ตัวอย่างการวิเคราะห์</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_multilabel_classification</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># define dataset</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_multilabel_classification(n_samples<span class="op">=</span><span class="dv">1000</span>, n_features<span class="op">=</span><span class="dv">10</span>, n_classes<span class="op">=</span><span class="dv">3</span>, n_labels<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize dataset shape</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X.shape, y.shape)</span></code></pre></div>
+<pre><code>(1000, 10) (1000, 3)</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">20</span>, input_shape<span class="op">=</span>[<span class="dv">10</span>], activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>))</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>))</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">3</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>))</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
+<pre><code>Model: &quot;sequential_12&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_42 (Dense)             (None, 20)                220       
+_________________________________________________________________
+dense_43 (Dense)             (None, 10)                210       
+_________________________________________________________________
+dense_44 (Dense)             (None, 3)                 33        
+=================================================================
+Total params: 463
+Trainable params: 463
+Non-trainable params: 0
+_________________________________________________________________</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>, optimizer<span class="op">=</span><span class="st">&#39;adam&#39;</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X, y,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>          epochs<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>          validation_split<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>          verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">&#39;loss&#39;</span>])</span></code></pre></div>
+<pre><code>[&lt;matplotlib.lines.Line2D object at 0x7f9fa895a0f0&gt;]</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">&#39;val_loss&#39;</span>])</span></code></pre></div>
+<pre><code>[&lt;matplotlib.lines.Line2D object at 0x7f9de841b320&gt;]</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;model loss&#39;</span>)</span></code></pre></div>
+<pre><code>Text(0.5, 1.0, &#39;model loss&#39;)</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;loss&#39;</span>)</span></code></pre></div>
+<pre><code>Text(0, 0.5, &#39;loss&#39;)</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;epoch&#39;</span>)</span></code></pre></div>
+<pre><code>Text(0.5, 0, &#39;epoch&#39;)</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">&#39;train&#39;</span>, <span class="st">&#39;test&#39;</span>], loc<span class="op">=</span><span class="st">&#39;upper left&#39;</span>)</span></code></pre></div>
+<pre><code>&lt;matplotlib.legend.Legend object at 0x7f9fa859b978&gt;</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p><img src="DL2_files/figure-html/unnamed-chunk-59-1.png" width="768" /></p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pred <span class="op">=</span> model.predict(X)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(py<span class="sc">$</span>pred)</span></code></pre></div>
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div id="overfitting-and-underfitting" class="section level1">
+<h1>Overfitting and Underfitting</h1>
+<p>ทำนองเดียวกัน overfitting และ underfitting ของโมเดลเป็นปัจจัยที่ผู้วิเคราะห์จำเป็นต้องพิจารณาในการสร้าง DL model</p>
+<p>model = signal + noise</p>
+<p><left><img src="Screen%20Shot%202564-05-15%20at%2013.32.10.png" style="width:50.0%" /></left></p>
+<p>รูปด้านบนเรียกว่า trace plot หรือ learning curves แผนภาพนี้ใช้สารสนเทศเกี่ยวกับการเรียนรู้ของโมเดล โดยปกติ learning curve อาจจำแนกได้เป็นสองประเภทได้แก่</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>loss learning curve</strong> แผนภาพนี้มีแกน Y เป็นค่าของ loss function และแกน X เป็น epoch โมเดลที่เรียนรู้ได้อย่างไม่มีปัญหาจะมีแนวโน้มของ loss learning curve ที่ลดลงเมื่อจำนวน epoch เพิ่มขึ้น และเมื่อ loss function ลดลงถึงค่าหนึ่งก็จะมีแนวโน้มคงที่ แสดงถึงการลู่เข้าของโมเดล อย่างไรก็ตามโมเดลที่มี loss learning curve ลักษณะดังกล่าวไม่จำเป็นต้องเป็นโมเดลที่ดีที่สุด ต้องพิจารณาระดับของ loss function ประกอบด้วย</p></li>
+<li><p><strong>accuracy learning curve</strong> แผนภาพนี้มีลักษณะคล้ายกับ loss learning curve แต่ตรงกันข้ามกัน แกน Y ของแผนภาพเป็นค่าความแม่นยำหรือ accuracy ส่วนแกน X เป็น epoch ในโมเดลที่เรียนรู้ได้อย่างปกติแผนภาพดังกล่าวจึงจะมีแนวโน้มเพิ่มขึ้นเมื่อจำนวน epoch เพิ่มขึ้น และแนวโน้มการเพิ่มขึ้นดังกล่าวจะดำเนินไประยะหนึ่งค่า accuracy ของโมเดลก็จะมีแนวโน้มคงที่</p></li>
+</ol>
+<p>การประเมินการเรียนรู้ของโมเดลมัก plot แผนภาพข้างต้น โดยเปรียบเทียบกันระหว่างพล็อตของชุดข้อมูลฝึกหัด และชุดข้อมูลตรวจสอบ (validation data) แนวโน้มของ learning curve จากชุดข้อมูลทั้งสองจะช่วยให้ผู้วิเคราะห์สามารถประเมิน overfiting ของโมเดลได้</p>
+<p>โมเดลที่ validation learning curve มีแนวโน้มให้ค่าแตกต่างจาก training learning curve บ่งชี้ว่าเป็นโมเดลที่มีการระบุเกินพอดี (overfitting model) กล่าวคือโมเดลดังกล่าวไม่สามารถใช้งานได้ดีในชุดข้อมูลที่ไม่เคยรู้จักมาก่อน แม้ว่าจะเป็นชุดข้อมูลที่ได้จากประชากรเดียวกันก็ตาม อย่างไรก็ตามในการประเมิน learning curve ของโมเดล ผู้วิเคราะห์ควรกำหนดจำนวน epoch ให้มากเพียงพอเพื่อรับประกันได้ว่าแนวโน้มที่พบนั้นถูกต้องน่าเชื่อถือแล้ว</p>
+<p>การแก้ปัญหา overfitting สามารถทำได้หลายวิธี วิธีการหนึ่งคือการกำหนดโมเดลทำนายใหม่ให้มีความซับซ้อนน้อยลง อีกวิธีการหนึ่งคือการกำหนดจุด early stopping เพื่อให้โมเดลหยุดการเรียนรู้ก่อนที่จะเรียนสารสนเทศจากข้อมูลมากจนเกินไป</p>
+</div>
+<div id="ปัญหาเกี่ยวกับการ-train-model" class="section level1">
+<h1>ปัญหาเกี่ยวกับการ train model</h1>
+<p>การที่ learning curve ของโมเดลลู่เข้าช้า หรือไม่ลู่เข้าเกิดขึ้นได้จากหลายสาเหตุ เช่น การกำหนดค่าเริ่มต้น learning rate, batch size, โครงสร้างของโมเดล, activation function และ optimizer เป็นต้น</p>
+<p>ปัจจัยข้างต้นนี้เรียกว่า hyperparameters ของโมเดลซึ่งสามารถปรับแต่งให้มีค่าที่เหมาะสมเพื่อเพิ่มประสิทธิภาพการทำนายของโมเดลได้ เรียกกระบวนการนี้ว่า tuning hyperparameters ที่จะกล่าวถึงในหัวข้อถัดไป หัวข้อนี้จะกล่าวรายละเอียดเกี่ยวกับปัจจัยต่าง ๆ ที่ก่อให้เปิดปัญหาการไม่ลู่เข้าของโมเดล เพื่อเป็นพื้นฐานสำหรับการปรับแต่งโมเดล รายละเอียดมีดังนี้</p>
+<div id="ปัญหาเกี่ยวกับการกำหนดค่าเริ่มต้น" class="section level2">
+<h2>ปัญหาเกี่ยวกับการกำหนดค่าเริ่มต้น</h2>
+<p>การเรียนรู้เชิงลึกเป็นอัลกอริทึมที่จำเป็นต้องมีการกำหนดค่าเริ่มต้น (initial values) ให้กับโมเดลก่อน แล้วจึงใช้อัลกอริทึมที่เรียกว่า optimization algorithm เพื่อหาค่าประมาณพารามิเตอร์ที่เหมาะสม ผ่านกระบวนการ forward และ backward propagation ดังที่ได้กล่าวไปแล้ว</p>
+<p>วิธีที่ง่ายที่สุดสำหรับกำหนดค่า initial values ของพารามิเตอร์ในโมเดลคือการใช้เลขสุ่ม (random number) ในบางสถานการณ์วิธีการดังกล่าวอาจใช้ได้ดี แต่ในหลายสถานการณ์ค่าเริ่มต้นอาจเป็นปัจจัยสำคัญที่ส่งผลอย่างมากต่อประสิทธิภาพของโมเดล การกำหนดค่าเริ่มต้นที่ไม่เหมาะสมอาจะทำให้เกิดปัญหาในการประมาณค่าพารามิเตอร์ในโมเดลอย่างร้ายแรง เช่น อัลกอริทึมไม่สามารถลู่เข้าได้ หรือค่าพารามิเตอร์ที่ประมาณได้ยังไม่ได้ทำให้ loss function มีค่าต่ำที่สุดอย่างแท้จริง (กล่าวคือโมเดลยังมี bias ในปริมาณที่มากเกินไป) เป็นต้น</p>
+<p>หัวข้อนี้จะลงรายละเอียดเกี่ยวกับผลกระทบที่เกิดขึ้นจากการกำหนดค่าเริ่มต้นของพารามิเตอร์ในโมเดลในลักษณะต่าง ๆ และจะกล่าวถึงวิธีการเฉพาะที่ใช้สำหรับการกำหนดค่าเริ่มต้นที่เหมาะสม รายละเอียดมีดังนี้</p>
+<p>สมมุติให้รูปด้านล่างเป็น DL model ที่ผู้วิเคราะห์ต้องการประมาณค่าพารามิเตอร์</p>
+<p><left><img src="Screen%20Shot%202564-05-15%20at%2002.29.19.png" style="width:80.0%" /></left></p>
+<p>ในขั้นแรกของการประมาณค่าพารามิเตอร์ คือการกำหนดค่าเริ่มต้นให้กับพารามิเตอร์ของโมเดล จากสถานการณ์ข้างต้นประกอบด้วย พารามิเตอร์น้ำหนักและความลำเอียงสำหรับประมวลผลเป็น hidden layer ชั้นที่ 1 เขียนแทนด้วย <span class="math inline">\(w[1]\)</span> และ <span class="math inline">\(b[1]\)</span> และพารามิเตอร์น้ำหนักและความลำเอียงสำหรับประมวลผลเป็น hidden layer ชั้นที่ 2 เขียนแทนด้วย <span class="math inline">\(w[2]\)</span> และ <span class="math inline">\(b[2]\)</span></p>
+<p>สมมุติว่าผู้วิเคราะห์กำหนดค่าเริ่มต้นของโมเดลข้างต้นเป็นค่าคงที่ โดยที่ <span class="math inline">\(w[1]=w[2]=w\)</span> และ <span class="math inline">\(b[1]=b[2]=0\)</span> เมื่อเริ่มกระบวนการ forward propagation จากข้อมูลนำเข้า <span class="math inline">\(x = [x_1, x_2, x_3]\)</span> เมื่อนำไปประมวลผลเป็น neuron ภายใน hidden layer ชั้น 1 และ 2 จะให้ผลลัพธ์เท่ากันทุก neuron และส่งผลให้ gredient ของ loss function เมื่อเปรียบเทียบกับพารามิเตอร์แต่ละตัวภายในโมเดลมีค่าเท่ากันด้วย การเรียนรู้ของแต่ละ neuron ภายสถานการณ์นี้จึงจะเรียนรู้เหมือนกันหมด ซึ่งส่งผลให้ประสิทธิภาพการทำนายของโมเดลไม่สามารถพัฒนาได้</p>
+<p>ในกรณีส่งผลให้ค่าพารามิเตอร์บางตัวภายในโมเดลมีจุดเริ่มต้นที่ห่างจากค่าที่เหมาะสมมากเกินไป จึงต้องใช้วงรอบในการประมาณค่าพารามิเตอร์จำนวนมากจึงจะลู่เข้าสู่ค่าที่เหมาะสม (slow learning) หรือในกรณีที่ร้ายแรงกว่านั้นคือการประมาณค่าพารามิเตอร์รอบนั้นอาจไม่ลู่เข้า (divergence)</p>
+<ul>
+<li><p>ในกรณีที่กำหนดค่าเริ่มต้นของพารามิเตอร์ให้มีค่าน้อยเกินไป จะทำให้ค่า first-order derivative ของ cost function เมื่อเทียบกับค่าพารามิเตอร์มีแนวโน้มจะน้อยไปด้วย ซึ่งทำให้การปรับปรุงค่าพารามิเตอร์ในแต่ละวงรอบทำได้ช้า และในบางกรณีอาจทำให้ผู้วิเคราะห์เข้าใจผิดว่าลู่เข้าแล้ว ทั้ง ๆ ที่ cost function ของโมเดลยังมีค่าสูงมากอยู่ ส่งผลให้โมเดลมีความลำเอียงมากกว่าที่ควรจะเป็น เรียกปัญหานี้ว่า vanishing gradients</p></li>
+<li><p>ในกรณีที่กำหนดค่าเริ่มต้นให้มีค่ามากเกินไป จะทำให้ <span class="math inline">\(\frac{\partial{J(w)}}{\partial{w}}\)</span> มีแนวโน้มที่จะมีค่ามาก ซึ่งทำให้การปรับปรุงค่าพารามิเตอร์ในแต่ละวงรอบสามารถทำได้ช้าอย่างก้าวกระโดด และอาจไม่สามารถหาจุดต่ำสุดหรือจุด optimum ของ cost function ได้ ทั้งนี้เป็นเพราะการปรับปรุงในแต่ละวงรอบมีขนาดของการปรับปรุงค่าพารามิเตอร์ที่มากเกินไป ภายใต้สถานการณ์ดังกล่าวการประมาณค่าพารามิเตอร์จึงไม่สามารถระบุจุดที่โมเดลลู่เข้าได้อย่างสมบูรณ์ เรียกปัญหานี้ว่า exploding gradient</p></li>
+</ul>
+<div id="xavier-and-he-initialization" class="section level3">
+<h3>Xavier and He initialization</h3>
+<p>การกำหนดค่าเริ่มต้นที่เหมาะสมสำหรับโมเดล DL มีหลายวิธีการ วิธีการแรกเรียกว่า <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf?hc_location=ufi"><strong>Xavier initialization</strong></a> วัตถุประสงค์ของวิธีการนี้คือการสุ่มค่าเริ่มต้นให้กับพารามิเตอร์ของโมเดลที่ทำให้ความแปรปรวนของข้อมูลนำเข้า (x) กับผลลัพธ์ในแต่ละ neuron (y) มีความเป็นเอกพันธ์กัน</p>
+<p>กำหนดให้ <span class="math inline">\(y = w_1x_1+w_2x_2+...+w_px_p+b\)</span> เป็นผลรวมเชิงเส้นสำหรับ neuron แต่ละตัวใน network จะได้ว่าความแปรปรวนของผลลัพธ์ที่ได้จาก neuron ดังกล่าวมีค่าเท่ากับ</p>
+<p><span class="math inline">\(Var(y)=Var(w_1x_1+w_2x_2+...+w_px_p+b)\)</span></p>
+<p>ในกรณีที่เป็นการคำนวณผลลัพธ์ของ hidden layer ชั้นใน ผลรวมเชิงเส้นข้างต้นสามารถเขียนในรูปทั่วไปได้ดังนี้</p>
+<p><span class="math inline">\(Var(y)=Var(w_1a_1+w_2a_2+...+w_pa_p+b)\)</span></p>
+<p>เมื่อ <span class="math inline">\(a_j=tanh(y^{[l-1]}\)</span></p>
+<p>เนื่องจากค่าเริ่มต้นของน้ำหนักภายในโมเดลสร้างขึ้นด้วยกระบวนการสุ่ม ดังนั้นน้ำหนักแต่ละตัวจึงเป็นตัวแปรสุ่มเช่นเดียวกับข้อมูลนำเข้าแต่ละตัว ดังนั้นความแปรปรวนของผลคูณระหว่างน้ำหนักและข้อมูลนำเข้าแต่ละเทอม จะมีค่าเท่ากับ</p>
+<p><span class="math inline">\(Var(w_jx_j)=E(w_j)^2Var(x_j)+E(x_j)^2Var(w_j)+Var(w_j)Var(x_j)\)</span></p>
+<p>เมื่อ <span class="math inline">\(E(.)\)</span> คือค่าคาดหวังของตัวแปรสุ่ม</p>
+<p>สมมุติให้ข้อมูลนำเข้าและน้ำหนักของผลรวมเชิงเส้นเป็นตัวแปรสุ่มที่มีค่าเฉลี่ยเท่ากับ 0 จะได้ว่า</p>
+<p><span class="math inline">\(Var(w_jx_j)=Var(w_j)Var(x_j)\)</span></p>
+<p>แทนผลลัพธ์ที่ได้ข้างต้นลงในสมการความแปรปรวนรวม จะได้ว่า</p>
+<p><span class="math inline">\(Var(y)=Var(w_1)Var(x_1)+Var(w_2)Var(x_2)+...+Var(w_p)Var(x_p)\)</span></p>
+<p>สมมุติให้การแจกแจงของ <span class="math inline">\(w_j\)</span> และ <span class="math inline">\(x_j\)</span> มีการแจกแจงเหมือนกันทุก <span class="math inline">\(j = 1, 2, ...,p\)</span> ดังนั้นความแปรปรวนข้างต้นสามารถเขียนใหม่ได้เป็น</p>
+<p><span class="math inline">\(Var(y)=pVar(w_j)Var(x_j)\)</span></p>
+<p>ดังนั้นหากต้องการให้ความแปรปรวนของข้อมูลนำเข้า (x) กับผลลัพธ์ในแต่ละ neuron (y) มีความเป็นเอกพันธ์กัน ต้องกำหนดให้เทอมความแปรปรวน <span class="math inline">\(pVar(w_j) = 1\)</span> ซึ่งจะได้ว่า</p>
+<p><span class="math inline">\(Var(w_j)=\frac{1}{p}\)</span></p>
+<p>จากผลลัพธ์ข้างต้น Xavier initialization จึงกำหนดให้ค่าเริ่ิมต้นของน้ำหนักสำหรับ layer ที่ <span class="math inline">\(l\)</span> สร้างขึ้นเลขสุ่ม <span class="math inline">\(w_j^{[l]}\)</span> ที่มีความแปรปรวนเท่ากับ <span class="math inline">\(\frac{1}{p^{[l-1]}}\)</span> เมื่อ <span class="math inline">\(p^{[l-1]}\)</span> คือขนาดของ layer การสุ่มน้ำหนักดังกล่าวอาจทำได้ 2 ลักษณะ คือสุ่มจากการแจกแจงแบบสม่ำเสมอ (uniform distribution) ดังนี้</p>
+<p><span class="math inline">\(w_j^{[l]} \sim U(-\frac{1}{p^{[l-1]}}), \frac{1}{p^{[l-1]}})\)</span></p>
+<p>หรือสุ่มจากการแจกแจงแบบปกติ (normal distribution) ดังนี้</p>
+<p><span class="math inline">\(w_j^{[l]} \sim N(0, \frac{1}{p^{[l-1]}})\)</span></p>
+<p>คำสั่งใน package-keras สามารถกำหนดค่าเริ่มต้นของพารามิเตอร์ด้วยวิธีการดังกล่าวได้ดังนี้</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">16</span>, kernal_initializer<span class="op">=</span><span class="st">&#39;glorot_uniform&#39;</span>, <span class="co">#Xavier uniform unitializer</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                    bias_initializer <span class="op">=</span><span class="st">&#39;zero&#39;</span>))</span></code></pre></div>
+<p>หรือ</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">16</span>, kernal_initializer<span class="op">=</span><span class="st">&#39;glorot_normal&#39;</span>, <span class="co">#Xavier normal unitializer</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>                    bias_initializer <span class="op">=</span><span class="st">&#39;zero&#39;</span>))</span></code></pre></div>
+<p><strong>note: </strong> การกำหนดค่าเริ่มต้นด้วย Xavier initializer นี้ถูกพัฒนาขึ้นให้ใช้กับ Tanh actication function ในกรณีที่ผู้วิเคราะห์ต้องการใช้ activation function ในกลุ่มของ ReLU ควรเปลี่ยน initializer เป็น <a href="https://arxiv.org/pdf/1502.01852.pdf"><strong>He initializer</strong></a> ดังนี้</p>
+<p><span class="math inline">\(w_j^{[l]} \sim U(-\frac{2}{p^{[l-1]}}), \frac{2}{p^{[l-1]}})\)</span></p>
+<p>หรือสุ่มจากการแจกแจงแบบปกติ (normal distribution) ดังนี้</p>
+<p><span class="math inline">\(w_j^{[l]} \sim N(0, \frac{2}{p^{[l-1]}})\)</span></p>
+<p>โดยใน package-keras สามารถเขียนคำสั่งได้ดังนี้</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">16</span>, kernal_initializer<span class="op">=</span><span class="st">&#39;he_uniform&#39;</span>, <span class="co">#Xavier uniform unitializer</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>                    bias_initializer <span class="op">=</span><span class="st">&#39;zero&#39;</span>))</span></code></pre></div>
+<p>หรือ</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">16</span>, kernal_initializer<span class="op">=</span><span class="st">&#39;he_normal&#39;</span>, <span class="co">#Xavier normal unitializer</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>                    bias_initializer <span class="op">=</span><span class="st">&#39;zero&#39;</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="การเลือก-activation-function" class="section level2">
+<h2>การเลือก activation function</h2>
+<p>นอกจากปัจจัยด้าน initialization ของโมเดลที่อาจก่อให้เกิดปัญหา vanishing gradient problem แล้วการกำหนด activation function ก็เป็นอีกปัจจัยหนึ่งที่อาจส่งผลให้เกิดปัญหาดังกล่าวได้เช่นเดียวกัน</p>
+<p>หน้าที่ของ activation function คือการแปลงพิสัยหรือควบคุมพิสัยของผลลัพธ์จาก neuron ให้อยู่ในสเกลที่สมเหตุสมผลหรือ neuron ในชั้นถัดไปสามารถรับไปคำนวณได้ง่าย และสำหรับ hidden layer ชั้นสุดท้ายที่เชื่อมต่อกับ output layer ก็จะมีหน้าที่ควบคุมให้พิสัยของ output อยู่ในช่วงที่สอดคล้องกับค่าทำนายหรือคำตอบที่ต้องการ</p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-34-1.png" width="384" style="display: block; margin: auto auto auto 0;" /></p>
+<p>การใช้ sigmoid และ hyperbolic tangent ในข้างต้นเป็น activation function อาจทำให้เกิดปัญหาในการประมวลผล 2 ปัญหาหลัก ได้แก่ (1) ทั้งสองฟังก์ชันมีส่วนประกอบเป็น exponential function ซึ่งใช้ทรัพยากรในการประมวลผลสูง และ (2) สังเกตลักษณะของฟังก์ชันทั้งสองจากรูป จะเห็นว่า gradient ของฟังก์ชันทั้งสองไม่คงที่โดยจะมีแนวโน้มลดลงเข้าใกล้ 0 (vanishing gradients) เมื่อข้อมูลนำเข้าของฟังก์ชันมีค่าน้อยหรือมากเกินไป ซึ่งทำให้การปรับปรุงค่าพารามิเตอร์ในวงรอบถัดไปจะมีการเปลี่ยนแปลงที่น้อยกว่าที่ควรจะเป็น กระบวนการประมาณค่าพารามิเตอร์จึงอาจลู่เข้าหาค่าพารามิเตอร์ที่เหมาะสมช้า หรืออาจไม่ลู่เข้าก็ได้</p>
+<p>การแก้ปัญหาทั้งสองในข้างต้นสามารถทำได้โดยเปลี่ยน activation function เป็น ReLU (rectified linear unit) ซึ่งมีค่าเท่ากับ <span class="math inline">\(\sigma(x)=max(0,x)\)</span> จุดเด่นของการใช้ activation function นี้คือ (1) เนื่องจากเป็นฟังก์ชันเชิงเส้นตรงจึงทำให้การประมวลผลทำได้เร็วมากกว่า sigmoid และ tanh อย่างมาก (2) เนื่องจากความชันของฟังก์ชันจะมีค่าคงที่เท่ากับ 1 เสมอ จึงช่วยแก้ปัญหา vanishing gredient ในข้างต้นได้</p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-35-1.png" width="768" /></p>
+<p>อย่างไรก็ตามในกรณีที่ผลรวมเชิงเส้นใน neuron มีค่าน้อยเกินไป (<span class="math inline">\(\leq 0\)</span>) ReLu activation function จะให้ผลลัพธ์ของ neuron นั้นเป็น 0 นั่นหมายถึงขจัด neuron นั้นออกไปจากการประมวลผลเลย ผลที่เกิดขึ้นคือทำให้โมเดลมีส่วนที่เป็น signal ลดลง และไม่สามารถ optimized loss function ให้อยู่ในจุดที่ดีที่สุดได้ กล่าวง่าย ๆ คือ โมเดลมีแนวโน้มที่จะมีความลำเอียงสูงกว่าที่ควรจะเป็น สถานการณ์ดังกล่าวจะมีโอกาสเกิดขึ้นน้อยถ้าเทอม <span class="math inline">\(wx\)</span> ส่วนใหญ่ยังมีค่าเป็นบวกอยู่ แต่ในกรณีทั่วไปยังมีโอกาสสูงที่ผลรวมเชิงเส้นดังกล่าวจะติดลบในหลาย neuron ซึ่งทำให้โมเดลสูญเสียสารสนเทศสำหรับการเรียนรู้ไปโดยไม่จำเป็น</p>
+<p>การแก้ปัญหาข้างต้นวิธีการหนึ่งคือการปรับ activation function จาก ReLU เป็น Leaky ReLU ซึ่งมีฟังก์ชันทางคณิตศาสตร์ดังนี้ <span class="math inline">\(\sigma(x)=max(0.01x, x)\)</span> จะเห็นว่าฟังก์ชันนี้มีลักษณะเป็นฟังก์ชันเชิงเส้นที่มีความชันน้อย ๆ บนช่วงที่ข้อมูลนำเข้ามีค่าน้อยกว่า 0 ดังรูปขวาด้านบน</p>
+<p>activation function อีกตัวที่มีการพัฒนาขึ้นใหม่และมีประสิทธิภาพสูงกว่า ReLU รวมทั้ง Leaky ReLU คือ <strong>Exponential Linear Unit (ELU)</strong> ดังนี้</p>
+<p><span class="math inline">\(\sigma(x)= \begin{cases} \alpha(e^x-1),&amp; \text{if} x &lt; 0\\x, &amp; \text{otherwise}\end{cases}\)</span></p>
+<p><img src="DL2_files/figure-html/unnamed-chunk-36-1.png" width="768" /></p>
+<p>ELU มีประสิทธิภาพที่ช่วยให้การลู่เข้าของการประมาณค่าพารามิเตอร์ทำได้เร็วมากขึ้น อย่างไรก็ตามเนื่องด้วย ELU มีส่วนประกอบของ exponential function อยู่จึงทำให้ใช้ทรัพยากรในการประมวลผลสูงกว่า ReLU และ Leaky ReLU ปัจจัยด้านความเร็วในการประมวลผลนี้เป็นอีกหนึ่งปัจจัยที่ผู้วิเคราะห์ควรพิจารณาอีกครั้งเมื่อนำโมเดลไป implement</p>
+<p>การกำหนด activation function แบบ ELU ให้กับแต่ละ layer ใน model สามารถทำได้โดยเขียนคำสั่งดังนี้</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_multilabel_classification</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># define dataset</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_multilabel_classification(n_samples<span class="op">=</span><span class="dv">1000</span>, n_features<span class="op">=</span><span class="dv">10</span>, n_classes<span class="op">=</span><span class="dv">3</span>, n_labels<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize dataset shape</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X.shape, y.shape)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers.advanced_activations <span class="im">import</span> ELU</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">20</span>, input_shape<span class="op">=</span>[<span class="dv">10</span>], activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>))</span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">10</span>))</span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>model.add(ELU(alpha<span class="op">=</span><span class="fl">1.0</span>))</span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">3</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>))</span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code></pre></div>
+<div id="เปรียบเทียบ-activation-function" class="section level3">
+<h3>เปรียบเทียบ activation function</h3>
+<p>ในทางปฏิบัติไม่ได้มีกฎเกณฑ์ตายตัวว่าการกำหนด activation function ตัวไหนจะให้ประสิทธิภาพหรือผลลัพธ์ในการวิเคราะห์ที่ดีที่สุด การเลือก activation function ที่เหมาะสมจึงมักพิจารณาจากผลการทดลองใช้</p>
+<p>จากตัวอย่างข้างต้น สมมุติว่าต้องการเปรียบเทียบการใช้ activation function ใน hidden layer 3 ตัวได้แก่ <code>tanh()</code>, <code>ReLU()1</code> และ <code>leaky_ReLU()</code></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_multilabel_classification</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co"># define dataset</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_multilabel_classification(n_samples<span class="op">=</span><span class="dv">1000</span>, n_features<span class="op">=</span><span class="dv">10</span>, n_classes<span class="op">=</span><span class="dv">3</span>, n_labels<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize dataset shape</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X.shape, y.shape)</span></code></pre></div>
+<pre><code>(1000, 10) (1000, 3)</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers.advanced_activations <span class="im">import</span> ELU</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_model(act_function):</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> Sequential()</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">4</span>, input_shape<span class="op">=</span>[<span class="dv">10</span>], activation<span class="op">=</span>act_function))</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">3</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>))</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>  model.<span class="bu">compile</span>(loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>, optimizer<span class="op">=</span><span class="st">&#39;adam&#39;</span>)</span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> model</span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Activation functions to try</span></span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>activations <span class="op">=</span> [<span class="st">&quot;tanh&quot;</span>, <span class="st">&quot;relu&quot;</span>]</span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a>activation_results <span class="op">=</span> {}</span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-19"><a href="#cb65-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> act <span class="kw">in</span> activations:</span>
+<span id="cb65-20"><a href="#cb65-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># passing i into model</span></span>
+<span id="cb65-21"><a href="#cb65-21" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> get_model(act) </span>
+<span id="cb65-22"><a href="#cb65-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit the model and store the history results</span></span>
+<span id="cb65-23"><a href="#cb65-23" aria-hidden="true" tabindex="-1"></a>  history <span class="op">=</span> model.fit(X, y, epochs<span class="op">=</span><span class="dv">20</span>, verbose<span class="op">=</span><span class="dv">0</span>, validation_split<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb65-24"><a href="#cb65-24" aria-hidden="true" tabindex="-1"></a>  activation_results[act] <span class="op">=</span> history</span>
+<span id="cb65-25"><a href="#cb65-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-26"><a href="#cb65-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-27"><a href="#cb65-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb65-28"><a href="#cb65-28" aria-hidden="true" tabindex="-1"></a>tanh <span class="op">=</span> activation_results[<span class="st">&quot;tanh&quot;</span>].history[<span class="st">&#39;val_loss&#39;</span>]</span>
+<span id="cb65-29"><a href="#cb65-29" aria-hidden="true" tabindex="-1"></a>relu <span class="op">=</span> activation_results[<span class="st">&quot;relu&quot;</span>].history[<span class="st">&#39;val_loss&#39;</span>]</span>
+<span id="cb65-30"><a href="#cb65-30" aria-hidden="true" tabindex="-1"></a>temp <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(tanh ,relu))</span>
+<span id="cb65-31"><a href="#cb65-31" aria-hidden="true" tabindex="-1"></a>val_loss <span class="op">=</span> pd.DataFrame(temp, columns<span class="op">=</span>activations)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>val_loss <span class="ot">&lt;-</span> py<span class="sc">$</span>val_loss</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, val_loss<span class="sc">$</span>relu, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>), <span class="at">ylab =</span> <span class="st">&quot;Loss function&quot;</span>)</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, val_loss<span class="sc">$</span>tanh, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;skyblue&quot;</span>)</span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;relu&quot;</span>, <span class="st">&quot;tanh&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>, <span class="st">&quot;skyblue&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="DL2_files/figure-html/unnamed-chunk-39-1.png" width="768" /></p>
+</div>
+</div>
+<div id="batch-size" class="section level2">
+<h2>Batch Size</h2>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>model.fit(X, y, epochs<span class="op">=</span><span class="dv">20</span>, verbose<span class="op">=</span><span class="dv">0</span>, validation_split<span class="op">=</span><span class="fl">0.2</span>, batch_size<span class="op">=</span><span class="dv">32</span>)</span></code></pre></div>
+</div>
+<div id="batch-normalization" class="section level2">
+<h2>Batch normalization</h2>
+<p>normalization เป็นเทคนิคการแปลงข้อมูลเชิงปริมาณจากสเกลดั้งเดิิมให่้อยู่ในสเกลมาตรฐานที่กำหนด ทั้งนี้การแปลงดังกล่าวจะไม่ได้มีการบิดเบือนรูปทรงการแจกแจงเดิมของข้อมูล โดยปกติการเรียนรู้ของ DL model จะมีการ normalize ข้อมูลนำเข้าที่อยู่ใน input layer เพื่อข้อมูลนำเข้าในแต่ละ neuron อยู่ภายใต้สเกลเดียวกัน ซึ่งช่วยให้การเรียนรู้ของ layer ที่อยู่ถัดจาก input สามารถเรียนรู้ได้อย่างมีประสิทธิภาพ</p>
+<p>อย่างไรก็ตามเมื่อโมเดลเรียนรู้ไประยะนึง การแจกแจงของ input สำหรับในแต่ละ hidden layer จะมีแนวโน้มเปลี่ยนแปลงไปเรื่อย ๆ เรียกปรากฏการณ์นี้ว่า internal covariate shift และอาจมีความแตกต่างกันมากจนทำให้ประสิทธิภาพในการประมาณค่าพารามิเตอร์ลดลง และการลู่เข้าของโมเดลทำได้ช้า หรือต้องใช้เวลาประมวลผลในแต่ละรอบมากกว่าปกติ</p>
+<p>มีผู้เสนอการแก้ปัญหาดังกล่าวด้วยการทำ <strong>batch normalization</strong> หลักการของวิธีการนี้คือแทนที่จะ normalize เฉพาะข้อมูลใน input layer อย่างเดียว ก็เปลี่ยนมา normalized input ของทุก hidden layer ภายในโมเดล ทั้งนี้เพื่อปรับสเกลของ output ของแต่ละ neuron ใน hidden layer ให้เป็นมาตรฐาน ขั้นตอนของ batch normalization คร่าว ๆ มีดังนี้</p>
+<ol style="list-style-type: decimal">
+<li><p>normalized output ของ activation function: <span class="math inline">\(a_i=\frac{y_i-\mu_B}{\sqrt{\sigma^2_B+\epsilon}}\)</span></p></li>
+<li><p>สเกลค่า normalized ที่ได้ดังนี้ <span class="math inline">\(z_i=\gamma a_i+\beta\)</span></p></li>
+</ol>
+<p><img src="/Users/siwachoat/Library/Mobile%20Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/deep%20learning/Screen%20Shot%202564-05-22%20at%2013.05.14.png" /></p>
+<p>การทำ batch normalization ด้วย package-keras สามารถเขียนคำสั่งเพิ่มเติมโดยใส่ batch normalization ต่อจาก activation function ของ layer ก่อนหน้าดังนี้</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense, BatchNormalization</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(units <span class="op">=</span> <span class="dv">32</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>))</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>model.add(BatchNormalization())</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>model.add(Dense(units <span class="op">=</span> <span class="dv">1</span>, activation<span class="op">=</span><span class="st">&quot;sigmoid&quot;</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="tuning-hyperparameter" class="section level1">
+<h1>Tuning hyperparameter</h1>
+<p>หัวข้อนี้จะกล่าวถึงการปรับแต่งค่า hyperparameter ของโมเดล neural network โดยก่อนที่จะเข้าสู่บทเรียนขอให้ผู้อ่านพิจารณาตัวอย่างต่อไปนี้</p>
+<p>ข้อมูล heart.csv ประกอบด้วยข้อมูลของตัวแปรอิสระที่เป็นปัจจัยที่เกี่ยวข้องกับการเป็นโรคหัวใจตามทฤษฎี และตัวแปรตามคือการเป็นโรคหัวใจ วัตถุประสงค์ของตัวอย่างนี้คือการสร้างโมเดลทำนายการเป็นโรคหัวใจของผู้ป่วย จากตัวแปรอิสระที่แพทย์มักใช้เป็นตัวบ่งชี้โรค</p>
+<p>ขั้นตอนแรกคือนำข้อมูลเข้าและทำการสำรวจข้อมูลเบื้องต้นก่อน</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;/Users/siwachoat/Downloads/heart.csv&quot;</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  age sex cp trestbps chol fbs restecg thalach exang oldpeak slope ca thal</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  <span class="dv">63</span>   <span class="dv">1</span>  <span class="dv">3</span>      <span class="dv">145</span>  <span class="dv">233</span>   <span class="dv">1</span>       <span class="dv">0</span>     <span class="dv">150</span>     <span class="dv">0</span>     <span class="fl">2.3</span>     <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">1</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>  <span class="dv">37</span>   <span class="dv">1</span>  <span class="dv">2</span>      <span class="dv">130</span>  <span class="dv">250</span>   <span class="dv">0</span>       <span class="dv">1</span>     <span class="dv">187</span>     <span class="dv">0</span>     <span class="fl">3.5</span>     <span class="dv">0</span>  <span class="dv">0</span>    <span class="dv">2</span></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>  <span class="dv">41</span>   <span class="dv">0</span>  <span class="dv">1</span>      <span class="dv">130</span>  <span class="dv">204</span>   <span class="dv">0</span>       <span class="dv">0</span>     <span class="dv">172</span>     <span class="dv">0</span>     <span class="fl">1.4</span>     <span class="dv">2</span>  <span class="dv">0</span>    <span class="dv">2</span></span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>  <span class="dv">56</span>   <span class="dv">1</span>  <span class="dv">1</span>      <span class="dv">120</span>  <span class="dv">236</span>   <span class="dv">0</span>       <span class="dv">1</span>     <span class="dv">178</span>     <span class="dv">0</span>     <span class="fl">0.8</span>     <span class="dv">2</span>  <span class="dv">0</span>    <span class="dv">2</span></span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>  <span class="dv">57</span>   <span class="dv">0</span>  <span class="dv">0</span>      <span class="dv">120</span>  <span class="dv">354</span>   <span class="dv">0</span>       <span class="dv">1</span>     <span class="dv">163</span>     <span class="dv">1</span>     <span class="fl">0.6</span>     <span class="dv">2</span>  <span class="dv">0</span>    <span class="dv">2</span></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>  <span class="dv">57</span>   <span class="dv">1</span>  <span class="dv">0</span>      <span class="dv">140</span>  <span class="dv">192</span>   <span class="dv">0</span>       <span class="dv">1</span>     <span class="dv">148</span>     <span class="dv">0</span>     <span class="fl">0.4</span>     <span class="dv">1</span>  <span class="dv">0</span>    <span class="dv">1</span></span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>  target</span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>      <span class="dv">1</span></span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>      <span class="dv">1</span></span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>      <span class="dv">1</span></span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>      <span class="dv">1</span></span>
+<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>      <span class="dv">1</span></span>
+<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>      <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dat<span class="sc">$</span>target)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>   <span class="dv">1</span> </span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="dv">138</span> <span class="dv">165</span> </span></code></pre></div>
+<p>รายละเอียดของชุดข้อมูลมีดังนี้</p>
+<ol style="list-style-type: decimal">
+<li><p>age: The person’s age in years</p></li>
+<li><p>sex: The person’s sex (1 = male, 0 = female)</p></li>
+<li><p>cp: The chest pain experienced (Value 1: typical angina, Value 2: atypical angina, Value 3: non-anginal pain, Value 4: asymptomatic)</p></li>
+<li><p>trestbps: The person’s resting blood pressure (mm Hg on admission to the hospital)</p></li>
+<li><p>chol: The person’s cholesterol measurement in mg/dl</p></li>
+<li><p>fbs: The person’s fasting blood sugar (&gt; 120 mg/dl, 1 = true; 0 = false)</p></li>
+<li><p>restecg: Resting electrocardiographic measurement (0 = normal, 1 = having ST-T wave abnormality, 2 = showing probable or definite left ventricular hypertrophy by Estes’ criteria)</p></li>
+<li><p>thalach: The person’s maximum heart rate achieved</p></li>
+<li><p>exang: Exercise induced angina (1 = yes; 0 = no)</p></li>
+<li><p>oldpeak: ST depression induced by exercise relative to rest (‘ST’ relates to positions on the ECG plot. See more here)</p></li>
+<li><p>slope: the slope of the peak exercise ST segment (Value 1: upsloping, Value 2: flat, Value 3: downsloping)</p></li>
+<li><p>ca: The number of major vessels (0-3)</p></li>
+<li><p>thal: A blood disorder called thalassemia (3 = normal; 6 = fixed defect; 7 = reversable defect)</p></li>
+<li><p>target: Heart disease (0 = no, 1 = yes)</p></li>
+</ol>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastDummies)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">dummy_cols</span>(dat, <span class="at">select_columns =</span> <span class="fu">c</span>(<span class="st">&quot;cp&quot;</span>, <span class="st">&quot;restecg&quot;</span>, <span class="st">&quot;slope&quot;</span>, <span class="st">&quot;thal&quot;</span>), <span class="at">remove_first_dummy =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_selected_columns =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>  age sex trestbps chol fbs thalach exang oldpeak ca target cp_1 cp_2 cp_3</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>  <span class="dv">63</span>   <span class="dv">1</span>      <span class="dv">145</span>  <span class="dv">233</span>   <span class="dv">1</span>     <span class="dv">150</span>     <span class="dv">0</span>     <span class="fl">2.3</span>  <span class="dv">0</span>      <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">0</span>    <span class="dv">1</span></span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>  <span class="dv">37</span>   <span class="dv">1</span>      <span class="dv">130</span>  <span class="dv">250</span>   <span class="dv">0</span>     <span class="dv">187</span>     <span class="dv">0</span>     <span class="fl">3.5</span>  <span class="dv">0</span>      <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">1</span>    <span class="dv">0</span></span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>  <span class="dv">41</span>   <span class="dv">0</span>      <span class="dv">130</span>  <span class="dv">204</span>   <span class="dv">0</span>     <span class="dv">172</span>     <span class="dv">0</span>     <span class="fl">1.4</span>  <span class="dv">0</span>      <span class="dv">1</span>    <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">0</span></span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>  <span class="dv">56</span>   <span class="dv">1</span>      <span class="dv">120</span>  <span class="dv">236</span>   <span class="dv">0</span>     <span class="dv">178</span>     <span class="dv">0</span>     <span class="fl">0.8</span>  <span class="dv">0</span>      <span class="dv">1</span>    <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">0</span></span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>  <span class="dv">57</span>   <span class="dv">0</span>      <span class="dv">120</span>  <span class="dv">354</span>   <span class="dv">0</span>     <span class="dv">163</span>     <span class="dv">1</span>     <span class="fl">0.6</span>  <span class="dv">0</span>      <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">0</span>    <span class="dv">0</span></span>
+<span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>  <span class="dv">57</span>   <span class="dv">1</span>      <span class="dv">140</span>  <span class="dv">192</span>   <span class="dv">0</span>     <span class="dv">148</span>     <span class="dv">0</span>     <span class="fl">0.4</span>  <span class="dv">0</span>      <span class="dv">1</span>    <span class="dv">0</span>    <span class="dv">0</span>    <span class="dv">0</span></span>
+<span id="cb71-13"><a href="#cb71-13" aria-hidden="true" tabindex="-1"></a>  restecg_1 restecg_2 slope_1 slope_2 thal_1 thal_2 thal_3</span>
+<span id="cb71-14"><a href="#cb71-14" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>         <span class="dv">0</span>         <span class="dv">0</span>       <span class="dv">0</span>       <span class="dv">0</span>      <span class="dv">1</span>      <span class="dv">0</span>      <span class="dv">0</span></span>
+<span id="cb71-15"><a href="#cb71-15" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>         <span class="dv">1</span>         <span class="dv">0</span>       <span class="dv">0</span>       <span class="dv">0</span>      <span class="dv">0</span>      <span class="dv">1</span>      <span class="dv">0</span></span>
+<span id="cb71-16"><a href="#cb71-16" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>         <span class="dv">0</span>         <span class="dv">0</span>       <span class="dv">0</span>       <span class="dv">1</span>      <span class="dv">0</span>      <span class="dv">1</span>      <span class="dv">0</span></span>
+<span id="cb71-17"><a href="#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>         <span class="dv">1</span>         <span class="dv">0</span>       <span class="dv">0</span>       <span class="dv">1</span>      <span class="dv">0</span>      <span class="dv">1</span>      <span class="dv">0</span></span>
+<span id="cb71-18"><a href="#cb71-18" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>         <span class="dv">1</span>         <span class="dv">0</span>       <span class="dv">0</span>       <span class="dv">1</span>      <span class="dv">0</span>      <span class="dv">1</span>      <span class="dv">0</span></span>
+<span id="cb71-19"><a href="#cb71-19" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>         <span class="dv">1</span>         <span class="dv">0</span>       <span class="dv">1</span>       <span class="dv">0</span>      <span class="dv">1</span>      <span class="dv">0</span>      <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat <span class="sc">%&gt;%</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>target))</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dat <span class="sc">%&gt;%</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(target))</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense, BatchNormalization</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>model.add(Dense(units<span class="op">=</span><span class="dv">10</span>, kernel_initializer<span class="op">=</span><span class="st">&#39;he_uniform&#39;</span>, bias_initializer <span class="op">=</span><span class="st">&#39;zero&#39;</span>, input_shape<span class="op">=</span>[<span class="dv">19</span>], activation <span class="op">=</span> <span class="st">&quot;relu&quot;</span>))</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>model.add(BatchNormalization())</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>model.add(Dense(units<span class="op">=</span><span class="dv">1</span>,activation<span class="op">=</span><span class="st">&quot;sigmoid&quot;</span> ))</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">&quot;adam&quot;</span>, </span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">&quot;binary_crossentropy&quot;</span>, </span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">&#39;accuracy&#39;</span>])</span></code></pre></div>
+<p>reference: <a href="https://keras.io/api/metrics/">metrics</a></p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(r.X, r.y, </span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>                    epochs<span class="op">=</span><span class="dv">500</span>, </span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>                    validation_split<span class="op">=</span><span class="fl">0.2</span>, </span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>                    verbose<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>                    batch_size<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(history.history)</span></code></pre></div>
+<pre><code>         loss  accuracy  val_loss  val_accuracy
+0    0.696106  0.644628  0.378630      0.786885
+1    0.643404  0.665289  0.903239      0.459016
+2    0.616622  0.652893  1.081824      0.311475
+3    0.607106  0.677686  1.127255      0.196721
+4    0.554259  0.723140  0.919891      0.393443
+..        ...       ...       ...           ...
+495  0.316112  0.876033  1.233124      0.508197
+496  0.321450  0.863636  0.588694      0.721311
+497  0.321530  0.851240  0.394822      0.836066
+498  0.395699  0.822314  0.849823      0.622951
+499  0.340839  0.855372  0.620917      0.721311
+
+[500 rows x 4 columns]</code></pre>
+<p>พล็อต learning curve สามารถทำได้ดังนี้</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot train and test accuracy</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span></code></pre></div>
+
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">&#39;accuracy&#39;</span>])</span></code></pre></div>
+<pre><code>[&lt;matplotlib.lines.Line2D object at 0x7f9fc919f7b8&gt;]</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">&#39;val_accuracy&#39;</span>])</span></code></pre></div>
+<pre><code>[&lt;matplotlib.lines.Line2D object at 0x7f9fc919f5f8&gt;]</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Model accuracy&quot;</span>)</span></code></pre></div>
+<pre><code>Text(0, 0.5, &#39;Model accuracy&#39;)</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Epoch&quot;</span>)</span></code></pre></div>
+<pre><code>Text(0.5, 0, &#39;Epoch&#39;)</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">&#39;Train&#39;</span>, <span class="st">&#39;Test&#39;</span>])</span></code></pre></div>
+<pre><code>&lt;matplotlib.legend.Legend object at 0x7f9de84681d0&gt;</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p><img src="DL2_files/figure-html/unnamed-chunk-59-1.png" width="768" /></p>
+<p>ผลการวิเคราะห์โมเดลข้างต้นจะเห็นว่าโมเดลดังกล่าวมีลักษณะเป็นโมเดลที่ระบุเกินพอดี มีความน่าเชื่อถือต่ำเมื่อนำไปใช้กับข้อมูลอื่น ๆ นอกเหนือจากชุดข้อมูลฝึกหัด การปรับแต่งค่า hyperparameter ของโมเดลอาจช่วยให้โมเดลดังกล่าวมีประสิทธิภาพที่ดีขึ้นได้ โดยทั่วไปโมเดล neural network มี hyperparamters ที่ผู้วิเคราะห์สามารถ fine tune เพื่อเสริมประสิทธิภาพให้โมเดลมีความเป็นนัยทั่วไปมากยิ่งขึ้น ได้แก่</p>
+<ol style="list-style-type: decimal">
+<li><p>จำนวน hidden layers</p></li>
+<li><p>จำนวน neurons ในแต่ละ hidden layer</p></li>
+<li><p>การจัดเรียง hidden layers</p></li>
+<li><p>Activation functions</p></li>
+<li><p>batch sizes</p></li>
+<li><p>learning rates</p></li>
+<li><p>Weight initialization</p></li>
+<li><p>จำนวน epochs</p></li>
+<li><p>Optimizers</p></li>
+</ol>
+<p>…</p>
+<p>ผู้อ่านจะเห็นว่า hyperparameter ในโมเดล neural network นี้มีจำนวนมาก หากใช้การ fine tune ค่าของพารามิเตอร์ดังกล่าวด้วยการใช้ grid search แบบปกติจะทำให้เสียเวลาและทรัพยากรในการประมวลผลมาก เพราะต้องประมวลผลทุก combination ของ grid search นั้นทั้งหมด วิธีหนึ่งที่ช่วยให้การ fine tune ดังกล่าวทำได้ไวขึ้น และยังสามารถกำหนดค่าที่เหมาะสมของ hyperparameters ในอยู่ในระดับที่ยอมรับได้ คืิอการใช้ <a href="https://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">random search</a></p>
+<p>ในโปรแกรม python ผู้วิเคราะห์สามารถใช้ package-scikitlearn ช่วยทำ random grid search ดังกล่าวได้ คำสั่งด้านล่างแสดงตัวอย่างการทำ random grid search ในโมเดลต้นไม้ตัดสินใจ</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co"># instantiate the model</span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="co"># define a series of hyperparameters</span></span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>hyper_params<span class="op">=</span>{<span class="st">&#39;max_depth&#39;</span>: [<span class="dv">3</span>, <span class="va">None</span>], <span class="st">&#39;max_features&#39;</span>: <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="st">&#39;min_samples_leaf&#39;</span>: <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">4</span>)}</span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a><span class="co"># perform random search with CV</span></span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a>tree_cv <span class="op">=</span> RandomizedSearchCV(tree, hyper_params, cv <span class="op">=</span> <span class="dv">10</span>)</span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-12"><a href="#cb90-12" aria-hidden="true" tabindex="-1"></a><span class="co"># print the best combination of hyperparameters</span></span>
+<span id="cb90-13"><a href="#cb90-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tree_cv.best_params_)</span></code></pre></div>
+<p>ใน Keras สามารถทำ random grid search ในข้างต้นได้ โดยดำเนินการตามขั้นตอนเดียวกันมีขั้นตอนดังนี้</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1. define function that creates keras model</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.models <span class="im">import</span> Sequential</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.layers <span class="im">import</span> Dense, BatchNormalization</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_model(optimizer<span class="op">=</span><span class="st">&quot;adam&quot;</span>, activation<span class="op">=</span><span class="st">&quot;relu&quot;</span>):</span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> Sequential()</span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>    model.add(Dense(<span class="dv">16</span>, input_shape<span class="op">=</span>[<span class="dv">19</span>], activation<span class="op">=</span>activation))</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>    model.add(Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>))</span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer, loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>, metrics<span class="op">=</span>[<span class="st">&#39;accuracy&#39;</span>])</span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a><span class="co">#2. import sklearn wrapper from keras</span></span>
+<span id="cb91-13"><a href="#cb91-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> keras.wrappers.scikit_learn <span class="im">import</span> KerasClassifier</span>
+<span id="cb91-14"><a href="#cb91-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="co">#3. create model as a sklearn estimator</span></span>
+<span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> KerasClassifier(build_fn <span class="op">=</span> create_model, epochs<span class="op">=</span><span class="dv">10</span>, batch_size<span class="op">=</span><span class="dv">16</span>)</span></code></pre></div>
+<p>ในการเปรียบเทียบประสิทธิภาพของโมเดลในแต่ grid ที่ทำการวิเคราะห์สามารถทำได้โดยใช้ CV เหมือนกับ ML อื่น ๆ โดยสามารถทำได้ใน pacage-scikit learn เลย ดังนี้ (syntax ด้านล่างคอมพิวเตอร์แรง ๆ ใช้เวลารันประมาณ 1 นาที)</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> <span class="bu">dict</span>(optimizer<span class="op">=</span>[<span class="st">&#39;sgd&#39;</span>,<span class="st">&#39;adam&#39;</span>], </span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>            epochs<span class="op">=</span>[<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">200</span>], </span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>            batch_size<span class="op">=</span>[<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">32</span>],</span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>            activation<span class="op">=</span>[<span class="st">&#39;relu&#39;</span>, <span class="st">&#39;tanh&#39;</span>])</span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>random_search <span class="op">=</span> RandomizedSearchCV(model, param_distributions<span class="op">=</span>params, cv<span class="op">=</span><span class="dv">10</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> random_search.fit(r.X, r.y)</span></code></pre></div>
+<p><img src="Screen%20Shot%202564-05-29%20at%2016.28.08.png" /></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.best_score_)</span></code></pre></div>
+<pre><code>0.8183870851993561</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.best_params_)</span></code></pre></div>
+<pre><code>{&#39;optimizer&#39;: &#39;adam&#39;, &#39;epochs&#39;: 100, &#39;batch_size&#39;: 10, &#39;activation&#39;: &#39;relu&#39;}</code></pre>
+<p>การปรับแต่ง hyperparameter อื่น ๆ สามารถทำได้ในทำนองเดียวกัน เช่น การปรับแต่งจำนวน hidden layer และจำนวน neuron ในแต่ละ hidden layer สามารถทำได้ดังนี้</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_model(nL<span class="op">=</span><span class="dv">1</span>, nN<span class="op">=</span><span class="dv">10</span>, optimizer<span class="op">=</span><span class="st">&quot;adam&quot;</span>):</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> Sequential()</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>    model.add(Dense(<span class="dv">10</span>, input_shape<span class="op">=</span>[<span class="dv">19</span>], activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>))</span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(nL):</span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(nN):</span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>            model.add(Dense(nN, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>))</span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>    model.add(Dense(units<span class="op">=</span><span class="dv">1</span>, activation<span class="op">=</span><span class="st">&quot;sigmoid&quot;</span>))</span>
+<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer,</span>
+<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a>                loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>, metrics<span class="op">=</span>[<span class="st">&#39;accuracy&#39;</span>])</span>
+<span id="cb97-12"><a href="#cb97-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model </span></code></pre></div>
+<p>จากนั้นทำ random grid search</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> KerasClassifier(build_fn <span class="op">=</span> create_model, epochs<span class="op">=</span><span class="dv">10</span>, batch_size<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> <span class="bu">dict</span>(nL<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>], nN<span class="op">=</span>[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>],</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>            optimizer<span class="op">=</span>[<span class="st">&#39;sgd&#39;</span>,<span class="st">&#39;adam&#39;</span>], </span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>            epochs<span class="op">=</span>[<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">200</span>], </span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>            batch_size<span class="op">=</span>[<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">32</span>])</span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>random_search <span class="op">=</span> RandomizedSearchCV(model, param_distributions<span class="op">=</span>params, cv<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> random_search.fit(r.X, r.y)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(results.cv_results_)</span></code></pre></div>
+<pre><code>   mean_fit_time  std_fit_time  mean_score_time  std_score_time  ... split9_test_score mean_test_score std_test_score rank_test_score
+0       2.829144      0.069176         0.105652        0.005360  ...               0.5        0.694086       0.134792               1
+1       3.104167      0.137160         0.131929        0.002077  ...               0.0        0.339247       0.330913               2
+2       1.316957      0.104490         0.131603        0.004390  ...               0.0        0.040000       0.120000               9
+3       4.360149      0.083786         0.097722        0.002865  ...               0.0        0.040000       0.120000               9
+4       3.602179      0.030028         0.159799        0.087129  ...               0.6        0.186667       0.303754               6
+5       0.839052      0.102992         0.138167        0.094416  ...               0.0        0.296022       0.216795               3
+6       1.826950      0.016677         0.068410        0.002741  ...               0.0        0.052903       0.119339               8
+7       0.669861      0.108167         0.074891        0.001682  ...               0.0        0.278172       0.371669               4
+8       0.419482      0.004079         0.066130        0.001683  ...               0.0        0.229355       0.294634               5
+9       0.765410      0.105213         0.065921        0.002336  ...               0.0        0.166667       0.308761               7
+
+[10 rows x 23 columns]</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.best_score_)</span></code></pre></div>
+<pre><code>0.6940860211849212</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.best_params_)</span></code></pre></div>
+<pre><code>{&#39;optimizer&#39;: &#39;adam&#39;, &#39;nN&#39;: 8, &#39;nL&#39;: 1, &#39;epochs&#39;: 50, &#39;batch_size&#39;: 5}</code></pre>
+</div>
+
+   
+   
+           </section>
+  </div>
+  </div>
+  </div>
+  </div>
+      
+      
+
+  <script>
+    $(document).ready(function () {
+
+		// add bootstrap table styles to pandoc tables
+	$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+		
+ 		
+	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>
