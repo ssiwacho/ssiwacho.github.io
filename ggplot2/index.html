@@ -17,6 +17,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -98,11 +161,6 @@ ul.task-list{list-style: none;}
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">มโนทัศน์เบื้องต้นของ ggplot2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -192,7 +250,8 @@ ul.task-list{list-style: none;}
 <li><strong>ชุดข้อมูล <code>gapminder</code></strong> เป็นข้อมูลที่เกี่ยวข้องกับความอยู่ดีมีสุขของประชากรโลกในแต่ละประเทศ ชุดข้อมูลนี้เป็นชุดข้อมูลตัวอย่างที่อยู่ใน package-gapminder สามารถดาวน์โหลดและเรียกใช้ได้โดยพิมพ์คำสั่งต่อไปนี้</li>
 </ol>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gapminder"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 
@@ -203,7 +262,8 @@ ul.task-list{list-style: none;}
 <p><img src="img/data.jpg" class="img-fluid" style="width:50.0%"></p>
 <p>เนื่องจากไฟล์ข้อมูล <code>ชุดข้อมูลตัวอย่าง.xlsx</code> เป็นไฟล์นามสกุล .xlsx การนำเข้าไฟล์ดังกล่าวจะใช้ฟังก์ชัน <code>read_excel()</code> ของ <code>package-readxl</code> ช่วย สำหรับผู้ที่เพิ่งเริ่มใช้ R หรือยังไม่มี package นี้สามารถดาวน์โหลดและติดตั้งได้โดยเขียนคำสั่งดังตัวอย่างด้านล่าง</p>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 
@@ -211,6 +271,7 @@ ul.task-list{list-style: none;}
 <p>หากยังจำได้ภายในไฟล์ <code>ชุดข้อมูลตัวอย่าง.xlsx</code> ประกอบด้วย worksheet ย่อย ๆ จำนวนหลาย worksheet ดังนั้นก่อนที่จะนำเข้าผู้วิเคราะห์ควรที่จะต้องสำรวจก่อนว่าภายในไฟล์ข้อมูลดังกล่าวมี worksheet อะไรบ้าง และ worksheet ไหนที่เกี่ยวข้องกับการทำงานของเรา การสำรวจ worksheet สามารถทำได้โดยใช้ฟังก์ชัน <code>excel_sheets(path)</code> โดยที่ <code>path</code> เรียกว่า อาร์กิวเมนท์ (argument) ของฟังก์ชัน <code>excel_sheets()</code> ผู้วิเคราะห์จะกำหนดการทำงานของฟังก์ชันใน R แต่ละฟังก์ชันผ่านทางอาร์กิวเมนท์ดังกล่าว ซึ่งจะแตกต่างกันไปตามฟังก์ชันที่เลือกใช้</p>
 <p>ในกรณีนี้ <code>path</code> เป็นอาร์กิวเมนท์ เพื่อให้ผู้วิเคราะห์กำหนดชื่อไฟล์หรือที่อยู่ของไฟล์ที่ต้องการ ดังตัวอย่างด้านล่าง ซึ่งจะเห็นว่าชุดข้อมูลดังกล่าวประกอบด้วย worksheet จำนวน 10 worksheet</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">excel_sheets</span>(<span class="at">path=</span><span class="st">"/Users/siwachoat/Library/CloudStorage/OneDrive-ChulalongkornUniversity/Documents/เอกสารประกอบการสอน/2758686/ชุดข้อมูลตัวอย่าง.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "งบประมาณด้านการศึกษา"          "จำนวนผู้สำเร็จการศึกษา ปวช. ปวส"
  [3] "ผลสัมฤทธิ์และรายได้เฉลี่ย"         "online learning dataset"    
@@ -222,7 +283,8 @@ ul.task-list{list-style: none;}
 <p>ในกรณีที่ไม่ทราบว่าจะกำหนดอาร์กิวเมนท์อย่างไร สามารถเรียกดูวิธีการใช้ฟังก์ชันต่าง ๆ จากคู่มือ โดยพิมพ์คำสั่ง <code>?excel_sheets()</code></p>
 <p>สมมุติว่าผู้วิเคราะห์ต้องการใช้ข้อมูลใน worksheet <code>"PrePost"</code> สามารถ worksheet ดังกล่าวเข้ามาใน R ได้ด้วยฟังก์ชัน <code>read_excel(path, sheet)</code> โดยที่อาร์กิวเมนท์ <code>path</code> และ <code>sheet</code> ใช้สำหรับกำหนดชื่อหรือที่อยู่ของไฟล์ข้อมูล และ worksheet ที่ต้องการนำเข้า โดยการกำหนด worksheet ที่ต้องการนำเข้าสามารถกำหนดเป็นหมายเลขลำดับของ worksheet ก็ได้ หรือจะกำหนดเป็นชื่อของ worksheet ตามที่แสดงใน output ด้านบนก็ได้ดังตัวอย่างต่อไปนี้</p>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="ot">&lt;-</span><span class="fu">read_excel</span>(<span class="at">path=</span><span class="st">"/Users/siwachoat/Library/CloudStorage/OneDrive-ChulalongkornUniversity/Documents/เอกสารประกอบการสอน/2758686/ชุดข้อมูลตัวอย่าง.xlsx"</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sheet=</span><span class="st">"PrePost"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>คำสั่งข้างต้นหมายความว่าให้นำข้อมูลจากชุดข้อมูลที่กำหนดเข้ามาใน R แล้วเก็บไว้ในตัวแปร <code>mydata</code> ตัวแปรในเชิง programming มีความหมายที่แตกต่างไปจากตัวแปรในเชิงสถิติหรือการวิจัย โดยตัวแปรใน R นี้จะหมายถึงวัตถุภายในสภาพแวดล้อมของ R ที่ทำหน้าที่เก็บข้อมูล/ผลลัพธ์ที่ได้จากการประมวลผลเอาไว้ในหน่วยความจำของคอมพิวเตอร์ ซึ่งทำให้ผู้ใช้สามารถเรียกดูค่าที่เก็บไว้ในภายหลัง หรือนำค่า/ผลลัพธ์ที่เก็บไว้ไปใช้ในการดำเนินการในขั้นตอนอื่น ๆ ได้โดยง่าย (สิวะโชติ ศรีสุทธิยากร, 2564)</p>
 <p>ตัวแปรใน R มีหลายประเภท และสามารถจำแนกได้หลากหลายลักษณะ หากจำแนกตามโครงสร้างอาจจำแนกได้เป็น ตัวแปรสเกลาร์ (scalar) เวกเตอร์ (vector) เมทริกซ์ (matrix) อาร์เรย์ (array) ชุดข้อมูล (dataframe/tibble) และลิสท์ (list)</p>
@@ -231,6 +293,7 @@ ul.task-list{list-style: none;}
 <h1>ทบทวนการสำรวจชุดข้อมูลใน R</h1>
 <p>ตัวแปร <code>gapminder</code> และ <code>mydata</code> ที่นำเข้ามาในข้างต้นจะมีสถานะเป็นตัวแปรแบบชุดข้อมูล ผู้ใช้งานจะไม่ได้เห็นข้อมูลเป็นตารางเหมือนที่เห็นใน worksheet ของ excel หากต้องการเรียกดูหรือสำรวจข้อมูลดังกล่าวสามารถทำได้หลายวิธีการ วิธีการแรกคือเรียกชื่อตัวแปรตรง ๆ ดังนี้</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mydata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    student PreTest PostTest
@@ -250,6 +313,7 @@ ul.task-list{list-style: none;}
 <p>อย่างไรก็ตามการเรียกชื่อตัวแปรตรง ๆ ในข้างต้นอาจเกิดปัญหาข้อมูลล้นหน้า console (หากต้องการเห็นว่าปัญหาดังกล่าวเป็นอย่างไรลองเรียก <code>gapminder</code> ใน console ดู)</p>
 <p>โดยปกติผู้วิเคราะห์จึงจะเรียกดูข้อมูลในชุดข้อมูลโดยสรุปผ่านฟังก์ชัน เช่น <code>head()</code>, <code>tail()</code>, <code>summary()</code>, <code>str()</code> หรือ <code>glimpse()</code> ดังตัวอย่างต่อไปนี้</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mydata) <span class="co">#เรียกดูข้อมูลส่วนหัว 6 ค่าแรก</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   student PreTest PostTest
@@ -261,6 +325,7 @@ ul.task-list{list-style: none;}
 5 บุญมี           3        6
 6 บุญมา          0        4</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [10 × 3] (S3: tbl_df/tbl/data.frame)
  $ student : chr [1:10] "บุญเติม" "บุญหนัก" "บุญทับ" "บุญรอด" ...
@@ -270,7 +335,8 @@ ul.task-list{list-style: none;}
 </div>
 <p>การเรียกใช้ฟังก์ชัน <code>glimpse()</code> จำเป็นต้องติดตั้ง package-dplyr เพิ่มเติม ดังนี้</p>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
@@ -289,6 +355,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 10
 Columns: 3
@@ -299,6 +366,7 @@ $ PostTest &lt;dbl&gt; 1, 4, 0, 1, 6, 4, 8, 1, 2, 5</code></pre>
 </div>
 <p>ฟังก์ชัน <code>summary()</code> จะแสดงค่าสถิติพื้นฐานของตัวแปร ซึ่งขึ้นอยู่กับประเภทของตัวแปรในชุดข้อมูล โดยถ้าเป็นตัวแปรเชิงปริมาณ จะนำเสนอค่าสถิติของ Tukey 5 ค่า และค่าเฉลี่ย แต่ถ้าเป็นตัวแปรจัดประเภทจะนำเสนอการแจกแจงความถี่ของตัวแปรนั้น อย่างไรก็ตามตัวแปรจัดประเภทดังกล่าวต้องมีสถานะเป็นตัวแปร factor ก่อน (ไว้จะหาโอกาสกล่าวถึงอีกทีภายหลัง)</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   student             PreTest        PostTest   
  Length:10          Min.   :0.00   Min.   :0.00  
