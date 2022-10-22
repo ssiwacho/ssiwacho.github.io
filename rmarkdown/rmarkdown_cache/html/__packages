@@ -1,6 +1,6 @@
-base
 knitr
 rmdformats
 foreign
 dplyr
 kableExtra
+ggplot2

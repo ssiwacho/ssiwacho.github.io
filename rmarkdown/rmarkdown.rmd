@@ -80,15 +80,26 @@ library(rmarkdown)
 <left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/2.png){width=60%}</left>
 
 
-# กิจกรรม 2: โครงสร้างของ RMD file
+# กิจกรรม 2: สร้างเอกสารจาก rmarkdown
 
 เมื่อดำเนินการเสร็จผู้ใช้จะได้หน้าต่าง script file ที่มีนามสกุล .rmd (RMarkdown file) ที่มีตัวอย่าง syntax รายงานผลการวิเคราะห์ข้อมูล ดังรูปด้านล่าง 
 
 ![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/Screen Shot 2564-05-23 at 08.34.26.png)
 
+ผู้เรียนลองพิจารณาว่าเอกสาร rmarkdown ที่สร้างขึ้นในครั้งแรกนี้มีเนื้อหาอะไรบ้าง?
+
+1. ใน Rstudio ผู้ใช้สามารถสร้างเอกสาร rmarkdown ได้โดยการคลิ้กที่ปุ่ม **Knit** แล้วสังเกตผลลัพธ์ที่ได้
+
+2. ผู้เรียนลองเปลี่ยน format ของเอกสารเป็น pdf และ word document จากนั้นสังเกตผลลัพธ์ที่ได้
+
+
+# กิจกรรม 3: โครงสร้างของ RMD file
+
 หากสังเกตดี ๆ ไฟล์ RMD ที่ generate ได้นั้นมีส่วนประกอบหลัก 3 ส่วนด้วยกันคือ
 
-1. **Header** เป็นคำสั่งในส่วนหัวของไฟล์ RMD เขียนในรูปแบบ *YAML* โดยจะกำหนดอยู่บริเวณส่วนต้นของไฟล์ .rmd โดยถูกคร่อมด้วยเครื่องหมาย --- ดังรูป
+## **Header** 
+
+เป็นคำสั่งในส่วนหัวของไฟล์ RMD เขียนในรูปแบบ *YAML* โดยจะกำหนดอยู่บริเวณส่วนต้นของไฟล์ .rmd โดยถูกคร่อมด้วยเครื่องหมาย --- ดังรูป
 
 ```{r eval=F}
 # ---
@@ -99,37 +110,20 @@ output: html_document
 # ---
 ```
 
-2. **Markdown sections** เป็นส่วนของเอกสารใช้เก็บเนื้อหาต่าง ๆ ข้อมูลรวมทั้งผลการวิเคราะห์ที่ต้องการทำเป็นรายงาน การเขียนคำสั่งในส่วนนี้จะใช้ภาษา markdown เป็นหลัก
+## **Markdown sections** 
 
-3. **Code chunks** เป็นส่วนชุดคำสั่งภาษา R ที่ฝังอยู่ในเอกสาร 
+เป็นส่วนของเอกสารใช้เก็บเนื้อหาต่าง ๆ ข้อมูลรวมทั้งผลการวิเคราะห์ที่ต้องการทำเป็นรายงาน การเขียนคำสั่งในส่วนนี้จะใช้ภาษา markdown เป็นหลัก
 
-ผู้เรียนลองพิจารณาว่าเอกสาร rmarkdown ที่สร้างขึ้นในครั้งแรกนี้มีเนื้อหาอะไรบ้าง?
+## **Embed Code** 
 
-# กิจกรรม 3: สร้างเอกสารจาก rmarkdown
+R markdown มีจุดเด่นคือสามารถผังชุดคำสั่งของภาษา R (รวมทั้ง python) เพื่อนำเข้า จัดกระทำ วิเคราะห์ และสร้างทัศนภาพข้อมูล และนำเสนอในเอกสารได้ ชุดคำสั่งที่ผังอยู่ใน R markdown document สามารถใส่ได้หลายชุดคำสั่ง โดยที่แต่ละชุดจะถูกเขียนอยู่ใน **code chunks** 
 
-1. ใน Rstudio ผู้ใช้สามารถสร้างเอกสาร rmarkdown ได้โดยการคลิ้กที่ปุ่ม **Knit** แล้วสังเกตผลลัพธ์ที่ได้
-
-2. ผู้เรียนลองเปลี่ยน format ของเอกสารเป็น pdf และ word document จากนั้นสังเกตผลลัพธ์ที่ได้
+การสร้าง code chunck ใน R markdown สามารถทำได้ภายใต้สัญลักษณ์ ```{r} และ ``` หรือกดที่ปุ่ม insert Code Chunk ด้านบน
 
 
-# R code chunks
+ในทางปฏิบัติผู้วิเคราะห์สามารถกำหนดคุณสมบัติของ code chunks ได้หลายประการผ่านอาร์กิวเมนท์ดังนี้
 
-จากกิจกรรมข้างต้นผู้เรียนทราบแล้วว่า code chunks เป็นส่วนที่ยอมให้ผู้วิเคราะห์สามารถเขียนคำสั่งภาษา R เพื่อทำการวิเคราะห์และรายงานผลการวิเคราะห์ดังกล่าวภายในเอกสาร rmarkdown ได้ ในทางปฏิบัติผู้วิเคราะห์สามารถกำหนดคุณสมบัติของ code chunks ได้หลายประการผ่านอาร์กิวเมนท์หลายตัว ดังนี้
-
-- `echo` ใช้สำหรับระบุว่าจะให้แสดงชุดคำสั่งที่ใช้ในการวิเคราะห์ข้อมูลหรือไม่ ถ้าต้องการให้แสดงจะกำหนด `echo=TRUE` (ค่าเริ่มต้น) แต่ถ้าไม่ต้องการจะกำหนด `echo=FALSE`
-
-- `eval` ใช้สำหรับระบุว่าจะให้ประมวลผลชุดคำสั่งภายใน chunk หรือไม่ ถ้าต้องการให้ประมวลผลจะกำหนด `eval=TRUE` (ค่าเริ่มต้น) แต่ถ้าไม่ต้องการจะกำหนด `eval=FALSE`
-
-- `warning` ใช้กำหนดว่ายอมให้โปรแกรมแสดงคำแจ้งเตือนต่าง ๆ ในรายงานผลการวิเคราะห์หรือไม่ ถ้ายอมจะกำหนดให้ `warning=TRUE` (ค่าเริ่มต้น) ถ้าไม่ต้องการจะกำหนดให้ `warning=FALSE`
-
-- `error` และ `message` กำหนดในทำนองเดียวกับ `warning` โดยที่ `error` จะเป็นการกำหนดว่าต้องการให้แจ้งเตือน error ต่าง ๆ ที่เกิดขึ้นจากการประมวลผลหรือไม่ ส่วน `message` เป็นการกำหนดว่าต้องการให้แสดงข้อความจากการดำเนินการต่าง ๆ ของโปรแกรมหรือไม่
-
-- `results` ใช้กำหนดว่าจะให้โปรแกรมนำเสนอผลการวิเคราะห์ข้อมูลหรือไม่ (ค่าเริ่มต้น `results=TRUE`)
-
-- `fig.width`, `fig.height` ใช้กำหนดความกว้างและความสูงของแผนภาพที่สร้างจากโปรแกรม R (ค่าเริ่มต้น `fig.width=7`) โดยหน่วยเป็น นิ้ว (inches)
-
-- `fig.align` ใช้กำหนดตำแหน่งที่จะวางแผนภาพในรายงาน โดยสามารถกำหนดได้ 3 ค่าคือ `left, center, right` (ค่าเริ่มต้น `fig.align="left"`)
-
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/codechunk.png){width=50%}</left>
 
 ลองสร้าง code chunk ใน rmarkdown จากนั้นกำหนดอาร์กิวเมนท์ต่าง ๆ ข้างต้น แล้วสังเกตผลลัพธ์ที่ได้
 
@@ -138,25 +132,120 @@ output: html_document
 ![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/exam1.png)
 
 
-# Introduction to Markdown
+# Markdown Basic
 
 ผู้เรียนทราบแล้วว่าส่วนหลักของเอกสารที่สร้างจาก rmarkdown ใช้ภาษา markdown เป็นหลัก ภาษานี้เป็นภาษาที่เขียนค่อนข้างง่ายใกล้เคียงกับการเขียนเอกสารในโปรแกรม MS word หรือ Text processing ตัวอื่น ๆ ส่วนที่แตกต่างกันคือ markdown ไม่ได้มีเมนูลัดให้ผู้ใช้กดเพื่อปรับแต่งหน้าตาหรือคุณลักษณะของตัวอักษร การดำเนินการดังกล่าวใน markdown จำเป็นต้องสั่งการผ่าน syntax โดยมีรายละเอียดของคำสั่งพื้นฐานดังนี้
 
-- `#` หมายถึงหัวข้อ (header) ของเอกสาร ข้อความที่ต่อท้ายเครื่องหมายนี้จะเป็นหัวข้อ
+## Header
 
-- `**` ข้อความภายใต้สัญลักษณ์ดังกล่าวจะเป็นตัวหนา เช่น `**ตัวหนา**` ---> **ตัวหนา**
+```
+# Header1
 
-- `*` ข้อความภายใต้สัญลักษณ์นี้จะเป็นตัวเอียง เช่น `*ตัวเอียง*` ---> *ตัวเอียง*
+## Header2
 
-- `[Link](https://www.google.com)` ใช้สร้าง hyperlink ภายในเอกสาร เช่น `[คลิ้กที่นี่](www.edu.chula.ac.th)`
+### Header3
 
-- `$$` ใช้เขียนสมการหรือสัญลักษณ์ทางคณิตศาสตร์ โดยจะใช้ภาษา latex เป็นเครื่องมือ ผู้เริ่มหัดใช้ latex สามารถใช้ตัวช่วย generate syntax ของ latex ได้ เช่น [Online Latex](https://www.codecogs.com/latex/eqneditor.php)
+#### Header4
 
-- `---` หรือ `***` ใช้ขีดเส้นคั่นส่วนของเอกสารในแนวนอน
+##### Header5
 
-- `![image name](path-to-image)` ใช้สอดแทรกรูปแบบลงในเอกสาร เช่น `![](0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg)`
+###### Header6
+
+```
+
+### Header3
+
+#### Header4
+
+##### Header5
+
+
+## text styles
+
+- เน้นตัวหนาโดยเขียนคำสั่ง `**` คร่่อมข้อความที่ต้องการทำตัวหนา เช่น `**ตัวหนา** ---> **ตัวหนา**
+
+
+- ข้อความภายใต้สัญลักษณ์ `*` นี้จะเป็นตัวเอียง เช่น `*ตัวเอียง*` ---> *ตัวเอียง*
+
+
+- `superscript^2^`/`subscript~2~`
+
+- `~~strikethrough~~`
+
+## Horizontal rule
+
+`emdash: ---`
+
+
+---
+
+## เว้นบรรทัด
+
+- `escaped: \ หรือ \\`
+
+---
+
+
+## Bullet
+
+bullet มี 2 ประเภทได้แก่ unordered และ ordered bullet ดังนี้
+
+```
+- unordered bullet1
+- xxx bullet2
+  - bullet2.1
+  - bullet2.2
+```
+
+- unordered bullet1
+- xxx bullet2
+  - bullet2.1
+  - bullet2.2
+  
+```
+1. ordered bullet1
+2. bullet2
+  - bullet2.1
+  - bullet2.2
+```
+
+1. ordered bullet1
+2. bullet2
+  - bullet2.1
+  - bullet2.2
+  
+---
+
+## Hyper link
+
+`[Link](https://www.google.com)` ใช้สร้าง hyperlink ภายในเอกสาร เช่น `[คลิ้กที่นี่](www.edu.chula.ac.th)`
+
+[คลิ้กที่นี่](www.edu.chula.ac.th)
+
+## Math Equations
+
+`$$` ใช้เขียนสมการหรือสัญลักษณ์ทางคณิตศาสตร์ โดยจะใช้ภาษา latex เป็นเครื่องมือ ผู้เริ่มหัดใช้ latex สามารถใช้ตัวช่วย generate syntax ของ latex ได้ เช่น [Online Latex](https://www.codecogs.com/latex/eqneditor.php)
+
+```
+$f(x)=x^2+2x+1$
+```
+
+$f(x)=x^2+2x+1$
+
+```
+$f(x|\mu, \sigma) = \frac{1}{\sqrt{\sigma \pi}}exp(\frac{1}{2\sigma^2}(x-\mu)^2)$
+
+```
+$f(x|\mu, \sigma) = \frac{1}{\sqrt{\sigma \pi}}exp(\frac{1}{2\sigma^2}(x-\mu)^2)$
+
+
+## Insert Images
+
+`![image name](path-to-image)` ใช้สอดแทรกรูปลงในเอกสาร เช่น `![](0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg)`
 
 ![](0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg)
+
+## Insert youtube video
 
 - การแทรก clip video จาก youtube สามารถใช้การ embed video ได้เช่น
 
@@ -168,9 +257,208 @@ output: html_document
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uZCD6XS333s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+
+## block quotes
+
+```
+> All models are wrong, but some are useful. (Box, G., 1976)
+```
+
+> All models are wrong, but some are useful. (Box, G., 1976)
+
+
+## Very basic HTML table
+
+```
+|Right | Left | Default | Center | 
+|-------:|:------|-----------|:---------:| 
+| 12 | 12 | 12 | 12 |
+| 123 | 123 | 123 | 123 |
+|1 |1 | 1 |1 |
+```
+
+|Right | Left | Default | Center | 
+|-------:|:------|-----------|:---------:| 
+| 12 | 12 | 12 | 12 |
+| 123 | 123 | 123 | 123 |
+|1 |1 | 1 |1 |
+
+## Creating table with kableExtra
+
+
+การสร้างตารางใน rmarkdown มีหลายวิธีมาก วิธีการหนึ่งที่มีประสิทธิภาพคือการใช้ [package-kableExtra](https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf)
+
+[ดาวน์โหลดไฟล์ข้อมูล](http://161.200.152.253/2758604/datafiles/t2.sav) 
+
+```{r message=F}
+library(foreign)
+library(dplyr)
+#install.packages("kableExtra")
+library(kableExtra)
+dat<-read.spss("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/t2.sav",to.data.frame = T)
+subset<-dat%>%select(id,matach,ses_kb,sibl,male)
+kable(head(subset))
+```
+
+จะเห็นว่าตารางในข้างต้นค่อยข้างเรียบเกินไป ไม่ค่อยสวย และอาจดูยากในกรณีที่มีข้อมูลจำนวนมาก ๆ ผู้ใช้สามารถปรับแต่งลักษณะของตารางได้ตามความต้องการผ่านฟังก์ชัน `kable_styling()` 
+
+```{r}
+head(subset)%>%
+      kable()%>%
+      kable_styling()
+
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped"))
+
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"))
+
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"),
+                              position="left",full_width = F)
+```
+
+
+```{r}
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"),
+                              position="float_right",full_width = F)
+```
+
+ตารางข้อมูล t2.sav ประกอบด้วยค่าสังเกตของตัวแปรทั้งหมด 4 ตัวได้แก่ ผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของนักเรียน (matach) เศรษฐานะของครอบครัวนักเรียนที่วัดจากรายได้ของหัวหน้าครอบครัว หน่วยเป็น 1,000 บาท (ses_kb) จำนวนพี่น้องในครอบครัว (sibl) และตัวแปร dummy ของเพศชาย (male)
+
+จะเห็นว่าการกำหนด position="float_right" ทำให้สามารถเขียนคำอธิบายตารางไว้ด้านข้างของตารางได้
+
+
+```{r}
+head(subset)%>%
+      kable()%>%
+      kable_styling(bootstrap_options = c("striped","hover"),
+                              position="left",full_width = F,
+                              font_size = 11)
+```
+
+### Column Specification
+
+```{r}
+text_tbl <- data.frame(
+  Items = c("Item 1", "Item 2", "Item 3"),
+  Features = c(
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula tempor ex. Morbi malesuada sagittis turpis, at venenatis nisl luctus a. ",
+    "In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius, posuere risus et, cursus augue. Duis eleifend aliquam ante, a aliquet ex tincidunt in. ", 
+    "Vivamus venenatis egestas eros ut tempus. Vivamus id est nisi. Aliquam molestie erat et sollicitudin venenatis. In ac lacus at velit scelerisque mattis. "
+  )
+)
+
+kable(text_tbl) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2, width = "30em", background = "grey")
+```
+
+### Row Specification
+
+```{r}
+kable(head(subset,10)) %>%
+  kable_styling("striped", full_width = F) %>%
+  column_spec(2, bold = T) %>%
+  row_spec(7:10, bold = T, color = "white", background = "grey")
+```
+
+### Header Specification
+
+```{r}
+kable(head(subset)) %>%
+  kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -45,color="white",background = "#D7261E")
+
+```
+
+### Grouped Columns
+
+```{r}
+kable(head(subset)) %>%
+  kable_styling("striped",font_size = 14,full_width = F) %>%
+  add_header_above(c(" " = 1,"Achievement" = 1,"Family Background" = 3))
+```
+
+### Scroll box table
+
+```{r}
+kable(dat) %>%
+  kable_styling() %>%
+  scroll_box(width = "500px", height = "400px")
+```
+
+</br>
+
+รายละเอียดอื่น ๆ สามารถศึกษาได้จาก https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
+
+
+## Tabsets
+
+```
+## My Tabsets {.tabset}
+
+### my data
+
+head(iris)
+
+### histogram
+
+library(ggplot2)
+ggplot(iris)+
+  geom_histogram(aes(x=Sepal.Length))+
+  facet_wrap(~Species)
+```
+
+
+## My Tabsets {.tabset}
+
+### my data
+
+```{r}
+head(iris)
+```
+
+### histogram
+
+```{r}
+library(ggplot2)
+ggplot(iris)+
+  geom_histogram(aes(x=Sepal.Length))+
+  facet_wrap(~Species)
+```
+
+##
+
+การกำหนดแถบเมนูดังกล่าวมี option ให้เลือกเพิ่มเติมอีก 2 ตัวได้แก่ `.tabset-fade` ใช้เพิ่ม fade in และ fade out effect เมื่อกดเลือกแถบเมนูแต่ละแถบ และ `.tabset-pills` ใช้เพิ่ม effect เป็นสีของแถบเมนูเมื่อกดเลือกแถบนั้น ๆ 
+
+```{r eval=F}
+# tabmenu {.tabset .tabset-fade .tabset-pills}
+```
+
+
 # YAML header
 
 ใน YAML header ผู้ใช้สามารถกำหนด option เพิ่มเติมเพื่อเปลี่ยนลักษณะของเอกสารให้เป็นไปตามที่ต้องการได้ดังนี้
+
+## Output format
+
+```
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    toc: true
+```
+
+<left>![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/Screen Shot 2565-10-22 at 12.52.23.png){width=50%}</left>
 
 ## Table of contents
 
@@ -247,6 +535,7 @@ output:
 เอกสาร rmarkdown ในรูปแบบ HTML สามารถปรับแต่งให้มีรูปแบบได้หลากหลาย และ customized ได้ตามความต้องการของผู้เขียนรายงาน ในเบื้องต้นผู้เขียนรายงานสามารถปรับแต่ง theme และ highlight ของเอกสารได้โดยกำหนดบนส่วน YAML header ดังเช่น
 
 ```{r eval=F}
+---
 title: "my first rmarkdown"
 author: "Siwachoat Srisuttiyakorn"
 date: "5/23/2021"
@@ -254,135 +543,61 @@ output:
   html_document:
     theme: united
     hightlight: tango
+---
 ```
 
-- `theme` ที่สามารถกำหนดได้อ้างอิงจาก [package-Bootswatch](https://bootswatch.com/3/) โดยสามารถกำหนดได้เป็น *default, cerulean, journal, flatly, darkly, readable, spacelab, united, cosmo, lumen, paper, sandstone, simplex* และ *yeti*
+- `theme` ที่สามารถกำหนดได้อ้างอิงจาก [package-Bootswatch](https://bootswatch.com/3/) ลองพิมพ์คำสั่ง `bslib::bootswatch_themes()`โดยสามารถกำหนดได้เป็น *default, cerulean, journal, flatly, darkly, readable, spacelab, united, cosmo, lumen, paper, sandstone, simplex* และ *yeti*
 
 - `highlight` ที่สามารถกำหนดได้ได้แก่ *default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, breezedark* และ *textmate*
 
-
-
-## Tabbed sections
-
-รูปแบบของสารบัญสามารถทำให้อยู่ในรูปแบบของแถบเมนูได้ โดยรูปแบบพื้นฐานสามารถสร้างได้ง่าย ๆ ดังนี้
-
-![](/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/Screen Shot 2564-05-23 at 09.23.27.png)
-
-การกำหนดแถบเมนูดังกล่าวมี option ให้เลือกเพิ่มเติมอีก 2 ตัวได้แก่ `.tabset-fade` ใช้เพิ่ม fade in และ fade out effect เมื่อกดเลือกแถบเมนูแต่ละแถบ และ `.tabset-pills` ใช้เพิ่ม effect เป็นสีของแถบเมนูเมื่อกดเลือกแถบนั้น ๆ 
+## Custom Themes
 
 ```{r eval=F}
-# tabmenu {.tabset .tabset-fade .tabset-pills}
+?bs_theme
 ```
 
-# การสร้างตาราง
-
-การสร้างตารางใน rmarkdown มีหลายวิธีมาก วิธีการหนึ่งที่มีประสิทธิภาพคือการใช้ [package-kableExtra](https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf)
-
-[ดาวน์โหลดไฟล์ข้อมูล](http://161.200.152.253/2758604/datafiles/t2.sav) 
-
-```{r message=F}
-library(foreign)
-library(dplyr)
-#install.packages("kableExtra")
-library(kableExtra)
-dat<-read.spss("/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/t2.sav",to.data.frame = T)
-subset<-dat%>%select(id,matach,ses_kb,sibl,male)
-kable(head(subset))
+```
+---
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    theme: 
+      bg: "#121212"
+      fg: "#E4E4E4"
+      base_font:
+        google: "Prompt"
+---
 ```
 
-จะเห็นว่าตารางในข้างต้นค่อยข้างเรียบเกินไป ไม่ค่อยสวย และอาจดูยากในกรณีที่มีข้อมูลจำนวนมาก ๆ ผู้ใช้สามารถปรับแต่งลักษณะของตารางได้ตามความต้องการผ่านฟังก์ชัน `kable_styling()` 
+## Styling with CSS
 
-```{r}
-head(subset)%>%
-      kable()%>%
-      kable_styling()
+CSS คือ ภาษาที่ใช้สำหรับตกแต่งเอกสาร HTML/XHTML ให้มีหน้าตา สีสัน ระยะห่าง พื้นหลัง เส้นขอบและอื่นๆ ตามที่ต้องการ CSS ย่อมาจาก Cascading Style Sheets มีลักษณะเป็นภาษาที่มีรูปแบบในการเขียน Syntax แบบเฉพาะและได้ถูกกำหนดมาตรฐานโดย W3C ผู้อ่านสามารถอ้างอิงวิธีการเขียน CSS ได้จากหลายแหล่งใน google เช่น https://www.w3schools.com/css/
 
-head(subset)%>%
-      kable()%>%
-      kable_styling(bootstrap_options = c("striped"))
 
-head(subset)%>%
-      kable()%>%
-      kable_styling(bootstrap_options = c("striped","hover"))
-
-head(subset)%>%
-      kable()%>%
-      kable_styling(bootstrap_options = c("striped","hover"),
-                              position="left",full_width = F)
+```
+title: "my first rmarkdown"
+author: "Siwachoat Srisuttiyakorn"
+date: "5/23/2021"
+output: 
+  html_document:
+    css: "style.css"
 ```
 
 
-```{r}
-head(subset)%>%
-      kable()%>%
-      kable_styling(bootstrap_options = c("striped","hover"),
-                              position="float_right",full_width = F)
-```
 
-ตารางข้อมูล t2.sav ประกอบด้วยค่าสังเกตของตัวแปรทั้งหมด 4 ตัวได้แก่ ผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของนักเรียน (matach) เศรษฐานะของครอบครัวนักเรียนที่วัดจากรายได้ของหัวหน้าครอบครัว หน่วยเป็น 1,000 บาท (ses_kb) จำนวนพี่น้องในครอบครัว (sibl) และตัวแปร dummy ของเพศชาย (male)
+# Interactive Documents
 
-จะเห็นว่าการกำหนด position="float_right" ทำให้สามารถเขียนคำอธิบายตารางไว้ด้านข้างของตารางได้
+R markdown สามารถทำงานร่วมกับ package-shiny เพื่อสร้าง interactive document ได้ เช่น
+
+- https://siwachoat.shinyapps.io/example/
+
+- https://bit.ly/KruRooPower
 
 
-```{r}
-head(subset)%>%
-      kable()%>%
-      kable_styling(bootstrap_options = c("striped","hover"),
-                              position="left",full_width = F,
-                              font_size = 11)
-```
+</br>
 
-## Column Specification
-
-```{r}
-text_tbl <- data.frame(
-  Items = c("Item 1", "Item 2", "Item 3"),
-  Features = c(
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula tempor ex. Morbi malesuada sagittis turpis, at venenatis nisl luctus a. ",
-    "In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius, posuere risus et, cursus augue. Duis eleifend aliquam ante, a aliquet ex tincidunt in. ", 
-    "Vivamus venenatis egestas eros ut tempus. Vivamus id est nisi. Aliquam molestie erat et sollicitudin venenatis. In ac lacus at velit scelerisque mattis. "
-  )
-)
-
-kable(text_tbl) %>%
-  kable_styling(full_width = F) %>%
-  column_spec(1, bold = T, border_right = T) %>%
-  column_spec(2, width = "30em", background = "grey")
-```
-
-## Row Specification
-
-```{r}
-kable(head(subset,10)) %>%
-  kable_styling("striped", full_width = F) %>%
-  column_spec(2, bold = T) %>%
-  row_spec(7:10, bold = T, color = "white", background = "grey")
-```
-
-## Header Specification
-
-```{r}
-kable(head(subset)) %>%
-  kable_styling("striped", full_width = F) %>%
-  row_spec(0, angle = -45,color="white",background = "#D7261E")
-
-```
-
-## Grouped Columns
-
-```{r}
-kable(head(subset)) %>%
-  kable_styling("striped",font_size = 14,full_width = F) %>%
-  add_header_above(c(" " = 1,"Achievement" = 1,"Family Background" = 3))
-```
-
-## Scroll box table
-
-```{r}
-kable(dat) %>%
-  kable_styling() %>%
-  scroll_box(width = "500px", height = "400px")
-```
-
+</br>
 
 ---

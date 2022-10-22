@@ -7,12 +7,12 @@
 
         <meta name="author" content="สิวะโชติ ศรีสุทธิยากร" />
     
-        <meta name="date" content="2021-09-19" />
+        <meta name="date" content="2022-10-22" />
     
     <title>R markdown</title>
 
-        <script src="rmarkdown_files/header-attrs-2.10/header-attrs.js"></script>
-        <script src="rmarkdown_files/jquery-1.11.3/jquery.min.js"></script>
+        <script src="rmarkdown_files/header-attrs-2.14/header-attrs.js"></script>
+        <script src="rmarkdown_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="rmarkdown_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
         <script src="rmarkdown_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -32,6 +32,7 @@
       pre > code.sourceCode { white-space: pre; position: relative; }
       pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
       pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
       code.sourceCode > span { color: inherit; text-decoration: inherit; }
       div.sourceCode { margin: 1em 0; }
       pre.sourceCode { margin: 0; }
@@ -189,33 +190,81 @@
         </ul>
         <nav role="navigation" id="toc">
           <ul>
-          <li><a href="#whats-rmarkdown">What’s Rmarkdown</a></li>
-          <li><a href="#ติดตั้ง-package-พื้นฐาน">ติดตั้ง package พื้นฐาน</a></li>
-          <li><a href="#กิจกรรม-1-สร้างเอกสาร-rmarkdown">กิจกรรม 1: สร้างเอกสาร rmarkdown</a></li>
-          <li><a href="#กิจกรรม-2-โครงสร้างของ-rmd-file">กิจกรรม 2: โครงสร้างของ RMD file</a></li>
-          <li><a href="#กิจกรรม-3-สร้างเอกสารจาก-rmarkdown">กิจกรรม 3: สร้างเอกสารจาก rmarkdown</a></li>
-          <li><a href="#r-code-chunks">R code chunks</a></li>
-          <li><a href="#introduction-to-markdown">Introduction to Markdown</a></li>
-          <li><a href="#yaml-header">YAML header</a>
+          <li><a href="#whats-rmarkdown" id="toc-whats-rmarkdown">What’s
+          Rmarkdown</a></li>
+          <li><a href="#ตดตง-package-พนฐาน"
+          id="toc-ตดตง-package-พนฐาน">ติดตั้ง package พื้นฐาน</a></li>
+          <li><a href="#กจกรรม-1-สรางเอกสาร-rmarkdown"
+          id="toc-กจกรรม-1-สรางเอกสาร-rmarkdown">กิจกรรม 1: สร้างเอกสาร
+          rmarkdown</a></li>
+          <li><a href="#กจกรรม-2-สรางเอกสารจาก-rmarkdown"
+          id="toc-กจกรรม-2-สรางเอกสารจาก-rmarkdown">กิจกรรม 2:
+          สร้างเอกสารจาก rmarkdown</a></li>
+          <li><a href="#กจกรรม-3-โครงสรางของ-rmd-file"
+          id="toc-กจกรรม-3-โครงสรางของ-rmd-file">กิจกรรม 3: โครงสร้างของ
+          RMD file</a>
           <ul>
-          <li><a href="#table-of-contents">Table of contents</a></li>
-          <li><a href="#การปรับแต่งรูปแบบของเอกสารเบื้องต้น">การปรับแต่งรูปแบบของเอกสารเบื้องต้น</a></li>
-          <li><a href="#tabbed-sections">Tabbed sections</a></li>
+          <li><a href="#header"
+          id="toc-header"><strong>Header</strong></a></li>
+          <li><a href="#markdown-sections"
+          id="toc-markdown-sections"><strong>Markdown
+          sections</strong></a></li>
+          <li><a href="#embed-code" id="toc-embed-code"><strong>Embed
+          Code</strong></a></li>
           </ul></li>
-          <li><a href="#การสร้างตาราง">การสร้างตาราง</a>
+          <li><a href="#markdown-basic" id="toc-markdown-basic">Markdown
+          Basic</a>
           <ul>
-          <li><a href="#column-specification">Column Specification</a></li>
-          <li><a href="#row-specification">Row Specification</a></li>
-          <li><a href="#header-specification">Header Specification</a></li>
-          <li><a href="#grouped-columns">Grouped Columns</a></li>
-          <li><a href="#scroll-box-table">Scroll box table</a></li>
+          <li><a href="#header-1" id="toc-header-1">Header</a></li>
+          <li><a href="#text-styles" id="toc-text-styles">text
+          styles</a></li>
+          <li><a href="#horizontal-rule"
+          id="toc-horizontal-rule">Horizontal rule</a></li>
+          <li><a href="#เวนบรรทด" id="toc-เวนบรรทด">เว้นบรรทัด</a></li>
+          <li><a href="#bullet" id="toc-bullet">Bullet</a></li>
+          <li><a href="#hyper-link" id="toc-hyper-link">Hyper
+          link</a></li>
+          <li><a href="#math-equations" id="toc-math-equations">Math
+          Equations</a></li>
+          <li><a href="#insert-images" id="toc-insert-images">Insert
+          Images</a></li>
+          <li><a href="#insert-youtube-video"
+          id="toc-insert-youtube-video">Insert youtube video</a></li>
+          <li><a href="#block-quotes" id="toc-block-quotes">block
+          quotes</a></li>
+          <li><a href="#very-basic-html-table"
+          id="toc-very-basic-html-table">Very basic HTML table</a></li>
+          <li><a href="#creating-table-with-kableextra"
+          id="toc-creating-table-with-kableextra">Creating table with
+          kableExtra</a></li>
+          <li><a href="#tabsets" id="toc-tabsets">Tabsets</a></li>
+          <li><a href="#my-tabsets" id="toc-my-tabsets">My
+          Tabsets</a></li>
+          <li><a href="#section" id="toc-section"></a></li>
           </ul></li>
+          <li><a href="#yaml-header" id="toc-yaml-header">YAML
+          header</a>
+          <ul>
+          <li><a href="#output-format" id="toc-output-format">Output
+          format</a></li>
+          <li><a href="#table-of-contents"
+          id="toc-table-of-contents">Table of contents</a></li>
+          <li><a href="#การปรบแตงรปแบบของเอกสารเบองตน"
+          id="toc-การปรบแตงรปแบบของเอกสารเบองตน">การปรับแต่งรูปแบบของเอกสารเบื้องต้น</a></li>
+          <li><a href="#custom-themes" id="toc-custom-themes">Custom
+          Themes</a></li>
+          <li><a href="#styling-with-css"
+          id="toc-styling-with-css">Styling with CSS</a></li>
+          </ul></li>
+          <li><a href="#interactive-documents"
+          id="toc-interactive-documents">Interactive Documents</a></li>
           </ul>
         </nav>
         <ul class="authors">
           <li class="divider"></li>
-                                <li><span><i class="glyphicon glyphicon-user"></i> สิวะโชติ ศรีสุทธิยากร</span></li>
-                                         <li><span><i class="glyphicon glyphicon-calendar"></i> 2021-09-19</span></li>
+                                <li><span><i class="glyphicon glyphicon-user"></i> สิวะโชติ
+ศรีสุทธิยากร</span></li>
+                                         <li><span><i class="glyphicon glyphicon-calendar"></i> 2022-10-22</span></li>
                   </ul>     
       </div>
       <div class="book-body fixed">
@@ -237,176 +286,294 @@
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <p style="line-height:1.3; font-size:16px; color: #353b48; text-align:right;">
-สิวะโชติ ศรีสุทธิยากร </br> </br> ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์ </br> จุฬาลงกรณ์มหาวิทยาลัย </br> </font> 23 May 2021 </font>
+สิวะโชติ ศรีสุทธิยากร </br> </br> ภาควิชาวิจัยและจิตวิทยาการศึกษา คณะครุศาสตร์ </br>
+จุฬาลงกรณ์มหาวิทยาลัย </br> </font> 23 May 2021 </font>
 </p>
 <div id="whats-rmarkdown" class="section level1">
 <h1>What’s Rmarkdown</h1>
-<p>rmarkdown เป็น package สร้างเอกสารจากโปรแกรม R ที่ช่วยให้ผู้วิเคราะห์สามารถดำเนินการวิเคราะห์และสร้างรายงานผลการวิเคราะห์ได้ภายในไฟล์คำสั่งเดียว นอกจากนี้ rmarkdown ยังสามารถ convert ชุดคำสั่งที่สร้างขึ้นให้เป็นเอกสารที่มีรูปแบบหลากหลาย เช่น PDF document, HTML และ Word document โดยมีหลักการทำงานดังรูป</p>
-<p><left><img src="rmarkdown_workflow.png" style="width:60.0%" /></left></p>
-<p>นอกจากนี้ยังเป็นพื้นฐานที่สามารถนำไปประยุกต์ใช้สร้างเอกสารในรูปแบบอื่นที่หลากหลาย เช่น</p>
+<p>rmarkdown เป็น package สร้างเอกสารจากโปรแกรม R
+ที่ช่วยให้ผู้วิเคราะห์สามารถดำเนินการวิเคราะห์และสร้างรายงานผลการวิเคราะห์ได้ภายในไฟล์คำสั่งเดียว
+นอกจากนี้ rmarkdown ยังสามารถ convert
+ชุดคำสั่งที่สร้างขึ้นให้เป็นเอกสารที่มีรูปแบบหลากหลาย เช่น PDF document, HTML และ Word
+document โดยมีหลักการทำงานดังรูป</p>
+<p><left><img
+src="rmarkdown_workflow.png"
+style="width:60.0%" /></left></p>
+<p>นอกจากนี้ยังเป็นพื้นฐานที่สามารถนำไปประยุกต์ใช้สร้างเอกสารในรูปแบบอื่นที่หลากหลาย
+เช่น</p>
 <ul>
-<li><p><a href="https://ssiwacho.github.io/2758501/week1/week1.html#1">Presentation document</a></p></li>
-<li><p><a href="https://siwachoat.shinyapps.io/multinomial/#section-introduction">Tutorial document</a></p></li>
-<li><p><a href="https://161.200.152.253/2758604/nakornnayok/">Dashboard</a></p></li>
+<li><p><a
+href="https://ssiwacho.github.io/2758501/week1/week1.html#1">Presentation
+document</a></p></li>
+<li><p><a
+href="https://siwachoat.shinyapps.io/multinomial/#section-introduction">Tutorial
+document</a></p></li>
+<li><p><a
+href="https://161.200.152.253/2758604/nakornnayok/">Dashboard</a></p></li>
 </ul>
 </div>
-<div id="ติดตั้ง-package-พื้นฐาน" class="section level1">
+<div id="ตดตง-package-พนฐาน" class="section level1">
 <h1>ติดตั้ง package พื้นฐาน</h1>
-<p>การสร้างเอกสาร rmarkdown แบบพื้นฐานสามารถสร้างได้โดยง่ายผ่าน Rstudio IDE โดยจะมีเมนูลัดให้ผู้ใช้เลือกสร้างเอกสารได้อย่างสะดวก ส่วนผู้ที่ไม่ได้ใช้ Rstudio ก็สามารถสร้างเอกสาร rmarkdown จากโปรแกรม R โดยตรง ก่อนดำเนินการใด ๆ ผู้ใช้จำเป็นต้องติดตั้ง package-rmarkdown และ package อื่น ๆ ที่เกี่ยวข้อง โดยพิมพ์คำสั่งดังนี้</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<p>การสร้างเอกสาร rmarkdown แบบพื้นฐานสามารถสร้างได้โดยง่ายผ่าน Rstudio IDE
+โดยจะมีเมนูลัดให้ผู้ใช้เลือกสร้างเอกสารได้อย่างสะดวก ส่วนผู้ที่ไม่ได้ใช้ Rstudio
+ก็สามารถสร้างเอกสาร rmarkdown จากโปรแกรม R โดยตรง ก่อนดำเนินการใด ๆ
+ผู้ใช้จำเป็นต้องติดตั้ง package-rmarkdown และ package อื่น ๆ ที่เกี่ยวข้อง
+โดยพิมพ์คำสั่งดังนี้</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>, <span class="at">dependencies=</span><span class="cn">TRUE</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span></code></pre></div>
 </div>
-<div id="กิจกรรม-1-สร้างเอกสาร-rmarkdown" class="section level1">
+<div id="กจกรรม-1-สรางเอกสาร-rmarkdown" class="section level1">
 <h1>กิจกรรม 1: สร้างเอกสาร rmarkdown</h1>
-<p>จากที่กล่าวไปในข้างต้น การสร้างเอกสาร rmarkdown สามารถสร้างได้จากทั้งใน Rstudio และโปรแกรม R กิจกรรมแรกในวันนี้จะให้ผู้เรียนสร้างเอกสาร rmarkdown จาก Rstudio ก่อน ผู้เรียนที่ยังไม่ได้ติดตั้งโปรแกรมสามารถติดตั้งได้โดย<a href="https://www.rstudio.com/products/rstudio/download/">คลิ้กที่นี่</a></p>
+<p>จากที่กล่าวไปในข้างต้น การสร้างเอกสาร rmarkdown สามารถสร้างได้จากทั้งใน Rstudio
+และโปรแกรม R กิจกรรมแรกในวันนี้จะให้ผู้เรียนสร้างเอกสาร rmarkdown จาก Rstudio ก่อน
+ผู้เรียนที่ยังไม่ได้ติดตั้งโปรแกรมสามารถติดตั้งได้โดย<a
+href="https://www.rstudio.com/products/rstudio/download/">คลิ้กที่นี่</a></p>
 <p>สำหรับผู้ที่ติดตั้งเรียบร้อยแล้วให้ดำเนินการตามขั้นตอนต่อไปนี้</p>
 <ol style="list-style-type: decimal">
 <li><p>เปิด Rstudio</p></li>
 <li><p>ดาวน์โหลดและติดตั้ง package-rmarkdown</p></li>
-<li><p>ในโปรแกรม Rstudio คลิ้กเลือก <code>File/New File/R Markdown</code> ดังตัวอย่างในรูปด้านล่าง จากนั้นผู้เรียนจะได้พบกับหน้าต่าง New R Markdown ให้กำหนด Title และ Author</p></li>
+<li><p>ในโปรแกรม Rstudio คลิ้กเลือก <code>File/New File/R Markdown</code>
+ดังตัวอย่างในรูปด้านล่าง จากนั้นผู้เรียนจะได้พบกับหน้าต่าง New R Markdown ให้กำหนด Title
+และ Author</p></li>
 </ol>
-<p><img src="1.png" /></p>
-<p><left><img src="2.png" style="width:60.0%" /></left></p>
+<p><img
+src="1.png" /></p>
+<p><left><img
+src="2.png"
+style="width:60.0%" /></left></p>
 </div>
-<div id="กิจกรรม-2-โครงสร้างของ-rmd-file" class="section level1">
-<h1>กิจกรรม 2: โครงสร้างของ RMD file</h1>
-<p>เมื่อดำเนินการเสร็จผู้ใช้จะได้หน้าต่าง script file ที่มีนามสกุล .rmd (RMarkdown file) ที่มีตัวอย่าง syntax รายงานผลการวิเคราะห์ข้อมูล ดังรูปด้านล่าง</p>
-<p><img src="Screen%20Shot%202564-05-23%20at%2008.34.26.png" /></p>
-<p>หากสังเกตดี ๆ ไฟล์ RMD ที่ generate ได้นั้นมีส่วนประกอบหลัก 3 ส่วนด้วยกันคือ</p>
-<ol style="list-style-type: decimal">
-<li><strong>Header</strong> เป็นคำสั่งในส่วนหัวของไฟล์ RMD เขียนในรูปแบบ <em>YAML</em> โดยจะกำหนดอยู่บริเวณส่วนต้นของไฟล์ .rmd โดยถูกคร่อมด้วยเครื่องหมาย — ดังรูป</li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span><span class="st">&quot;my first rmarkdown&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span><span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span><span class="st">&quot;5/23/2021&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span>html_document</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ---</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li><p><strong>Markdown sections</strong> เป็นส่วนของเอกสารใช้เก็บเนื้อหาต่าง ๆ ข้อมูลรวมทั้งผลการวิเคราะห์ที่ต้องการทำเป็นรายงาน การเขียนคำสั่งในส่วนนี้จะใช้ภาษา markdown เป็นหลัก</p></li>
-<li><p><strong>Code chunks</strong> เป็นส่วนชุดคำสั่งภาษา R ที่ฝังอยู่ในเอกสาร</p></li>
-</ol>
+<div id="กจกรรม-2-สรางเอกสารจาก-rmarkdown" class="section level1">
+<h1>กิจกรรม 2: สร้างเอกสารจาก rmarkdown</h1>
+<p>เมื่อดำเนินการเสร็จผู้ใช้จะได้หน้าต่าง script file ที่มีนามสกุล .rmd (RMarkdown
+file) ที่มีตัวอย่าง syntax รายงานผลการวิเคราะห์ข้อมูล ดังรูปด้านล่าง</p>
+<p><img
+src="Screen%20Shot%202564-05-23%20at%2008.34.26.png" /></p>
 <p>ผู้เรียนลองพิจารณาว่าเอกสาร rmarkdown ที่สร้างขึ้นในครั้งแรกนี้มีเนื้อหาอะไรบ้าง?</p>
-</div>
-<div id="กิจกรรม-3-สร้างเอกสารจาก-rmarkdown" class="section level1">
-<h1>กิจกรรม 3: สร้างเอกสารจาก rmarkdown</h1>
 <ol style="list-style-type: decimal">
-<li><p>ใน Rstudio ผู้ใช้สามารถสร้างเอกสาร rmarkdown ได้โดยการคลิ้กที่ปุ่ม <strong>Knit</strong> แล้วสังเกตผลลัพธ์ที่ได้</p></li>
-<li><p>ผู้เรียนลองเปลี่ยน format ของเอกสารเป็น pdf และ word document จากนั้นสังเกตผลลัพธ์ที่ได้</p></li>
+<li><p>ใน Rstudio ผู้ใช้สามารถสร้างเอกสาร rmarkdown ได้โดยการคลิ้กที่ปุ่ม
+<strong>Knit</strong> แล้วสังเกตผลลัพธ์ที่ได้</p></li>
+<li><p>ผู้เรียนลองเปลี่ยน format ของเอกสารเป็น pdf และ word document
+จากนั้นสังเกตผลลัพธ์ที่ได้</p></li>
 </ol>
 </div>
-<div id="r-code-chunks" class="section level1">
-<h1>R code chunks</h1>
-<p>จากกิจกรรมข้างต้นผู้เรียนทราบแล้วว่า code chunks เป็นส่วนที่ยอมให้ผู้วิเคราะห์สามารถเขียนคำสั่งภาษา R เพื่อทำการวิเคราะห์และรายงานผลการวิเคราะห์ดังกล่าวภายในเอกสาร rmarkdown ได้ ในทางปฏิบัติผู้วิเคราะห์สามารถกำหนดคุณสมบัติของ code chunks ได้หลายประการผ่านอาร์กิวเมนท์หลายตัว ดังนี้</p>
-<ul>
-<li><p><code>echo</code> ใช้สำหรับระบุว่าจะให้แสดงชุดคำสั่งที่ใช้ในการวิเคราะห์ข้อมูลหรือไม่ ถ้าต้องการให้แสดงจะกำหนด <code>echo=TRUE</code> (ค่าเริ่มต้น) แต่ถ้าไม่ต้องการจะกำหนด <code>echo=FALSE</code></p></li>
-<li><p><code>eval</code> ใช้สำหรับระบุว่าจะให้ประมวลผลชุดคำสั่งภายใน chunk หรือไม่ ถ้าต้องการให้ประมวลผลจะกำหนด <code>eval=TRUE</code> (ค่าเริ่มต้น) แต่ถ้าไม่ต้องการจะกำหนด <code>eval=FALSE</code></p></li>
-<li><p><code>warning</code> ใช้กำหนดว่ายอมให้โปรแกรมแสดงคำแจ้งเตือนต่าง ๆ ในรายงานผลการวิเคราะห์หรือไม่ ถ้ายอมจะกำหนดให้ <code>warning=TRUE</code> (ค่าเริ่มต้น) ถ้าไม่ต้องการจะกำหนดให้ <code>warning=FALSE</code></p></li>
-<li><p><code>error</code> และ <code>message</code> กำหนดในทำนองเดียวกับ <code>warning</code> โดยที่ <code>error</code> จะเป็นการกำหนดว่าต้องการให้แจ้งเตือน error ต่าง ๆ ที่เกิดขึ้นจากการประมวลผลหรือไม่ ส่วน <code>message</code> เป็นการกำหนดว่าต้องการให้แสดงข้อความจากการดำเนินการต่าง ๆ ของโปรแกรมหรือไม่</p></li>
-<li><p><code>results</code> ใช้กำหนดว่าจะให้โปรแกรมนำเสนอผลการวิเคราะห์ข้อมูลหรือไม่ (ค่าเริ่มต้น <code>results=TRUE</code>)</p></li>
-<li><p><code>fig.width</code>, <code>fig.height</code> ใช้กำหนดความกว้างและความสูงของแผนภาพที่สร้างจากโปรแกรม R (ค่าเริ่มต้น <code>fig.width=7</code>) โดยหน่วยเป็น นิ้ว (inches)</p></li>
-<li><p><code>fig.align</code> ใช้กำหนดตำแหน่งที่จะวางแผนภาพในรายงาน โดยสามารถกำหนดได้ 3 ค่าคือ <code>left, center, right</code> (ค่าเริ่มต้น <code>fig.align="left"</code>)</p></li>
-</ul>
-<p>ลองสร้าง code chunk ใน rmarkdown จากนั้นกำหนดอาร์กิวเมนท์ต่าง ๆ ข้างต้น แล้วสังเกตผลลัพธ์ที่ได้</p>
-<p>นอกจากนี้ผู้ใช้ยังสามารถผังคำสั่งขนาดเล็กเพื่อช่วยประมวลผลลัพธ์ภายในย่อหน้าหรือเนื้อความต่าง ๆ ของเอกสาร ขอให้ผู้เรียนลองพิมพ์คำสั่งในรูปต่อไปนี้จากนั้นกด knit แล้วสังเกตผลลัพธ์ที่ได้</p>
-<p><img src="exam1.png" /></p>
+<div id="กจกรรม-3-โครงสรางของ-rmd-file" class="section level1">
+<h1>กิจกรรม 3: โครงสร้างของ RMD file</h1>
+<p>หากสังเกตดี ๆ ไฟล์ RMD ที่ generate ได้นั้นมีส่วนประกอบหลัก 3 ส่วนด้วยกันคือ</p>
+<div id="header" class="section level2">
+<h2><strong>Header</strong></h2>
+<p>เป็นคำสั่งในส่วนหัวของไฟล์ RMD เขียนในรูปแบบ <em>YAML</em>
+โดยจะกำหนดอยู่บริเวณส่วนต้นของไฟล์ .rmd โดยถูกคร่อมด้วยเครื่องหมาย — ดังรูป</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;my first rmarkdown&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;5/23/2021&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> html_document</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ---</span></span></code></pre></div>
 </div>
-<div id="introduction-to-markdown" class="section level1">
-<h1>Introduction to Markdown</h1>
-<p>ผู้เรียนทราบแล้วว่าส่วนหลักของเอกสารที่สร้างจาก rmarkdown ใช้ภาษา markdown เป็นหลัก ภาษานี้เป็นภาษาที่เขียนค่อนข้างง่ายใกล้เคียงกับการเขียนเอกสารในโปรแกรม MS word หรือ Text processing ตัวอื่น ๆ ส่วนที่แตกต่างกันคือ markdown ไม่ได้มีเมนูลัดให้ผู้ใช้กดเพื่อปรับแต่งหน้าตาหรือคุณลักษณะของตัวอักษร การดำเนินการดังกล่าวใน markdown จำเป็นต้องสั่งการผ่าน syntax โดยมีรายละเอียดของคำสั่งพื้นฐานดังนี้</p>
+<div id="markdown-sections" class="section level2">
+<h2><strong>Markdown sections</strong></h2>
+<p>เป็นส่วนของเอกสารใช้เก็บเนื้อหาต่าง ๆ
+ข้อมูลรวมทั้งผลการวิเคราะห์ที่ต้องการทำเป็นรายงาน การเขียนคำสั่งในส่วนนี้จะใช้ภาษา
+markdown เป็นหลัก</p>
+</div>
+<div id="embed-code" class="section level2">
+<h2><strong>Embed Code</strong></h2>
+<p>R markdown มีจุดเด่นคือสามารถผังชุดคำสั่งของภาษา R (รวมทั้ง python) เพื่อนำเข้า
+จัดกระทำ วิเคราะห์ และสร้างทัศนภาพข้อมูล และนำเสนอในเอกสารได้ ชุดคำสั่งที่ผังอยู่ใน R
+markdown document สามารถใส่ได้หลายชุดคำสั่ง โดยที่แต่ละชุดจะถูกเขียนอยู่ใน
+<strong>code chunks</strong></p>
+<p>การสร้าง code chunck ใน R markdown สามารถทำได้ภายใต้สัญลักษณ์
+<code>{r} และ</code> หรือกดที่ปุ่ม insert Code Chunk ด้านบน</p>
+<p>ในทางปฏิบัติผู้วิเคราะห์สามารถกำหนดคุณสมบัติของ code chunks
+ได้หลายประการผ่านอาร์กิวเมนท์ดังนี้</p>
+<p><left><img
+src="codechunk.png"
+style="width:50.0%" /></left></p>
+<p>ลองสร้าง code chunk ใน rmarkdown จากนั้นกำหนดอาร์กิวเมนท์ต่าง ๆ ข้างต้น
+แล้วสังเกตผลลัพธ์ที่ได้</p>
+<p>นอกจากนี้ผู้ใช้ยังสามารถผังคำสั่งขนาดเล็กเพื่อช่วยประมวลผลลัพธ์ภายในย่อหน้าหรือเนื้อความต่าง
+ๆ ของเอกสาร ขอให้ผู้เรียนลองพิมพ์คำสั่งในรูปต่อไปนี้จากนั้นกด knit
+แล้วสังเกตผลลัพธ์ที่ได้</p>
+<p><img
+src="exam1.png" /></p>
+</div>
+</div>
+<div id="markdown-basic" class="section level1">
+<h1>Markdown Basic</h1>
+<p>ผู้เรียนทราบแล้วว่าส่วนหลักของเอกสารที่สร้างจาก rmarkdown ใช้ภาษา markdown
+เป็นหลัก ภาษานี้เป็นภาษาที่เขียนค่อนข้างง่ายใกล้เคียงกับการเขียนเอกสารในโปรแกรม MS word
+หรือ Text processing ตัวอื่น ๆ ส่วนที่แตกต่างกันคือ markdown
+ไม่ได้มีเมนูลัดให้ผู้ใช้กดเพื่อปรับแต่งหน้าตาหรือคุณลักษณะของตัวอักษร การดำเนินการดังกล่าวใน
+markdown จำเป็นต้องสั่งการผ่าน syntax โดยมีรายละเอียดของคำสั่งพื้นฐานดังนี้</p>
+<div id="header-1" class="section level2">
+<h2>Header</h2>
+<pre><code># Header1
+
+## Header2
+
+### Header3
+
+#### Header4
+
+##### Header5
+
+###### Header6
+</code></pre>
+<div id="header3" class="section level3">
+<h3>Header3</h3>
+<div id="header4" class="section level4">
+<h4>Header4</h4>
+<div id="header5" class="section level5">
+<h5>Header5</h5>
+</div>
+</div>
+</div>
+</div>
+<div id="text-styles" class="section level2">
+<h2>text styles</h2>
 <ul>
-<li><p><code>#</code> หมายถึงหัวข้อ (header) ของเอกสาร ข้อความที่ต่อท้ายเครื่องหมายนี้จะเป็นหัวข้อ</p></li>
-<li><p><code>**</code> ข้อความภายใต้สัญลักษณ์ดังกล่าวจะเป็นตัวหนา เช่น <code>**ตัวหนา**</code> —&gt; <strong>ตัวหนา</strong></p></li>
-<li><p><code>*</code> ข้อความภายใต้สัญลักษณ์นี้จะเป็นตัวเอียง เช่น <code>*ตัวเอียง*</code> —&gt; <em>ตัวเอียง</em></p></li>
-<li><p><code>[Link](https://www.google.com)</code> ใช้สร้าง hyperlink ภายในเอกสาร เช่น <code>[คลิ้กที่นี่](www.edu.chula.ac.th)</code></p></li>
-<li><p><code>$$</code> ใช้เขียนสมการหรือสัญลักษณ์ทางคณิตศาสตร์ โดยจะใช้ภาษา latex เป็นเครื่องมือ ผู้เริ่มหัดใช้ latex สามารถใช้ตัวช่วย generate syntax ของ latex ได้ เช่น <a href="https://www.codecogs.com/latex/eqneditor.php">Online Latex</a></p></li>
-<li><p><code>---</code> หรือ <code>***</code> ใช้ขีดเส้นคั่นส่วนของเอกสารในแนวนอน</p></li>
-<li><p><code>![image name](path-to-image)</code> ใช้สอดแทรกรูปแบบลงในเอกสาร เช่น <code>![](0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg)</code></p></li>
+<li><p>เน้นตัวหนาโดยเขียนคำสั่ง <code>**</code> คร่่อมข้อความที่ต้องการทำตัวหนา เช่น
+`<strong>ตัวหนา</strong> —&gt; <strong>ตัวหนา</strong></p></li>
+<li><p>ข้อความภายใต้สัญลักษณ์ <code>*</code> นี้จะเป็นตัวเอียง เช่น
+<code>*ตัวเอียง*</code> —&gt; <em>ตัวเอียง</em></p></li>
+<li><p><code>superscript^2^</code>/<code>subscript~2~</code></p></li>
+<li><p><code>~~strikethrough~~</code></p></li>
 </ul>
+</div>
+<div id="horizontal-rule" class="section level2">
+<h2>Horizontal rule</h2>
+<p><code>emdash: ---</code></p>
+<hr />
+</div>
+<div id="เวนบรรทด" class="section level2">
+<h2>เว้นบรรทัด</h2>
+<ul>
+<li><code>escaped: \ หรือ \\</code></li>
+</ul>
+<hr />
+</div>
+<div id="bullet" class="section level2">
+<h2>Bullet</h2>
+<p>bullet มี 2 ประเภทได้แก่ unordered และ ordered bullet ดังนี้</p>
+<pre><code>- unordered bullet1
+- xxx bullet2
+  - bullet2.1
+  - bullet2.2</code></pre>
+<ul>
+<li>unordered bullet1</li>
+<li>xxx bullet2
+<ul>
+<li>bullet2.1</li>
+<li>bullet2.2</li>
+</ul></li>
+</ul>
+<pre><code>1. ordered bullet1
+2. bullet2
+  - bullet2.1
+  - bullet2.2</code></pre>
+<ol style="list-style-type: decimal">
+<li>ordered bullet1</li>
+<li>bullet2</li>
+</ol>
+<ul>
+<li>bullet2.1</li>
+<li>bullet2.2</li>
+</ul>
+<hr />
+</div>
+<div id="hyper-link" class="section level2">
+<h2>Hyper link</h2>
+<p><code>[Link](https://www.google.com)</code> ใช้สร้าง hyperlink
+ภายในเอกสาร เช่น <code>[คลิ้กที่นี่](www.edu.chula.ac.th)</code></p>
+<p><a href="www.edu.chula.ac.th">คลิ้กที่นี่</a></p>
+</div>
+<div id="math-equations" class="section level2">
+<h2>Math Equations</h2>
+<p><code>$$</code> ใช้เขียนสมการหรือสัญลักษณ์ทางคณิตศาสตร์ โดยจะใช้ภาษา latex
+เป็นเครื่องมือ ผู้เริ่มหัดใช้ latex สามารถใช้ตัวช่วย generate syntax ของ latex ได้ เช่น
+<a href="https://www.codecogs.com/latex/eqneditor.php">Online
+Latex</a></p>
+<pre><code>$f(x)=x^2+2x+1$</code></pre>
+<p><span class="math inline">\(f(x)=x^2+2x+1\)</span></p>
+<pre><code>$f(x|\mu, \sigma) = \frac{1}{\sqrt{\sigma \pi}}exp(\frac{1}{2\sigma^2}(x-\mu)^2)$
+</code></pre>
+<p><span class="math inline">\(f(x|\mu, \sigma) = \frac{1}{\sqrt{\sigma
+\pi}}exp(\frac{1}{2\sigma^2}(x-\mu)^2)\)</span></p>
+</div>
+<div id="insert-images" class="section level2">
+<h2>Insert Images</h2>
+<p><code>![image name](path-to-image)</code> ใช้สอดแทรกรูปลงในเอกสาร เช่น
+<code>![](0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg)</code></p>
 <p><img src="0DF8258E-9B79-4D34-9F47-E29C62E1E390.jpg" /></p>
+</div>
+<div id="insert-youtube-video" class="section level2">
+<h2>Insert youtube video</h2>
 <ul>
 <li>การแทรก clip video จาก youtube สามารถใช้การ embed video ได้เช่น</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>iframe width<span class="ot">=</span><span class="st">&quot;560&quot;</span> height<span class="ot">=</span><span class="st">&quot;315&quot;</span> src<span class="ot">=</span><span class="st">&quot;https://www.youtube.com/embed/uZCD6XS333s&quot;</span> title<span class="ot">=</span><span class="st">&quot;YouTube video player&quot;</span> frameborder<span class="ot">=</span><span class="st">&quot;0&quot;</span> allow<span class="ot">=</span><span class="st">&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot;</span> allowfullscreen<span class="sc">&gt;</span><span class="er">&lt;/</span>iframe<span class="sc">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>iframe width<span class="ot">=</span><span class="st">&quot;560&quot;</span> height<span class="ot">=</span><span class="st">&quot;315&quot;</span> src<span class="ot">=</span><span class="st">&quot;https://www.youtube.com/embed/uZCD6XS333s&quot;</span> title<span class="ot">=</span><span class="st">&quot;YouTube video player&quot;</span> frameborder<span class="ot">=</span><span class="st">&quot;0&quot;</span> allow<span class="ot">=</span><span class="st">&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot;</span> allowfullscreen<span class="sc">&gt;</span><span class="er">&lt;/</span>iframe<span class="sc">&gt;</span></span></code></pre></div>
 <p>ซึ่งจะให้ผลลัพธ์เป็นดังนี้</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uZCD6XS333s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 </div>
-<div id="yaml-header" class="section level1">
-<h1>YAML header</h1>
-<p>ใน YAML header ผู้ใช้สามารถกำหนด option เพิ่มเติมเพื่อเปลี่ยนลักษณะของเอกสารให้เป็นไปตามที่ต้องการได้ดังนี้</p>
-<div id="table-of-contents" class="section level2">
-<h2>Table of contents</h2>
-<p>ผู้ใช้ Rmarkdown สามารถสร้างส่วนสารบัญของเอกสาร โดยเขียนคำสั่งเพิ่มเติมใน YAML header ดังตัวอย่างด้านล่าง โดยโปรแกรมจะใช้ header ในเอกสารส่วนของ markdown มาสร้างเป็น table of contents</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span><span class="st">&quot;my first rmarkdown&quot;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span><span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span><span class="st">&quot;5/23/2021&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span>html_document<span class="sc">:</span>toc<span class="sc">:</span>true</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>toc_depth<span class="sc">:</span><span class="dv">2</span>  <span class="co"># specific level of table content</span></span></code></pre></div>
-<div id="toc_float" class="section level3">
-<h3><code>toc_float</code></h3>
-<p>หากเพิ่ม option <code>toc_float</code> ใน YAML จะปรับรูปแบบ table of contents ให้เป็นแบบลอยตัว และตั้งอยู่ด้านซ้ายมือของเอกสาร</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span><span class="st">&quot;my first rmarkdown&quot;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span><span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span><span class="st">&quot;5/23/2021&quot;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span>html_document<span class="sc">:</span>toc<span class="sc">:</span>true</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>toc_depth<span class="sc">:</span><span class="dv">2</span>  <span class="co"># specific level of table content</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>toc_float<span class="sc">:</span>true</span></code></pre></div>
-<p><code>toc_float</code> ยังมี option ให้กำหนดเพิ่มเติมได้อีก คือ <code>collapsed</code> และ <code>smooth_scroll</code> ทั้งนี้คือเริ่มต้นของ option ทั้งสองเป็น TRUE ทั้งหมด</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span><span class="st">&quot;my first rmarkdown&quot;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span><span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span><span class="st">&quot;5/23/2021&quot;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span>html_document<span class="sc">:</span>toc<span class="sc">:</span>true</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>toc_depth<span class="sc">:</span><span class="dv">2</span>  <span class="co"># specific level of table content</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>toc_float<span class="sc">:</span>collapsed<span class="sc">:</span>false</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>smooth_scroll<span class="sc">:</span>false</span></code></pre></div>
+<div id="block-quotes" class="section level2">
+<h2>block quotes</h2>
+<pre><code>&gt; All models are wrong, but some are useful. (Box, G., 1976)</code></pre>
+<blockquote>
+<p>All models are wrong, but some are useful. (Box, G., 1976)</p>
+</blockquote>
 </div>
-<div id="กำหนดเลขหัวข้อ-section-numbering" class="section level3">
-<h3>กำหนดเลขหัวข้อ (section numbering)</h3>
-<p>ผู้เขียนรายงานสามารถกำหนดให้โปรแกรมรันเลขให้กับหัวข้อในสารบัญของเอกสารได้ กำหนด option <code>number_sections</code> เพิ่มเติมดังนี้</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span><span class="st">&quot;my first rmarkdown&quot;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span><span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span><span class="st">&quot;5/23/2021&quot;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span>html_document<span class="sc">:</span>toc<span class="sc">:</span>true</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>toc_depth<span class="sc">:</span><span class="dv">2</span>  <span class="co"># specific level of table content</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>toc_float<span class="sc">:</span>collapsed<span class="sc">:</span>false</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>smooth_scroll<span class="sc">:</span>false</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>number_sections<span class="sc">:</span>true</span></code></pre></div>
+<div id="very-basic-html-table" class="section level2">
+<h2>Very basic HTML table</h2>
+<pre><code>|Right | Left | Default | Center | 
+|-------:|:------|-----------|:---------:| 
+| 12 | 12 | 12 | 12 |
+| 123 | 123 | 123 | 123 |
+|1 |1 | 1 |1 |</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Right</th>
+<th align="left">Left</th>
+<th>Default</th>
+<th align="center">Center</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">12</td>
+<td align="left">12</td>
+<td>12</td>
+<td align="center">12</td>
+</tr>
+<tr class="even">
+<td align="right">123</td>
+<td align="left">123</td>
+<td>123</td>
+<td align="center">123</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">1</td>
+<td>1</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-<div id="การปรับแต่งรูปแบบของเอกสารเบื้องต้น" class="section level2">
-<h2>การปรับแต่งรูปแบบของเอกสารเบื้องต้น</h2>
-<p>เอกสาร rmarkdown ในรูปแบบ HTML สามารถปรับแต่งให้มีรูปแบบได้หลากหลาย และ customized ได้ตามความต้องการของผู้เขียนรายงาน ในเบื้องต้นผู้เขียนรายงานสามารถปรับแต่ง theme และ highlight ของเอกสารได้โดยกำหนดบนส่วน YAML header ดังเช่น</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span><span class="st">&quot;my first rmarkdown&quot;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span><span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span><span class="st">&quot;5/23/2021&quot;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span>html_document<span class="sc">:</span>theme<span class="sc">:</span>united</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>hightlight<span class="sc">:</span>tango</span></code></pre></div>
-<ul>
-<li><p><code>theme</code> ที่สามารถกำหนดได้อ้างอิงจาก <a href="https://bootswatch.com/3/">package-Bootswatch</a> โดยสามารถกำหนดได้เป็น <em>default, cerulean, journal, flatly, darkly, readable, spacelab, united, cosmo, lumen, paper, sandstone, simplex</em> และ <em>yeti</em></p></li>
-<li><p><code>highlight</code> ที่สามารถกำหนดได้ได้แก่ <em>default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, breezedark</em> และ <em>textmate</em></p></li>
-</ul>
-</div>
-<div id="tabbed-sections" class="section level2">
-<h2>Tabbed sections</h2>
-<p>รูปแบบของสารบัญสามารถทำให้อยู่ในรูปแบบของแถบเมนูได้ โดยรูปแบบพื้นฐานสามารถสร้างได้ง่าย ๆ ดังนี้</p>
-<p><img src="Screen%20Shot%202564-05-23%20at%2009.23.27.png" /></p>
-<p>การกำหนดแถบเมนูดังกล่าวมี option ให้เลือกเพิ่มเติมอีก 2 ตัวได้แก่ <code>.tabset-fade</code> ใช้เพิ่ม fade in และ fade out effect เมื่อกดเลือกแถบเมนูแต่ละแถบ และ <code>.tabset-pills</code> ใช้เพิ่ม effect เป็นสีของแถบเมนูเมื่อกดเลือกแถบนั้น ๆ</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabmenu {.tabset .tabset-fade .tabset-pills}</span></span></code></pre></div>
-</div>
-</div>
-<div id="การสร้างตาราง" class="section level1">
-<h1>การสร้างตาราง</h1>
-<p>การสร้างตารางใน rmarkdown มีหลายวิธีมาก วิธีการหนึ่งที่มีประสิทธิภาพคือการใช้ <a href="https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf">package-kableExtra</a></p>
-<p><a href="http://161.200.152.253/2758604/datafiles/t2.sav">ดาวน์โหลดไฟล์ข้อมูล</a></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&#39;kableExtra&#39;)</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">&quot;/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/t2.sav&quot;</span>, </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">to.data.frame =</span> T)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, matach, ses_kb, sibl, male)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset))</span></code></pre></div>
+<div id="creating-table-with-kableextra" class="section level2">
+<h2>Creating table with kableExtra</h2>
+<p>การสร้างตารางใน rmarkdown มีหลายวิธีมาก วิธีการหนึ่งที่มีประสิทธิภาพคือการใช้ <a
+href="https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf">package-kableExtra</a></p>
+<p><a
+href="http://161.200.152.253/2758604/datafiles/t2.sav">ดาวน์โหลดไฟล์ข้อมูล</a></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;kableExtra&quot;)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">read.spss</span>(<span class="st">&quot;/Users/siwachoat/Library/Mobile Documents/com~apple~CloudDocs/github/ssiwacho/2758501/ssiwacho.github.io/rmarkdown/t2.sav&quot;</span>,<span class="at">to.data.frame =</span> T)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>subset<span class="ot">&lt;-</span>dat<span class="sc">%&gt;%</span><span class="fu">select</span>(id,matach,ses_kb,sibl,male)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -532,8 +699,13 @@ male
 </tr>
 </tbody>
 </table>
-<p>จะเห็นว่าตารางในข้างต้นค่อยข้างเรียบเกินไป ไม่ค่อยสวย และอาจดูยากในกรณีที่มีข้อมูลจำนวนมาก ๆ ผู้ใช้สามารถปรับแต่งลักษณะของตารางได้ตามความต้องการผ่านฟังก์ชัน <code>kable_styling()</code></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset) <span class="sc">%&gt;%</span> <span class="fu">kable</span>() <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>()</span></code></pre></div>
+<p>จะเห็นว่าตารางในข้างต้นค่อยข้างเรียบเกินไป ไม่ค่อยสวย
+และอาจดูยากในกรณีที่มีข้อมูลจำนวนมาก ๆ
+ผู้ใช้สามารถปรับแต่งลักษณะของตารางได้ตามความต้องการผ่านฟังก์ชัน
+<code>kable_styling()</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)<span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable_styling</span>()</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -659,7 +831,9 @@ male
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset) <span class="sc">%&gt;%</span> <span class="fu">kable</span>() <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)<span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>))</span></code></pre></div>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -785,7 +959,9 @@ male
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset) <span class="sc">%&gt;%</span> <span class="fu">kable</span>() <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)<span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;hover&quot;</span>))</span></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -911,8 +1087,10 @@ male
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset) <span class="sc">%&gt;%</span> <span class="fu">kable</span>() <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">&quot;left&quot;</span>, <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)<span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;hover&quot;</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">position=</span><span class="st">&quot;left&quot;</span>,<span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped table-hover" style="width: auto !important; ">
 <thead>
 <tr>
@@ -1038,8 +1216,10 @@ male
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset) <span class="sc">%&gt;%</span> <span class="fu">kable</span>() <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">&quot;float_right&quot;</span>, <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)<span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;hover&quot;</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">position=</span><span class="st">&quot;float_right&quot;</span>,<span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped table-hover" style="width: auto !important; float: right; margin-left: 10px;">
 <thead>
 <tr>
@@ -1165,10 +1345,17 @@ male
 </tr>
 </tbody>
 </table>
-<p>ตารางข้อมูล t2.sav ประกอบด้วยค่าสังเกตของตัวแปรทั้งหมด 4 ตัวได้แก่ ผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของนักเรียน (matach) เศรษฐานะของครอบครัวนักเรียนที่วัดจากรายได้ของหัวหน้าครอบครัว หน่วยเป็น 1,000 บาท (ses_kb) จำนวนพี่น้องในครอบครัว (sibl) และตัวแปร dummy ของเพศชาย (male)</p>
-<p>จะเห็นว่าการกำหนด position=“float_right” ทำให้สามารถเขียนคำอธิบายตารางไว้ด้านข้างของตารางได้</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset) <span class="sc">%&gt;%</span> <span class="fu">kable</span>() <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">&quot;left&quot;</span>, <span class="at">full_width =</span> F, <span class="at">font_size =</span> <span class="dv">11</span>)</span></code></pre></div>
+<p>ตารางข้อมูล t2.sav ประกอบด้วยค่าสังเกตของตัวแปรทั้งหมด 4 ตัวได้แก่
+ผลสัมฤทธิ์ทางการเรียนวิชาคณิตศาสตร์ของนักเรียน (matach)
+เศรษฐานะของครอบครัวนักเรียนที่วัดจากรายได้ของหัวหน้าครอบครัว หน่วยเป็น 1,000 บาท
+(ses_kb) จำนวนพี่น้องในครอบครัว (sibl) และตัวแปร dummy ของเพศชาย (male)</p>
+<p>จะเห็นว่าการกำหนด position=“float_right”
+ทำให้สามารถเขียนคำอธิบายตารางไว้ด้านข้างของตารางได้</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(subset)<span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;hover&quot;</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">position=</span><span class="st">&quot;left&quot;</span>,<span class="at">full_width =</span> F,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">font_size =</span> <span class="dv">11</span>)</span></code></pre></div>
 <table class="table table-striped table-hover" style="font-size: 11px; width: auto !important; ">
 <thead>
 <tr>
@@ -1294,14 +1481,21 @@ male
 </tr>
 </tbody>
 </table>
-<div id="column-specification" class="section level2">
-<h2>Column Specification</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>text_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Items =</span> <span class="fu">c</span>(<span class="st">&quot;Item 1&quot;</span>, <span class="st">&quot;Item 2&quot;</span>, <span class="st">&quot;Item 3&quot;</span>), <span class="at">Features =</span> <span class="fu">c</span>(<span class="st">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula tempor ex. Morbi malesuada sagittis turpis, at venenatis nisl luctus a. &quot;</span>, </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius, posuere risus et, cursus augue. Duis eleifend aliquam ante, a aliquet ex tincidunt in. &quot;</span>, </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Vivamus venenatis egestas eros ut tempus. Vivamus id est nisi. Aliquam molestie erat et sollicitudin venenatis. In ac lacus at velit scelerisque mattis. &quot;</span>))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(text_tbl) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="at">full_width =</span> F) <span class="sc">%&gt;%</span> <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">bold =</span> T, <span class="at">border_right =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_spec</span>(<span class="dv">2</span>, <span class="at">width =</span> <span class="st">&quot;30em&quot;</span>, <span class="at">background =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<div id="column-specification" class="section level3">
+<h3>Column Specification</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>text_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Items =</span> <span class="fu">c</span>(<span class="st">&quot;Item 1&quot;</span>, <span class="st">&quot;Item 2&quot;</span>, <span class="st">&quot;Item 3&quot;</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Features =</span> <span class="fu">c</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula tempor ex. Morbi malesuada sagittis turpis, at venenatis nisl luctus a. &quot;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius, posuere risus et, cursus augue. Duis eleifend aliquam ante, a aliquet ex tincidunt in. &quot;</span>, </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Vivamus venenatis egestas eros ut tempus. Vivamus id est nisi. Aliquam molestie erat et sollicitudin venenatis. In ac lacus at velit scelerisque mattis. &quot;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(text_tbl) <span class="sc">%&gt;%</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">bold =</span> T, <span class="at">border_right =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">2</span>, <span class="at">width =</span> <span class="st">&quot;30em&quot;</span>, <span class="at">background =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1319,7 +1513,8 @@ Features
 Item 1
 </td>
 <td style="text-align:left;width: 30em; background-color: grey !important;">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula tempor ex. Morbi malesuada sagittis turpis, at venenatis nisl luctus a.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula
+tempor ex. Morbi malesuada sagittis turpis, at venenatis nisl luctus a.
 </td>
 </tr>
 <tr>
@@ -1327,7 +1522,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula tempor e
 Item 2
 </td>
 <td style="text-align:left;width: 30em; background-color: grey !important;">
-In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius, posuere risus et, cursus augue. Duis eleifend aliquam ante, a aliquet ex tincidunt in.
+In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius,
+posuere risus et, cursus augue. Duis eleifend aliquam ante, a aliquet ex
+tincidunt in.
 </td>
 </tr>
 <tr>
@@ -1335,16 +1532,20 @@ In eu urna at magna luctus rhoncus quis in nisl. Fusce in velit varius, posuere 
 Item 3
 </td>
 <td style="text-align:left;width: 30em; background-color: grey !important;">
-Vivamus venenatis egestas eros ut tempus. Vivamus id est nisi. Aliquam molestie erat et sollicitudin venenatis. In ac lacus at velit scelerisque mattis.
+Vivamus venenatis egestas eros ut tempus. Vivamus id est nisi. Aliquam
+molestie erat et sollicitudin venenatis. In ac lacus at velit
+scelerisque mattis.
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="row-specification" class="section level2">
-<h2>Row Specification</h2>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset, <span class="dv">10</span>)) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span> <span class="fu">column_spec</span>(<span class="dv">2</span>, </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">bold =</span> T) <span class="sc">%&gt;%</span> <span class="fu">row_spec</span>(<span class="dv">7</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">background =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<div id="row-specification" class="section level3">
+<h3>Row Specification</h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset,<span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">2</span>, <span class="at">bold =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">7</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">background =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1539,10 +1740,11 @@ male
 </tbody>
 </table>
 </div>
-<div id="header-specification" class="section level2">
-<h2>Header Specification</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset)) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span> <span class="fu">row_spec</span>(<span class="dv">0</span>, </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">angle =</span> <span class="sc">-</span><span class="dv">45</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">background =</span> <span class="st">&quot;#D7261E&quot;</span>)</span></code></pre></div>
+<div id="header-specification" class="section level3">
+<h3>Header Specification</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">angle =</span> <span class="sc">-</span><span class="dv">45</span>,<span class="at">color=</span><span class="st">&quot;white&quot;</span>,<span class="at">background =</span> <span class="st">&quot;#D7261E&quot;</span>)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1669,10 +1871,11 @@ male
 </tbody>
 </table>
 </div>
-<div id="grouped-columns" class="section level2">
-<h2>Grouped Columns</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset)) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>, <span class="at">font_size =</span> <span class="dv">14</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at"> </span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="at">Achievement =</span> <span class="dv">1</span>, <span class="st">`</span><span class="at">Family Background</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code></pre></div>
+<div id="grouped-columns" class="section level3">
+<h3>Grouped Columns</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(subset)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>,<span class="at">font_size =</span> <span class="dv">14</span>,<span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">&quot; &quot;</span> <span class="ot">=</span> <span class="dv">1</span>,<span class="st">&quot;Achievement&quot;</span> <span class="ot">=</span> <span class="dv">1</span>,<span class="st">&quot;Family Background&quot;</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code></pre></div>
 <table class="table table-striped" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1813,10 +2016,13 @@ male
 </tbody>
 </table>
 </div>
-<div id="scroll-box-table" class="section level2">
-<h2>Scroll box table</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat) <span class="sc">%&gt;%</span> <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span> <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;500px&quot;</span>, <span class="at">height =</span> <span class="st">&quot;400px&quot;</span>)</span></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:500px; ">
+<div id="scroll-box-table" class="section level3">
+<h3>Scroll box table</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat) <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">&quot;500px&quot;</span>, <span class="at">height =</span> <span class="st">&quot;400px&quot;</span>)</span></code></pre></div>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:500px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -3013,8 +3219,199 @@ z_ses
 </tbody>
 </table>
 </div>
-<hr />
+<p></br></p>
+<p>รายละเอียดอื่น ๆ สามารถศึกษาได้จาก <a
+href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html"
+class="uri">https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html</a></p>
 </div>
+</div>
+<div id="tabsets" class="section level2">
+<h2>Tabsets</h2>
+<pre><code>## My Tabsets {.tabset}
+
+### my data
+
+head(iris)
+
+### histogram
+
+library(ggplot2)
+ggplot(iris)+
+  geom_histogram(aes(x=Sepal.Length))+
+  facet_wrap(~Species)</code></pre>
+</div>
+<div id="my-tabsets" class="section level2 tabset">
+<h2 class="tabset">My Tabsets</h2>
+<div id="my-data" class="section level3">
+<h3>my data</h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div>
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+<div id="histogram" class="section level3">
+<h3>histogram</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris)<span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length))<span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)</span></code></pre></div>
+<p><img src="rmarkdown_files/figure-html/unnamed-chunk-14-1.png" width="768" /></p>
+</div>
+</div>
+<div id="section" class="section level2">
+<h2></h2>
+<p>การกำหนดแถบเมนูดังกล่าวมี option ให้เลือกเพิ่มเติมอีก 2 ตัวได้แก่
+<code>.tabset-fade</code> ใช้เพิ่ม fade in และ fade out effect
+เมื่อกดเลือกแถบเมนูแต่ละแถบ และ <code>.tabset-pills</code> ใช้เพิ่ม effect
+เป็นสีของแถบเมนูเมื่อกดเลือกแถบนั้น ๆ</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabmenu {.tabset .tabset-fade .tabset-pills}</span></span></code></pre></div>
+</div>
+</div>
+<div id="yaml-header" class="section level1">
+<h1>YAML header</h1>
+<p>ใน YAML header ผู้ใช้สามารถกำหนด option
+เพิ่มเติมเพื่อเปลี่ยนลักษณะของเอกสารให้เป็นไปตามที่ต้องการได้ดังนี้</p>
+<div id="output-format" class="section level2">
+<h2>Output format</h2>
+<pre><code>title: &quot;my first rmarkdown&quot;
+author: &quot;Siwachoat Srisuttiyakorn&quot;
+date: &quot;5/23/2021&quot;
+output: 
+  html_document:
+    toc: true</code></pre>
+<p><left><img
+src="Screen%20Shot%202565-10-22%20at%2012.52.23.png"
+style="width:50.0%" /></left></p>
+</div>
+<div id="table-of-contents" class="section level2">
+<h2>Table of contents</h2>
+<p>ผู้ใช้ Rmarkdown สามารถสร้างส่วนสารบัญของเอกสาร โดยเขียนคำสั่งเพิ่มเติมใน YAML
+header ดังตัวอย่างด้านล่าง โดยโปรแกรมจะใช้ header ในเอกสารส่วนของ markdown
+มาสร้างเป็น table of contents</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;my first rmarkdown&quot;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;5/23/2021&quot;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    toc<span class="sc">:</span> true</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    toc_depth<span class="sc">:</span> <span class="dv">2</span> <span class="co"># specific level of table content</span></span></code></pre></div>
+<div id="toc_float" class="section level3">
+<h3><code>toc_float</code></h3>
+<p>หากเพิ่ม option <code>toc_float</code> ใน YAML จะปรับรูปแบบ table of
+contents ให้เป็นแบบลอยตัว และตั้งอยู่ด้านซ้ายมือของเอกสาร</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;my first rmarkdown&quot;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;5/23/2021&quot;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    toc<span class="sc">:</span> true</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    toc_depth<span class="sc">:</span> <span class="dv">2</span> <span class="co"># specific level of table content</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    toc_float<span class="sc">:</span> true</span></code></pre></div>
+<p><code>toc_float</code> ยังมี option ให้กำหนดเพิ่มเติมได้อีก คือ
+<code>collapsed</code> และ <code>smooth_scroll</code> ทั้งนี้คือเริ่มต้นของ
+option ทั้งสองเป็น TRUE ทั้งหมด</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;my first rmarkdown&quot;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;5/23/2021&quot;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    toc<span class="sc">:</span> true</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    toc_depth<span class="sc">:</span> <span class="dv">2</span> <span class="co"># specific level of table content</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    toc_float<span class="sc">:</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        collapsed<span class="sc">:</span> false</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        smooth_scroll<span class="sc">:</span> false</span></code></pre></div>
+</div>
+<div id="กำหนดเลขหวขอ-section-numbering" class="section level3">
+<h3>กำหนดเลขหัวข้อ (section numbering)</h3>
+<p>ผู้เขียนรายงานสามารถกำหนดให้โปรแกรมรันเลขให้กับหัวข้อในสารบัญของเอกสารได้ กำหนด
+option <code>number_sections</code> เพิ่มเติมดังนี้</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;my first rmarkdown&quot;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;5/23/2021&quot;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    toc<span class="sc">:</span> true</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    toc_depth<span class="sc">:</span> <span class="dv">2</span> <span class="co"># specific level of table content</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    toc_float<span class="sc">:</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        collapsed<span class="sc">:</span> false</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        smooth_scroll<span class="sc">:</span> false</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    number_sections<span class="sc">:</span> true</span></code></pre></div>
+</div>
+</div>
+<div id="การปรบแตงรปแบบของเอกสารเบองตน" class="section level2">
+<h2>การปรับแต่งรูปแบบของเอกสารเบื้องต้น</h2>
+<p>เอกสาร rmarkdown ในรูปแบบ HTML สามารถปรับแต่งให้มีรูปแบบได้หลากหลาย และ
+customized ได้ตามความต้องการของผู้เขียนรายงาน ในเบื้องต้นผู้เขียนรายงานสามารถปรับแต่ง
+theme และ highlight ของเอกสารได้โดยกำหนดบนส่วน YAML header ดังเช่น</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">&quot;my first rmarkdown&quot;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">&quot;Siwachoat Srisuttiyakorn&quot;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">&quot;5/23/2021&quot;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>output<span class="sc">:</span> </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  html_document<span class="sc">:</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    theme<span class="sc">:</span> united</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    hightlight<span class="sc">:</span> tango</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div>
+<ul>
+<li><p><code>theme</code> ที่สามารถกำหนดได้อ้างอิงจาก <a
+href="https://bootswatch.com/3/">package-Bootswatch</a> ลองพิมพ์คำสั่ง
+<code>bslib::bootswatch_themes()</code>โดยสามารถกำหนดได้เป็น <em>default,
+cerulean, journal, flatly, darkly, readable, spacelab, united, cosmo,
+lumen, paper, sandstone, simplex</em> และ <em>yeti</em></p></li>
+<li><p><code>highlight</code> ที่สามารถกำหนดได้ได้แก่ <em>default, tango,
+pygments, kate, monochrome, espresso, zenburn, haddock, breezedark</em>
+และ <em>textmate</em></p></li>
+</ul>
+</div>
+<div id="custom-themes" class="section level2">
+<h2>Custom Themes</h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>?bs_theme</span></code></pre></div>
+<pre><code>---
+title: &quot;my first rmarkdown&quot;
+author: &quot;Siwachoat Srisuttiyakorn&quot;
+date: &quot;5/23/2021&quot;
+output: 
+  html_document:
+    theme: 
+      bg: &quot;#121212&quot;
+      fg: &quot;#E4E4E4&quot;
+      base_font:
+        google: &quot;Prompt&quot;
+---</code></pre>
+</div>
+<div id="styling-with-css" class="section level2">
+<h2>Styling with CSS</h2>
+<p>CSS คือ ภาษาที่ใช้สำหรับตกแต่งเอกสาร HTML/XHTML ให้มีหน้าตา สีสัน ระยะห่าง พื้นหลัง
+เส้นขอบและอื่นๆ ตามที่ต้องการ CSS ย่อมาจาก Cascading Style Sheets
+มีลักษณะเป็นภาษาที่มีรูปแบบในการเขียน Syntax แบบเฉพาะและได้ถูกกำหนดมาตรฐานโดย W3C
+ผู้อ่านสามารถอ้างอิงวิธีการเขียน CSS ได้จากหลายแหล่งใน google เช่น <a
+href="https://www.w3schools.com/css/"
+class="uri">https://www.w3schools.com/css/</a></p>
+<pre><code>title: &quot;my first rmarkdown&quot;
+author: &quot;Siwachoat Srisuttiyakorn&quot;
+date: &quot;5/23/2021&quot;
+output: 
+  html_document:
+    css: &quot;style.css&quot;</code></pre>
+</div>
+</div>
+<div id="interactive-documents" class="section level1">
+<h1>Interactive Documents</h1>
+<p>R markdown สามารถทำงานร่วมกับ package-shiny เพื่อสร้าง interactive
+document ได้ เช่น</p>
+<ul>
+<li><p><a href="https://siwachoat.shinyapps.io/example/"
+class="uri">https://siwachoat.shinyapps.io/example/</a></p></li>
+<li><p><a href="https://bit.ly/KruRooPower"
+class="uri">https://bit.ly/KruRooPower</a></p></li>
+</ul>
+<p></br></p>
+<p></br></p>
+<hr />
 </div>
 
    
