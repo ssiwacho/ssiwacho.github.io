@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>หน่วยที่ 4 การเตรียมข้อมูล - ตอนที่ 4.1 การจัดระเบียบและการจัดกระทำข้อมูล</title>
+<title>หน่วยที่ 4 การเตรียมข้อมูล - ตอนที่ 4.1 การจัดระเบียบข้อมูล (tidying data)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -15,6 +15,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -56,6 +119,9 @@ ul.task-list{list-style: none;}
   }
 }</script>
 
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 </head>
 
@@ -65,7 +131,7 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">ตอนที่ 4.1 การจัดระเบียบและการจัดกระทำข้อมูล</h1>
+      <h1 class="quarto-secondary-nav-title">ตอนที่ 4.1 การจัดระเบียบข้อมูล (tidying data)</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -95,7 +161,7 @@ ul.task-list{list-style: none;}
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch4.1.html" class="sidebar-item-text sidebar-link active">ตอนที่ 4.1 การจัดระเบียบและการจัดกระทำข้อมูล</a>
+  <a href="./ch4.1.html" class="sidebar-item-text sidebar-link active">ตอนที่ 4.1 การจัดระเบียบข้อมูล (tidying data)</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -113,14 +179,28 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#เรองท-4.1.1-การสำรวจลกษณะของชดขอมล" id="toc-เรองท-4.1.1-การสำรวจลกษณะของชดขอมล" class="nav-link active" data-scroll-target="#เรองท-4.1.1-การสำรวจลกษณะของชดขอมล">เรื่องที่ 4.1.1 การสำรวจลักษณะของชุดข้อมูล</a>
+  <ul class="collapse">
+  <li><a href="#การเรยกดรายการและสถานะของตวแปร" id="toc-การเรยกดรายการและสถานะของตวแปร" class="nav-link" data-scroll-target="#การเรยกดรายการและสถานะของตวแปร"><strong>การเรียกดูรายการและสถานะของตัวแปร</strong></a></li>
+  <li><a href="#การเรยกดสวนหวและสวนทายของชดขอมล" id="toc-การเรยกดสวนหวและสวนทายของชดขอมล" class="nav-link" data-scroll-target="#การเรยกดสวนหวและสวนทายของชดขอมล"><strong>การเรียกดูส่วนหัวและส่วนท้ายของชุดข้อมูล</strong></a></li>
+  </ul></li>
+  <li><a href="#เรองท-4.1.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data" id="toc-เรองท-4.1.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data" class="nav-link" data-scroll-target="#เรองท-4.1.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data">เรื่องที่ 4.1.2 การปรับเปลี่ยนลักษณะของชุดข้อมูล (reshaping data)</a>
+  <ul class="collapse">
+  <li><a href="#การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว" id="toc-การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว" class="nav-link" data-scroll-target="#การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว">การปรับเปลี่ยนรูปแบบชุดข้อมูลระหว่างชุดข้อมูลแบบกว้างกับชุดข้อมูลแบบยาว</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">ตอนที่ 4.1 การจัดระเบียบและการจัดกระทำข้อมูล</h1>
+<h1 class="title d-none d-lg-block">ตอนที่ 4.1 การจัดระเบียบข้อมูล (tidying data)</h1>
 </div>
 
 
@@ -134,22 +214,373 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p>ชุดข้อมูล (data set) มีลักษณะเป็นตารางที่ใช้เก็บข้อมูลของตัวแปรต่าง ๆ ข้อมูลที่ถูกจัดเก็บอยู่ในตารางดังกล่าวเป็นไปได้ทั้งข้อมูลเชิงปริมาณที่มีค่าเป็นตัวเลข ข้อมูลเชิงคุณลักษณะที่ไม่ใช่ตัวเลข อย่างไรก็ตามการจัดเก็บข้อมูลในชุดข้อมูลในรูปแบบที่เหมาะสม จะช่วยให้การวิเคราะห์ข้อมูลตามวัตถุประสงค์ต่าง ๆ สามารถทำได้ง่ายและมีประสิทธิภาพ ในทางกลับกันการจัดเก็บข้อมูลในรูปแบบที่ไม่เหมาะสมจะเป็นอุปสรรคในการวิเคราะห์ข้อมูล นอกจากนี้ยังอาจเป็นปัจจัยที่ก่อให้เกิดความผิดพลาดในผลการวิเคราะห์อีกด้วย รูปแบบของชุดข้อมูลที่เหมาะสมและสนับสนุนให้การวิเคราะห์ข้อมูลสามารถดำเนินไปได้อย่างมีประสิทธิภาพเรียกว่า <strong>ชุดข้อมูลจัดระเบียบ (tidy data)</strong></p>
+<p><br></p>
+<p>ชุดข้อมูล (data set) มีลักษณะเป็นตารางที่ประกอบด้วยมิติด้านคอลัมน์ (column) และแถว (row) ใช้เก็บข้อมูลของตัวแปรต่าง ๆ ข้อมูลที่ถูกจัดเก็บอยู่ในตารางดังกล่าวเป็นไปได้ทั้งข้อมูลเชิงปริมาณที่มีค่าเป็นตัวเลข ข้อมูลเชิงคุณลักษณะที่ไม่ใช่ตัวเลข การออกแบบตารางสำหรับจัดเก็บข้อมูลนั้นสามารถทำได้หลากหลายลักษณะ พิจารณาชุดข้อมูลในตาราง 1 และ 2 ด้านล่างจะเห็นว่าถึงแม้จะเป็นเป็นชุดข้อมูลที่จัดเก็บข้อมูลเดียวกัน แต่ก็สามารถที่จะมีรูปแบบการจัดเก็บที่แตกต่างกันได้</p>
+<p><strong>ตาราง 1</strong> : คะแนนสอบวิชาคณิตศาสตร์และภาษาอังกฤษของนักเรียน (รูปแบบที่ 1)</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 15px; font-family: Sarabun; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> นักเรียน </th>
+   <th style="text-align:right;"> คะแนนวิชาคณิตศาสตร์ </th>
+   <th style="text-align:right;"> คะแนนวิชาวิทยาศาสตร์ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> บุญมา </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมี </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญเติม </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญหนัก </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><strong>ตาราง 2</strong> : คะแนนสอบวิชาคณิตศาสตร์และภาษาอังกฤษของนักเรียน (รูปแบบที่ 2)</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 15px; font-family: Sarabun; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> นักเรียน </th>
+   <th style="text-align:left;"> รายวิชา </th>
+   <th style="text-align:right;"> คะแนน </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> บุญมา </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมา </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมี </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมี </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญเติม </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญเติม </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญหนัก </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญหนัก </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><br></p>
+<p>อย่างไรก็ตามการจัดเก็บข้อมูลในชุดข้อมูลในรูปแบบที่เหมาะสมกับการดำเนินการวิเคราะห์ข้อมูล หรือการสร้างทัศนภาพข้อมูลจะช่วยให้การวิเคราะห์ข้อมูลตามวัตถุประสงค์ต่าง ๆ สามารถทำได้ง่ายและมีประสิทธิภาพ ในทางกลับกันการจัดเก็บข้อมูลในรูปแบบที่ไม่เหมาะสมจะเป็นอุปสรรคในการวิเคราะห์ข้อมูล นอกจากนี้ยังอาจเป็นปัจจัยที่ก่อให้เกิดความผิดพลาดในผลการวิเคราะห์อีกด้วย รูปแบบของชุดข้อมูลที่เหมาะสมและสนับสนุนให้การวิเคราะห์ข้อมูลสามารถดำเนินไปได้อย่างมีประสิทธิภาพเรียกว่า <strong>ชุดข้อมูลจัดระเบียบ (tidy data)</strong></p>
 <p>ชุดข้อมูลจัดระเบียบเป็นตารางข้อมูลที่มีลักษณะสำคัญของรูปแบบการจัดเก็บข้อมูล 3 ประการ (สิวะโชติ ศรีสุทธิยากร, 2564; Wickham, 2014) ดังนี้</p>
 <ol type="1">
 <li>มิติด้านคอลัมน์ (column) ของชุดข้อมูล เป็นมิติของตัวแปร โดยที่แต่ละคอลมน์จะใช้เก็บข้อมูลตัวแปรได้เพียงคอลัมน์ละหนึ่งตัวแปรเท่านั้น</li>
 <li>มิติด้านแถว (row) ของชุดข้อมูล เป็นมิติของหน่วยข้อมูล โดยที่แต่ละแถวจะใช้เก็บข้อมูลของหน่วยข้อมูลได้เพียงแถวละหนึ่งหน่วยข้อมูลเท่านั้น</li>
 <li>ภายในแต่ละเซลล์ (cell) ของชุดข้อมูล จะใช้เก็บข้อมูลค่าสังเกตได้เพียงค่าเดียวเท่านั้น</li>
 </ol>
-<p>รูป 4.1 แสดงตัวอย่างของชุดข้อมูลจัดระเบียบที่มีคุณลักษณะข้างต้น อย่างไรก็ตามในสถานการณ์จริงชุดข้อมูลส่วนใหญ่มักมีลักษณะที่ละเมิดเงื่อนไขของชุดข้อมูลจัดระเบียบข้างต้นอย่างน้อยหนึ่งข้อ การจัดระเบียบชุดข้อมูลจึงเป็นขั้นตอนที่มีความสำคัญภายใต้การดำเนินงานทางด้านวิทยาการข้อมูล เนื้อหาในตอนที่ 4.1 นี้จึงจะกล่าวถึงปัญหาความไม่เป็นระเบียบของชุดข้อมูล และวิธีการแก้ปัญหา รายละเอียดมีดังนี้</p>
-<div class="quarto-figure quarto-figure-center">
+<p>รูป 4.1 แสดงตัวอย่างของชุดข้อมูลจัดระเบียบที่มีคุณลักษณะข้างต้น สังเกตว่าหัวตาราง (แถวแรกของตาราง) จะเป็นส่วนที่ใช้ระบุชื่อของตัวแปรในแต่ละคอลัมน์ อย่างไรก็ตามในสถานการณ์จริงชุดข้อมูลส่วนใหญ่มักมีลักษณะที่ละเมิดเงื่อนไขของชุดข้อมูลจัดระเบียบข้างต้นอย่างน้อยหนึ่งข้อ การจัดระเบียบชุดข้อมูลจึงเป็นขั้นตอนที่มีความสำคัญภายใต้การดำเนินงานทางด้านวิทยาการข้อมูล เนื้อหาในตอนที่ 4.1 นี้จึงจะกล่าวถึง การสำรวจลักษณะของชุดข้อมูล เพื่อวิเคราะห์สภาพและระบุปัญหาความไม่เป็นระเบียบของชุดข้อมูล (ถ้ามี) จากนั้นจะกล่าวถึงวิธีการที่เกี่ยวข้องสำหรับแก้ปัญหาดังกล่าว รายละเอียดมีดังนี้</p>
+<div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="tidydata.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="tidydata.png" class="img-fluid figure-img" alt="ที่มา : ดัดแปลงจาก สิวะโชติ ศรีสุทธิยากร (2564)" style="width:70.0%"></p>
 <p></p><figcaption class="figure-caption">รูป 4.1 ตัวอย่างข้อมูลจัดระเบียบ</figcaption><p></p>
 </figure>
 </div>
+<p><br></p>
+<section id="เรองท-4.1.1-การสำรวจลกษณะของชดขอมล" class="level2">
+<h2 class="anchored" data-anchor-id="เรองท-4.1.1-การสำรวจลกษณะของชดขอมล">เรื่องที่ 4.1.1 การสำรวจลักษณะของชุดข้อมูล</h2>
+<p>ในหัวข้อนี้จะใช้ชุดข้อมูล <code>gapminder</code> (Bryan, 2017) ที่ประกอบด้วยข้อมูลเกี่ยวกับจำนวนประชากร (pop) ผลิตภัณฑ์มวลรวมในประเทศต่อหัว (gdpPercap) และอายุขัยเฉลี่ยของประชากร (lifeExp) ของประเทศต่าง ๆ เป็นตัวอย่างประกอบการอธิบาย เมื่อผู้วิเคราะห์นำข้อมูล <code>gapminder</code> เข้าสู่โปรแกรมแล้วเรียกดูชุดข้อมูลจะได้ผลลัพธ์ที่มีลักษณะดังนี้</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       country continent year lifeExp      pop gdpPercap
+1  Afghanistan      Asia 1952  28.801  8425333  779.4453
+2  Afghanistan      Asia 1957  30.332  9240934  820.8530
+3  Afghanistan      Asia 1962  31.997 10267083  853.1007
+4  Afghanistan      Asia 1967  34.020 11537966  836.1971
+5  Afghanistan      Asia 1972  36.088 13079460  739.9811
+6  Afghanistan      Asia 1977  38.438 14880372  786.1134
+7  Afghanistan      Asia 1982  39.854 12881816  978.0114
+8  Afghanistan      Asia 1987  40.822 13867957  852.3959
+9  Afghanistan      Asia 1992  41.674 16317921  649.3414
+10 Afghanistan      Asia 1997  41.763 22227415  635.3414</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      country continent year lifeExp      pop gdpPercap
+1695 Zimbabwe    Africa 1962  52.358  4277736  527.2722
+1696 Zimbabwe    Africa 1967  53.995  4995432  569.7951
+1697 Zimbabwe    Africa 1972  55.635  5861135  799.3622
+1698 Zimbabwe    Africa 1977  57.674  6642107  685.5877
+1699 Zimbabwe    Africa 1982  60.363  7636524  788.8550
+1700 Zimbabwe    Africa 1987  62.351  9216418  706.1573
+1701 Zimbabwe    Africa 1992  60.377 10704340  693.4208
+1702 Zimbabwe    Africa 1997  46.809 11404948  792.4500
+1703 Zimbabwe    Africa 2002  39.989 11926563  672.0386
+1704 Zimbabwe    Africa 2007  43.487 12311143  469.7093</code></pre>
+</div>
+</div>
+<p>ผลลัพธ์ข้างต้นจะเห็นว่าชุดข้อมูล <code>gapminder</code> ประกอบด้วยตัวแปรทั้งหมด 6 ตัว ได้แก่ ประเทศ (country) ทวีป (continent) ปี (year) อายุขัยเฉลี่ยของประชากร (lifeExp) จำนวนประชากร (pop) และผลิตภัณฑ์มวลรวมต่อหัวภายในประเทศ (gdpPercap) ผู้อ่านจะสังเกตเห็นว่าการเรียนดูข้อมูลทั้งชุดขึ้นมาโดยตรงดังตัวอย่างข้างต้นเป็นวิธีการที่ไม่มีประสิทธิภาพในการสำรวจข้อมูล ทั้งนี้เป็นเพราะในสถานการณ์ที่ข้อมูลมีจำนวนมาก วิธีการดังกล่าวจะให้รายละเอียดของชุดข้อมูลที่มากเกินไปโดยไม่จำเป็น นอกจากนี้ยังมีโอกาสสูงที่จะเกิดปัญหาข้อมูลล้นหน้าจอแสดงผล จนผู้วิเคราะห์ไม่สามารถทราบสภาพของชุดข้อมูลดังกล่าวได้อย่างสะดวก</p>
+<p>ในทางปฏิบัติการสำรวจชุดข้อมูลต่าง ๆ ผู้วิเคราะห์จะไม่ได้เรียกดูหรือสำรวจชุดข้อมูลทั้งหมดโดยตรง แต่จะใช้ module ของโปรแกรมวิเคราะห์ข้อมูลช่วยในการสำรวจ module ดังกล่าวจะทำหน้าที่สรุปสารสนเทศที่จำเป็นสำหรับการทำความเข้าใจสภาพของชุดข้อมูลดังกล่าว ได้แก่ การเรียกดูรายการและสถานะของตัวแปรในชุดข้อมูล และการเรียกดูส่วนหัวและส่วนท้ายของชุดข้อมูล รายละเอียดมีดังนี้</p>
+<section id="การเรยกดรายการและสถานะของตวแปร" class="level3">
+<h3 class="anchored" data-anchor-id="การเรยกดรายการและสถานะของตวแปร"><strong>การเรียกดูรายการและสถานะของตัวแปร</strong></h3>
+<p>วิธีการเรียกดูผลลัพธ์ส่วนนี้จะแตกต่างกันไปขึ้นอยู่กับผู้วิเคราะห์ว่าใช้โปรแกรมใด เช่น ในกรณีที่ใช้ภาษา R อาจเลือกใช้ฟังก์ชัน <code>str()</code> หรือ <code>glimpse()</code> หรือในกรณีที่ใช้ภาษา Python อาจเลือก method <code>info()</code> ภายใต้ pandas library เป็นต้น ผลการวิเคราะห์ด้านล่างแสดงผลลัพธ์ในภาษา R และ Python ดังกล่าว</p>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,704
+Columns: 6
+$ country   &lt;fct&gt; "Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", …
+$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
+$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …</code></pre>
+</div>
+</div>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>gapminder.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1704 entries, 0 to 1703
+Data columns (total 6 columns):
+ #   Column     Non-Null Count  Dtype   
+---  ------     --------------  -----   
+ 0   country    1704 non-null   category
+ 1   continent  1704 non-null   category
+ 2   year       1704 non-null   int32   
+ 3   lifeExp    1704 non-null   float64 
+ 4   pop        1704 non-null   int32   
+ 5   gdpPercap  1704 non-null   float64 
+dtypes: category(2), float64(2), int32(2)
+memory usage: 51.4 KB</code></pre>
+</div>
+</div>
+<hr>
+<p>เมื่อพิจารณาผลลัพธ์จากภาษา R ข้างต้นแสดงให้เห็นว่าในชุดข้อมูล <code>gapminder</code> ประกอบด้วยข้อมูลจำนวน 1,704 หน่วย และมีจำนวน 6 คอลัมน์ โดยมีการรายงานชื่อของตัวแปรในแต่ละคอลัมน์ พร้อมทั้งระบุสถานะของตัวแปรดังกล่าว เช่น ตัวแปร <code>country</code> มีสถานะเป็นตัวแปรประเภทปัจจัย (<code>fct</code>) หรือตัวแปร <code>year</code> มีสถานะเป็นตัวแปรตัวเลขจำนวนเต็ม (<code>int</code>) หรือตัวแปร <code>gdrPercap</code> มีสถานะเป็นตัวแปรประเภทจำนวนจริง (<code>dbl</code>) เป็นต้น ผลลัพธ์นี้ช่วยให้ผู้วิเคราะห์ทราบว่าการนำเข้าข้อมูลดังกล่าว นำเข้ามาอย่างถูกต้องหรือไม่ หากมีตัวแปรใดที่ถูกจัดเก็บอยู่ในสถานะที่ไม่เหมาะสม ผู้วิเคราะห์ก็สามารถดำเนินการแก้ไขปรับเปลี่ยนให้เหมาะสมได้ และเมื่อพิจารณาผลลัพธ์จากภาษา Python พบว่าให้สารสนเทศในลักษณะเดียวกับภาษา R</p>
+</section>
+<section id="การเรยกดสวนหวและสวนทายของชดขอมล" class="level3">
+<h3 class="anchored" data-anchor-id="การเรยกดสวนหวและสวนทายของชดขอมล"><strong>การเรียกดูส่วนหัวและส่วนท้ายของชุดข้อมูล</strong></h3>
+<p>วิธีการนี้เป็นวิธีการง่าย ๆ ที่ช่วยให้ผู้วิเคราะห์ทำความเข้าใจโครงสร้างของตารางข้อมูล ขอบเขตของตัวแปร รวมทั้งลักษณะของค่าสังเกตบางส่วนที่จัดเก็บอยู่ในชุดข้อมูล การดำเนินการส่วนนี้ด้วยภาษา R สามารถทำได้โดยใช้ฟังก์ชัน <code>head()</code> และ <code>tail()</code> ตามลำดับ ส่วนภาษา Python สามารถทำได้โดยใช้ method <code>head()</code> และ <code>tail()</code> ของ pandas libary ดังตัวอย่างต่อไปนี้</p>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  country     continent  year lifeExp      pop gdpPercap
+  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 Afghanistan Asia       1952    28.8  8425333      779.
+2 Afghanistan Asia       1957    30.3  9240934      821.
+3 Afghanistan Asia       1962    32.0 10267083      853.
+4 Afghanistan Asia       1967    34.0 11537966      836.
+5 Afghanistan Asia       1972    36.1 13079460      740.
+6 Afghanistan Asia       1977    38.4 14880372      786.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  country  continent  year lifeExp      pop gdpPercap
+  &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 Zimbabwe Africa     1982    60.4  7636524      789.
+2 Zimbabwe Africa     1987    62.4  9216418      706.
+3 Zimbabwe Africa     1992    60.4 10704340      693.
+4 Zimbabwe Africa     1997    46.8 11404948      792.
+5 Zimbabwe Africa     2002    40.0 11926563      672.
+6 Zimbabwe Africa     2007    43.5 12311143      470.</code></pre>
+</div>
+</div>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>gapminder.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       country continent  year  lifeExp       pop   gdpPercap
+0  Afghanistan      Asia  1952   28.801   8425333  779.445314
+1  Afghanistan      Asia  1957   30.332   9240934  820.853030
+2  Afghanistan      Asia  1962   31.997  10267083  853.100710
+3  Afghanistan      Asia  1967   34.020  11537966  836.197138
+4  Afghanistan      Asia  1972   36.088  13079460  739.981106</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>gapminder.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       country continent  year  lifeExp       pop   gdpPercap
+1699  Zimbabwe    Africa  1987   62.351   9216418  706.157306
+1700  Zimbabwe    Africa  1992   60.377  10704340  693.420786
+1701  Zimbabwe    Africa  1997   46.809  11404948  792.449960
+1702  Zimbabwe    Africa  2002   39.989  11926563  672.038623
+1703  Zimbabwe    Africa  2007   43.487  12311143  469.709298</code></pre>
+</div>
+</div>
+<hr>
+<p>ในทางปฏิบัติผลการวิเคราะห์ด้วยวิธีการข้างต้นเพียงพอสำหรับผู้วิเคราะห์ที่จะใช้พิจารณาว่าโครงสร้างการจัดเก็บข้อมูลในชุดข้อมูลที่นำเข้ามามีลักษณะเป็นชุดข้อมูลจัดระเบียบที่เหมาะสำหรับการนำไปวิเคราะห์ข้อมูลตามวัตถุประสงค์แล้วหรือไม่ หากยังไม่เหมาะสมผู้วิเคราะห์จำเป็นต้องแก้ปัญหาในเชิงของโครงสร้างชุดข้อมูลดังกล่าวก่อนที่จะดำเนินการในขั้นตอนต่อไป หัวข้อถัดไปจะกล่าวถึงเครื่องมือหรือวิธีการพื้นฐานที่จำเป็นสำหรับปรับเปลี่ยนลักษณะของชุดข้อมูลให้ตรงกับความต้องการ</p>
+</section>
+</section>
+<section id="เรองท-4.1.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data" class="level2">
+<h2 class="anchored" data-anchor-id="เรองท-4.1.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data">เรื่องที่ 4.1.2 การปรับเปลี่ยนลักษณะของชุดข้อมูล (reshaping data)</h2>
+<p>ชุดข้อมูลที่ยังไม่เป็นระเบียบมีหลากหลายลักษณะ และโดยมากมักพบเมื่อผู้วิเคราะห์ได้ข้อมูลมาจากแหล่งข้อมูลทุติยภูมิ เช่น ฐานข้อมูล หรือแหล่ง open data ต่าง ๆ หัวข้อนี้จะกล่าวถึงปัญหาข้อมูลไม่เป็นระเบียบที่มักพบและวิธีการแก้ปัญหาดังกล่าว รายละเอียดมีดังนี้</p>
+<section id="การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว" class="level3">
+<h3 class="anchored" data-anchor-id="การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว">การปรับเปลี่ยนรูปแบบชุดข้อมูลระหว่างชุดข้อมูลแบบกว้างกับชุดข้อมูลแบบยาว</h3>
+<p>ชุดข้อมูลอาจจำแนกได้เป็น 2 ลักษณะ ได้แก่ ชุดข้อมูลแบบกว้าง (wide format) และชุดข้อมูลแบบยาว (long format) <strong>ชุดข้อมูลแบบกว้าง</strong> เป็นชุดข้อมูลที่มีการกระจายค่าสังเกตของตัวแปรสำคัญขึ้นไปอยู่บนคอลัมน์ ดังตัวอย่างในตาราง 3 โดยส่วนใหญ่ตารางลักษณะนี้เหมาะสำหรับการนำเสนอข้อมูล หรือนำไปใช้สำหรับสร้างทัศนภาพข้อมูลในบางกรณี แต่มักไม่เหมาะที่จะนำไปเข้าสู่โมเดลวิเคราะห์ข้อมูลต่าง ๆ</p>
+<p><strong>ตาราง 3</strong> : จำนวนนักเรียนจำแนกตามรายวิชาและช่วงคะแนนผลการสอบ O-NET ระดับชั้น ม.6 ปีการศึกษา 2560</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 14px; font-family: Sarabun; ">
+ <thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1"></th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="10"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">ช่วงคะแนนผลสอบ O-NET</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;"> วิชา </th>
+   <th style="text-align:right;"> &lt; 10 คะแนน </th>
+   <th style="text-align:right;"> 10-20 </th>
+   <th style="text-align:right;"> 20-30 </th>
+   <th style="text-align:right;"> 30-40 </th>
+   <th style="text-align:right;"> 40-50 </th>
+   <th style="text-align:right;"> 50-60 </th>
+   <th style="text-align:right;"> 60-70 </th>
+   <th style="text-align:right;"> 70-80 </th>
+   <th style="text-align:right;"> 80-90 </th>
+   <th style="text-align:right;"> 90-100 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> ภาษาไทย </td>
+   <td style="text-align:right;"> 205 </td>
+   <td style="text-align:right;"> 10918 </td>
+   <td style="text-align:right;"> 39277 </td>
+   <td style="text-align:right;"> 59459 </td>
+   <td style="text-align:right;"> 80767 </td>
+   <td style="text-align:right;"> 84977 </td>
+   <td style="text-align:right;"> 61052 </td>
+   <td style="text-align:right;"> 28544 </td>
+   <td style="text-align:right;"> 6623 </td>
+   <td style="text-align:right;"> 221 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> สังคมศึกษา </td>
+   <td style="text-align:right;"> 93 </td>
+   <td style="text-align:right;"> 11450 </td>
+   <td style="text-align:right;"> 119492 </td>
+   <td style="text-align:right;"> 155338 </td>
+   <td style="text-align:right;"> 64380 </td>
+   <td style="text-align:right;"> 17638 </td>
+   <td style="text-align:right;"> 3721 </td>
+   <td style="text-align:right;"> 447 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 2664 </td>
+   <td style="text-align:right;"> 120768 </td>
+   <td style="text-align:right;"> 146339 </td>
+   <td style="text-align:right;"> 48926 </td>
+   <td style="text-align:right;"> 21706 </td>
+   <td style="text-align:right;"> 12859 </td>
+   <td style="text-align:right;"> 8510 </td>
+   <td style="text-align:right;"> 5868 </td>
+   <td style="text-align:right;"> 3791 </td>
+   <td style="text-align:right;"> 1156 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 52250 </td>
+   <td style="text-align:right;"> 163221 </td>
+   <td style="text-align:right;"> 81737 </td>
+   <td style="text-align:right;"> 29113 </td>
+   <td style="text-align:right;"> 14854 </td>
+   <td style="text-align:right;"> 9772 </td>
+   <td style="text-align:right;"> 7302 </td>
+   <td style="text-align:right;"> 5524 </td>
+   <td style="text-align:right;"> 4516 </td>
+   <td style="text-align:right;"> 4564 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> วิทยาศาสตร์ </td>
+   <td style="text-align:right;"> 950 </td>
+   <td style="text-align:right;"> 61511 </td>
+   <td style="text-align:right;"> 183241 </td>
+   <td style="text-align:right;"> 75152 </td>
+   <td style="text-align:right;"> 25353 </td>
+   <td style="text-align:right;"> 12909 </td>
+   <td style="text-align:right;"> 7437 </td>
+   <td style="text-align:right;"> 3944 </td>
+   <td style="text-align:right;"> 1578 </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><strong>ชุดข้อมูลแบบยาว</strong> เป็นชุดข้อมูล</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
