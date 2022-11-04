@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>หน่วยที่ 4 การเตรียมข้อมูล - ตอนที่ 4.1 การนำเข้าและเขียนชุดข้อมูล (importing and writing data)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tidy.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">ตอนที่ 4.1 การนำเข้าและเขียนชุดข้อมูล (importing and writing data)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">หน่วยที่ 4 การเตรียมข้อมูล</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">แผนการสอนประจำหน่วย</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./import.html" class="sidebar-item-text sidebar-link active">ตอนที่ 4.1 การนำเข้าและเขียนชุดข้อมูล (importing and writing data)</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tidy.html" class="sidebar-item-text sidebar-link">ตอนที่ 4.2 การจัดระเบียบข้อมูล (tidying data)</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#เรองท-4.1.1-การนำเขาขอมลประเภท-flat-file" id="toc-เรองท-4.1.1-การนำเขาขอมลประเภท-flat-file" class="nav-link active" data-scroll-target="#เรองท-4.1.1-การนำเขาขอมลประเภท-flat-file">เรื่องที่ 4.1.1 การนำเข้าข้อมูลประเภท flat file</a>
+  <ul class="collapse">
+  <li><a href="#การนำเขาและเขยนไฟลแบบ-csv" id="toc-การนำเขาและเขยนไฟลแบบ-csv" class="nav-link" data-scroll-target="#การนำเขาและเขยนไฟลแบบ-csv">การนำเข้าและเขียนไฟล์แบบ CSV</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">ตอนที่ 4.1 การนำเข้าและเขียนชุดข้อมูล (importing and writing data)</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>การนำเข้าข้อมูลถือได้ว่าเป็นขั้นตอนแรกของการดำเนินงานวิเคราะห์ข้อมูล ในบทเรียนนี้จะกล่าวถึงการนำเข้าข้อมูลลักษณะต่าง ๆ ในภาษา R และ Python รวมทั้งการเขียนชุดข้อมูลเป็นไฟล์ข้อมูลเพื่อนำไปใช้ตามวัตถุประสงค์ต่าง ๆ รายละเอียดมีดังนี้</p>
+<section id="เรองท-4.1.1-การนำเขาขอมลประเภท-flat-file" class="level2">
+<h2 class="anchored" data-anchor-id="เรองท-4.1.1-การนำเขาขอมลประเภท-flat-file">เรื่องที่ 4.1.1 การนำเข้าข้อมูลประเภท flat file</h2>
+<p>flat files เป็นไฟล์ข้อมูลที่อยู่ในรูปแบบข้อความ (plain text) และชุดข้อมูลไม่ได้มีโครงสร้างการจัดเก็บในรูปแบบตารางหรือ spreadsheet แต่ flat file จะมีการใช้ตัวอักษรพิเศษ เช่น comma (,), slash (/) หรือ underscore (_) เป็นตัวคั่น (separator or delimiter) เพื่อจำแนกข้อมูลที่แตกต่างกันออกจากกัน รูป 4.1 แสดงลักษณะของชุดข้อมูลแบบ flat file ที่มีการใช้ตัวคั่นแบบ comma (,) และแบบเว้นวรรค (tab) จากรูปจะเห็นว่าตัวอย่างของไฟล์ข้อมูลทั้งสองมีโครงสร้างการจัดเก็บข้อมูลที่เหมือนกันกล่าวคือ ในแถวแรกของไฟล์ข้อมูลเป็นที่จัดเก็บชื่อของตัวแปรภายในชุดข้อมูล และตั้งแต่แถวที่สองเป็นต้นไปเป็นที่จัดเก็บข้อมูลของตัวแปรต่าง ๆ ของแต่ละหน่วยข้อมูล อย่างไรก็ตามในทางปฏิบัติแถวแรกของไฟล์ข้อมูลไม่จำเป็นจะต้องเป็นชื่อของตัวแปรเสมอไป</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="flatfile.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">รูป 4.1 ตัวอย่างโครงสร้างของ flat file แบบ CSV และ TSV</figcaption><p></p>
+</figure>
+</div>
+<p>ที่มา : สิวะโชติ ศรีสุทธิยากร (2564)</p>
+<p>flat file ยังมีการเรียกชื่อที่เฉพาะตามลักษณะของตัวคั่นที่ใช้ในชุดข้อมูล จากรูปจะเห็นว่าชุดข้อมูลด้านบนมีการใช้ comma (,) เป็นตัวคั่น จะเรียกไฟล์ข้อมูลประเภทนี้ว่า comma separated values (CSV) หรืออาจเรียกว่า comma-delimited ก็ได้ ส่วนชุดข้อมูลด้านล่างของรูปมีการใช้ตัวคั่นเป็นการเว้นวรรค (tab) จะเรียกชุดข้อมูลประเภทนี้ว่า tab separated values (TSV) หรือ tab-delimited</p>
+<section id="การนำเขาและเขยนไฟลแบบ-csv" class="level3">
+<h3 class="anchored" data-anchor-id="การนำเขาและเขยนไฟลแบบ-csv">การนำเข้าและเขียนไฟล์แบบ CSV</h3>
+<p>ภาษา R สามารถนำเข้าและเขียนไฟล์ CSV ได้หลายวิธี วิธีการแรกเป็นการนำเข้าด้วยฟังก์ชันจาก package-utils ที่เป็น package พื้นฐานของ R ได้แก่ฟังก์ชัน <code>read.csv()</code> ที่มีอาร์กิวเมนท์สำคัญได้แก่ <code>file</code> ใช้ระบุที่อยู่และชื่อของไฟล์ข้อมูลแบบ CSV ที่ต้องการนำเข้าอาร์กิวเมนท์นี้ผู้วิเคราะห์จำเป็นต้องกำหนดแบบตัวแปรตัวอักษร (กล่าวคือต้องระบุไว้ภายใต้เครื่องหมาย quotation) อาร์กิวเมนท์ <code>header</code> ใช้ระบุว่าไฟล์ข้อมูลที่นำเข้ามีแถวแรกของไฟล์เป็นชื่อของตัวแปรหรือไม่ การกำหนดอาร์กิวเมนท์นี้กำหนดเป็นค่าความจริงได้แก่ <code>TRUE</code> หรือ <code>FALSE</code> โดยหากกำหนดเป็น <code>TRUE</code> (ค่าเริ่มต้น) จะหมายถึงการระบุว่าใช้แถวแรกของไฟล์ข้อมูลเป็นชื่อของตัวแปรในแต่ละคอลัมน์ ในกรณีที่กำหนดเป็น <code>FALSE</code> ฟังก์ชัน CSV จะกำหนดชื่อของคอลัมน์ให้โดยอัตโนมัติ ตัวอย่างด้านล่างแสดงการนำเข้าชุดข้อมูล <a href="https://github.com/ssiwacho/dataset/blob/main/gapminder_mini.csv"><code>gapminder_mini.csv</code></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"gapminder_mini.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   142 obs. of  4 variables:
+ $ X        : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ country  : chr  "Afghanistan" "Albania" "Algeria" "Angola" ...
+ $ gdpPercap: num  975 5937 6223 4797 12779 ...
+ $ lifeExp  : num  43.8 76.4 72.3 42.7 75.3 ...</code></pre>
+</div>
+</div>
+<p>อาร์กิวเมนท์อีกตัวที่สำคัญของฟังก์ชัน <code>read.csv()</code> คืออาร์กิวเมนท์ <code>na.strings</code> ใช้ในกรณีที่ชุดข้อมูลที่ต้องการนำเข้ามีค่าสูญหาย การระบุอาร์กิวเมนท์ดังกล่าวให้ระบุเป็นสัญลักษณ์ที่ใช้แทนค่าสูญหายของชุดข้อมูลที่ต้องการนำเข้า เช่น หากชุดข้อมูลที่นำเข้าใช้สัญลักษณ์ <code>-999</code> แทนค่าสูญหายให้กำหนด <code>na.strings = -999</code> เป็นต้น นอกจากนี้ฟังก์ชัน <code>read.csv()</code> ยังมีอาร์กิวเมนท์ <code>stringsAsFactors</code> ที่กำหนดค่าเป็น <code>TRUE</code> หรือ <code>FALSE</code> เพื่อแปลงคอลัมน์ตัวอักษรในชุดข้อมูลให้เป็นตัวแปรแบบ factor ซึ่งเป็นตัวแปรแบบจัดประเภทของ R ผู้อ่านสามารถศึกษารายละเอียดเพิ่มเติมได้จาก สิวะโชติ ศรีสุทธิยากร (2564) หน้า 40</p>
+<p>ภาษา R ยังมีความสามารถในการเขียนไฟล์ชุดข้อมูลเพื่อส่งออกไปบันทึกในคอมพิวเตอร์สำหรับนำไปใช้ในวัตถุประสงค์ต่าง ๆ การเขียนไฟล์แบบ CSV สามารถทำได้หลายวิธีการเช่นกัน วิธีการพื้นฐานคือการใช้ฟังก์ชัน <code>write.csv()</code> ที่มีอาร์กิวเมนท์สำคัญ 2 ตัวได้แก่ <code>x</code> คือชุดข้อมูลแบบ Dataframe ที่ต้องการเขียนออกไปเป็นไฟล์แบบ CSV และ <code>file</code> ใช้ระบุที่อยู่และชื่อของไฟล์ปลายทางที่จะให้ R เขียนออกไปบันทึกในคอมพิวเตอร์ ทั้งนี้รูปแบบของชื่อไฟล์ต้องเขียนในลักษณะตัวอักษรกล่าวคืออยู่ภายใต้เครื่องหมาย quotation และมีนามสกุลของไฟล์เป็นแบบ `*.csv` ดังตัวอย่างด้านล่าง</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(dat, <span class="at">file=</span><span class="st">"Desktop/mydata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>คำสั่งด้านบนจะเขียนไฟล์ <code>my.data.csv</code> ไว้บน Desktop ของเครื่องคอมพิวเตอร์ ในกรณีที่ผู้วิเคราะห์กำหนดแค่ชื่อไฟล์ปลายทางแต่ไม่ได้กำหนดที่อยู่ของไฟล์ เช่น <code>write.csv(dat, file="mydata.csv")</code> ไฟล์ที่สร้างขึ้นจะบันทึกไว้ใน folder เป็นค่าเริ่มต้นหรือ folder ที่กำหนดเป็น working directory เอาไว้ การกำหนด working directory สามารถทำได้โดยใช้ฟังก์ชัน <code>setwd()</code> โดยภายในฟังก์ชันให้ใส่ที่อยู่ของ folder ที่ต้องการกำหนดให้เป็น working directory ในลักษณะตัวอักษร เช่น <code>setwd("/Desktop/myjob")</code> หมายถึงกำหนดให้ working directory เป็น folder myjob ที่อยู่บน Desktop ของเครื่องคอมพิวเตอร์</p>
+<p>สำหรับการนำเข้าและเขียนไฟล์ข้อมูลแบบ CSV ด้วยภาษา Python สามารถทำได้โดยใช้ฟังก์ชัน <code>pd.read_csv()</code> ของ pandas library ฟังก์ชันนี้มีพารามิเตอร์ได้แก่ <code>filepath</code> ใช้กำหนดที่อยู่และชื่อของไฟล์ที่ต้องการนำเข้า พารามิเตอร์ <code>sep</code> สำหรับระบุตัวอักษรที่ใช้เป็นตัวคั่นในชุดข้อมูล ซึ่งในกรณีนี้จะกำหนดให้ <code>sep=","</code> เพื่อนำเข้าชุดข้อมูลแบบ CSV พารามิเตอร์ <code>header</code> สำหรับระบุว่าแถวที่เท่าไหร่ในตารางข้อมูลจะใช้เป็นชื่อของตัวแปร (เริ่มจาก 0) พารามิเตอร์ <code>skiprows</code> ใช้กำหนดให้ Python อ่านไฟล์ข้อมูลโดยข้ามแถวไปจำนวนเท่ากับที่กำหนด พารามิเตอร์นี้มีประโยชน์มากสำหรับการนำเข้าไฟล์ข้อมูลจากองค์กร หรือ logfile ที่หัวของตารางมักมีคำอธิบายหรือ caption ต่าง ๆ ก่อนที่จะเป็นส่วนของตารางข้อมูล ฟังก์ชัน <code>pd.read_csv()</code> ยังมีพารามิเตอร์อีกหลายตัว (optional parameters) ที่สามารถกำหนดเพื่อปรับแต่งลักษณะของข้อมูลที่นำเข้ามาได้ รายละเอียดอื่น ๆ ผู้อ่านสามารถศึกษาเพิ่มเติมได้จาก <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html" class="uri">https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"/Users/siwachoat/Downloads/gapminder.csv"</span>, header<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Unnamed: 0             country     gdpPercap  lifeExp
+0             1         Afghanistan    974.580338   43.828
+1             2             Albania   5937.029526   76.423
+2             3             Algeria   6223.367465   72.301
+3             4              Angola   4797.231267   42.731
+4             5           Argentina  12779.379640   75.320
+..          ...                 ...           ...      ...
+137         138             Vietnam   2441.576404   74.249
+138         139  West Bank and Gaza   3025.349798   73.422
+139         140         Yemen, Rep.   2280.769906   62.698
+140         141              Zambia   1271.211593   42.384
+141         142            Zimbabwe    469.709298   43.487
+
+[142 rows x 4 columns]</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">แผนการสอนประจำหน่วย</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./tidy.html" class="pagination-link">
+        <span class="nav-page-text">ตอนที่ 4.2 การจัดระเบียบข้อมูล (tidying data)</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
