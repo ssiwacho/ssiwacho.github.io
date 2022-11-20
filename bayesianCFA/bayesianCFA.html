@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bayesian CFA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="bayesianCFA_files/libs/clipboard/clipboard.min.js"></script>
+<script src="bayesianCFA_files/libs/quarto-html/quarto.js"></script>
+<script src="bayesianCFA_files/libs/quarto-html/popper.min.js"></script>
+<script src="bayesianCFA_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="bayesianCFA_files/libs/quarto-html/anchor.min.js"></script>
+<link href="bayesianCFA_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="bayesianCFA_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="bayesianCFA_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="bayesianCFA_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="bayesianCFA_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages">loading packages</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">Model</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#create-run-mplus-model" id="toc-create-run-mplus-model" class="nav-link" data-scroll-target="#create-run-mplus-model">Create &amp; run Mplus model</a></li>
+  <li><a href="#extract-the-results" id="toc-extract-the-results" class="nav-link" data-scroll-target="#extract-the-results">Extract the results</a>
+  <ul class="collapse">
+  <li><a href="#parameter-specification-tech1" id="toc-parameter-specification-tech1" class="nav-link" data-scroll-target="#parameter-specification-tech1">Parameter Specification (tech1)</a></li>
+  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary">Model summary</a></li>
+  <li><a href="#trace-plot-of-factor-loadings" id="toc-trace-plot-of-factor-loadings" class="nav-link" data-scroll-target="#trace-plot-of-factor-loadings">Trace plot of factor loadings</a></li>
+  <li><a href="#trace-plot-of-residuals-variances-observed-variables" id="toc-trace-plot-of-residuals-variances-observed-variables" class="nav-link" data-scroll-target="#trace-plot-of-residuals-variances-observed-variables">Trace plot of residuals variances (observed variables)</a></li>
+  <li><a href="#trace-plot-of-residuals-variances-latent-variables" id="toc-trace-plot-of-residuals-variances-latent-variables" class="nav-link" data-scroll-target="#trace-plot-of-residuals-variances-latent-variables">Trace plot of residuals variances (latent variables)</a></li>
+  <li><a href="#parameter-estimates" id="toc-parameter-estimates" class="nav-link" data-scroll-target="#parameter-estimates">Parameter Estimates</a></li>
+  </ul></li>
+  <li><a href="#cross-loading-tuning" id="toc-cross-loading-tuning" class="nav-link" data-scroll-target="#cross-loading-tuning">Cross-loading tuning</a></li>
+  <li><a href="#residual-variances-tuning" id="toc-residual-variances-tuning" class="nav-link" data-scroll-target="#residual-variances-tuning">Residual variances tuning</a>
+  <ul class="collapse">
+  <li><a href="#วเคราะหผล" id="toc-วเคราะหผล" class="nav-link" data-scroll-target="#วเคราะหผล">วิเคราะห์ผล</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Bayesian CFA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="loading-packages" class="level2">
+<h2 class="anchored" data-anchor-id="loading-packages">loading packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MplusAutomation)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidySEM)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="model" class="level2">
+<h2 class="anchored" data-anchor-id="model">Model</h2>
+<p><img src="images/paste-5B4CFB52.png" class="img-fluid" style="width:50.0%"></p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>ชุดข้อมูลได้จากไฟล์ข้อมูล <code>DataStudent.xlsx</code> ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">read_excel</span>(<span class="st">"DataStudent.xlsx"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dat_ana<span class="ot">&lt;-</span>dat<span class="sc">%&gt;%</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dat_ana<span class="ot">&lt;-</span><span class="fu">scale</span>(dat_ana)<span class="sc">%&gt;%</span><span class="fu">data.frame</span>()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_ana)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 450
+Columns: 15
+$ IT  &lt;dbl&gt; -0.4591276, 0.4591276, 1.3773827, -0.4591276, 0.0000000, -0.918255…
+$ IL  &lt;dbl&gt; 0.2754431, 1.5532717, 0.7013859, -1.0023856, 0.7013859, -1.0023856…
+$ CA  &lt;dbl&gt; 0.1172921, 1.8062987, 0.9617954, 0.9617954, 0.5395438, -0.7272112,…
+$ DA  &lt;dbl&gt; -0.2295886, 1.4367803, 0.7702327, -1.5626837, 0.4369589, -0.562862…
+$ CE  &lt;dbl&gt; 0.1620310, 1.5642226, 0.8631268, 0.1620310, 0.5125789, 0.1620310, …
+$ DC  &lt;dbl&gt; -1.1722540, 1.2431045, 0.2769611, -1.1722540, 0.7600328, -1.655325…
+$ DCO &lt;dbl&gt; -1.5612006, 0.9719975, 0.5497978, -1.9834003, 0.9719975, -1.561200…
+$ SI  &lt;dbl&gt; -0.1766740, 1.4294531, -1.7828011, -0.5782058, 0.6263896, 0.224857…
+$ DF  &lt;dbl&gt; -0.53576881, 1.29766059, 1.29766059, -0.53576881, 1.29766059, -1.4…
+$ DET &lt;dbl&gt; -0.42245666, 1.01049935, 0.05519534, -1.37776067, 1.01049935, -1.3…
+$ DLA &lt;dbl&gt; -0.1400416, 0.3302473, 0.3302473, -1.5509082, 1.2708250, -1.080619…
+$ DRR &lt;dbl&gt; -0.97940601, 0.51123448, 1.00811464, -0.97940601, 1.00811464, -1.4…
+$ CM  &lt;dbl&gt; -0.6997050, -0.2642040, 0.6067981, -1.1352060, 1.4778002, 0.606798…
+$ PS  &lt;dbl&gt; -0.79173364, -0.37307308, 0.88290860, -0.79173364, 1.30156916, 1.3…
+$ DH  &lt;dbl&gt; 0.09157388, 0.85468951, -0.67154175, 0.09157388, 1.61780514, -1.05…</code></pre>
+</div>
+</div>
+</section>
+<section id="create-run-mplus-model" class="level2">
+<h2 class="anchored" data-anchor-id="create-run-mplus-model">Create &amp; run Mplus model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create mplus model object via R</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>based.model<span class="ot">&lt;-</span><span class="fu">mplusObject</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">TITLE =</span> <span class="st">"CFA based model"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ANALYSIS =</span> <span class="st">"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">    ESTIMATOR = BAYES;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">    CHAINS = 2;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">    PROCESSORS = 2;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">    FBITERATIONS = 10000;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">MODEL =</span> <span class="st">"</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">  DLIT BY IT IL CA;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">  DPAR BY DA CE DC DCO;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">  DIDE BY SI DF;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">  DETH BY DET DLA DRR;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">  DPRO BY CM PS DH;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">  DCIT BY DLIT DPAR DIDE DETH DPRO;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">OUTPUT =</span> <span class="st">"standardized TECH1;"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">PLOT =</span> <span class="st">"TYPE = PLOT2;"</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">rdata =</span> dat_ana</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># run</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>result<span class="ot">&lt;-</span><span class="fu">mplusModeler</span>(</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  based.model,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">modelout =</span> <span class="st">"basemodel.inp"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">run =</span> 1L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extract-the-results" class="level2">
+<h2 class="anchored" data-anchor-id="extract-the-results">Extract the results</h2>
+<p>เราสามารถเรียกดู sub-objects ที่เก็บอยู่ใน result ได้จากการใช้ฟังก์ชัน <code>objects()</code> ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">objects</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ANALYSIS"        "DATA"            "DEFINE"          "imputed"        
+ [5] "MODEL"           "MODELCONSTRAINT" "MODELINDIRECT"   "MODELMISSING"   
+ [9] "MODELPOPULATION" "MODELPRIORS"     "MODELTEST"       "MONTECARLO"     
+[13] "OUTPUT"          "PLOT"            "quiet"           "rdata"          
+[17] "results"         "SAVEDATA"        "TITLE"           "usevariables"   
+[21] "VARIABLE"       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">objects</span>(result<span class="sc">$</span>results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "class_counts"        "covariance_coverage" "data_summary"       
+ [4] "errors"              "fac_score_stats"     "gh5"                
+ [7] "indirect"            "input"               "invariance_testing" 
+[10] "output"              "parameters"          "residuals"          
+[13] "sampstat"            "summaries"           "tech1"              
+[16] "tech10"              "tech12"              "tech15"             
+[19] "tech3"               "tech4"               "tech7"              
+[22] "tech8"               "tech9"               "warnings"           </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model summary stat</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>results<span class="sc">$</span>summaries<span class="sc">%&gt;%</span><span class="fu">data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        [,1]              
+Mplus.version           "8.6"             
+Title                   " CFA based model"
+AnalysisType            "GENERAL"         
+DataType                "INDIVIDUAL"      
+Estimator               "BAYES"           
+Observations            "450"             
+NGroups                 "1"               
+NDependentVars          "15"              
+NIndependentVars        "0"               
+NContinuousLatentVars   "6"               
+Parameters              "50"              
+CFI                     "0.904"           
+TLI                     "0.882"           
+BIC                     "16342.5"         
+DIC                     "16135.77"        
+pD                      "48.894"          
+RMSEA_Estimate          "0.092"           
+RMSEA_90CI_LB           "0.09"            
+RMSEA_90CI_UB           "0.095"           
+RMSEA_pLT05             "0"               
+ObsRepChiSqDiff_95CI_LB "287.628"         
+ObsRepChiSqDiff_95CI_UB "366.947"         
+PostPred_PValue         "0"               
+Filename                "basemodel.out"   </code></pre>
+</div>
+</div>
+<section id="parameter-specification-tech1" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-specification-tech1">Parameter Specification (tech1)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$nu
+  IT IL CA DA CE DC DCO SI DF DET DLA DRR CM PS DH
+1  1  2  3  4  5  6   7  8  9  10  11  12 13 14 15
+
+$lambda
+    DLIT DPAR DIDE DETH DPRO DCIT
+IT     0    0    0    0    0    0
+IL    16    0    0    0    0    0
+CA    17    0    0    0    0    0
+DA     0    0    0    0    0    0
+CE     0   18    0    0    0    0
+DC     0   19    0    0    0    0
+DCO    0   20    0    0    0    0
+SI     0    0    0    0    0    0
+DF     0    0   21    0    0    0
+DET    0    0    0    0    0    0
+DLA    0    0    0   22    0    0
+DRR    0    0    0   23    0    0
+CM     0    0    0    0    0    0
+PS     0    0    0    0   24    0
+DH     0    0    0    0   25    0
+
+$theta
+    IT IL CA DA CE DC DCO SI DF DET DLA DRR CM PS DH
+IT  26 NA NA NA NA NA  NA NA NA  NA  NA  NA NA NA NA
+IL   0 27 NA NA NA NA  NA NA NA  NA  NA  NA NA NA NA
+CA   0  0 28 NA NA NA  NA NA NA  NA  NA  NA NA NA NA
+DA   0  0  0 29 NA NA  NA NA NA  NA  NA  NA NA NA NA
+CE   0  0  0  0 30 NA  NA NA NA  NA  NA  NA NA NA NA
+DC   0  0  0  0  0 31  NA NA NA  NA  NA  NA NA NA NA
+DCO  0  0  0  0  0  0  32 NA NA  NA  NA  NA NA NA NA
+SI   0  0  0  0  0  0   0 33 NA  NA  NA  NA NA NA NA
+DF   0  0  0  0  0  0   0  0 34  NA  NA  NA NA NA NA
+DET  0  0  0  0  0  0   0  0  0  35  NA  NA NA NA NA
+DLA  0  0  0  0  0  0   0  0  0   0  36  NA NA NA NA
+DRR  0  0  0  0  0  0   0  0  0   0   0  37 NA NA NA
+CM   0  0  0  0  0  0   0  0  0   0   0   0 38 NA NA
+PS   0  0  0  0  0  0   0  0  0   0   0   0  0 39 NA
+DH   0  0  0  0  0  0   0  0  0   0   0   0  0  0 40
+
+$alpha
+  DLIT DPAR DIDE DETH DPRO DCIT
+1    0    0    0    0    0    0
+
+$beta
+     DLIT DPAR DIDE DETH DPRO DCIT
+DLIT    0    0    0    0    0    0
+DPAR    0    0    0    0    0   41
+DIDE    0    0    0    0    0   42
+DETH    0    0    0    0    0   43
+DPRO    0    0    0    0    0   44
+DCIT    0    0    0    0    0    0
+
+$psi
+     DLIT DPAR DIDE DETH DPRO DCIT
+DLIT   45   NA   NA   NA   NA   NA
+DPAR    0   46   NA   NA   NA   NA
+DIDE    0    0   47   NA   NA   NA
+DETH    0    0    0   48   NA   NA
+DPRO    0    0    0    0   49   NA
+DCIT    0    0    0    0    0   50
+
+attr(,"class")
+[1] "mplus.parameterSpecification" "list"                        </code></pre>
+</div>
+</div>
+</section>
+<section id="model-summary" class="level3">
+<h3 class="anchored" data-anchor-id="model-summary">Model summary</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> CFA based modelEstimated using BAYES 
+Number of obs: 450, number of (free) parameters: 50 
+
+Fit Indices: 
+
+CFI = 0.904, TLI = 0.882, SRMR = NA 
+RMSEA = 0.092, 90% CI [0.09, 0.095], p &lt; .05 = 0 
+AIC = NA, BIC = 16342.497 
+NULL</code></pre>
+</div>
+</div>
+<p>จะเห็นว่าโมเดลยังไม่ fit และสามารถพัฒนาได้อีก ผลการวิเคราะห์ต่อไปนี้จะแสดงแผนภาพ trace plot ของพารามิเตอร์ต่าง ๆ ภายในโมเดล จำแนกเป็นพารามิเตอร์น้ำหนักองค์ประกอบของ first-order model พารามิเตอร์น้ำหนักองค์ประกอบของ second-order model พารามิเตอร์ความแปรปรวนของเศษเหลือในตัวแปรสังเกตได้ เศษเหลือในตัวแปรแฝง และความแปรปรวนของตัวแปรแฝง DCLIT ดังนี้</p>
+</section>
+<section id="trace-plot-of-factor-loadings" class="level3">
+<h3 class="anchored" data-anchor-id="trace-plot-of-factor-loadings">Trace plot of factor loadings</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"mplus.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'rhdf5' was built under R version 4.2.1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Loaded rhdf5 package"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>result<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>lambda<span class="sc">%&gt;%</span><span class="fu">rowSums</span>()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>lambda[lambda<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> lambda)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"basemodel.gh5"</span>, i)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="trace-plot-of-residuals-variances-observed-variables" class="level3">
+<h3 class="anchored" data-anchor-id="trace-plot-of-residuals-variances-observed-variables">Trace plot of residuals variances (observed variables)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>theta<span class="ot">&lt;-</span>result<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>theta<span class="sc">%&gt;%</span><span class="fu">rowSums</span>(<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> theta)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"basemodel.gh5"</span>, i)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="trace-plot-of-residuals-variances-latent-variables" class="level3">
+<h3 class="anchored" data-anchor-id="trace-plot-of-residuals-variances-latent-variables">Trace plot of residuals variances (latent variables)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>psi<span class="ot">&lt;-</span>result<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>psi<span class="sc">%&gt;%</span><span class="fu">rowSums</span>(<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> psi)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"basemodel.gh5"</span>, i)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="parameter-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h3>
+<div class="cell" data-font.size="10">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>results<span class="sc">$</span>parameters<span class="sc">$</span>stdyx.standardized</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          paramHeader param    est posterior_sd  pval lower_2.5ci upper_2.5ci
+1             DLIT.BY    IT  0.748        0.027 0.000       0.688       0.796
+2             DLIT.BY    IL  0.858        0.022 0.000       0.812       0.897
+3             DLIT.BY    CA  0.694        0.029 0.000       0.633       0.749
+4             DPAR.BY    DA  0.707        0.029 0.000       0.644       0.758
+5             DPAR.BY    CE  0.562        0.035 0.000       0.490       0.627
+6             DPAR.BY    DC  0.847        0.020 0.000       0.805       0.882
+7             DPAR.BY   DCO  0.727        0.026 0.000       0.672       0.775
+8             DIDE.BY    SI  0.452        0.040 0.000       0.375       0.533
+9             DIDE.BY    DF  0.750        0.033 0.000       0.687       0.820
+10            DETH.BY   DET  0.799        0.022 0.000       0.752       0.838
+11            DETH.BY   DLA  0.793        0.022 0.000       0.746       0.833
+12            DETH.BY   DRR  0.777        0.023 0.000       0.727       0.818
+13            DPRO.BY    CM  0.753        0.028 0.000       0.695       0.804
+14            DPRO.BY    PS  0.756        0.028 0.000       0.695       0.807
+15            DPRO.BY    DH  0.657        0.033 0.000       0.586       0.717
+16            DCIT.BY  DLIT  0.778        0.032 0.000       0.708       0.833
+17            DCIT.BY  DPAR  0.937        0.021 0.000       0.893       0.979
+18            DCIT.BY  DIDE  0.978        0.031 0.000       0.887       0.999
+19            DCIT.BY  DETH  0.896        0.022 0.000       0.848       0.935
+20            DCIT.BY  DPRO  0.830        0.028 0.000       0.768       0.880
+21         Intercepts    IT -0.002        0.046 0.486      -0.094       0.090
+22         Intercepts    IL -0.001        0.047 0.489      -0.096       0.088
+23         Intercepts    CA -0.002        0.046 0.484      -0.092       0.089
+24         Intercepts    DA  0.000        0.046 0.497      -0.092       0.088
+25         Intercepts    CE -0.001        0.047 0.489      -0.092       0.091
+26         Intercepts    DC  0.000        0.047 0.500      -0.093       0.088
+27         Intercepts   DCO -0.001        0.046 0.490      -0.093       0.089
+28         Intercepts    SI -0.002        0.047 0.483      -0.093       0.091
+29         Intercepts    DF -0.002        0.046 0.487      -0.093       0.088
+30         Intercepts   DET -0.002        0.047 0.487      -0.094       0.089
+31         Intercepts   DLA -0.001        0.047 0.493      -0.095       0.089
+32         Intercepts   DRR -0.002        0.047 0.485      -0.096       0.086
+33         Intercepts    CM -0.001        0.047 0.494      -0.092       0.090
+34         Intercepts    PS -0.001        0.046 0.494      -0.093       0.089
+35         Intercepts    DH -0.001        0.046 0.493      -0.093       0.088
+36          Variances  DCIT  1.000        0.000 0.000       1.000       1.000
+37 Residual.Variances    IT  0.441        0.040 0.000       0.366       0.527
+38 Residual.Variances    IL  0.264        0.037 0.000       0.195       0.341
+39 Residual.Variances    CA  0.518        0.041 0.000       0.439       0.600
+40 Residual.Variances    DA  0.500        0.041 0.000       0.426       0.585
+41 Residual.Variances    CE  0.685        0.039 0.000       0.606       0.760
+42 Residual.Variances    DC  0.283        0.033 0.000       0.223       0.351
+43 Residual.Variances   DCO  0.471        0.038 0.000       0.399       0.548
+44 Residual.Variances    SI  0.795        0.037 0.000       0.715       0.859
+45 Residual.Variances    DF  0.438        0.050 0.000       0.328       0.528
+46 Residual.Variances   DET  0.362        0.035 0.000       0.298       0.434
+47 Residual.Variances   DLA  0.371        0.035 0.000       0.306       0.444
+48 Residual.Variances   DRR  0.396        0.036 0.000       0.330       0.471
+49 Residual.Variances    CM  0.433        0.042 0.000       0.353       0.517
+50 Residual.Variances    PS  0.429        0.042 0.000       0.349       0.517
+51 Residual.Variances    DH  0.568        0.043 0.000       0.486       0.656
+52 Residual.Variances  DLIT  0.395        0.049 0.000       0.306       0.499
+53 Residual.Variances  DPAR  0.122        0.040 0.000       0.042       0.202
+54 Residual.Variances  DIDE  0.044        0.058 0.000       0.001       0.213
+55 Residual.Variances  DETH  0.198        0.039 0.000       0.126       0.280
+56 Residual.Variances  DPRO  0.312        0.047 0.000       0.225       0.409
+     sig
+1   TRUE
+2   TRUE
+3   TRUE
+4   TRUE
+5   TRUE
+6   TRUE
+7   TRUE
+8   TRUE
+9   TRUE
+10  TRUE
+11  TRUE
+12  TRUE
+13  TRUE
+14  TRUE
+15  TRUE
+16  TRUE
+17  TRUE
+18  TRUE
+19  TRUE
+20  TRUE
+21 FALSE
+22 FALSE
+23 FALSE
+24 FALSE
+25 FALSE
+26 FALSE
+27 FALSE
+28 FALSE
+29 FALSE
+30 FALSE
+31 FALSE
+32 FALSE
+33 FALSE
+34 FALSE
+35 FALSE
+36 FALSE
+37  TRUE
+38  TRUE
+39  TRUE
+40  TRUE
+41  TRUE
+42  TRUE
+43  TRUE
+44  TRUE
+45  TRUE
+46  TRUE
+47  TRUE
+48  TRUE
+49  TRUE
+50  TRUE
+51  TRUE
+52  TRUE
+53  TRUE
+54  TRUE
+55  TRUE
+56  TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>results<span class="sc">$</span>parameters<span class="sc">$</span>r2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   param   est posterior_sd pval lower_2.5ci upper_2.5ci
+1     IT 0.559        0.040    0       0.473       0.634
+2     IL 0.736        0.037    0       0.659       0.804
+3     CA 0.482        0.041    0       0.400       0.561
+4     DA 0.500        0.041    0       0.415       0.574
+5     CE 0.315        0.039    0       0.240       0.393
+6     DC 0.717        0.033    0       0.649       0.777
+7    DCO 0.529        0.038    0       0.452       0.601
+8     SI 0.205        0.037    0       0.141       0.285
+9     DF 0.562        0.050    0       0.472       0.672
+10   DET 0.638        0.035    0       0.566       0.702
+11   DLA 0.629        0.035    0       0.556       0.694
+12   DRR 0.604        0.036    0       0.529       0.670
+13    CM 0.567        0.042    0       0.483       0.647
+14    PS 0.571        0.042    0       0.483       0.651
+15    DH 0.432        0.043    0       0.344       0.514
+16  DLIT 0.605        0.049    0       0.501       0.694
+17  DPAR 0.878        0.040    0       0.798       0.958
+18  DIDE 0.956        0.058    0       0.787       0.999
+19  DETH 0.802        0.039    0       0.720       0.874
+20  DPRO 0.688        0.047    0       0.590       0.775</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="cross-loading-tuning" class="level2">
+<h2 class="anchored" data-anchor-id="cross-loading-tuning">Cross-loading tuning</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cfa1<span class="ot">&lt;-</span><span class="fu">mplusObject</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">TITLE =</span> <span class="st">"CFA with crossloading"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ANALYSIS =</span> <span class="st">"</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ESTIMATOR = BAYES;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">    CHAINS = 2;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">    PROCESSORS = 2;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FBITERATIONS = 10000;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="st">    "</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">MODEL =</span> <span class="st">"</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="st">  DLIT BY IT IL CA;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="st">  DPAR BY DA CE DC DCO;</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="st">  DIDE BY SI DF;</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="st">  DETH BY DET DLA DRR;</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="st">  DPRO BY CM PS DH;</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="st">  DCIT BY DLIT DPAR DIDE DETH DPRO;</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="st">  !cross-loading</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="st">  DLIT BY DA CE DC DCO SI DF DET DLA DRR CM PS DH (a1-a12);</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="st">  DPAR BY IT IL CA SI DF DET DLA DRR CM PS DH (b1-b11);</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="st">  DIDE BY IT IL CA DA CE DC DCO DET DLA DRR CM PS DH (c1-c13);</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="st">  DETH BY IT IL CA DA CE DC DCO SI DF CM PS DH (d1-d12);</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="st">  DPRO BY IT IL CA DA CE DC DCO SI DF DET DLA DRR (e1-e12);</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">MODELPRIORS =</span> <span class="st">"</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="st">  a1-a12 ~ N(0,0.001);</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a><span class="st">  b1-b11 ~ N(0,0.001);</span></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="st">  c1-c13 ~ N(0,0.001);</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="st">  d1-d12 ~ N(0,0.001);</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a><span class="st">  e1-e12 ~ N(0,0.001);</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">OUTPUT =</span> <span class="st">"</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a><span class="st">   STAND(STDYX);</span></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a><span class="st">   RESIDUAL TECH1 TECH8 STDYX;    </span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">PLOT =</span> <span class="st">"TYPE = PLOT2;"</span>,</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">rdata =</span> dat_ana</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>) <span class="co"># end of mplusObject</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>result1<span class="ot">&lt;-</span><span class="fu">mplusModeler</span>(</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>  cfa1,</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">modelout =</span> <span class="st">"cfa1.inp"</span>,</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">run =</span> 1L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>result1<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>lambda[,<span class="dv">1</span>]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>lambda[lambda<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> lambda)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"cfa1.gh5"</span>, i)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>result1<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>lambda[,<span class="dv">2</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>lambda[lambda<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> lambda)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"cfa1.gh5"</span>, i)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>result1<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>lambda[,<span class="dv">3</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>lambda[lambda<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> lambda)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"cfa1.gh5"</span>, i)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="residual-variances-tuning" class="level1">
+<h1>Residual variances tuning</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>D<span class="ot">&lt;-</span>result<span class="sc">$</span>results<span class="sc">$</span>parameters<span class="sc">$</span>unstandardized[<span class="dv">37</span><span class="sc">:</span><span class="dv">56</span>,<span class="dv">3</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.442 0.265 0.521 0.501 0.691 0.285 0.475 0.802 0.441 0.364 0.373 0.400
+[13] 0.435 0.432 0.574 0.221 0.061 0.009 0.127 0.177</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cfa2<span class="ot">&lt;-</span><span class="fu">mplusObject</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">TITLE =</span> <span class="st">"CFA with crossloading"</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ANALYSIS =</span> <span class="st">"</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ESTIMATOR = BAYES;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">    CHAINS = 2;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="st">    PROCESSORS = 2;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FBITERATIONS = 10000;</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="st">    "</span>,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">MODEL =</span> <span class="st">"</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="st">  DLIT BY IT IL CA;</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="st">  DPAR BY DA CE DC DCO;</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="st">  DIDE BY SI DF;</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="st">  DETH BY DET DLA DRR;</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="st">  DPRO BY CM PS DH;</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="st">  DCIT BY DLIT DPAR DIDE DETH DPRO;</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="st">  !cross-loading</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="st">  DLIT BY DA CE DC DCO SI DF DET DLA DRR CM PS DH (a1-a12);</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="st">  DPAR BY IT IL CA SI DF DET DLA DRR CM PS DH (b1-b11);</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a><span class="st">  DIDE BY IT IL CA DA CE DC DCO DET DLA DRR CM PS DH (c1-c13);</span></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a><span class="st">  DETH BY IT IL CA DA CE DC DCO SI DF CM PS DH (d1-d12);</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="st">  DPRO BY IT IL CA DA CE DC DCO SI DF DET DLA DRR (e1-e12);</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a><span class="st">  !residual variances</span></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a><span class="st">  IT-DH (v1-v15);</span></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a><span class="st">  IT-DH WITH IT-DH;</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a><span class="st">  DLIT-DPRO;</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">MODELPRIORS =</span> <span class="st">"</span></span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a><span class="st">  a1-a12 ~ N(0,0.001);</span></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a><span class="st">  b1-b11 ~ N(0,0.001);</span></span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a><span class="st">  c1-c13 ~ N(0,0.001);</span></span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a><span class="st">  d1-d12 ~ N(0,0.001);</span></span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a><span class="st">  e1-e12 ~ N(0,0.001);</span></span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a><span class="st"> !residual var priors</span></span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a><span class="st">  v1 ~ IW(23.3, 100);</span></span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a><span class="st">  v2 ~ IW(16.2, 100);</span></span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a><span class="st">  v3 ~ IW(32.4, 100);</span></span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a><span class="st">  v4 ~ IW(28.2, 100);</span></span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a><span class="st">  v5 ~ IW(62.5, 100);</span></span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a><span class="st">  v6 ~ IW(13.6, 100);</span></span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a><span class="st">  v7 ~ IW(29.6, 100);</span></span>
+<span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a><span class="st">  v8 ~ IW(55.2, 100);</span></span>
+<span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a><span class="st">  v9 ~ IW(23.3, 100);</span></span>
+<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a><span class="st">  v10 ~ IW(17.7, 100);</span></span>
+<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a><span class="st">  v11 ~ IW(18.7, 100);</span></span>
+<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a><span class="st">  v12 ~ IW(25.5, 100);</span></span>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a><span class="st">  v13 ~ IW(27.4, 100);</span></span>
+<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a><span class="st">  v14 ~ IW(43.8, 100);</span></span>
+<span id="cb31-54"><a href="#cb31-54" aria-hidden="true" tabindex="-1"></a><span class="st">  v15 ~ IW(11.7, 100);</span></span>
+<span id="cb31-55"><a href="#cb31-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-56"><a href="#cb31-56" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb31-57"><a href="#cb31-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-58"><a href="#cb31-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">OUTPUT =</span> <span class="st">"</span></span>
+<span id="cb31-59"><a href="#cb31-59" aria-hidden="true" tabindex="-1"></a><span class="st">   STAND(STDYX);</span></span>
+<span id="cb31-60"><a href="#cb31-60" aria-hidden="true" tabindex="-1"></a><span class="st">   RESIDUAL TECH1 TECH8 STDYX;    </span></span>
+<span id="cb31-61"><a href="#cb31-61" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>,</span>
+<span id="cb31-62"><a href="#cb31-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">PLOT =</span> <span class="st">"TYPE = PLOT2;"</span>,</span>
+<span id="cb31-63"><a href="#cb31-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">rdata =</span> dat_ana</span>
+<span id="cb31-64"><a href="#cb31-64" aria-hidden="true" tabindex="-1"></a>) <span class="co"># end of mplusObject</span></span>
+<span id="cb31-65"><a href="#cb31-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-66"><a href="#cb31-66" aria-hidden="true" tabindex="-1"></a>result2<span class="ot">&lt;-</span><span class="fu">mplusModeler</span>(</span>
+<span id="cb31-67"><a href="#cb31-67" aria-hidden="true" tabindex="-1"></a>  cfa2,</span>
+<span id="cb31-68"><a href="#cb31-68" aria-hidden="true" tabindex="-1"></a>  <span class="at">modelout =</span> <span class="st">"cfa2.inp"</span>,</span>
+<span id="cb31-69"><a href="#cb31-69" aria-hidden="true" tabindex="-1"></a>  <span class="at">run =</span> 1L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>result2<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>lambda[,<span class="dv">1</span>]</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>lambda[lambda<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> lambda)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"cfa1.gh5"</span>, i)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>result2<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>lambda[,<span class="dv">2</span>]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>lambda[lambda<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> lambda)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"cfa1.gh5"</span>, i)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>result2<span class="sc">$</span>results<span class="sc">$</span>tech1<span class="sc">$</span>parameterSpecification<span class="sc">$</span>lambda[,<span class="dv">3</span>]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>lambda<span class="ot">&lt;-</span>lambda[lambda<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> lambda)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mplus.plot.bayesian.traceplot</span>(<span class="st">"cfa1.gh5"</span>, i)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bayesianCFA_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="วเคราะหผล" class="level2">
+<h2 class="anchored" data-anchor-id="วเคราะหผล">วิเคราะห์ผล</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>result2<span class="sc">$</span>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> CFA with crossloadingEstimated using BAYES 
+Number of obs: 450, number of (free) parameters: 215 
+
+Fit Indices: 
+
+CFI = 0.993, TLI = 0.963, SRMR = NA 
+RMSEA = 0.052, 90% CI [0, 0.079], p &lt; .05 = 0.466 
+AIC = NA, BIC = 16980.547 
+NULL</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>result2<span class="sc">$</span>results<span class="sc">$</span>summaries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mplus.version                  Title AnalysisType   DataType Estimator
+1           8.6  CFA with crossloading      GENERAL INDIVIDUAL     BAYES
+  Observations NGroups NDependentVars NIndependentVars NContinuousLatentVars
+1          450       1             15                0                     6
+  Parameters   CFI   TLI      BIC      DIC     pD RMSEA_Estimate RMSEA_90CI_LB
+1        215 0.993 0.963 16980.55 15897.06 114.41          0.052             0
+  RMSEA_90CI_UB RMSEA_pLT05 ObsRepChiSqDiff_95CI_LB ObsRepChiSqDiff_95CI_UB
+1         0.079       0.466                 -27.499                  78.188
+  PostPred_PValue PriorPostPred_PValue Filename
+1           0.165                0.344 cfa2.out</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>result2<span class="sc">$</span>results<span class="sc">$</span>parameters<span class="sc">$</span>r2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   param   est posterior_sd pval lower_2.5ci upper_2.5ci
+1     IT 0.594        0.050    0       0.481       0.678
+2     IL 0.710        0.043    0       0.613       0.783
+3     CA 0.474        0.050    0       0.374       0.569
+4     DA 0.538        0.047    0       0.437       0.622
+5     CE 0.329        0.045    0       0.240       0.414
+6     DC 0.767        0.038    0       0.682       0.829
+7    DCO 0.547        0.044    0       0.457       0.629
+8     SI 0.253        0.044    0       0.174       0.345
+9     DF 0.659        0.051    0       0.544       0.742
+10   DET 0.668        0.044    0       0.569       0.744
+11   DLA 0.685        0.040    0       0.599       0.757
+12   DRR 0.570        0.047    0       0.471       0.656
+13    CM 0.558        0.052    0       0.444       0.651
+14    PS 0.486        0.047    0       0.391       0.575
+15    DH 0.679        0.059    0       0.548       0.783
+16  DLIT 0.714        0.062    0       0.600       0.850
+17  DPAR 0.877        0.045    0       0.793       0.970
+18  DIDE 0.770        0.068    0       0.642       0.914
+19  DETH 0.752        0.046    0       0.660       0.849
+20  DPRO 0.609        0.059    0       0.488       0.720</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>result2<span class="sc">$</span>results<span class="sc">$</span>parameters<span class="sc">$</span>stdyx.standardized<span class="sc">%&gt;%</span><span class="fu">data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           paramHeader param    est posterior_sd  pval lower_2.5ci upper_2.5ci
+1              DLIT.BY    IT  0.748        0.053 0.000       0.618       0.836
+2              DLIT.BY    IL  0.857        0.044 0.000       0.763       0.938
+3              DLIT.BY    CA  0.692        0.053 0.000       0.586       0.791
+4              DLIT.BY    DA  0.015        0.024 0.255      -0.031       0.063
+5              DLIT.BY    CE  0.012        0.023 0.300      -0.033       0.057
+6              DLIT.BY    DC -0.003        0.023 0.445      -0.048       0.044
+7              DLIT.BY   DCO  0.006        0.024 0.392      -0.040       0.052
+8              DLIT.BY    SI -0.002        0.023 0.460      -0.047       0.043
+9              DLIT.BY    DF -0.009        0.023 0.343      -0.056       0.036
+10             DLIT.BY   DET -0.003        0.023 0.451      -0.048       0.043
+11             DLIT.BY   DLA -0.005        0.023 0.419      -0.050       0.041
+12             DLIT.BY   DRR -0.001        0.023 0.474      -0.047       0.045
+13             DLIT.BY    CM  0.010        0.023 0.335      -0.035       0.057
+14             DLIT.BY    PS  0.004        0.023 0.425      -0.040       0.049
+15             DLIT.BY    DH -0.014        0.024 0.289      -0.061       0.032
+16             DPAR.BY    DA  0.721        0.051 0.000       0.610       0.813
+17             DPAR.BY    CE  0.556        0.055 0.000       0.445       0.660
+18             DPAR.BY    DC  0.902        0.044 0.000       0.813       0.984
+19             DPAR.BY   DCO  0.732        0.049 0.000       0.634       0.826
+20             DPAR.BY    IT  0.014        0.023 0.266      -0.030       0.061
+21             DPAR.BY    IL -0.001        0.022 0.479      -0.045       0.042
+22             DPAR.BY    CA  0.001        0.022 0.486      -0.044       0.045
+23             DPAR.BY    SI  0.002        0.022 0.471      -0.043       0.044
+24             DPAR.BY    DF  0.001        0.023 0.479      -0.044       0.045
+25             DPAR.BY   DET -0.004        0.023 0.424      -0.051       0.041
+26             DPAR.BY   DLA  0.000        0.023 0.498      -0.044       0.044
+27             DPAR.BY   DRR  0.002        0.023 0.458      -0.043       0.047
+28             DPAR.BY    CM  0.005        0.023 0.403      -0.039       0.050
+29             DPAR.BY    PS  0.008        0.022 0.359      -0.036       0.052
+30             DPAR.BY    DH -0.018        0.023 0.222      -0.064       0.028
+31             DIDE.BY    SI  0.494        0.057 0.000       0.390       0.612
+32             DIDE.BY    DF  0.811        0.050 0.000       0.704       0.903
+33             DIDE.BY    IT  0.002        0.017 0.445      -0.029       0.037
+34             DIDE.BY    IL -0.004        0.016 0.406      -0.035       0.027
+35             DIDE.BY    CA -0.001        0.016 0.484      -0.033       0.031
+36             DIDE.BY    DA  0.001        0.016 0.473      -0.030       0.034
+37             DIDE.BY    CE  0.002        0.016 0.460      -0.029       0.033
+38             DIDE.BY    DC -0.001        0.016 0.476      -0.033       0.031
+39             DIDE.BY   DCO  0.000        0.016 0.497      -0.031       0.032
+40             DIDE.BY   DET  0.001        0.016 0.481      -0.031       0.033
+41             DIDE.BY   DLA -0.001        0.016 0.486      -0.032       0.031
+42             DIDE.BY   DRR  0.002        0.016 0.461      -0.030       0.033
+43             DIDE.BY    CM  0.004        0.016 0.395      -0.026       0.036
+44             DIDE.BY    PS  0.004        0.016 0.387      -0.026       0.036
+45             DIDE.BY    DH -0.004        0.016 0.384      -0.036       0.028
+46             DETH.BY   DET  0.821        0.046 0.000       0.721       0.904
+47             DETH.BY   DLA  0.821        0.044 0.000       0.730       0.903
+48             DETH.BY   DRR  0.745        0.048 0.000       0.646       0.833
+49             DETH.BY    IT  0.009        0.027 0.371      -0.042       0.062
+50             DETH.BY    IL -0.007        0.026 0.384      -0.058       0.042
+51             DETH.BY    CA -0.008        0.025 0.375      -0.057       0.042
+52             DETH.BY    DA -0.002        0.026 0.464      -0.053       0.050
+53             DETH.BY    CE -0.001        0.025 0.492      -0.051       0.048
+54             DETH.BY    DC -0.009        0.025 0.365      -0.060       0.040
+55             DETH.BY   DCO  0.006        0.026 0.404      -0.044       0.057
+56             DETH.BY    SI -0.001        0.025 0.490      -0.051       0.049
+57             DETH.BY    DF  0.002        0.026 0.460      -0.048       0.054
+58             DETH.BY    CM  0.019        0.026 0.230      -0.032       0.072
+59             DETH.BY    PS  0.018        0.025 0.229      -0.031       0.067
+60             DETH.BY    DH -0.012        0.026 0.326      -0.063       0.040
+61             DPRO.BY    CM  0.720        0.052 0.000       0.607       0.813
+62             DPRO.BY    PS  0.671        0.049 0.000       0.573       0.765
+63             DPRO.BY    DH  0.856        0.052 0.000       0.743       0.948
+64             DPRO.BY    IT  0.006        0.023 0.406      -0.038       0.051
+65             DPRO.BY    IL -0.008        0.022 0.365      -0.052       0.036
+66             DPRO.BY    CA  0.003        0.022 0.444      -0.041       0.046
+67             DPRO.BY    DA  0.002        0.023 0.462      -0.044       0.047
+68             DPRO.BY    CE  0.007        0.022 0.371      -0.035       0.052
+69             DPRO.BY    DC -0.024        0.023 0.140      -0.069       0.020
+70             DPRO.BY   DCO -0.005        0.023 0.409      -0.050       0.039
+71             DPRO.BY    SI  0.010        0.022 0.336      -0.035       0.054
+72             DPRO.BY    DF  0.005        0.022 0.418      -0.040       0.049
+73             DPRO.BY   DET  0.001        0.023 0.488      -0.043       0.046
+74             DPRO.BY   DLA  0.013        0.023 0.270      -0.030       0.059
+75             DPRO.BY   DRR  0.010        0.022 0.320      -0.033       0.054
+76             DCIT.BY  DLIT  0.845        0.037 0.000       0.775       0.922
+77             DCIT.BY  DPAR  0.936        0.024 0.000       0.891       0.985
+78             DCIT.BY  DIDE  0.878        0.039 0.000       0.802       0.956
+79             DCIT.BY  DETH  0.867        0.027 0.000       0.812       0.921
+80             DCIT.BY  DPRO  0.780        0.038 0.000       0.699       0.848
+81             IT.WITH    IL -0.003        0.086 0.484      -0.169       0.170
+82             IT.WITH    CA -0.085        0.070 0.111      -0.223       0.053
+83             IT.WITH    DA  0.391        0.054 0.000       0.280       0.490
+84             IT.WITH    CE  0.077        0.056 0.091      -0.036       0.185
+85             IT.WITH    DC  0.059        0.078 0.228      -0.097       0.209
+86             IT.WITH   DCO -0.039        0.062 0.266      -0.159       0.081
+87             IT.WITH    SI -0.049        0.056 0.188      -0.157       0.062
+88             IT.WITH    DF -0.130        0.069 0.029      -0.264       0.005
+89             IT.WITH   DET -0.070        0.070 0.164      -0.205       0.071
+90             IT.WITH   DLA -0.119        0.068 0.047      -0.245       0.020
+91             IT.WITH   DRR -0.081        0.063 0.101      -0.205       0.042
+92             IT.WITH    CM -0.109        0.063 0.038      -0.232       0.015
+93             IT.WITH    PS -0.040        0.059 0.243      -0.155       0.075
+94             IT.WITH    DH -0.007        0.073 0.465      -0.149       0.137
+95             IL.WITH    CA  0.135        0.078 0.045      -0.021       0.279
+96             IL.WITH    DA  0.163        0.071 0.012       0.022       0.301
+97             IL.WITH    CE  0.188        0.059 0.001       0.071       0.300
+98             IL.WITH    DC -0.046        0.082 0.292      -0.205       0.116
+99             IL.WITH   DCO -0.040        0.066 0.279      -0.164       0.094
+100            IL.WITH    SI -0.103        0.061 0.043      -0.223       0.015
+101            IL.WITH    DF -0.178        0.073 0.010      -0.317      -0.031
+102            IL.WITH   DET -0.122        0.075 0.058      -0.262       0.030
+103            IL.WITH   DLA -0.059        0.077 0.222      -0.207       0.097
+104            IL.WITH   DRR -0.174        0.069 0.009      -0.305      -0.032
+105            IL.WITH    CM -0.026        0.070 0.356      -0.161       0.112
+106            IL.WITH    PS -0.085        0.064 0.091      -0.212       0.042
+107            IL.WITH    DH  0.011        0.084 0.448      -0.163       0.166
+108            CA.WITH    DA -0.016        0.060 0.394      -0.133       0.101
+109            CA.WITH    CE  0.186        0.050 0.000       0.087       0.283
+110            CA.WITH    DC -0.060        0.068 0.185      -0.196       0.071
+111            CA.WITH   DCO -0.019        0.056 0.362      -0.129       0.093
+112            CA.WITH    SI  0.042        0.052 0.210      -0.061       0.143
+113            CA.WITH    DF -0.130        0.063 0.020      -0.252      -0.008
+114            CA.WITH   DET -0.106        0.064 0.049      -0.231       0.018
+115            CA.WITH   DLA -0.044        0.066 0.253      -0.173       0.087
+116            CA.WITH   DRR -0.165        0.058 0.003      -0.274      -0.052
+117            CA.WITH    CM  0.025        0.059 0.335      -0.090       0.138
+118            CA.WITH    PS -0.040        0.055 0.242      -0.147       0.071
+119            CA.WITH    DH  0.111        0.066 0.048      -0.021       0.239
+120            DA.WITH    CE  0.052        0.056 0.188      -0.060       0.160
+121            DA.WITH    DC -0.016        0.085 0.425      -0.182       0.150
+122            DA.WITH   DCO -0.110        0.063 0.041      -0.231       0.014
+123            DA.WITH    SI -0.100        0.052 0.031      -0.203       0.005
+124            DA.WITH    DF -0.099        0.065 0.069      -0.225       0.032
+125            DA.WITH   DET -0.089        0.066 0.094      -0.216       0.040
+126            DA.WITH   DLA -0.134        0.065 0.025      -0.256       0.000
+127            DA.WITH   DRR -0.110        0.060 0.034      -0.226       0.009
+128            DA.WITH    CM -0.097        0.060 0.053      -0.214       0.020
+129            DA.WITH    PS  0.024        0.058 0.337      -0.090       0.137
+130            DA.WITH    DH -0.023        0.072 0.375      -0.161       0.120
+131            CE.WITH    DC -0.041        0.067 0.265      -0.171       0.091
+132            CE.WITH   DCO -0.147        0.053 0.003      -0.249      -0.044
+133            CE.WITH    SI  0.025        0.049 0.299      -0.070       0.120
+134            CE.WITH    DF -0.095        0.056 0.047      -0.205       0.017
+135            CE.WITH   DET -0.132        0.055 0.009      -0.240      -0.023
+136            CE.WITH   DLA -0.017        0.059 0.381      -0.132       0.099
+137            CE.WITH   DRR -0.135        0.053 0.005      -0.238      -0.030
+138            CE.WITH    CM  0.040        0.054 0.228      -0.067       0.146
+139            CE.WITH    PS  0.054        0.051 0.149      -0.047       0.154
+140            CE.WITH    DH  0.070        0.062 0.135      -0.055       0.190
+141            DC.WITH   DCO -0.027        0.082 0.374      -0.186       0.132
+142            DC.WITH    SI  0.028        0.063 0.332      -0.097       0.152
+143            DC.WITH    DF  0.079        0.081 0.166      -0.077       0.237
+144            DC.WITH   DET -0.003        0.081 0.486      -0.163       0.158
+145            DC.WITH   DLA -0.052        0.076 0.252      -0.197       0.097
+146            DC.WITH   DRR  0.045        0.076 0.281      -0.106       0.191
+147            DC.WITH    CM -0.031        0.079 0.345      -0.183       0.125
+148            DC.WITH    PS -0.097        0.069 0.078      -0.231       0.041
+149            DC.WITH    DH -0.201        0.087 0.016      -0.358      -0.018
+150           DCO.WITH    SI -0.067        0.052 0.097      -0.171       0.034
+151           DCO.WITH    DF  0.083        0.069 0.119      -0.058       0.215
+152           DCO.WITH   DET  0.160        0.066 0.010       0.026       0.285
+153           DCO.WITH   DLA  0.063        0.066 0.168      -0.065       0.194
+154           DCO.WITH   DRR  0.157        0.061 0.007       0.031       0.271
+155           DCO.WITH    CM  0.112        0.064 0.045      -0.019       0.232
+156           DCO.WITH    PS  0.011        0.059 0.432      -0.104       0.126
+157           DCO.WITH    DH -0.217        0.066 0.001      -0.343      -0.081
+158            SI.WITH    DF -0.128        0.068 0.029      -0.260       0.004
+159            SI.WITH   DET -0.032        0.057 0.289      -0.143       0.082
+160            SI.WITH   DLA  0.009        0.058 0.442      -0.106       0.120
+161            SI.WITH   DRR  0.039        0.054 0.238      -0.068       0.143
+162            SI.WITH    CM  0.102        0.054 0.032      -0.007       0.207
+163            SI.WITH    PS  0.019        0.052 0.363      -0.082       0.119
+164            SI.WITH    DH  0.132        0.060 0.019       0.008       0.243
+165            DF.WITH   DET  0.270        0.069 0.000       0.128       0.399
+166            DF.WITH   DLA  0.000        0.073 0.498      -0.140       0.149
+167            DF.WITH   DRR  0.180        0.068 0.004       0.045       0.309
+168            DF.WITH    CM  0.106        0.070 0.072      -0.037       0.238
+169            DF.WITH    PS  0.114        0.063 0.039      -0.014       0.234
+170            DF.WITH    DH -0.168        0.075 0.013      -0.309      -0.019
+171           DET.WITH   DLA -0.126        0.082 0.071      -0.276       0.041
+172           DET.WITH   DRR  0.070        0.076 0.170      -0.074       0.222
+173           DET.WITH    CM  0.159        0.068 0.013       0.017       0.287
+174           DET.WITH    PS  0.021        0.065 0.375      -0.107       0.147
+175           DET.WITH    DH -0.225        0.074 0.001      -0.364      -0.076
+176           DLA.WITH   DRR  0.011        0.075 0.444      -0.136       0.161
+177           DLA.WITH    CM  0.119        0.068 0.042      -0.016       0.251
+178           DLA.WITH    PS  0.198        0.059 0.001       0.079       0.312
+179           DLA.WITH    DH  0.049        0.079 0.266      -0.102       0.203
+180           DRR.WITH    CM  0.185        0.062 0.002       0.059       0.300
+181           DRR.WITH    PS  0.100        0.059 0.049      -0.019       0.211
+182           DRR.WITH    DH -0.140        0.070 0.024      -0.276      -0.001
+183            CM.WITH    PS  0.083        0.067 0.111      -0.053       0.209
+184            CM.WITH    DH -0.308        0.078 0.000      -0.448      -0.142
+185            PS.WITH    DH -0.038        0.079 0.314      -0.196       0.116
+186         Intercepts    IT -0.001        0.048 0.493      -0.096       0.095
+187         Intercepts    IL -0.001        0.048 0.489      -0.097       0.094
+188         Intercepts    CA -0.001        0.048 0.493      -0.094       0.095
+189         Intercepts    DA -0.002        0.047 0.483      -0.097       0.090
+190         Intercepts    CE -0.001        0.048 0.491      -0.096       0.091
+191         Intercepts    DC -0.001        0.048 0.488      -0.098       0.089
+192         Intercepts   DCO -0.002        0.047 0.480      -0.095       0.090
+193         Intercepts    SI -0.001        0.047 0.493      -0.094       0.093
+194         Intercepts    DF -0.002        0.047 0.485      -0.094       0.091
+195         Intercepts   DET -0.003        0.048 0.476      -0.097       0.094
+196         Intercepts   DLA -0.002        0.048 0.487      -0.099       0.093
+197         Intercepts   DRR -0.002        0.048 0.485      -0.097       0.094
+198         Intercepts    CM -0.003        0.047 0.476      -0.095       0.091
+199         Intercepts    PS -0.002        0.048 0.484      -0.094       0.091
+200         Intercepts    DH -0.003        0.047 0.477      -0.095       0.090
+201          Variances  DCIT  1.000        0.000 0.000       1.000       1.000
+202 Residual.Variances    IT  0.406        0.050 0.000       0.321       0.519
+203 Residual.Variances    IL  0.290        0.043 0.000       0.216       0.387
+204 Residual.Variances    CA  0.526        0.050 0.000       0.431       0.626
+205 Residual.Variances    DA  0.462        0.047 0.000       0.378       0.563
+206 Residual.Variances    CE  0.671        0.045 0.000       0.586       0.760
+207 Residual.Variances    DC  0.233        0.038 0.000       0.171       0.318
+208 Residual.Variances   DCO  0.453        0.044 0.000       0.371       0.543
+209 Residual.Variances    SI  0.747        0.044 0.000       0.655       0.826
+210 Residual.Variances    DF  0.341        0.051 0.000       0.258       0.456
+211 Residual.Variances   DET  0.332        0.044 0.000       0.256       0.431
+212 Residual.Variances   DLA  0.315        0.040 0.000       0.243       0.401
+213 Residual.Variances   DRR  0.430        0.047 0.000       0.344       0.529
+214 Residual.Variances    CM  0.442        0.052 0.000       0.349       0.556
+215 Residual.Variances    PS  0.514        0.047 0.000       0.425       0.609
+216 Residual.Variances    DH  0.321        0.059 0.000       0.217       0.452
+217 Residual.Variances  DLIT  0.286        0.062 0.000       0.150       0.400
+218 Residual.Variances  DPAR  0.123        0.045 0.000       0.030       0.207
+219 Residual.Variances  DIDE  0.230        0.068 0.000       0.086       0.357
+220 Residual.Variances  DETH  0.248        0.046 0.000       0.151       0.340
+221 Residual.Variances  DPRO  0.391        0.059 0.000       0.280       0.512
+      sig
+1    TRUE
+2    TRUE
+3    TRUE
+4   FALSE
+5   FALSE
+6   FALSE
+7   FALSE
+8   FALSE
+9   FALSE
+10  FALSE
+11  FALSE
+12  FALSE
+13  FALSE
+14  FALSE
+15  FALSE
+16   TRUE
+17   TRUE
+18   TRUE
+19   TRUE
+20  FALSE
+21  FALSE
+22  FALSE
+23  FALSE
+24  FALSE
+25  FALSE
+26  FALSE
+27  FALSE
+28  FALSE
+29  FALSE
+30  FALSE
+31   TRUE
+32   TRUE
+33  FALSE
+34  FALSE
+35  FALSE
+36  FALSE
+37  FALSE
+38  FALSE
+39  FALSE
+40  FALSE
+41  FALSE
+42  FALSE
+43  FALSE
+44  FALSE
+45  FALSE
+46   TRUE
+47   TRUE
+48   TRUE
+49  FALSE
+50  FALSE
+51  FALSE
+52  FALSE
+53  FALSE
+54  FALSE
+55  FALSE
+56  FALSE
+57  FALSE
+58  FALSE
+59  FALSE
+60  FALSE
+61   TRUE
+62   TRUE
+63   TRUE
+64  FALSE
+65  FALSE
+66  FALSE
+67  FALSE
+68  FALSE
+69  FALSE
+70  FALSE
+71  FALSE
+72  FALSE
+73  FALSE
+74  FALSE
+75  FALSE
+76   TRUE
+77   TRUE
+78   TRUE
+79   TRUE
+80   TRUE
+81  FALSE
+82  FALSE
+83   TRUE
+84  FALSE
+85  FALSE
+86  FALSE
+87  FALSE
+88  FALSE
+89  FALSE
+90  FALSE
+91  FALSE
+92  FALSE
+93  FALSE
+94  FALSE
+95  FALSE
+96   TRUE
+97   TRUE
+98  FALSE
+99  FALSE
+100 FALSE
+101  TRUE
+102 FALSE
+103 FALSE
+104  TRUE
+105 FALSE
+106 FALSE
+107 FALSE
+108 FALSE
+109  TRUE
+110 FALSE
+111 FALSE
+112 FALSE
+113  TRUE
+114 FALSE
+115 FALSE
+116  TRUE
+117 FALSE
+118 FALSE
+119 FALSE
+120 FALSE
+121 FALSE
+122 FALSE
+123 FALSE
+124 FALSE
+125 FALSE
+126  TRUE
+127 FALSE
+128 FALSE
+129 FALSE
+130 FALSE
+131 FALSE
+132  TRUE
+133 FALSE
+134 FALSE
+135  TRUE
+136 FALSE
+137  TRUE
+138 FALSE
+139 FALSE
+140 FALSE
+141 FALSE
+142 FALSE
+143 FALSE
+144 FALSE
+145 FALSE
+146 FALSE
+147 FALSE
+148 FALSE
+149  TRUE
+150 FALSE
+151 FALSE
+152  TRUE
+153 FALSE
+154  TRUE
+155 FALSE
+156 FALSE
+157  TRUE
+158 FALSE
+159 FALSE
+160 FALSE
+161 FALSE
+162 FALSE
+163 FALSE
+164  TRUE
+165  TRUE
+166 FALSE
+167  TRUE
+168 FALSE
+169 FALSE
+170  TRUE
+171 FALSE
+172 FALSE
+173  TRUE
+174 FALSE
+175  TRUE
+176 FALSE
+177 FALSE
+178  TRUE
+179 FALSE
+180  TRUE
+181 FALSE
+182  TRUE
+183 FALSE
+184  TRUE
+185 FALSE
+186 FALSE
+187 FALSE
+188 FALSE
+189 FALSE
+190 FALSE
+191 FALSE
+192 FALSE
+193 FALSE
+194 FALSE
+195 FALSE
+196 FALSE
+197 FALSE
+198 FALSE
+199 FALSE
+200 FALSE
+201 FALSE
+202  TRUE
+203  TRUE
+204  TRUE
+205  TRUE
+206  TRUE
+207  TRUE
+208  TRUE
+209  TRUE
+210  TRUE
+211  TRUE
+212  TRUE
+213  TRUE
+214  TRUE
+215  TRUE
+216  TRUE
+217  TRUE
+218  TRUE
+219  TRUE
+220  TRUE
+221  TRUE</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

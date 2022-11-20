@@ -1,0 +1,339 @@
+---
+title: "Bayesian CFA"
+format: 
+  html:
+    toc: true
+editor: visual
+---
+
+## loading packages
+
+```{r message=F}
+library(MplusAutomation)
+library(tidySEM)
+library(lavaan)
+```
+
+## Model
+
+![](images/paste-5B4CFB52.png){width="50%"}
+
+## Data
+
+ชุดข้อมูลได้จากไฟล์ข้อมูล `DataStudent.xlsx` ดังนี้
+
+```{r message=F}
+library(readxl)
+library(dplyr)
+dat<-read_excel("DataStudent.xlsx")
+dat_ana<-dat%>%select(1:15)
+dat_ana<-scale(dat_ana)%>%data.frame()
+glimpse(dat_ana)
+```
+
+## Create & run Mplus model
+
+```{r}
+## create mplus model object via R
+based.model<-mplusObject(
+  TITLE = "CFA based model",
+  ANALYSIS = "
+    ESTIMATOR = BAYES;
+    CHAINS = 2;
+    PROCESSORS = 2;
+    FBITERATIONS = 10000;
+  ",
+  MODEL = "
+  DLIT BY IT IL CA;
+  DPAR BY DA CE DC DCO;
+  DIDE BY SI DF;
+  DETH BY DET DLA DRR;
+  DPRO BY CM PS DH;
+  DCIT BY DLIT DPAR DIDE DETH DPRO;
+  ",
+  OUTPUT = "standardized TECH1;",
+  PLOT = "TYPE = PLOT2;",
+  rdata = dat_ana
+)
+
+# run
+result<-mplusModeler(
+  based.model,
+  modelout = "basemodel.inp",
+  run = 1L)
+```
+
+## Extract the results
+
+เราสามารถเรียกดู sub-objects ที่เก็บอยู่ใน result ได้จากการใช้ฟังก์ชัน `objects()` ดังนี้
+
+```{r}
+objects(result)
+objects(result$results)
+
+# Model summary stat
+result$results$summaries%>%data.frame()%>%t()
+```
+
+### Parameter Specification (tech1)
+
+```{r}
+result$results$tech1$parameterSpecification
+```
+
+### Model summary
+
+```{r}
+result$results
+```
+
+จะเห็นว่าโมเดลยังไม่ fit และสามารถพัฒนาได้อีก ผลการวิเคราะห์ต่อไปนี้จะแสดงแผนภาพ trace plot ของพารามิเตอร์ต่าง ๆ ภายในโมเดล จำแนกเป็นพารามิเตอร์น้ำหนักองค์ประกอบของ first-order model พารามิเตอร์น้ำหนักองค์ประกอบของ second-order model พารามิเตอร์ความแปรปรวนของเศษเหลือในตัวแปรสังเกตได้ เศษเหลือในตัวแปรแฝง และความแปรปรวนของตัวแปรแฝง DCLIT ดังนี้
+
+### Trace plot of factor loadings
+
+```{r fig.height=16}
+source("mplus.R")
+lambda<-result$results$tech1$parameterSpecification$lambda%>%rowSums()
+lambda<-lambda[lambda>0]
+par(mfrow=c(4,3))
+for (i in lambda)
+{
+mplus.plot.bayesian.traceplot("basemodel.gh5", i)
+}
+```
+
+### Trace plot of residuals variances (observed variables)
+
+```{r fig.height=16}
+
+theta<-result$results$tech1$parameterSpecification$theta%>%rowSums(na.rm=TRUE)
+par(mfrow=c(5,3), mar=c(1,1,3,1))
+for (i in theta)
+{
+mplus.plot.bayesian.traceplot("basemodel.gh5", i)
+}
+```
+
+### Trace plot of residuals variances (latent variables)
+
+```{r}
+
+
+psi<-result$results$tech1$parameterSpecification$psi%>%rowSums(na.rm=TRUE)
+par(mfrow=c(3,2), mar=c(1,1,3,1))
+for (i in psi)
+{
+mplus.plot.bayesian.traceplot("basemodel.gh5", i)
+}
+```
+
+### Parameter Estimates
+
+```{r font.size=10}
+result$results$parameters$stdyx.standardized
+result$results$parameters$r2
+```
+
+## Cross-loading tuning
+
+```{r}
+
+cfa1<-mplusObject(
+  TITLE = "CFA with crossloading",
+  ANALYSIS = "
+    ESTIMATOR = BAYES;
+    CHAINS = 2;
+    PROCESSORS = 2;
+    FBITERATIONS = 10000;
+    ",
+   MODEL = "
+  DLIT BY IT IL CA;
+  DPAR BY DA CE DC DCO;
+  DIDE BY SI DF;
+  DETH BY DET DLA DRR;
+  DPRO BY CM PS DH;
+  DCIT BY DLIT DPAR DIDE DETH DPRO;
+  
+
+  !cross-loading
+  DLIT BY DA CE DC DCO SI DF DET DLA DRR CM PS DH (a1-a12);
+  DPAR BY IT IL CA SI DF DET DLA DRR CM PS DH (b1-b11);
+  DIDE BY IT IL CA DA CE DC DCO DET DLA DRR CM PS DH (c1-c13);
+  DETH BY IT IL CA DA CE DC DCO SI DF CM PS DH (d1-d12);
+  DPRO BY IT IL CA DA CE DC DCO SI DF DET DLA DRR (e1-e12);
+  ",
+  
+  MODELPRIORS = "
+  a1-a12 ~ N(0,0.001);
+  b1-b11 ~ N(0,0.001);
+  c1-c13 ~ N(0,0.001);
+  d1-d12 ~ N(0,0.001);
+  e1-e12 ~ N(0,0.001);
+  ",
+  
+  OUTPUT = "
+   STAND(STDYX);
+   RESIDUAL TECH1 TECH8 STDYX;    
+  ",
+  PLOT = "TYPE = PLOT2;",
+  rdata = dat_ana
+) # end of mplusObject
+
+result1<-mplusModeler(
+  cfa1,
+  modelout = "cfa1.inp",
+  run = 1L)
+```
+
+```{r fig.height=18}
+lambda<-result1$results$tech1$parameterSpecification$lambda[,1]
+lambda<-lambda[lambda>0]
+
+par(mfrow=c(5,3))
+for (i in lambda)
+{
+mplus.plot.bayesian.traceplot("cfa1.gh5", i)
+}
+```
+
+```{r fig.height=18}
+lambda<-result1$results$tech1$parameterSpecification$lambda[,2]
+lambda<-lambda[lambda>0]
+
+par(mfrow=c(5,3))
+for (i in lambda)
+{
+mplus.plot.bayesian.traceplot("cfa1.gh5", i)
+}
+```
+
+```{r fig.height=18}
+lambda<-result1$results$tech1$parameterSpecification$lambda[,3]
+lambda<-lambda[lambda>0]
+
+par(mfrow=c(5,3))
+for (i in lambda)
+{
+mplus.plot.bayesian.traceplot("cfa1.gh5", i)
+}
+```
+
+# Residual variances tuning
+
+```{r}
+
+D<-result$results$parameters$unstandardized[37:56,3]
+D
+cfa2<-mplusObject(
+  TITLE = "CFA with crossloading",
+  ANALYSIS = "
+    ESTIMATOR = BAYES;
+    CHAINS = 2;
+    PROCESSORS = 2;
+    FBITERATIONS = 10000;
+    ",
+   MODEL = "
+  DLIT BY IT IL CA;
+  DPAR BY DA CE DC DCO;
+  DIDE BY SI DF;
+  DETH BY DET DLA DRR;
+  DPRO BY CM PS DH;
+  DCIT BY DLIT DPAR DIDE DETH DPRO;
+  
+
+  !cross-loading
+  DLIT BY DA CE DC DCO SI DF DET DLA DRR CM PS DH (a1-a12);
+  DPAR BY IT IL CA SI DF DET DLA DRR CM PS DH (b1-b11);
+  DIDE BY IT IL CA DA CE DC DCO DET DLA DRR CM PS DH (c1-c13);
+  DETH BY IT IL CA DA CE DC DCO SI DF CM PS DH (d1-d12);
+  DPRO BY IT IL CA DA CE DC DCO SI DF DET DLA DRR (e1-e12);
+  
+  !residual variances
+  
+  IT-DH (v1-v15);
+  IT-DH WITH IT-DH;
+  DLIT-DPRO;
+  ",
+  
+  MODELPRIORS = "
+  a1-a12 ~ N(0,0.001);
+  b1-b11 ~ N(0,0.001);
+  c1-c13 ~ N(0,0.001);
+  d1-d12 ~ N(0,0.001);
+  e1-e12 ~ N(0,0.001);
+  
+ !residual var priors
+  v1 ~ IW(23.3, 100);
+  v2 ~ IW(16.2, 100);
+  v3 ~ IW(32.4, 100);
+  v4 ~ IW(28.2, 100);
+  v5 ~ IW(62.5, 100);
+  v6 ~ IW(13.6, 100);
+  v7 ~ IW(29.6, 100);
+  v8 ~ IW(55.2, 100);
+  v9 ~ IW(23.3, 100);
+  v10 ~ IW(17.7, 100);
+  v11 ~ IW(18.7, 100);
+  v12 ~ IW(25.5, 100);
+  v13 ~ IW(27.4, 100);
+  v14 ~ IW(43.8, 100);
+  v15 ~ IW(11.7, 100);
+
+  ",
+  
+  OUTPUT = "
+   STAND(STDYX);
+   RESIDUAL TECH1 TECH8 STDYX;    
+  ",
+  PLOT = "TYPE = PLOT2;",
+  rdata = dat_ana
+) # end of mplusObject
+
+result2<-mplusModeler(
+  cfa2,
+  modelout = "cfa2.inp",
+  run = 1L)
+```
+
+```{r fig.height=18}
+lambda<-result2$results$tech1$parameterSpecification$lambda[,1]
+lambda<-lambda[lambda>0]
+
+par(mfrow=c(5,3))
+for (i in lambda)
+{
+mplus.plot.bayesian.traceplot("cfa1.gh5", i)
+}
+```
+
+```{r fig.height=18}
+lambda<-result2$results$tech1$parameterSpecification$lambda[,2]
+lambda<-lambda[lambda>0]
+
+par(mfrow=c(5,3))
+for (i in lambda)
+{
+mplus.plot.bayesian.traceplot("cfa1.gh5", i)
+}
+```
+
+```{r fig.height=18}
+lambda<-result2$results$tech1$parameterSpecification$lambda[,3]
+lambda<-lambda[lambda>0]
+
+par(mfrow=c(5,3))
+for (i in lambda)
+{
+mplus.plot.bayesian.traceplot("cfa1.gh5", i)
+}
+```
+
+## วิเคราะห์ผล
+
+```{r}
+
+result2$results
+result2$results$summaries
+result2$results$parameters$r2
+result2$results$parameters$stdyx.standardized%>%data.frame()
+```
