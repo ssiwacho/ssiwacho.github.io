@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -195,7 +195,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
     </ul>
     </div>
-    <nav id="TOC" role="doc-toc" class="toc-active">
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">หัวข้อ</h2>
    
   <ul>
@@ -227,9 +230,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   </ul>
 </nav>
-</nav>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -244,6 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -472,7 +473,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="ภาษา-python-2">ภาษา Python</h4>
 <p>สำหรับภาษา Python การนำเข้าและเขียนไฟล์ TSV รวมทั้ง flat file แบบอื่น ๆ สามารถทำได้ด้วยฟังก์ชัน <code>pd.read_csv()</code> โดยเปลี่ยนค่าของพารามิเตอร์ <code>sep</code> ให้ตรงกับตัวคั่นที่ใช้ในไฟล์ข้อมูล ยกตัวอย่างเช่น หากต้องการนำเข้าชุดข้อมูล <a href="https://raw.githubusercontent.com/ssiwacho/dataset/main/myTSV.txt">myTSV.txt</a> สามารถดำเนินการได้ดังนี้</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dat_TSV <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/ssiwacho/dataset/main/myTSV.txt"</span>,</span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dat_TSV <span class="op">=</span> pd.read_csv(<span class="st">"myTSV.txt"</span>,</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                      header <span class="op">=</span> <span class="dv">0</span>, sep <span class="op">=</span> <span class="st">" "</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>dat_TSV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -637,9 +638,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(dat_TSV, <span class="at">file=</span><span class="st">"dat_TSV.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>รูปต่อไปนี้แสดงไฟล์ <code>dat_TSV.xlsx</code> ที่เขียนด้วยฟังก์ชัน <code>write.xlsx()</code> ในข้างต้น</p>
+<p><img src="images/image-388606005.png" class="img-fluid" style="width:40.0%"></p>
 </section>
 <section id="ภาษา-python-3" class="level4">
 <h4 class="anchored" data-anchor-id="ภาษา-python-3">ภาษา Python</h4>
+<p>ในทำนองเดียวกับ R ผู้วิเคราะห์สามารถเรียกดูชื่อของ worksheet ในไฟล์ .xlsx ได้ ซึ่งสามารถทำได้หลายวิธีการ วิธีการหนึ่งคือการใช้ฟังก์ชัน <code>ExcelFile()</code> ของ library pandas ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>sheets <span class="op">=</span> pd.ExcelFile(<span class="st">"Score.xlsx"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>sheets.sheet_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Score', 'Score3']</code></pre>
+</div>
+</div>
+<p>ผลลัพธ์ข้างต้นแสดงให้เห็นว่าในไฟล์ <code>Score.xlsx</code> มี worksheet จำนวน 2 worksheet ได้แก่ <code>Scoore</code> และ <code>Score3</code> สมมุติว่าผู้วิเคราะห์ต้องการนำเข้าชุดข้อมูลใน worksheet <code>Score</code> สามารถเขียนคำสั่งเพิ่มได้ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> sheets.parse(sheet_name <span class="op">=</span> <span class="st">"Score"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id gender  MathScore  EngScore
+0   1      M         33        80
+1   2      M         57        20
+2   3      F         76        80
+3   4      M         80        85
+4   5      F         92        95</code></pre>
+</div>
+</div>
+<p>ฟังก์ชัน <code>parse()</code> ที่ใช้นำเข้าข้อมูลข้างต้นมีพารามิเตอร์ที่สามารถใช้ควบคุมการทำงานอยู่หลายตัว จากตัวอย่างข้างต้นจะเห็นว่ามีพารามิเตอร์ <code>sheet_name</code> ที่ใช้สำหรับระบุ worksheet ที่ไฟล์ .xlsx ที่ต้องการนำเข้า นอกจากนี้ยังมีพารามิเตอร์ <code>header</code> ที่ใช้ระบุแถวของชื่อตัวแปรในแต่ละคอลัมน์ ค่าเริ่มต้นของพารามิเตอร์นี้คือ <code>header = 0</code> ซึ่งหมายความว่ากำหนดให้แถวแรกของชุดข้อมูลเป็นชื่อของตัวแปร นอกจากนี้ยังสามารถกำหนดชื่อของตัวแปรในแต่ละคอลัมน์ได้ผ่านพารามิเตอร์ <code>names</code> โดยกำหนดให้รูปแบบของ list ที่สมาชิกแต่ละตัวแปร string เป็นต้น</p>
+<p>อีกวิธีการหนึ่งที่สามารถใช้เพื่อนำเข้าไฟล์ .xlsx ใน Python ได้คือการใช้ฟังก์ชัน <code>read_excel()</code> ใน library pandas ฟังก์ชันนี้มีพารามิเตอร์สำคัญคือ <code>io</code> ที่ใช้ระบุชื่อหรือที่อยู่ (url) ของไฟล์ .xlsx ที่ต้องการนำเข้าสู่ Python นอกจากนี้ยังมีพารามิเตอร์ <code>sheet_name</code>, <code>header</code>, <code>names</code> และพารามิเตอร์อื่น ๆ ที่เหมือนกับฟังก์ชัน <code>parse()</code>ในตัวอย่างข้างต้น รายละเอียดของพารามิเตอร์ต่าง ๆ ผู้อ่านสามารถศึกษาเพิ่มเติมได้จาก <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html" class="uri">https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html</a></p>
+<p>ตัวอย่างต่อไปนี้แสดงการนำเข้าชุดข้อมูลจาก worksheet <code>Score3</code> ในไฟล์ <code>Score.xlsx</code> โดยใช้ฟังก์ชัน <code>read_excel()</code> ดังกล่าว เนื่องจากชุดข้อมูลใน worksheet นี้ไม่ได้มีการกำหนดชื่อของตัวแปรเอาไว้ในแถวแรกของชุดข้อมูล จึงมีการกำหนดพารามิเตอร์ <code>header = None</code> และกำหนดชื่อของตัวแปรในแต่ละคอลัมน์ของชุดข้อมูลผ่านพารามิเตอร์ <code>names</code> นอกจากนี้ เนื่องจากชุดข้อมูลใน worksheet <code>Score3</code> มีจำนวนค่อนข้างมาก จากตัวอย่างข้างต้นจึงมีการใช้ฟังก์ชัน <code>head()</code> เพื่อควบคุมจำนวนข้อมูลที่จะนำเสนอใน printout</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>score3 <span class="op">=</span> pd.read_excel(<span class="st">"Score.xlsx"</span>,</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                        sheet_name <span class="op">=</span> <span class="st">"Score3"</span>,</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>                        header <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>                        names <span class="op">=</span> [<span class="st">'gender'</span>,<span class="st">'att_pre'</span>,<span class="st">'prob_sov'</span>, <span class="st">'att_post'</span>,<span class="st">'ach'</span>])</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>score3.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  gender  att_pre  prob_sov  att_post   ach
+0      M      2.7         9       4.0  17.6
+1      F      2.9        22       3.2  23.0
+2      M      3.3        12       4.0  13.7
+3      M      4.2        16       4.8  18.0
+4      M      4.4        23       4.5  14.9
+5      F      4.7        20       5.2  25.8
+6      F      5.4        17       2.7  13.8
+7      M      5.8        22       3.7  17.6
+8      F      6.0        20       5.0  23.3
+9      M      6.0        22       3.7  20.9</code></pre>
+</div>
+</div>
+<p>การเขียนชุดข้อมูลใน Python ออกไปเป็นไฟล์ .xlsx สามารถทำได้โดยใช้ฟังก์ชัน <code>to_excel()</code> ซึ่งมีการใช้งานที่คล้ายกับกับฟังก์ชัน <code>to_csv()</code> อย่างไรก็ตามเนื่องจากไฟล์ .xlsx มีโครงสร้างการเก็บข้อมูลที่ซับซ้อนกว่าไฟล์ CSV หรือ flatfile อื่น ๆ ฟังก์ชันดังกล่าวจึงมีพารามิเตอร์เฉพาะสำหรับการเขียนไฟล์ .xlsx ด้วย ฟังก์ชัน <code>to_excel()</code> มีพารามิเตอร์ที่สำคัญได้แก่ (1) พารามิเตอร์ <code>excel_writer</code> ใช้ระบุที่อยู่และชื่อไฟล์ .xlsx ที่ต้องการเขียนออกไป (2) พารามิเตอร์ <code>sheet_name</code> ใช้กำหนดชื่อของ worksheet ภายในไฟล์ .xlsx ที่ต้องการเขียนออกไป (3) พารามิเตอร์ <code>na_rep</code> ใช้สำหรับระบุสัญลักษณะของข้อมูลสูญหาย (missing value representation) (4) พารามิเตอร์ <code>startrow</code> และ <code>startcol</code> ใช้สำหรับกำหนดขอบเขตของข้อมูลที่ต้องการเขียนออกไปในไฟล์ .xlsx นอกจากนี้ยังมีพารามิเตอร์อื่น ๆ อีกหลายตัว โดยผู้อ่านสามารถศึกษาได้จาก <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html" class="uri">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html</a></p>
+<p>ตัวอย่างต่อไปนี้แสดงการใช้ฟังก์ชัน <code>to_excel()</code> เพื่อเขียนไฟล์ข้อมูลตัวอย่าง <code>exam_dat</code> ออกไปเป็นไฟล์ <code>exam_dat.xlsx</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#เพศของนักเรียน</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>gender <span class="op">=</span> [<span class="st">"M"</span>,<span class="st">"M"</span>,<span class="st">"F"</span>,<span class="st">"F"</span>,<span class="st">"F"</span>,<span class="st">"M"</span>]</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co">#วิธีการสอนของครู</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>method <span class="op">=</span> [<span class="st">"LEC"</span>,<span class="st">"LEC"</span>,<span class="st">"LEC"</span>,<span class="st">"PBL"</span>,<span class="st">"PBL"</span>,<span class="st">"PBL"</span>]</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># คะแนนสอบวิชา Eng</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>eng <span class="op">=</span> [<span class="dv">6</span>, <span class="fl">5.5</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="fl">8.5</span>]</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> {<span class="st">'gender'</span>: gender,</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">'method'</span>: method,</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">'eng'</span>: eng}</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>exam_dat <span class="op">=</span> pd.DataFrame(dat)</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>exam_dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  gender method  eng
+0      M    LEC  6.0
+1      M    LEC  5.5
+2      F    LEC  7.0
+3      F    PBL  7.0
+4      F    PBL  8.0
+5      M    PBL  8.5</code></pre>
+</div>
+</div>
+<p>การเขียนชุดข้อมูล <code>exam_dat</code> ออกไปเป็นไฟล์ <code>exam_dat.xlsx</code> สามารถเขียนคำสั่งได้ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>exam_dat.to_excel(excel_writer <span class="op">=</span> <span class="st">'exam_dat.xlsx'</span> , sheet_name<span class="op">=</span><span class="st">"exam_dat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>รูปต่อไปนี้แสดงไฟล์ <code>exam_dat.xlsx</code> ที่เขียนด้วยฟังก์ชัน <code>to_excel()</code> ในข้างต้น</p>
+<p><img src="images/image-978432785.png" class="img-fluid" style="width:40.0%"></p>
 
 
 </section>
@@ -688,7 +767,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -724,24 +820,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
