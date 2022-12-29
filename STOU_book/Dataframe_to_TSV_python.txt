@@ -1,6 +1,0 @@
- "Unnamed: 0" students calculus statistics math
-0 0 1 80 75 70
-1 1 2 40 55 60
-2 2 3 84 85 86
-3 3 4 51 38 43
-4 4 5 67 73 77

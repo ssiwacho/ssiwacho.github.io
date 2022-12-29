@@ -428,7 +428,7 @@ Data columns (total 6 columns):
  4   pop        1704 non-null   int32   
  5   gdpPercap  1704 non-null   float64 
 dtypes: category(2), float64(2), int32(2)
-memory usage: 51.4 KB</code></pre>
+memory usage: 50.4 KB</code></pre>
 </div>
 </div>
 <p>เมื่อพิจารณาผลลัพธ์จากภาษา R ข้างต้นแสดงให้เห็นว่าในชุดข้อมูล <code>gapminder</code> ประกอบด้วยข้อมูลจำนวน 1,704 หน่วย และมีจำนวน 6 คอลัมน์ โดยมีการรายงานชื่อของตัวแปรในแต่ละคอลัมน์ พร้อมทั้งระบุสถานะของตัวแปรดังกล่าว เช่น ตัวแปร <code>country</code> มีสถานะเป็นตัวแปรประเภทปัจจัย (<code>fct</code>) หรือตัวแปร <code>year</code> มีสถานะเป็นตัวแปรตัวเลขจำนวนเต็ม (<code>int</code>) หรือตัวแปร <code>gdrPercap</code> มีสถานะเป็นตัวแปรประเภทจำนวนจริง (<code>dbl</code>) เป็นต้น ผลลัพธ์นี้ช่วยให้ผู้วิเคราะห์ทราบว่าการนำเข้าข้อมูลดังกล่าว นำเข้ามาอย่างถูกต้องหรือไม่ หากมีตัวแปรใดที่ถูกจัดเก็บอยู่ในสถานะที่ไม่เหมาะสม ผู้วิเคราะห์ก็สามารถดำเนินการแก้ไขปรับเปลี่ยนให้เหมาะสมได้ และเมื่อพิจารณาผลลัพธ์จากภาษา Python พบว่าให้สารสนเทศในลักษณะเดียวกับภาษา R</p>
@@ -1098,8 +1098,11 @@ memory usage: 328.0+ bytes</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>dat_rbind <span class="op">=</span> dat1.append(dat2)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>dat_rbind</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>dat_rbind <span class="op">=</span> dat1.append(dat2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;string&gt;:1: FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>dat_rbind</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  student.name  Lecture.pre  PBL.pre  Lecture.post  PBL.post
 0        บุญมี         20.0      NaN          45.0       NaN
@@ -1116,9 +1119,13 @@ memory usage: 328.0+ bytes</code></pre>
 </div>
 <p>ในกรณีที่มีชุดข้อมูลมากกว่า 2 ชุด ที่ต้องการยุบรวมเข้าด้วยกันตามแถว สามารถใช้ฟังก์ชัน <code>append()</code> เรียงต่อกกันได้ดังตัวอย่างต่อไปนี้</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>dat_rbind <span class="op">=</span> dat1.append(dat2).append(dat3).append(dat4)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>dat_rbind</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dat_rbind <span class="op">=</span> dat1.append(dat2).append(dat3).append(dat4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;string&gt;:1: FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.
+&lt;string&gt;:1: FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>dat_rbind</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  student.name  Lecture.pre  PBL.pre  Lecture.post  PBL.post
 0        บุญมี         20.0      NaN          45.0       NaN
@@ -1166,18 +1173,18 @@ memory usage: 328.0+ bytes</code></pre>
 <p>ฟังก์ชันในกลุ่ม join มีอาร์กิวเมนท์ที่สำคัญเหมือนกันได้แก่ <code>x</code> และ <code>y</code> คือชุดข้อมูลที่ต้องการยุบรวมกันตามคอลัมน์ และ <code>by</code> ใช้ระบุตัวแปร id ที่จะใช้จับคู่หน่วยข้อมูลระหว่างชุดข้อมูลทั้งสอง ทั้งนี้การระบุอาร์กิวเมนท์นี้จะต้องระบุเป็นเวกเตอร์ตัวอักษร (character vector)</p>
 <p>ตัวอย่างต่อไปนี้แสดงการใช้ฟังก์ชัน join ทั้ง 4 ตัวเพื่อยุบรวมข้อมูลตามคอลัมน์ ชุดข้อมูลที่ใช้เป็นตัวอย่างเป็นชุดข้อมูลที่สร้างขึ้นด้วยการกำหนดค่าด้วยมือ ประกอบด้วยชุดข้อมูล <code>X</code> และ <code>Y</code> สังเกตว่าชุดข้อมูลทั้งหมดมีตัวแปร <code>id</code> ที่ใช้สำหรับอ้างอิงหน่วยข้อมูล นอกจากนี้ชุดข้อมูลทั้งสองมีหน่วยข้อมูลที่เหมือนกันเพียงบางส่วน และมีการจัดเก็บข้อมูลของตัวแปรที่แตกต่างกัน</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>X<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">"m"</span>,<span class="st">"f"</span>,<span class="st">"f"</span>,<span class="st">"m"</span>),</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">income =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">15</span>))</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>Y<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>),</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">100</span>, <span class="dv">75</span>),</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">location =</span> <span class="fu">c</span>(<span class="st">"N"</span>,<span class="st">"NE"</span>,<span class="st">"S"</span>,<span class="st">"C"</span>,<span class="st">"W"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>X<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">"m"</span>,<span class="st">"f"</span>,<span class="st">"f"</span>,<span class="st">"m"</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">income =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">15</span>))</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>Y<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>),</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">100</span>, <span class="dv">75</span>),</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">location =</span> <span class="fu">c</span>(<span class="st">"N"</span>,<span class="st">"NE"</span>,<span class="st">"S"</span>,<span class="st">"C"</span>,<span class="st">"W"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id gender income
 1  1      m     10
@@ -1185,7 +1192,7 @@ memory usage: 328.0+ bytes</code></pre>
 3  3      f     20
 4  4      m     15</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>Y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>Y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id score location
 1  1    30        N
@@ -1197,14 +1204,14 @@ memory usage: 328.0+ bytes</code></pre>
 </div>
 <p>ผลลัพธ์ที่ได้จากการยุบรวมข้อมูลตามคอลัมน์ด้วยฟังก์ชัน join ทั้ง 4 ตัวเป็นดังนี้ ผู้อ่านลองพิจารณาความแตกต่างของผลลัพธ์ที่ได้จากฟังก์ชันทั้ง 4 ใน output ด้านล่าง</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id gender income score location
 1  1      m     10    30        N
 2  2      f      5    50       NE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id gender income score location
 1  1      m     10    30        N
@@ -1212,7 +1219,7 @@ memory usage: 328.0+ bytes</code></pre>
 3  3      f     20    NA     &lt;NA&gt;
 4  4      m     15    NA     &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id gender income score location
 1  1      m     10    30        N
@@ -1221,7 +1228,7 @@ memory usage: 328.0+ bytes</code></pre>
 4  6   &lt;NA&gt;     NA   100        C
 5  7   &lt;NA&gt;     NA    75        W</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id gender income score location
 1  1      m     10    30        N
@@ -1236,21 +1243,21 @@ memory usage: 328.0+ bytes</code></pre>
 <p>ในภาษา Python มีฟังก์ชันที่เทียบเคียงได้กับกลุ่มฟังก์ชัน join ของภาษา R เช่นเดียวกันได้แก่ ฟังก์ชัน <code>merge()</code> ภายใต้ pandas library ฟังก์ชันดังกล่าวมีพารามิเตอร์ที่สำคัญได้แก่ <code>left</code> และ <code>right</code> ใช้ระบุชุดข้อมูลทางซ้ายและทางขวาสำหรับการยุบรวม <code>on</code> ใช้ระบุ id สำหรับการจับคู่หน่วยข้อมูลเดียวกันระหว่างสองชุดข้อมูลที่ต้องการยุบรวมกัน และ <code>how</code> ใช้ระบุลักษณะของการยุบรวมระหว่างชุดข้อมูล โดยสามารถเลือกกำหนดได้ 4 แบบเช่นเดียวกับภาษา R ได้แก่ <code>inner</code>, <code>left</code>, <code>right</code> และ <code>outer</code> โดยที่ <code>outer</code> จะเทียบเท่ากับ <code>full_join()</code> ในภาษา R ข้างต้น</p>
 <p>ตัวอย่างต่อไปนี้แสดงการใช้ฟังก์ชัน <code>pd.merge()</code> เพื่อยุบรวมชุดข้อมูล <code>X</code> และ <code>Y</code> ด้านล่าง ด้วยวิธีการทั้ง 4 แบบ</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> {<span class="st">'id'</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>],</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'gender'</span>: [<span class="st">"m"</span>,<span class="st">"f"</span>,<span class="st">"f"</span>,<span class="st">"m"</span>],</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">'income'</span>: [<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">15</span>]}</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> {<span class="st">'id'</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>],</span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'score'</span>: [<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">100</span>, <span class="dv">75</span>],</span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'location'</span>: [<span class="st">"N"</span>,<span class="st">"NE"</span>,<span class="st">"S"</span>,<span class="st">"C"</span>,<span class="st">"W"</span>]}</span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame(X)</span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> pd.DataFrame(Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> {<span class="st">'id'</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>],</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'gender'</span>: [<span class="st">"m"</span>,<span class="st">"f"</span>,<span class="st">"f"</span>,<span class="st">"m"</span>],</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">'income'</span>: [<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">15</span>]}</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> {<span class="st">'id'</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>],</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'score'</span>: [<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">100</span>, <span class="dv">75</span>],</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'location'</span>: [<span class="st">"N"</span>,<span class="st">"NE"</span>,<span class="st">"S"</span>,<span class="st">"C"</span>,<span class="st">"W"</span>]}</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame(X)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> pd.DataFrame(Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   id gender  income
 0   1      m      10
@@ -1258,7 +1265,7 @@ memory usage: 328.0+ bytes</code></pre>
 2   3      f      20
 3   4      m      15</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>Y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>Y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   id  score location
 0   1     30        N
@@ -1269,14 +1276,14 @@ memory usage: 328.0+ bytes</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   id gender  income  score location
 0   1      m      10     30        N
 1   2      f       5     50       NE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   id gender  income  score location
 0   1      m      10   30.0        N
@@ -1284,7 +1291,7 @@ memory usage: 328.0+ bytes</code></pre>
 2   3      f      20    NaN      NaN
 3   4      m      15    NaN      NaN</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   id gender  income  score location
 0   1      m    10.0     30        N
@@ -1293,7 +1300,7 @@ memory usage: 328.0+ bytes</code></pre>
 3   6    NaN     NaN    100        C
 4   7    NaN     NaN     75        W</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"outer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"outer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   id gender  income  score location
 0   1      m    10.0   30.0        N
