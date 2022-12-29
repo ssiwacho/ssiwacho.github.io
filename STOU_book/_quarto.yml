@@ -1,0 +1,30 @@
+project:
+  type: book
+
+book:
+  title: "หน่วยที่ 4 การเตรียมข้อมูล"
+  author: "ผศ.ดร.สิวะโชติ ศรีสุทธิยากร"
+  date: "10/29/2022"
+  downloads: [pdf, epub]
+  sidebar:
+    style: docked
+    background: dark
+  chapters:
+    - index.qmd
+    - import.qmd
+    - tidy.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    toc-depth: 4
+    toc-location: right
+    toc-title: "หัวข้อ"
+    theme: 
+    - cosmo
+    - style.scss
+
+editor: visual
+

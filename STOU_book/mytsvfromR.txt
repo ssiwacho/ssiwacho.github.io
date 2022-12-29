@@ -1,0 +1,7 @@
+"gender" "method" "eng"
+"1" "M" "LEC" 6
+"2" "M" "LEC" 5.5
+"3" "F" "LEC" 7
+"4" "F" "PBL" 7
+"5" "F" "PBL" 8
+"6" "M" "PBL" 8.5

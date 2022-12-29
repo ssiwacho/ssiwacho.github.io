@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>หน่วยที่ 4 การเตรียมข้อมูล - ตอนที่ 4.2 การจัดระเบียบข้อมูล (tidying data)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./import.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">ตอนที่ 4.2 การจัดระเบียบข้อมูล (tidying data)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">หน่วยที่ 4 การเตรียมข้อมูล</a> 
+        <div class="sidebar-tools-main">
+    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./หน่วยที่-4-การเตรียมข้อมูล.pdf">
+            <i class="bi bi-bi-file-pdf pe-1"></i>
+          Download PDF
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./หน่วยที่-4-การเตรียมข้อมูล.epub">
+            <i class="bi bi-bi-journal pe-1"></i>
+          Download ePub
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">แผนการสอนประจำหน่วย</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./import.html" class="sidebar-item-text sidebar-link">ตอนที่ 4.1 การนำเข้าและเขียนชุดข้อมูล (importing and writing data)</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tidy.html" class="sidebar-item-text sidebar-link active">ตอนที่ 4.2 การจัดระเบียบข้อมูล (tidying data)</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">หัวข้อ</h2>
+   
+  <ul>
+  <li><a href="#เรองท-4.2.1-การสำรวจลกษณะของชดขอมล" id="toc-เรองท-4.2.1-การสำรวจลกษณะของชดขอมล" class="nav-link active" data-scroll-target="#เรองท-4.2.1-การสำรวจลกษณะของชดขอมล">เรื่องที่ 4.2.1 การสำรวจลักษณะของชุดข้อมูล</a>
+  <ul>
+  <li><a href="#การเรยกดรายการและสถานะของตวแปร" id="toc-การเรยกดรายการและสถานะของตวแปร" class="nav-link" data-scroll-target="#การเรยกดรายการและสถานะของตวแปร"><strong>การเรียกดูรายการและสถานะของตัวแปร</strong></a></li>
+  <li><a href="#การเรยกดสวนหวและสวนทายของชดขอมล" id="toc-การเรยกดสวนหวและสวนทายของชดขอมล" class="nav-link" data-scroll-target="#การเรยกดสวนหวและสวนทายของชดขอมล"><strong>การเรียกดูส่วนหัวและส่วนท้ายของชุดข้อมูล</strong></a></li>
+  </ul></li>
+  <li><a href="#เรองท-4.2.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data" id="toc-เรองท-4.2.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data" class="nav-link" data-scroll-target="#เรองท-4.2.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data">เรื่องที่ 4.2.2 การปรับเปลี่ยนลักษณะของชุดข้อมูล (reshaping data)</a>
+  <ul>
+  <li><a href="#การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว" id="toc-การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว" class="nav-link" data-scroll-target="#การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว">การปรับเปลี่ยนรูปแบบชุดข้อมูลระหว่างชุดข้อมูลแบบกว้างกับชุดข้อมูลแบบยาว</a></li>
+  <li><a href="#การแยกคอลมน" id="toc-การแยกคอลมน" class="nav-link" data-scroll-target="#การแยกคอลมน">การแยกคอลัมน์</a></li>
+  <li><a href="#การยบรวมคอลมน" id="toc-การยบรวมคอลมน" class="nav-link" data-scroll-target="#การยบรวมคอลมน">การยุบรวมคอลัมน์</a></li>
+  <li><a href="#การรวมชดขอมลตามแถว-rows-combined" id="toc-การรวมชดขอมลตามแถว-rows-combined" class="nav-link" data-scroll-target="#การรวมชดขอมลตามแถว-rows-combined">การรวมชุดข้อมูลตามแถว (rows combined)</a></li>
+  <li><a href="#การยบรวมขอมลตามคอลมน-columns-combined" id="toc-การยบรวมขอมลตามคอลมน-columns-combined" class="nav-link" data-scroll-target="#การยบรวมขอมลตามคอลมน-columns-combined">การยุบรวมข้อมูลตามคอลัมน์ (columns combined)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">ตอนที่ 4.2 การจัดระเบียบข้อมูล (tidying data)</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><br></p>
+<p>ชุดข้อมูล (data set) มีลักษณะเป็นตารางที่ประกอบด้วยมิติด้านคอลัมน์ (column) และแถว (row) ใช้เก็บข้อมูลของตัวแปรต่าง ๆ ข้อมูลที่ถูกจัดเก็บอยู่ในตารางดังกล่าวเป็นไปได้ทั้งข้อมูลเชิงปริมาณที่มีค่าเป็นตัวเลข ข้อมูลเชิงคุณลักษณะที่ไม่ใช่ตัวเลข การออกแบบตารางสำหรับจัดเก็บข้อมูลนั้นสามารถทำได้หลากหลายลักษณะ พิจารณาชุดข้อมูลในตาราง 1 และ 2 ด้านล่างจะเห็นว่าถึงแม้จะเป็นเป็นชุดข้อมูลที่จัดเก็บข้อมูลเดียวกัน แต่ก็สามารถที่จะมีรูปแบบการจัดเก็บที่แตกต่างกันได้</p>
+<p><strong>ตาราง 4.1</strong> : คะแนนสอบวิชาคณิตศาสตร์และภาษาอังกฤษของนักเรียน (รูปแบบที่ 1)</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 15px; font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> นักเรียน </th>
+   <th style="text-align:right;"> คะแนนวิชาคณิตศาสตร์ </th>
+   <th style="text-align:right;"> คะแนนวิชาวิทยาศาสตร์ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> บุญมา </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมี </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญเติม </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญหนัก </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><strong>ตาราง 4.2</strong> : คะแนนสอบวิชาคณิตศาสตร์และภาษาอังกฤษของนักเรียน (รูปแบบที่ 2)</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 15px; font-family: Sarabun; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> นักเรียน </th>
+   <th style="text-align:left;"> รายวิชา </th>
+   <th style="text-align:right;"> คะแนน </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> บุญมา </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมา </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมี </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญมี </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญเติม </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญเติม </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญหนัก </td>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> บุญหนัก </td>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><br></p>
+<p>อย่างไรก็ตามการจัดเก็บข้อมูลในชุดข้อมูลในรูปแบบที่เหมาะสมกับการดำเนินการวิเคราะห์ข้อมูล หรือการสร้างทัศนภาพข้อมูลจะช่วยให้การวิเคราะห์ข้อมูลตามวัตถุประสงค์ต่าง ๆ สามารถทำได้ง่ายและมีประสิทธิภาพ ในทางกลับกันการจัดเก็บข้อมูลในรูปแบบที่ไม่เหมาะสมจะเป็นอุปสรรคในการวิเคราะห์ข้อมูล นอกจากนี้ยังอาจเป็นปัจจัยที่ก่อให้เกิดความผิดพลาดในผลการวิเคราะห์อีกด้วย รูปแบบของชุดข้อมูลที่เหมาะสมและสนับสนุนให้การวิเคราะห์ข้อมูลสามารถดำเนินไปได้อย่างมีประสิทธิภาพเรียกว่า <strong>ชุดข้อมูลจัดระเบียบ (tidy data)</strong></p>
+<p>ชุดข้อมูลจัดระเบียบเป็นตารางข้อมูลที่มีลักษณะสำคัญของรูปแบบการจัดเก็บข้อมูล 3 ประการ (สิวะโชติ ศรีสุทธิยากร, 2564; Wickham, 2014) ดังนี้</p>
+<ol type="1">
+<li>มิติด้านคอลัมน์ (column) ของชุดข้อมูล เป็นมิติของตัวแปร โดยที่แต่ละคอลมน์จะใช้เก็บข้อมูลตัวแปรได้เพียงคอลัมน์ละหนึ่งตัวแปรเท่านั้น</li>
+<li>มิติด้านแถว (row) ของชุดข้อมูล เป็นมิติของหน่วยข้อมูล โดยที่แต่ละแถวจะใช้เก็บข้อมูลของหน่วยข้อมูลได้เพียงแถวละหนึ่งหน่วยข้อมูลเท่านั้น</li>
+<li>ภายในแต่ละเซลล์ (cell) ของชุดข้อมูล จะใช้เก็บข้อมูลค่าสังเกตได้เพียงค่าเดียวเท่านั้น</li>
+</ol>
+<p>รูป 4.1 แสดงตัวอย่างของชุดข้อมูลจัดระเบียบที่มีคุณลักษณะข้างต้น สังเกตว่าหัวตาราง (แถวแรกของตาราง) จะเป็นส่วนที่ใช้ระบุชื่อของตัวแปรในแต่ละคอลัมน์ อย่างไรก็ตามในสถานการณ์จริงชุดข้อมูลส่วนใหญ่มักมีลักษณะที่ละเมิดเงื่อนไขของชุดข้อมูลจัดระเบียบข้างต้นอย่างน้อยหนึ่งข้อ การจัดระเบียบชุดข้อมูลจึงเป็นขั้นตอนที่มีความสำคัญภายใต้การดำเนินงานทางด้านวิทยาการข้อมูล เนื้อหาในตอนที่ 4.1 นี้จึงจะกล่าวถึง การสำรวจลักษณะของชุดข้อมูล เพื่อวิเคราะห์สภาพและระบุปัญหาความไม่เป็นระเบียบของชุดข้อมูล (ถ้ามี) จากนั้นจะกล่าวถึงวิธีการที่เกี่ยวข้องสำหรับแก้ปัญหาดังกล่าว รายละเอียดมีดังนี้</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="tidydata.png" class="img-fluid figure-img" style="width:70.0%" alt="ที่มา : ดัดแปลงจาก สิวะโชติ ศรีสุทธิยากร (2564)"></p>
+<p></p><figcaption class="figure-caption">รูป 4.1 ตัวอย่างข้อมูลจัดระเบียบ</figcaption><p></p>
+</figure>
+</div>
+<p>ที่มา : ดัดแปลงจาก สิวะโชติ ศรีสุทธิยากร (2564)</p>
+<p><br></p>
+<section id="เรองท-4.2.1-การสำรวจลกษณะของชดขอมล" class="level2">
+<h2 class="anchored" data-anchor-id="เรองท-4.2.1-การสำรวจลกษณะของชดขอมล">เรื่องที่ 4.2.1 การสำรวจลักษณะของชุดข้อมูล</h2>
+<p>ในหัวข้อนี้จะใช้ชุดข้อมูล <code>gapminder</code> (Bryan, 2017) ที่ประกอบด้วยข้อมูลเกี่ยวกับจำนวนประชากร (pop) ผลิตภัณฑ์มวลรวมในประเทศต่อหัว (gdpPercap) และอายุขัยเฉลี่ยของประชากร (lifeExp) ของประเทศต่าง ๆ เป็นตัวอย่างประกอบการอธิบาย เมื่อผู้วิเคราะห์นำข้อมูล <code>gapminder</code> เข้าสู่โปรแกรมแล้วเรียกดูชุดข้อมูลจะได้ผลลัพธ์ที่มีลักษณะดังนี้</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       country continent year lifeExp      pop gdpPercap
+1  Afghanistan      Asia 1952  28.801  8425333  779.4453
+2  Afghanistan      Asia 1957  30.332  9240934  820.8530
+3  Afghanistan      Asia 1962  31.997 10267083  853.1007
+4  Afghanistan      Asia 1967  34.020 11537966  836.1971
+5  Afghanistan      Asia 1972  36.088 13079460  739.9811
+6  Afghanistan      Asia 1977  38.438 14880372  786.1134
+7  Afghanistan      Asia 1982  39.854 12881816  978.0114
+8  Afghanistan      Asia 1987  40.822 13867957  852.3959
+9  Afghanistan      Asia 1992  41.674 16317921  649.3414
+10 Afghanistan      Asia 1997  41.763 22227415  635.3414</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      country continent year lifeExp      pop gdpPercap
+1695 Zimbabwe    Africa 1962  52.358  4277736  527.2722
+1696 Zimbabwe    Africa 1967  53.995  4995432  569.7951
+1697 Zimbabwe    Africa 1972  55.635  5861135  799.3622
+1698 Zimbabwe    Africa 1977  57.674  6642107  685.5877
+1699 Zimbabwe    Africa 1982  60.363  7636524  788.8550
+1700 Zimbabwe    Africa 1987  62.351  9216418  706.1573
+1701 Zimbabwe    Africa 1992  60.377 10704340  693.4208
+1702 Zimbabwe    Africa 1997  46.809 11404948  792.4500
+1703 Zimbabwe    Africa 2002  39.989 11926563  672.0386
+1704 Zimbabwe    Africa 2007  43.487 12311143  469.7093</code></pre>
+</div>
+</div>
+<p>ผลลัพธ์ข้างต้นจะเห็นว่าชุดข้อมูล <code>gapminder</code> ประกอบด้วยตัวแปรทั้งหมด 6 ตัว ได้แก่ ประเทศ (country) ทวีป (continent) ปี (year) อายุขัยเฉลี่ยของประชากร (lifeExp) จำนวนประชากร (pop) และผลิตภัณฑ์มวลรวมต่อหัวภายในประเทศ (gdpPercap) ผู้อ่านจะสังเกตเห็นว่าการเรียนดูข้อมูลทั้งชุดขึ้นมาโดยตรงดังตัวอย่างข้างต้นเป็นวิธีการที่ไม่มีประสิทธิภาพในการสำรวจข้อมูล ทั้งนี้เป็นเพราะในสถานการณ์ที่ข้อมูลมีจำนวนมาก วิธีการดังกล่าวจะให้รายละเอียดของชุดข้อมูลที่มากเกินไปโดยไม่จำเป็น นอกจากนี้ยังมีโอกาสสูงที่จะเกิดปัญหาข้อมูลล้นหน้าจอแสดงผล จนผู้วิเคราะห์ไม่สามารถทราบสภาพของชุดข้อมูลดังกล่าวได้อย่างสะดวก</p>
+<p>ในทางปฏิบัติการสำรวจชุดข้อมูลต่าง ๆ ผู้วิเคราะห์จะไม่ได้เรียกดูหรือสำรวจชุดข้อมูลทั้งหมดโดยตรง แต่จะใช้ module ของโปรแกรมวิเคราะห์ข้อมูลช่วยในการสำรวจ module ดังกล่าวจะทำหน้าที่สรุปสารสนเทศที่จำเป็นสำหรับการทำความเข้าใจสภาพของชุดข้อมูลดังกล่าว ได้แก่ การเรียกดูรายการและสถานะของตัวแปรในชุดข้อมูล และการเรียกดูส่วนหัวและส่วนท้ายของชุดข้อมูล รายละเอียดมีดังนี้</p>
+<section id="การเรยกดรายการและสถานะของตวแปร" class="level3">
+<h3 class="anchored" data-anchor-id="การเรยกดรายการและสถานะของตวแปร"><strong>การเรียกดูรายการและสถานะของตัวแปร</strong></h3>
+<p>วิธีการเรียกดูผลลัพธ์ส่วนนี้จะแตกต่างกันไปขึ้นอยู่กับผู้วิเคราะห์ว่าใช้โปรแกรมใด เช่น ในกรณีที่ใช้ภาษา R อาจเลือกใช้ฟังก์ชัน <code>str()</code> หรือ <code>glimpse()</code> หรือในกรณีที่ใช้ภาษา Python อาจเลือก method <code>info()</code> ภายใต้ pandas library เป็นต้น ผลการวิเคราะห์ด้านล่างแสดงผลลัพธ์ในภาษา R และ Python ดังกล่าว</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,704
+Columns: 6
+$ country   &lt;fct&gt; "Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", …
+$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
+$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>gapminder.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1704 entries, 0 to 1703
+Data columns (total 6 columns):
+ #   Column     Non-Null Count  Dtype   
+---  ------     --------------  -----   
+ 0   country    1704 non-null   category
+ 1   continent  1704 non-null   category
+ 2   year       1704 non-null   int32   
+ 3   lifeExp    1704 non-null   float64 
+ 4   pop        1704 non-null   int32   
+ 5   gdpPercap  1704 non-null   float64 
+dtypes: category(2), float64(2), int32(2)
+memory usage: 50.4 KB</code></pre>
+</div>
+</div>
+<p>เมื่อพิจารณาผลลัพธ์จากภาษา R ข้างต้นแสดงให้เห็นว่าในชุดข้อมูล <code>gapminder</code> ประกอบด้วยข้อมูลจำนวน 1,704 หน่วย และมีจำนวน 6 คอลัมน์ โดยมีการรายงานชื่อของตัวแปรในแต่ละคอลัมน์ พร้อมทั้งระบุสถานะของตัวแปรดังกล่าว เช่น ตัวแปร <code>country</code> มีสถานะเป็นตัวแปรประเภทปัจจัย (<code>fct</code>) หรือตัวแปร <code>year</code> มีสถานะเป็นตัวแปรตัวเลขจำนวนเต็ม (<code>int</code>) หรือตัวแปร <code>gdrPercap</code> มีสถานะเป็นตัวแปรประเภทจำนวนจริง (<code>dbl</code>) เป็นต้น ผลลัพธ์นี้ช่วยให้ผู้วิเคราะห์ทราบว่าการนำเข้าข้อมูลดังกล่าว นำเข้ามาอย่างถูกต้องหรือไม่ หากมีตัวแปรใดที่ถูกจัดเก็บอยู่ในสถานะที่ไม่เหมาะสม ผู้วิเคราะห์ก็สามารถดำเนินการแก้ไขปรับเปลี่ยนให้เหมาะสมได้ และเมื่อพิจารณาผลลัพธ์จากภาษา Python พบว่าให้สารสนเทศในลักษณะเดียวกับภาษา R</p>
+</section>
+<section id="การเรยกดสวนหวและสวนทายของชดขอมล" class="level3">
+<h3 class="anchored" data-anchor-id="การเรยกดสวนหวและสวนทายของชดขอมล"><strong>การเรียกดูส่วนหัวและส่วนท้ายของชุดข้อมูล</strong></h3>
+<p>วิธีการนี้เป็นวิธีการง่าย ๆ ที่ช่วยให้ผู้วิเคราะห์ทำความเข้าใจโครงสร้างของตารางข้อมูล ขอบเขตของตัวแปร รวมทั้งลักษณะของค่าสังเกตบางส่วนที่จัดเก็บอยู่ในชุดข้อมูล การดำเนินการส่วนนี้ด้วยภาษา R สามารถทำได้โดยใช้ฟังก์ชัน <code>head()</code> และ <code>tail()</code> ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  country     continent  year lifeExp      pop gdpPercap
+  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 Afghanistan Asia       1952    28.8  8425333      779.
+2 Afghanistan Asia       1957    30.3  9240934      821.
+3 Afghanistan Asia       1962    32.0 10267083      853.
+4 Afghanistan Asia       1967    34.0 11537966      836.
+5 Afghanistan Asia       1972    36.1 13079460      740.
+6 Afghanistan Asia       1977    38.4 14880372      786.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  country  continent  year lifeExp      pop gdpPercap
+  &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1 Zimbabwe Africa     1982    60.4  7636524      789.
+2 Zimbabwe Africa     1987    62.4  9216418      706.
+3 Zimbabwe Africa     1992    60.4 10704340      693.
+4 Zimbabwe Africa     1997    46.8 11404948      792.
+5 Zimbabwe Africa     2002    40.0 11926563      672.
+6 Zimbabwe Africa     2007    43.5 12311143      470.</code></pre>
+</div>
+</div>
+<p>ส่วนภาษา Python สามารถทำได้โดยใช้ method <code>head()</code> และ <code>tail()</code> ของ pandas libary ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>gapminder.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       country continent  year  lifeExp       pop   gdpPercap
+0  Afghanistan      Asia  1952   28.801   8425333  779.445314
+1  Afghanistan      Asia  1957   30.332   9240934  820.853030
+2  Afghanistan      Asia  1962   31.997  10267083  853.100710
+3  Afghanistan      Asia  1967   34.020  11537966  836.197138
+4  Afghanistan      Asia  1972   36.088  13079460  739.981106</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>gapminder.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       country continent  year  lifeExp       pop   gdpPercap
+1699  Zimbabwe    Africa  1987   62.351   9216418  706.157306
+1700  Zimbabwe    Africa  1992   60.377  10704340  693.420786
+1701  Zimbabwe    Africa  1997   46.809  11404948  792.449960
+1702  Zimbabwe    Africa  2002   39.989  11926563  672.038623
+1703  Zimbabwe    Africa  2007   43.487  12311143  469.709298</code></pre>
+</div>
+</div>
+<p>ในทางปฏิบัติผลการวิเคราะห์ด้วยวิธีการข้างต้นเพียงพอสำหรับผู้วิเคราะห์ที่จะใช้พิจารณาว่าโครงสร้างการจัดเก็บข้อมูลในชุดข้อมูลที่นำเข้ามามีลักษณะเป็นชุดข้อมูลจัดระเบียบที่เหมาะสำหรับการนำไปวิเคราะห์ข้อมูลตามวัตถุประสงค์แล้วหรือไม่ หากยังไม่เหมาะสมผู้วิเคราะห์จำเป็นต้องแก้ปัญหาในเชิงของโครงสร้างชุดข้อมูลดังกล่าวก่อนที่จะดำเนินการในขั้นตอนต่อไป หัวข้อถัดไปจะกล่าวถึงเครื่องมือหรือวิธีการพื้นฐานที่จำเป็นสำหรับปรับเปลี่ยนลักษณะของชุดข้อมูลให้ตรงกับความต้องการ</p>
+</section>
+</section>
+<section id="เรองท-4.2.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data" class="level2">
+<h2 class="anchored" data-anchor-id="เรองท-4.2.2-การปรบเปลยนลกษณะของชดขอมล-reshaping-data">เรื่องที่ 4.2.2 การปรับเปลี่ยนลักษณะของชุดข้อมูล (reshaping data)</h2>
+<p>ชุดข้อมูลที่ยังไม่เป็นระเบียบมีหลากหลายลักษณะ และโดยมากมักพบเมื่อผู้วิเคราะห์ได้ข้อมูลมาจากแหล่งข้อมูลทุติยภูมิ เช่น ฐานข้อมูล หรือแหล่ง open data ต่าง ๆ หัวข้อนี้จะกล่าวถึงปัญหาข้อมูลไม่เป็นระเบียบที่มักพบและวิธีการแก้ปัญหาดังกล่าว รายละเอียดมีดังนี้</p>
+<section id="การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว" class="level3">
+<h3 class="anchored" data-anchor-id="การปรบเปลยนรปแบบชดขอมลระหวางชดขอมลแบบกวางกบชดขอมลแบบยาว">การปรับเปลี่ยนรูปแบบชุดข้อมูลระหว่างชุดข้อมูลแบบกว้างกับชุดข้อมูลแบบยาว</h3>
+<p>ชุดข้อมูลอาจจำแนกได้เป็น 2 ลักษณะ ได้แก่ ชุดข้อมูลแบบกว้าง (wide format) และชุดข้อมูลแบบยาว (long format) รายละเอียดมีดังนี้</p>
+<ol type="1">
+<li><strong>ชุดข้อมูลแบบกว้าง</strong> เป็นชุดข้อมูลที่มีการกระจายค่าสังเกตของตัวแปรสำคัญขึ้นไปอยู่บนคอลัมน์ ดังตัวอย่างชุดข้อมูล <code>onet.xlsx</code> ในตาราง 3 โดยส่วนใหญ่ตารางลักษณะนี้เหมาะสำหรับการนำเสนอข้อมูล หรือนำไปใช้สำหรับสร้างทัศนภาพข้อมูลในบางกรณี แต่มักไม่เหมาะที่จะนำไปเข้าสู่โมเดลวิเคราะห์ข้อมูลต่าง ๆ</li>
+<li><strong>ชุดข้อมูลแบบยาว</strong> เป็นชุดข้อมูลที่มีลักษณะเป็นไปตามเงื่อนไขของชุดข้อมูลจัดระเบียบ โดยมิติด้านคอลัมน์ใช้เก็บข้อมูลของตัวแปรแต่ละตัว ส่วนมิติด้านแถวใช้เก็บข้อมูลของหน่วยข้อมูล ชุดข้อมูล <code>gapminder</code> ข้างต้นเป็นตัวอย่างของชุดข้อมูลแบบยาว ชุดข้อมูลแบบยาวเป็นรูปแบบปกติที่มักพบในฐานข้อมูลแบบ SQL ทั่วไป</li>
+</ol>
+<p><strong>ตาราง 4.3</strong> : (ตัวอย่างชุดข้อมูลแบบกว้าง) จำนวนนักเรียนจำแนกตามรายวิชาและช่วงคะแนนผลการสอบ O-NET ระดับชั้น ม.6 ปีการศึกษา 2560</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 14px; font-family: Sarabun; ">
+ <thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1"></th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="10"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">ช่วงคะแนนผลสอบ O-NET</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;"> วิชา </th>
+   <th style="text-align:right;"> &lt; 10 คะแนน </th>
+   <th style="text-align:right;"> 10-20 </th>
+   <th style="text-align:right;"> 20-30 </th>
+   <th style="text-align:right;"> 30-40 </th>
+   <th style="text-align:right;"> 40-50 </th>
+   <th style="text-align:right;"> 50-60 </th>
+   <th style="text-align:right;"> 60-70 </th>
+   <th style="text-align:right;"> 70-80 </th>
+   <th style="text-align:right;"> 80-90 </th>
+   <th style="text-align:right;"> 90-100 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> ภาษาไทย </td>
+   <td style="text-align:right;"> 205 </td>
+   <td style="text-align:right;"> 10918 </td>
+   <td style="text-align:right;"> 39277 </td>
+   <td style="text-align:right;"> 59459 </td>
+   <td style="text-align:right;"> 80767 </td>
+   <td style="text-align:right;"> 84977 </td>
+   <td style="text-align:right;"> 61052 </td>
+   <td style="text-align:right;"> 28544 </td>
+   <td style="text-align:right;"> 6623 </td>
+   <td style="text-align:right;"> 221 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> สังคมศึกษา </td>
+   <td style="text-align:right;"> 93 </td>
+   <td style="text-align:right;"> 11450 </td>
+   <td style="text-align:right;"> 119492 </td>
+   <td style="text-align:right;"> 155338 </td>
+   <td style="text-align:right;"> 64380 </td>
+   <td style="text-align:right;"> 17638 </td>
+   <td style="text-align:right;"> 3721 </td>
+   <td style="text-align:right;"> 447 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ภาษาอังกฤษ </td>
+   <td style="text-align:right;"> 2664 </td>
+   <td style="text-align:right;"> 120768 </td>
+   <td style="text-align:right;"> 146339 </td>
+   <td style="text-align:right;"> 48926 </td>
+   <td style="text-align:right;"> 21706 </td>
+   <td style="text-align:right;"> 12859 </td>
+   <td style="text-align:right;"> 8510 </td>
+   <td style="text-align:right;"> 5868 </td>
+   <td style="text-align:right;"> 3791 </td>
+   <td style="text-align:right;"> 1156 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> คณิตศาสตร์ </td>
+   <td style="text-align:right;"> 52250 </td>
+   <td style="text-align:right;"> 163221 </td>
+   <td style="text-align:right;"> 81737 </td>
+   <td style="text-align:right;"> 29113 </td>
+   <td style="text-align:right;"> 14854 </td>
+   <td style="text-align:right;"> 9772 </td>
+   <td style="text-align:right;"> 7302 </td>
+   <td style="text-align:right;"> 5524 </td>
+   <td style="text-align:right;"> 4516 </td>
+   <td style="text-align:right;"> 4564 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> วิทยาศาสตร์ </td>
+   <td style="text-align:right;"> 950 </td>
+   <td style="text-align:right;"> 61511 </td>
+   <td style="text-align:right;"> 183241 </td>
+   <td style="text-align:right;"> 75152 </td>
+   <td style="text-align:right;"> 25353 </td>
+   <td style="text-align:right;"> 12909 </td>
+   <td style="text-align:right;"> 7437 </td>
+   <td style="text-align:right;"> 3944 </td>
+   <td style="text-align:right;"> 1578 </td>
+   <td style="text-align:right;"> 157 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>ในทางปฏิบัติผู้วิเคราะห์มีโอกาสพบชุดข้อมูลทั้งสองลักษณะ การปรับเปลี่ยนรูปแบบของชุดข้อมูลดังกล่าว จากชุดข้อมูลแบบกว้างให้เป็นแบบยาว และจากให้อยู่ในรูปแบบยาวให้เป็นรูปแบบกว้าง จึงเป็นทักษะพื้นฐานที่จำเป็นสำหรับนักวิทยาการข้อมูล ในทำนองเดียวกับการสำรวจโครงสร้างชุดข้อมูล วิธีการปรับเปลี่ยนรูปแบบตารางข้อมูลมีความแตกต่างกันขึ้นอยู่กับโปรแกรมวิเคราะห์ข้อมูลที่เลือกใช้</p>
+<p>ในกรณีที่ใช้ภาษา R ผู้วิเคราะห์สามารถดำเนินการได้หลายแบบ วิธีการหนึ่งที่สามารถทำได้สะดวกคือการใช้เครื่องมือใน package-tidyr พิจารณาชุดข้อมูล <code>จำนวนผู้สำเร็จการศึกษา.xlsx</code> ที่จัดเก็บอยู่ในชุดข้อมูล <code>wide_data</code> ด้านล่าง จะเห็นว่าเป็นชุดข้อมูลรูปแบบกว้างที่แสดงจำนวนผู้สำเร็จการศึกษาในระดับ ปวช. และ ปวส. จำแนกตามสาขาวิชา</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+  `สาขาวิชา`               รวม  ปวช.  ปวส.
+  &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 อุตสาหกรรม            123268 65724 57544
+2 พาณิชยกรรม /บริหารธุรกิจ 106556 55257 51299
+3 อุตสาหกรรมการท่องเที่ยว   10779  6696  4083
+4 คหกรรม                 7171  4101  3070
+5 เกษตรกรรม              6026  2926  3100
+6 ศิลปกรรม                5175  4163  1012
+7 เทคโนโลยีสารสนเทศฯ      3702  1758  1944
+8 ประมง                   576    91   485
+9 อุตสาหกรรมสิ่งทอ            87    39    48</code></pre>
+</div>
+</div>
+<p>หากผู้วิเคราะห์ต้องการปรับรูปแบบของชุดข้อมูล <code>wide_data</code> ข้างต้นให้เป็นชุดข้อมูลแบบยาว สามารถทำได้โดยใช้ฟังก์ชัน <code>pivot_longer()</code> โดยกำหนดอารกิวเมนท์ <code>data</code> เพื่อระบุชุดข้อมูลที่ต้องการปรับให้เป็นรูปแบบยาว <code>cols</code> เพื่อกำหนดคอลัมน์ในชุดข้อมูลแบบกว้างที่จะยุบรวมไว้ภายในคอลัมน์เดียวกัน <code>names_to</code> ใช้กำหนดชื่อคอลัมน์ใหม่สำหรับบรรจุคอลัมน์ที่ยุบรวมมาจากชุดข้อมูลแบบกว้างเดิม และ <code>values_to</code> ใช้กำหนดชื่อคอลัมน์สำหรับจัดเก็บค่าสังเกตที่อยู่ภายใต้คอลัมน์ที่ยุบรวมมา ตัวอย่างด้านล่างแสดงการปรับรูปแบบของชุดข้อมูล <code>จำนวนผู้สำเร็จการศึกษา.xlsx</code> ที่จัดเก็บอยู่ในชุดข้อมูล <code>wide_data</code> ให้เป็นชุดข้อมูลแบบยาว</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>long_data<span class="ot">&lt;-</span><span class="fu">pivot_longer</span>(<span class="at">data=</span>wide_data, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cols=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to =</span> <span class="st">"category"</span>, </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values_to =</span> <span class="st">"number"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>long_data<span class="sc">%&gt;%</span><span class="fu">data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               สาขาว.ชา category number
+1             อุตสาหกรรม      รวม 123268
+2             อุตสาหกรรม     ปวช.  65724
+3             อุตสาหกรรม     ปวส.  57544
+4  พาณิชยกรรม /บริหารธุรกิจ      รวม 106556
+5  พาณิชยกรรม /บริหารธุรกิจ     ปวช.  55257
+6  พาณิชยกรรม /บริหารธุรกิจ     ปวส.  51299
+7   อุตสาหกรรมการท่องเที่ยว      รวม  10779
+8   อุตสาหกรรมการท่องเที่ยว     ปวช.   6696
+9   อุตสาหกรรมการท่องเที่ยว     ปวส.   4083
+10               คหกรรม      รวม   7171
+11               คหกรรม     ปวช.   4101
+12               คหกรรม     ปวส.   3070
+13            เกษตรกรรม      รวม   6026
+14            เกษตรกรรม     ปวช.   2926
+15            เกษตรกรรม     ปวส.   3100
+16              ศิลปกรรม      รวม   5175
+17              ศิลปกรรม     ปวช.   4163
+18              ศิลปกรรม     ปวส.   1012
+19    เทคโนโลยีสารสนเทศฯ      รวม   3702
+20    เทคโนโลยีสารสนเทศฯ     ปวช.   1758
+21    เทคโนโลยีสารสนเทศฯ     ปวส.   1944
+22                ประมง      รวม    576
+23                ประมง     ปวช.     91
+24                ประมง     ปวส.    485
+25        อุตสาหกรรมสิ่งทอ      รวม     87
+26        อุตสาหกรรมสิ่งทอ     ปวช.     39
+27        อุตสาหกรรมสิ่งทอ     ปวส.     48</code></pre>
+</div>
+</div>
+<p>ในทางกลับกันหากมีชุดข้อมูลแบบยาว และผู้วิเคราะห์ต้องการปรับเปลี่ยนให้เป็นชุดข้อมูลแบบกว้างสามารถทำได้ด้วยฟังก์ชัน <code>pivot_wider()</code> ฟังก์ชันนี้มีอาร์กิวเมนท์จำเป็นที่จะต้องระบุ 3 ตัวได้แก่ <code>data</code> เพื่อระบุชุดข้อมูลที่ต้องการปรับให้เป็นรูปแบบกว้าง <code>names_from</code> เพื่อระบุว่าจะนำค่าสังเกตจากคอลัมน์ใดขยายไปเป็นหัวคอลัมน์ของตารางใหม่ และ <code>values_from</code> ใช้ระบุว่าจะเอาข้อมูล/ค่าสังเกตจากคอลัมน์ใดไปอยู่ภายใต้คอลัมน์ใหม่ที่ขยายจากการระบุใน <code>names_from</code> ตัวอย่างด้านล่างแสดงการเปลี่ยนชุดข้อมูล <code>long_data</code> ในข้างต้นให้กลับเป็นชุดข้อมูลแบบกว้างเหมือนเดิม</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_wider</span>(<span class="at">data =</span> long_data,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">names_from =</span> <span class="st">"category"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">values_from =</span> <span class="st">"number"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+  `สาขาวิชา`               รวม  ปวช.  ปวส.
+  &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 อุตสาหกรรม            123268 65724 57544
+2 พาณิชยกรรม /บริหารธุรกิจ 106556 55257 51299
+3 อุตสาหกรรมการท่องเที่ยว   10779  6696  4083
+4 คหกรรม                 7171  4101  3070
+5 เกษตรกรรม              6026  2926  3100
+6 ศิลปกรรม                5175  4163  1012
+7 เทคโนโลยีสารสนเทศฯ      3702  1758  1944
+8 ประมง                   576    91   485
+9 อุตสาหกรรมสิ่งทอ            87    39    48</code></pre>
+</div>
+</div>
+<p>ถ้าผู้วิเคราะห์ต้องการศึกษารายละเอียดเพิ่มเติมเกี่ยวกับฟังก์ชันต่าง ๆ ของโปรแกรม R สามารถเรียกดูคู่มือของฟังก์ชันดังกล่าวได้โดยใช้คำสั่ง <code>?XXX</code> หรือ <code>help(XXX)</code> เช่น หากต้องการรายละเอียดของฟังก์ชัน <code>pivot_longer()</code> ให้พิมพ์คำสั่ง <code>?pivot_longer()</code> หรือ <code>help(pivot_longer()</code> เป็นต้น</p>
+<p>ในกรณีที่ใช้ภาษา Python การปรับเปลี่ยนชุดข้อมูลแบบกว้างให้เป็นแบบยาวสามารถทำได้โดยใช้ฟังก์ชัน <code>melt()</code> ภายใต้ pandas library ฟังก์ชัน <code>melt()</code> มีพารามิเตอร์ควบคุมการทำงานของฟังก์ชันที่สำคัญ 3 ตัวได้แก่ <code>frame</code> ใช้ระบุชุดข้อมูล (pandas.DataFrame) ที่ต้องการดำเนินงาน <code>id_vars</code> ใช้ระบุคอลัมน์หรือตัวแปรที่เป็น id ของหน่วยข้อมูล และ <code>value_vars</code> ทำงานเหมือนกับอาร์กิวเมนท์ <code>names_to</code> ของ <code>pivot_longer()</code> ในโปรแกรม R ตัวอย่างด้านล่างแสดงการปรับรูปแบบชุดข้อมูล <code>จำนวนผู้สำเร็จการศึกษา.xlsx</code> ที่เป็นชุดข้อมูลแบบกว้างให้เป็นชุดข้อมูลแบบยาวด้วยฟังก์ชันดังกล่าว โดยในตัวอย่างชุดข้อมูลดังกล่าวจัดเก็บอยู่ในตัวแปรชื่อ <code>wide_data</code></p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>long_data <span class="op">=</span> pd.melt(frame <span class="op">=</span> wide_data, </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                    id_vars<span class="op">=</span>[<span class="st">'สาขาวิชา'</span>],</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                    value_vars<span class="op">=</span>[<span class="st">'รวม'</span>,<span class="st">'ปวช.'</span>, <span class="st">'ปวส.'</span>])</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>long_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    สาขาวิชา variable     value
+0                 อุตสาหกรรม      รวม  123268.0
+1   พาณิชยกรรม /บริหารธุรกิจ      รวม  106556.0
+2    อุตสาหกรรมการท่องเที่ยว      รวม   10779.0
+3                     คหกรรม      รวม    7171.0
+4                  เกษตรกรรม      รวม    6026.0
+5                   ศิลปกรรม      รวม    5175.0
+6         เทคโนโลยีสารสนเทศฯ      รวม    3702.0
+7                      ประมง      รวม     576.0
+8           อุตสาหกรรมสิ่งทอ      รวม      87.0
+9                 อุตสาหกรรม     ปวช.   65724.0
+10  พาณิชยกรรม /บริหารธุรกิจ     ปวช.   55257.0
+11   อุตสาหกรรมการท่องเที่ยว     ปวช.    6696.0
+12                    คหกรรม     ปวช.    4101.0
+13                 เกษตรกรรม     ปวช.    2926.0
+14                  ศิลปกรรม     ปวช.    4163.0
+15        เทคโนโลยีสารสนเทศฯ     ปวช.    1758.0
+16                     ประมง     ปวช.      91.0
+17          อุตสาหกรรมสิ่งทอ     ปวช.      39.0
+18                อุตสาหกรรม     ปวส.   57544.0
+19  พาณิชยกรรม /บริหารธุรกิจ     ปวส.   51299.0
+20   อุตสาหกรรมการท่องเที่ยว     ปวส.    4083.0
+21                    คหกรรม     ปวส.    3070.0
+22                 เกษตรกรรม     ปวส.    3100.0
+23                  ศิลปกรรม     ปวส.    1012.0
+24        เทคโนโลยีสารสนเทศฯ     ปวส.    1944.0
+25                     ประมง     ปวส.     485.0
+26          อุตสาหกรรมสิ่งทอ     ปวส.      48.0</code></pre>
+</div>
+</div>
+<p>ใน Python ผู้อ่านสามารถเรียกดูรายละเอียดของฟังก์ชันที่ต้องการใช้งานโดยพิมพ์คำส่ง <code>?XXX</code> หรือ <code>help(XXXX)</code> เหมือนกับภาษา R เช่นในกรณีนี้ต้องการรายละเอียดการใช้งานฟังก์ชัน <code>melt()</code>ให้พิมพ์คำสั่ง <code>help(pd.melt)</code></p>
+<p>ในทางกลับกันหากต้องการปรับเปลี่ยนรูปแบบของตารางแบบยาวให้เป็นแบบกว้างสามารถทำได้ด้วยฟังก์ชัน <code>pivot()</code> ดังตัวอย่างต่อไปนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pd.pivot(data<span class="op">=</span> long_data, </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                    index<span class="op">=</span>[<span class="st">'สาขาวิชา'</span>],</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                    columns<span class="op">=</span>[<span class="st">'variable'</span>],</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                    values<span class="op">=</span>[<span class="st">'value'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            value                   
+variable                     ปวช.     ปวส.       รวม
+สาขาวิชา                                            
+คหกรรม                     4101.0   3070.0    7171.0
+ประมง                        91.0    485.0     576.0
+พาณิชยกรรม /บริหารธุรกิจ  55257.0  51299.0  106556.0
+ศิลปกรรม                   4163.0   1012.0    5175.0
+อุตสาหกรรม                65724.0  57544.0  123268.0
+อุตสาหกรรมการท่องเที่ยว    6696.0   4083.0   10779.0
+อุตสาหกรรมสิ่งทอ             39.0     48.0      87.0
+เกษตรกรรม                  2926.0   3100.0    6026.0
+เทคโนโลยีสารสนเทศฯ         1758.0   1944.0    3702.0</code></pre>
+</div>
+</div>
+<p>อีกวิธีการหนึ่งในการปรับรูปแบบตารางระหว่างตารางรูปแบบกว้างกับยาวด้วยภาษา Python คือการใช้ library datar ที่เป็น API ของ package-dplyr และ tidyr ที่ใช้จัดกระทำและจัดระเบียบชุดข้อมูลใน R กล่าวคือ ผู้วิเคราะห์สามารถใช้ฟังก์ชัน <code>pivot_longer()</code> และ <code>pivot_wider()</code> รวมทั้งฟังก์ชันอื่น ๆ ที่เกี่ยวข้องใน Python ได้เหมือนกับที่ดำเนินการในภาษา R ก่อนการใช้งาน library ผู้วิเคราะห์จำเป็นต้องดาวน์โหลดและติดตั้ง library ลงในเครื่องก่อน โดยภายในหน้าต่าง terminal ให้พิมพ์คำสั่ง <code>pip install -U datar</code> รายละเอียดเพิ่มเติมสามารถศึกษาได้จาก <a href="https://github.com/pwwang/datar" class="uri">https://github.com/pwwang/datar</a></p>
+</section>
+<section id="การแยกคอลมน" class="level3">
+<h3 class="anchored" data-anchor-id="การแยกคอลมน">การแยกคอลัมน์</h3>
+<p>ในบางกรณีชุดข้อมูลที่นำใช้ในการวิเคราะห์อาจมีบางคอลัมน์ที่จัดเก็บค่าสังเกตของหลายตัวแปรอยู่ภายในเซลล์เดียวกัน ดังตัวอย่างในตาราง 4 (ดาวน์โหลดได้จาก <a href="https://bit.ly/38T1ENa">คะแนนเชาวน์ปัญญาของนักเรียน.xlsx (สิวะโชติ ศรีสุทธิยากร, 2564)</a>) จากตารางจะเห็นว่าคอลัมน์ที่ 3 (<code>gender.age</code>) เป็นคอลัมน์ที่จัดเก็บค่าสังเกตของตัวแปรจำนวน 2 ตัวร่วมกัน ได้แก่ เพศ และ อายุ ของนักเรียน ซึ่งละเมิดเงื่อนไขของชุดข้อมูลจัดระเบียบ การแก้ปัญหาจึงจำเป็นต้องแยกค่าสังเกตในคอลัมน์ดังกล่าวออกจากกันให้เป็น 2 คอลัมน์ได้แก่ คอลัมน์ของเพศ และอายุ ตามลำดับ</p>
+<p><strong>ตาราง 4.4</strong> คะแนนเชาว์ปัญญาของนักเรียน</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 14px; font-family: Sarabun; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> จังหวัด </th>
+   <th style="text-align:left;"> gender.age </th>
+   <th style="text-align:right;"> IQ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> กรุงเทพฯ </td>
+   <td style="text-align:left;"> ชาย/14 </td>
+   <td style="text-align:right;"> 80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> กรุงเทพฯ </td>
+   <td style="text-align:left;"> ชาย/24 </td>
+   <td style="text-align:right;"> 101 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> กรุงเทพฯ </td>
+   <td style="text-align:left;"> ชาย/25 </td>
+   <td style="text-align:right;"> 105 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> กรุงเทพฯ </td>
+   <td style="text-align:left;"> หญิง/54 </td>
+   <td style="text-align:right;"> 99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> กรุงเทพฯ </td>
+   <td style="text-align:left;"> ชาย/18 </td>
+   <td style="text-align:right;"> 100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> กรุงเทพฯ </td>
+   <td style="text-align:left;"> หญิง/65 </td>
+   <td style="text-align:right;"> 105 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:left;"> เชียงใหม่ </td>
+   <td style="text-align:left;"> ชาย/14 </td>
+   <td style="text-align:right;"> 90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:left;"> เชียงใหม่ </td>
+   <td style="text-align:left;"> หญิง/15 </td>
+   <td style="text-align:right;"> 110 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:left;"> เชียงใหม่ </td>
+   <td style="text-align:left;"> ชาย/37 </td>
+   <td style="text-align:right;"> 103 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> เชียงใหม่ </td>
+   <td style="text-align:left;"> หญิง/28 </td>
+   <td style="text-align:right;"> 108 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:left;"> เชียงใหม่ </td>
+   <td style="text-align:left;"> ชาย/44 </td>
+   <td style="text-align:right;"> 98 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:left;"> เชียงใหม่ </td>
+   <td style="text-align:left;"> หญิง/34 </td>
+   <td style="text-align:right;"> 106 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><span class="smallcaps">ที่มา: สิวะโชติ ศรีสุทธิยากร (2564)</span></p>
+<p>การแยกคอลัมน์ในชุดข้อมูลดังกล่าวด้วยภาษา R สามารถทำได้หลายวิธีการ ใน package-tidyr มีฟังก์ชัน <code>seperate()</code> ที่สามารถใช้ดำเนินการดังกล่าวได้ ฟังก์ชัน <code>separate()</code> มีอาร์กิวเมนท์สำคัญจำนวน 4 ตัวได้แก่ <code>data</code> ใช้สำหรับระบุชุดข้อมูลที่ต้องการแยกคอลัมน์ <code>col</code> ใช้ระบุคอลัมน์ที่ต้องการแยกค่าสังเกตออกจากกัน <code>into</code> ใช้กำหนดชื่อของคอลัมน์ใหม่ที่ภายหลังจากแยกค่าสังเกตของคอลัมน์เดิมออกจากกัน และ <code>sep</code> ใช้ระบุลลักษณะของตัวคั่น (seperator) ที่ใช้สำหรับแยกข้อมูล การกำหนดตัวคั่นนี้สามารถทำได้ 3 ลักษณะ ได้แก่ การกำหนดด้วยตัวอักษร การกำหนดด้วยตำแหน่งของตัวคั่น และการกำหนดด้วยนิพจน์ปกติ (regular expression) รายละเอียดสามารถศึกษาได้จาก สิวะโชติ ศรีสุทธิยากร (2564)</p>
+<p>ตัวอย่างด้านล่างแสดงการใช้ฟังก์ชัน <code>separate()</code> เพื่อแยกค่าสังเกตในคอลัมน์ <code>gender.age</code> ออกเป็นคอลัมน์ <code>gender</code> และ <code>age</code> ตามลำดับ จากตัวอย่างจะเห็นว่าในคอลัมน์ <code>gender.age</code> มีการใช้ตัวคั่นข้อมูลเป็น <code>/</code> จึงกำหนดอาร์กิวเมนท์ <code>sep="/"</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>iq_sep<span class="ot">&lt;-</span><span class="fu">separate</span>(<span class="at">data =</span> iq,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="st">"gender.age"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"gender"</span>,<span class="st">"age"</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">sep=</span><span class="st">"/"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>iq_sep</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 5
+      id `จังหวัด` gender age      IQ
+   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
+ 1     1 กรุงเทพฯ ชาย    14       80
+ 2     2 กรุงเทพฯ ชาย    24      101
+ 3     3 กรุงเทพฯ ชาย    25      105
+ 4     4 กรุงเทพฯ หญิง    54       99
+ 5     5 กรุงเทพฯ ชาย    18      100
+ 6     6 กรุงเทพฯ หญิง    65      105
+ 7     7 เชียงใหม่ ชาย    14       90
+ 8     8 เชียงใหม่ หญิง    15      110
+ 9     9 เชียงใหม่ ชาย    37      103
+10    10 เชียงใหม่ หญิง    28      108
+11    11 เชียงใหม่ ชาย    44       98
+12    12 เชียงใหม่ หญิง    34      106</code></pre>
+</div>
+</div>
+<p>ในกรณีที่ใช้ภาษา Python สามารถดำเนินการได้โดยใช้ฟังก์ชัน <code>str.split()</code> ภายใต้ pandas library โดยฟังก์ชันดังกล่าวมีพารามิเตอร์ที่สำคัญ 1 ตัวได้แก่ <code>separator</code> ที่ใช้สำหรับระบุลักษณะของตัวคั่นข้อมูลในคอลัมน์ที่ต้องการแยก ตัวอย่างการใช้ฟังก์ชัน <code>str.split()</code> เพื่อแยกคอลัมน์ <code>gender.age</code> ในชุดข้อมูล <code>iq</code> เป็นดังนี้</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>iq[<span class="st">"gender"</span>] <span class="op">=</span> iq[<span class="st">"gender.age"</span>].<span class="bu">str</span>.split(<span class="st">"/"</span>, expand<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>iq[<span class="st">"age"</span>] <span class="op">=</span> iq[<span class="st">"gender.age"</span>].<span class="bu">str</span>.split(<span class="st">"/"</span>, expand<span class="op">=</span><span class="va">True</span>)[<span class="dv">1</span>]</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>iq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      id    จังหวัด gender.age     IQ gender age
+0    1.0   กรุงเทพฯ     ชาย/14   80.0    ชาย  14
+1    2.0   กรุงเทพฯ     ชาย/24  101.0    ชาย  24
+2    3.0   กรุงเทพฯ     ชาย/25  105.0    ชาย  25
+3    4.0   กรุงเทพฯ    หญิง/54   99.0   หญิง  54
+4    5.0   กรุงเทพฯ     ชาย/18  100.0    ชาย  18
+5    6.0   กรุงเทพฯ    หญิง/65  105.0   หญิง  65
+6    7.0  เชียงใหม่     ชาย/14   90.0    ชาย  14
+7    8.0  เชียงใหม่    หญิง/15  110.0   หญิง  15
+8    9.0  เชียงใหม่     ชาย/37  103.0    ชาย  37
+9   10.0  เชียงใหม่    หญิง/28  108.0   หญิง  28
+10  11.0  เชียงใหม่     ชาย/44   98.0    ชาย  44
+11  12.0  เชียงใหม่    หญิง/34  106.0   หญิง  34</code></pre>
+</div>
+</div>
+</section>
+<section id="การยบรวมคอลมน" class="level3">
+<h3 class="anchored" data-anchor-id="การยบรวมคอลมน">การยุบรวมคอลัมน์</h3>
+<p>อีกกรณีคือเป็นไปได้ที่ข้อมูลของตัวแปรเดียวกันอาจถูกเก็บอยู่ในหลายคอลัมน์ เช่นข้อมูลคำนำหน้า ชื่อ และนามสกุล หรือ ข้อมูลเวลา (วัน เดือน ปี) ตาราง 5 แสดงข้อมูลจากชุดข้อมูล <code>login.xlsx</code> ที่มีปัญหาดังกล่าว จากตารางจะเห็นว่ามีการจัดเก็บคำนำหน้า และชื่อของผู้เข้าระบบอยู่คนละคอลัมน์กัน</p>
+<p><strong>ตาราง 5</strong> จำนวนครั้งของการเข้าระบบ</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic-2" style="font-size: 14px; font-family: Sarabun; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> คำนำหน้า </th>
+   <th style="text-align:left;"> ชื่อ </th>
+   <th style="text-align:right;"> จำนวนครั้งที่เข้าระบบ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> นาย </td>
+   <td style="text-align:left;"> บุญถึง </td>
+   <td style="text-align:right;"> 14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นางสาว </td>
+   <td style="text-align:left;"> บุญเติม </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นาย </td>
+   <td style="text-align:left;"> บุญมาก </td>
+   <td style="text-align:right;"> 17 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นางสาว </td>
+   <td style="text-align:left;"> บุญมี </td>
+   <td style="text-align:right;"> 18 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นาย </td>
+   <td style="text-align:left;"> บุญหนัก </td>
+   <td style="text-align:right;"> 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นาง </td>
+   <td style="text-align:left;"> บุญอยู่ </td>
+   <td style="text-align:right;"> 18 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นางสาว </td>
+   <td style="text-align:left;"> บุญมา </td>
+   <td style="text-align:right;"> 18 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นาย </td>
+   <td style="text-align:left;"> บุญทับ </td>
+   <td style="text-align:right;"> 14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> นาง </td>
+   <td style="text-align:left;"> บุญชอบ </td>
+   <td style="text-align:right;"> 18 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>การยุบรวมคอลัมน์ทั้งสองเข้าด้วยกันในภาษา R สามารถทำได้ด้วยฟังก์ชัน <code>unite()</code> ของ package-tidyr ฟังก์ชันนี้มีอาร์กิวเมนท์ที่สำคัญได้แก่ <code>data</code> ใช้ระบุชุดข้อมูลที่ต้องการดำเนินงาน <code>col</code> ใช้ระบุชื่อของคอลัมน์ใหม่ภายหลังจากยุบรวมคอลัมน์เดิมเข้าด้วยกัน และ <code>sep</code> ใช้สำหรับระบุตัวคั่นสำหรับคั่นข้อมูลที่ยุบรวมกัน (ค่าเริ่มต้นของอาร์กิวเมนท์นี้กำหนดให้ใช้สัญลักษณ์ underscore <code>sep="_"</code>)</p>
+<p>ตัวอย่างต่อไปนี้แสดงการใช้ฟังก์ชัน <code>unite()</code> ดังกล่าว สมมุติว่า <code>login.xlsx</code> ในข้างต้นถูกจัดเก็บในโปรแกรม R โดยเก็บไว้ในตัวแปร <code>login</code> ผู้วิเคราะห์สามารถยุบรวมคอลัมน์ <code>คำนำหน้า</code> และ <code>ชื่อ</code> เข้าด้วยกัน โดยใช้ฟังก์ชัน <code>unite()</code> ได้ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>login_united<span class="ot">&lt;-</span><span class="fu">unite</span>(login, </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">"name"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"คำนำหน้า"</span>, <span class="st">"ชื่อ"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>login_united</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  name         `จำนวนครั้งที่เข้าระบบ`
+  &lt;chr&gt;                     &lt;dbl&gt;
+1 นาย_บุญถึง                     14
+2 นางสาว_บุญเติม                 20
+3 นาย_บุญมาก                    17
+4 นางสาว_บุญมี                   18
+5 นาย_บุญหนัก                     6
+6 นาง_บุญอยู่                     18
+7 นางสาว_บุญมา                  18
+8 นาย_บุญทับ                     14
+9 นาง_บุญชอบ                    18</code></pre>
+</div>
+</div>
+<p>สำหรับภาษา Python การยุบรวมคอลัมน์ตั้งแต่ 2 คอลัมน์ขึ้นไปเข้าด้วยกันทำได้ง่ายมากโดยการใช้ตัวดำเนินการเชื่อม (concatenate operator) ดังตัวอย่างต่อไปนี้</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>login[<span class="st">"name"</span>] <span class="op">=</span> login[<span class="st">"คำนำหน้า"</span>] <span class="op">+</span> login[<span class="st">"ชื่อ"</span>]</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>login</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  คำนำหน้า     ชื่อ  จำนวนครั้งที่เข้าระบบ           name
+0      นาย   บุญถึง                   14.0      นายบุญถึง
+1   นางสาว  บุญเติม                   20.0  นางสาวบุญเติม
+2      นาย   บุญมาก                   17.0      นายบุญมาก
+3   นางสาว    บุญมี                   18.0    นางสาวบุญมี
+4      นาย  บุญหนัก                    6.0     นายบุญหนัก
+5      นาง  บุญอยู่                   18.0     นางบุญอยู่
+6   นางสาว    บุญมา                   18.0    นางสาวบุญมา
+7      นาย   บุญทับ                   14.0      นายบุญทับ
+8      นาง   บุญชอบ                   18.0      นางบุญชอบ</code></pre>
+</div>
+</div>
+</section>
+<section id="การรวมชดขอมลตามแถว-rows-combined" class="level3">
+<h3 class="anchored" data-anchor-id="การรวมชดขอมลตามแถว-rows-combined">การรวมชุดข้อมูลตามแถว (rows combined)</h3>
+<p>งานทางด้านสถิติและวิทยาการข้อมูลในปัจจุบันบ่อยครั้งข้อมูลสำคัญมักมาจากหลายแหล่งข้อมูล เช่น อาจได้มาจากการเก็บเกี่ยวข้อมูลจากเว็ปไซด์ส่วนนึง (web scraping) และส่วนที่เหลืออาจเป็นข้อมูลที่ได้จากฐานข้อมูลเปิดต่าง ๆ หากชุดข้อมูลดังกล่าวเป็นข้อมูลของหน่วยการวิเคราะห์เดียวกัน หรือสามารถจัดกระทำให้เป็นข้อมูลของหน่วยการวิเคราะห์เดียวกันได้แล้ว การจะนำข้อมูลดังกล่าวมาวิเคราะห์ร่วมกันจำเป็นที่จะต้องยุบรวมชุดข้อมูลดังกล่าวเข้าด้วยกันก่อน การยุบรวมชุดข้อมูลอาจจำแนกได้เป็น 2 ลักษณะ ได้แก่ การยุบรวมข้อมูลตามแถว (rows combined) และการยุบรวมข้อมูลตามคอลัมน์ (columns combined) หัวข้อนี้จะกล่าวถึงการยุบรวมข้อมูลตามแถว รายละเอียดมีดังนี้</p>
+<p>รูป 4.2 แสดงลักษณะของการยุบรวมข้อมูลตามแถว จากรูปจะเห็นว่าเริ่มต้นมีชุดข้อมูลจากแหล่งข้อมูลที่แตกต่างกันจำนวน 3 แหล่ง ได้แก่ A, B และ C โดยที่ชุดข้อมูลจากแต่ละแหล่งดังกล่าวเก็บข้อมูลของตัวแปรเดียวกัน และมีจำนวนคอลัมน์เท่ากัน แต่จะสังเกตเห็นว่าแต่ละชุดข้อมูลมีหน่วยข้อมูลที่แตกต่างกัน การยุบรวมชุดข้อมูลทั้ง 3 ตามแถวจะให้ผลลัพธ์เป็นชุดข้อมูลที่ใหญ่ขึ้นจากเดิม โดยมีหน่วยข้อมูลทั้งหมดจากทั้ง 3 ชุดข้อมูลข้างต้นมาจัดเก็บอยู่ภายใต้ชุดข้อมูลใหม่ขนาด 9 x 3</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="rowbind.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption"><strong>รูป 4.2</strong> ตัวอย่างแสดงลักษณะการยุบรวมชุดข้อมูลตามแถว (row combined)</figcaption><p></p>
+</figure>
+</div>
+<p>ที่มา : สิวะโชติ ศรีสุทธิยากร (2564)</p>
+<p>การรวมชุดข้อมูลตามแถวด้วยภาษา R สามารถทำได้หลายวิธีการ ฟังก์ชัน <code>bind_rows()</code> ของ package-dplyr สามารถใช้เพื่อรวมชุดข้อมูลดังกล่าวได้ อาร์กิวเมนท์ของฟังก์ชัน <code>bind_rows()</code> ได้แก่ชุดข้อมูลแบบ Dataframe ที่ต้องการนำมารวมกันตามแถว เงื่อนไขของการใช้ฟังก์ชันนี้คือชุดข้อมูลที่จะนำมารวมกันจำเป็นต้องมีจำนวนคอลัมน์เท่ากัน แต่ละคอลัมน์จัดเก็บข้อมูลของตัวแปรเดียวกันและมีการจัดเรียงลำดับของตัวแปรที่เหมือนกัน</p>
+<p>ตัวอย่างต่อไปนี้แสดงการยุบรวมข้อมูลตามแถวด้วยฟังก์ชัน <code>bind_rows()</code> สมมุติว่าผู้วิเคราะห์มีไฟล์ข้อมูลของกลุ่มเป้าหมายเดียวกันจำนวน 4 ไฟล์ ที่สามารถดาวน์โหลดไฟล์ดังกล่าวได้จาก <a href="https://bit.ly/2AuQgqr" class="uri">https://bit.ly/2AuQgqr</a> (สิวะโชติ ศรีสุทธิยากร, 2564) ไฟล์ข้อมูลทั้ง 4 ประกอบด้วย <code>file1.xlsx</code>, <code>file2.xlsx</code>, <code>file3.xlsx</code> และ <code>file4.xlsx</code> ตามลำดับ โดยที่แต่ละไฟล์จัดเก็บข้อมูลของนักเรียนไฟล์ละ 5 คน ตารางด้านล่างแสดงข้อมูลที่จัดเก็บอยู่ในไฟล์ <code>file1.xlsx</code></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  student.name Lecture.pre PBL.pre Lecture.post PBL.post
+  &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1 บุญมี                   20      NA           45       NA
+2 บุญมาก                 16      NA           34       NA
+3 บุญเกิน                 NA      18           NA       67
+4 บุญถึง                  NA      25           NA       93
+5 บุญธรรม                13      NA           50       NA</code></pre>
+</div>
+</div>
+<p>เมื่อผู้อ่านได้ดำเนินการสำรวจไฟล์ข้อมูลทั้ง 4 แล้วจะพบว่าโครงการการจัดเก็บข้อมูลของทั้ง 4 ไฟล์มีลักษณะเหมือนกัน ชุดข้อมูลทั้ง 4 จึงสามารถยุบรวมกันตามแถวได้โดยใช้ฟังก์ชัน <code>rbind()</code> ในข้างต้น ตัวอย่างนี้ผู้เขียนได้นำเข้าข้อมูลจากทั้ง 4 ไฟล์และจัดเก็บอยู่ในชุดข้อมูลชื่อ <code>dat1</code>, <code>dat2</code>, <code>dat3</code> และ <code>dat4</code> ตามลำดับ การเขียนคำสั่งเพิ่มยุบรวมชุดข้อมูลดังกล่าวตามแถวเป็นดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>dat_rbind <span class="ot">&lt;-</span><span class="fu">bind_rows</span>(dat1, dat2, dat3, dat4)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>dat_rbind</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 5
+   student.name Lecture.pre PBL.pre Lecture.post PBL.post
+   &lt;chr&gt;              &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+ 1 บุญมี                   20      NA           45       NA
+ 2 บุญมาก                 16      NA           34       NA
+ 3 บุญเกิน                 NA      18           NA       67
+ 4 บุญถึง                  NA      25           NA       93
+ 5 บุญธรรม                13      NA           50       NA
+ 6 บุญใหญ่                 NA      17           NA       71
+ 7 บุญหนัก                 14      NA           48       NA
+ 8 บุญมา                  NA      20           NA       83
+ 9 บุญเยอะ                NA      28           NA       75
+10 บุญแฝง                 NA      21           NA       73
+11 บุญดี                   22      NA           32       NA
+12 บุญแรง                 NA      17           NA       68
+13 บุญดัง                  14      NA           70       NA
+14 บุญจริง                 15      NA           64       NA
+15 บุญเติม                 19      NA           55       NA
+16 บุญรอด                 NA      15           NA       82
+17 บุญชอบ                 18      NA           59       NA
+18 บุญผ่อง                 NA      12           NA       68
+19 บุญสืบ                   8      NA           62       NA
+20 บุญเหลือ                NA      25           NA       87</code></pre>
+</div>
+</div>
+<p>สำหรับภาษา Python การยุบรวมชุดข้อมูลตามแถวสามารถดำเนินการได้หลายวิธีการเช่นเดียวกับภาษา R ฟังก์ชันหนึ่งที่สามารถทำได้คือฟังก์ชัน <code>append()</code> ภายใต้ pandas library ตัวอย่างต่อไปนี้แสดงการยุบรวมชุดข้อมูลใน <code>file1.xlsx</code>, <code>file2.xlsx</code>, <code>file3.xlsx</code> และ <code>file4.xlsx</code> ตามแถว ทั้งนี้ในตัวอย่างดังกล่าวได้จัดเก็บข้อมูลทั้ง 4 ไว้ในตัวแปรได้แก่ <code>dat1</code>, <code>dat2</code>, …, <code>dat4</code> เช่นเดียวกับตัวอย่างของภาษา R ผลลัพธ์ด้านล่างแสดงตัวอย่างของชุดข้อมูล <code>dat1</code> ที่เก็บอยู่ใน Python</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>dat1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  student.name  Lecture.pre  PBL.pre  Lecture.post  PBL.post
+0        บุญมี         20.0      NaN          45.0       NaN
+1       บุญมาก         16.0      NaN          34.0       NaN
+2      บุญเกิน          NaN     18.0           NaN      67.0
+3       บุญถึง          NaN     25.0           NaN      93.0
+4      บุญธรรม         13.0      NaN          50.0       NaN</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>dat1.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 5 entries, 0 to 4
+Data columns (total 5 columns):
+ #   Column        Non-Null Count  Dtype  
+---  ------        --------------  -----  
+ 0   student.name  5 non-null      object 
+ 1   Lecture.pre   3 non-null      float64
+ 2   PBL.pre       2 non-null      float64
+ 3   Lecture.post  3 non-null      float64
+ 4   PBL.post      2 non-null      float64
+dtypes: float64(4), object(1)
+memory usage: 328.0+ bytes</code></pre>
+</div>
+</div>
+<p>การยุบรวมชุดข้อมูลทั้ง 4 ตามแถวด้วยฟังก์ชัน <code>append()</code> สามารถทำได้ดังนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>dat_rbind <span class="op">=</span> dat1.append(dat2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;string&gt;:1: FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>dat_rbind</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  student.name  Lecture.pre  PBL.pre  Lecture.post  PBL.post
+0        บุญมี         20.0      NaN          45.0       NaN
+1       บุญมาก         16.0      NaN          34.0       NaN
+2      บุญเกิน          NaN     18.0           NaN      67.0
+3       บุญถึง          NaN     25.0           NaN      93.0
+4      บุญธรรม         13.0      NaN          50.0       NaN
+0      บุญใหญ่          NaN     17.0           NaN      71.0
+1      บุญหนัก         14.0      NaN          48.0       NaN
+2        บุญมา          NaN     20.0           NaN      83.0
+3      บุญเยอะ          NaN     28.0           NaN      75.0
+4       บุญแฝง          NaN     21.0           NaN      73.0</code></pre>
+</div>
+</div>
+<p>ในกรณีที่มีชุดข้อมูลมากกว่า 2 ชุด ที่ต้องการยุบรวมเข้าด้วยกันตามแถว สามารถใช้ฟังก์ชัน <code>append()</code> เรียงต่อกกันได้ดังตัวอย่างต่อไปนี้</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dat_rbind <span class="op">=</span> dat1.append(dat2).append(dat3).append(dat4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;string&gt;:1: FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.
+&lt;string&gt;:1: FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>dat_rbind</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  student.name  Lecture.pre  PBL.pre  Lecture.post  PBL.post
+0        บุญมี         20.0      NaN          45.0       NaN
+1       บุญมาก         16.0      NaN          34.0       NaN
+2      บุญเกิน          NaN     18.0           NaN      67.0
+3       บุญถึง          NaN     25.0           NaN      93.0
+4      บุญธรรม         13.0      NaN          50.0       NaN
+0      บุญใหญ่          NaN     17.0           NaN      71.0
+1      บุญหนัก         14.0      NaN          48.0       NaN
+2        บุญมา          NaN     20.0           NaN      83.0
+3      บุญเยอะ          NaN     28.0           NaN      75.0
+4       บุญแฝง          NaN     21.0           NaN      73.0
+0        บุญดี         22.0      NaN          32.0       NaN
+1       บุญแรง          NaN     17.0           NaN      68.0
+2       บุญดัง         14.0      NaN          70.0       NaN
+3      บุญจริง         15.0      NaN          64.0       NaN
+4      บุญเติม         19.0      NaN          55.0       NaN
+0       บุญรอด          NaN     15.0           NaN      82.0
+1       บุญชอบ         18.0      NaN          59.0       NaN
+2      บุญผ่อง          NaN     12.0           NaN      68.0
+3       บุญสืบ          8.0      NaN          62.0       NaN
+4     บุญเหลือ          NaN     25.0           NaN      87.0</code></pre>
+</div>
+</div>
+</section>
+<section id="การยบรวมขอมลตามคอลมน-columns-combined" class="level3">
+<h3 class="anchored" data-anchor-id="การยบรวมขอมลตามคอลมน-columns-combined">การยุบรวมข้อมูลตามคอลัมน์ (columns combined)</h3>
+<p>การยุบรวมข้อมูลตามคอลัมน์มีการดำเนินการคล้ายกับการยุบรวมตามแถว แต่เปลี่ยนมิติของการจับคู่เป็นการจับคู่ข้อมูลระหว่างหน่วยข้อมูลเดียวกันที่อยู่ต่างชุดข้อมูลกัน รูป 4.3 แสดงลักษณะของการยุบรวมข้อมูลตามคอลัมน์ จากรูปจะเห็นว่า การยุบรวมข้อมูลลักษณะนี้เป็นการนำชุดข้อมูลหลายชุดของหน่วยข้อมูลเดียวกันหรือมีหน่วยข้อมูลเป็นส่วนย่อยของกันและกัน และมีตัวแปรที่แตกต่างกันมารวมเข้าเป็นชุดข้อมูลเดียวกัน</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="colbind.png" class="img-fluid figure-img" style="width:70.0%" alt="รูป 4.3 ตัวอย่างแสดงลักษณะการยุบรวมชุดข้อมูลตามคอลัมน์ (column combined)"></p>
+<p></p><figcaption class="figure-caption">รูป 4.3 ตัวอย่างแสดงลักษณะการยุบรวมชุดข้อมูลตามคอลัมน์ (column combined)</figcaption><p></p>
+</figure>
+</div>
+<p>ที่มา : สิวะโชติ ศรีสุทธิยากร (2564)</p>
+<p>การยุบรวมข้อมูลตามคอลัมน์ด้วยภาษา R สามารถดำเนินการได้หลายวิธีการมาก วิธีการแรกคือการใช้ฟังก์ชัน <code>bind_cols()</code> ของ package-dplyr ที่มีการทำงานเหมือนกับฟังก์ชัน <code>bind_rows()</code> แต่จะดำเนินการรวมข้อมูลตามคอลัมน์แทน เงื่อนไขของฟังก์ชันนี้ที่ไม่ค่อยสะดวกนักคือ ชุดข้อมูลที่จะยุบรวมกันตามคอลัมน์ต้องเป็นชุดข้อมูลของหน่วยข้อมูลเดียวกัน แต่มีตัวแปรที่แตกต่างกัน และการจัดเรียงหน่วยข้อมูลต้องเป็นไปในลำดับเดียวกัน ดังในรูป 4.3 ข้างต้น (ผู้อ่านสามารถศึกษารายละเอียดของฟังก์ชัน <code>bind_cols()</code> ได้โดยพิมพ์คำสั่ง <code>?bind_cols()</code>)</p>
+<p>ในทางปฏิบัติเมื่อผู้วิเคราะห์ดำเนินการกับข้อมูลขนาดใหญ่หลายชุดที่มาจากฐานข้อมูลที่แตกต่างกัน ชุดข้อมูลดังกล่าวมักจะมีการจัดเรียงลำดับของหน่วยข้อมูลที่แตกต่างกัน นอกจากนี้ชุดข้อมูลทั้งหมดยังอาจมีบางหน่วยข้อมูลที่แตกต่างกันและไม่สามารถยุบรวมกันได้ สถานการณ์ที่ซับซ้อนลักษณะนี้การยุบรวมด้วยฟังก์ชัน <code>bind_cols()</code> จะเป็นวิธีการที่ค่อนข้างลำบาก การใช้กลุ่มฟังก์ชัน join ของ package-dplyr เป็นวิธีการที่เหมาะสมมากกว่า กลุ่มฟังก์ชัน join ดังกล่าวประกอบด้วยฟังก์ชัน 4 ตัวที่ทำงานแตกต่างกัน เพื่อรองรับความต้องการในการยุบรวมข้อมูลตามคอลัมน์ของผู้วิเคราะห์ที่แตกต่างกัน ได้แก่ <code>inner_join()</code>, <code>full_join()</code>, <code>left_join()</code> และ <code>right_join()</code> รูป 4.4 แสดงลักษณะการทำงานของกลุ่มฟังก์ชัน join ดังกล่าว จากรูปจะเห็นความแตกต่างของฟังก์ชันทั้ง 4 ตัวว่าอยู่ที่การเลือกจัดเก็บหรือไม่จัดเก็บหน่วยข้อมูลจากชุดข้อมูลที่จะยุบรวมกันอย่างไร กล่าวคือ <code>inner_join()</code> จะเลือกจัดเก็บเฉพาะหน่วยข้อมูลที่มีร่วมกันระหว่างชุดข้อมูลทั้งสองเท่านั้น ในขณะที่ <code>left_join()</code> จะเก็บหน่วยข้อมูลชุดทางซ้าย (เรียกว่าชุด x) ไว้ทั้งหมด แต่จะเลือกจัดเก็บข้อมูลชุดทางขวา (เรียกว่าชุด y) เฉพาะส่วนที่มีข้อมูลร่วมกันกับชุด x เท่านั้น ฟังก์ชัน <code>right_joint()</code> มีการดำเนินการเหมือนกับ <code>left_join()</code> แต่มีทิศทางการจัดเก็บข้อมูลที่ตรงข้ามกัน ส่วนฟังก์ชัน <code>full_join()</code> จะเก็บหน่วยข้อมูลทุกหน่วยไว้ไม่ว่าหน่วยข้อมูลนั้นจะมีอยู่ร่วมกันในทั้งสองชุดข้อมูลหรือไม่</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="join.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">รูป 4.4 ตัวอย่างแสดงลักษณะการทำงานของฟังก์ชันในกลุ่ม join</figcaption><p></p>
+</figure>
+</div>
+<p>ที่มา : สิวะโชติ ศรีสุทธิยากร (2564)</p>
+<p>ฟังก์ชันในกลุ่ม join มีอาร์กิวเมนท์ที่สำคัญเหมือนกันได้แก่ <code>x</code> และ <code>y</code> คือชุดข้อมูลที่ต้องการยุบรวมกันตามคอลัมน์ และ <code>by</code> ใช้ระบุตัวแปร id ที่จะใช้จับคู่หน่วยข้อมูลระหว่างชุดข้อมูลทั้งสอง ทั้งนี้การระบุอาร์กิวเมนท์นี้จะต้องระบุเป็นเวกเตอร์ตัวอักษร (character vector)</p>
+<p>ตัวอย่างต่อไปนี้แสดงการใช้ฟังก์ชัน join ทั้ง 4 ตัวเพื่อยุบรวมข้อมูลตามคอลัมน์ ชุดข้อมูลที่ใช้เป็นตัวอย่างเป็นชุดข้อมูลที่สร้างขึ้นด้วยการกำหนดค่าด้วยมือ ประกอบด้วยชุดข้อมูล <code>X</code> และ <code>Y</code> สังเกตว่าชุดข้อมูลทั้งหมดมีตัวแปร <code>id</code> ที่ใช้สำหรับอ้างอิงหน่วยข้อมูล นอกจากนี้ชุดข้อมูลทั้งสองมีหน่วยข้อมูลที่เหมือนกันเพียงบางส่วน และมีการจัดเก็บข้อมูลของตัวแปรที่แตกต่างกัน</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>X<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">"m"</span>,<span class="st">"f"</span>,<span class="st">"f"</span>,<span class="st">"m"</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">income =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">15</span>))</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>Y<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>),</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">100</span>, <span class="dv">75</span>),</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">location =</span> <span class="fu">c</span>(<span class="st">"N"</span>,<span class="st">"NE"</span>,<span class="st">"S"</span>,<span class="st">"C"</span>,<span class="st">"W"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id gender income
+1  1      m     10
+2  2      f      5
+3  3      f     20
+4  4      m     15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>Y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id score location
+1  1    30        N
+2  2    50       NE
+3  5    20        S
+4  6   100        C
+5  7    75        W</code></pre>
+</div>
+</div>
+<p>ผลลัพธ์ที่ได้จากการยุบรวมข้อมูลตามคอลัมน์ด้วยฟังก์ชัน join ทั้ง 4 ตัวเป็นดังนี้ ผู้อ่านลองพิจารณาความแตกต่างของผลลัพธ์ที่ได้จากฟังก์ชันทั้ง 4 ใน output ด้านล่าง</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R syntax</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id gender income score location
+1  1      m     10    30        N
+2  2      f      5    50       NE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id gender income score location
+1  1      m     10    30        N
+2  2      f      5    50       NE
+3  3      f     20    NA     &lt;NA&gt;
+4  4      m     15    NA     &lt;NA&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id gender income score location
+1  1      m     10    30        N
+2  2      f      5    50       NE
+3  5   &lt;NA&gt;     NA    20        S
+4  6   &lt;NA&gt;     NA   100        C
+5  7   &lt;NA&gt;     NA    75        W</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(X, Y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id gender income score location
+1  1      m     10    30        N
+2  2      f      5    50       NE
+3  3      f     20    NA     &lt;NA&gt;
+4  4      m     15    NA     &lt;NA&gt;
+5  5   &lt;NA&gt;     NA    20        S
+6  6   &lt;NA&gt;     NA   100        C
+7  7   &lt;NA&gt;     NA    75        W</code></pre>
+</div>
+</div>
+<p>ในภาษา Python มีฟังก์ชันที่เทียบเคียงได้กับกลุ่มฟังก์ชัน join ของภาษา R เช่นเดียวกันได้แก่ ฟังก์ชัน <code>merge()</code> ภายใต้ pandas library ฟังก์ชันดังกล่าวมีพารามิเตอร์ที่สำคัญได้แก่ <code>left</code> และ <code>right</code> ใช้ระบุชุดข้อมูลทางซ้ายและทางขวาสำหรับการยุบรวม <code>on</code> ใช้ระบุ id สำหรับการจับคู่หน่วยข้อมูลเดียวกันระหว่างสองชุดข้อมูลที่ต้องการยุบรวมกัน และ <code>how</code> ใช้ระบุลักษณะของการยุบรวมระหว่างชุดข้อมูล โดยสามารถเลือกกำหนดได้ 4 แบบเช่นเดียวกับภาษา R ได้แก่ <code>inner</code>, <code>left</code>, <code>right</code> และ <code>outer</code> โดยที่ <code>outer</code> จะเทียบเท่ากับ <code>full_join()</code> ในภาษา R ข้างต้น</p>
+<p>ตัวอย่างต่อไปนี้แสดงการใช้ฟังก์ชัน <code>pd.merge()</code> เพื่อยุบรวมชุดข้อมูล <code>X</code> และ <code>Y</code> ด้านล่าง ด้วยวิธีการทั้ง 4 แบบ</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> {<span class="st">'id'</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>],</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'gender'</span>: [<span class="st">"m"</span>,<span class="st">"f"</span>,<span class="st">"f"</span>,<span class="st">"m"</span>],</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">'income'</span>: [<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">15</span>]}</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> {<span class="st">'id'</span>: [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>],</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'score'</span>: [<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">100</span>, <span class="dv">75</span>],</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'location'</span>: [<span class="st">"N"</span>,<span class="st">"NE"</span>,<span class="st">"S"</span>,<span class="st">"C"</span>,<span class="st">"W"</span>]}</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame(X)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> pd.DataFrame(Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id gender  income
+0   1      m      10
+1   2      f       5
+2   3      f      20
+3   4      m      15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>Y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id  score location
+0   1     30        N
+1   2     50       NE
+2   5     20        S
+3   6    100        C
+4   7     75        W</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python syntax</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id gender  income  score location
+0   1      m      10     30        N
+1   2      f       5     50       NE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id gender  income  score location
+0   1      m      10   30.0        N
+1   2      f       5   50.0       NE
+2   3      f      20    NaN      NaN
+3   4      m      15    NaN      NaN</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id gender  income  score location
+0   1      m    10.0     30        N
+1   2      f     5.0     50       NE
+2   5    NaN     NaN     20        S
+3   6    NaN     NaN    100        C
+4   7    NaN     NaN     75        W</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>pd.merge(X, Y, on<span class="op">=</span><span class="st">"id"</span>, how<span class="op">=</span><span class="st">"outer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id gender  income  score location
+0   1      m    10.0   30.0        N
+1   2      f     5.0   50.0       NE
+2   3      f    20.0    NaN      NaN
+3   4      m    15.0    NaN      NaN
+4   5    NaN     NaN   20.0        S
+5   6    NaN     NaN  100.0        C
+6   7    NaN     NaN   75.0        W</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./import.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">ตอนที่ 4.1 การนำเข้าและเขียนชุดข้อมูล (importing and writing data)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
