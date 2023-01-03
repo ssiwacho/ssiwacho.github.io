@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Educational Statistics and Data Science",
+    "section": "",
+    "text": "What’s Machine Learning?\n\n\n\n\n\n\n\nmachine learning\n\n\nconcept\n\n\n\n\n\n\n\n\n\n\n\nJan 3, 2023\n\n\nSiwachoat Srisuttiyakorn\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nDec 31, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "What’s Machine Learning?",
+    "section": "",
+    "text": "บทความนี้จะกล่าวถึงมโนทัศน์เบื้องต้นของการเรียนรู้ของเครื่อง (machine learning: ML) รายละเอียดมีดังนี้\n\nWhat’s ML?\nการเรียนรู้ของเครื่อง (ML) เป็นศาสตร์ย่อยแขนงหนึ่งภายใต้ศาสตร์ทางด้านสถิติและวิทยาการข้อมูล ซึ่งเกี่ยวข้องกับการใช้อัลกอริทึม (algorithms) ในการเรียนรู้/ค้นหาความรู้จากข้อมูล แล้วนำความรู้ที่ได้มาใช้งานตั้งแต่การบรรยายสภาพของข้อมูล (descriptive) การวินิจฉัย (diagnostic) เพื่อหาสาเหตุหรือปัจจัยที่ก่อให้เกิดผลลัพธ์ที่สนใจ การทำนาย (predictive) เพื่อสร้างโมเดลที่เรียนรู้ความสัมพันธ์ในข้อมูลเพื่อทำนายผลลัพธ์ของตัวแปรที่สนใจ ผลลัพธ์ที่ได้จากการทำนายนี้สามารถนำมาโมเดลเพื่อช่วยวางแผน/ตัดสินใจ (prescriptive) ดำเนินการเพื่อนำไปสู่ผลลัพธ์ที่คาดหวัง"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "ผศ.ดร.สิวะโชติ ศรีสุทธิยากร",
+    "section": "",
+    "text": "อาจารย์ประจำภาควิชาวิจัยและจิตวิทยาการศึกษา\nคณะครุศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย\n\nการศึกษา\n\nค.ด. (วิธีวิทยาการวิจัยการศึกษา) จุฬาลงกรณ์มหาวิทยาลัย, พ.ศ. 2555\nสต.ม. (สถิติ) จุฬาลงกรณ์มหาวิทยาลัย, พ.ศ. 2550\nวท.บ. (คณิตศาสตร์) จุฬาลงกรณ์มหาวิทยาลัย, พ.ศ. 2547\n\n\n\nความเชี่ยวชาญ\nEducational Statistics and Data Science / Bayesian Data Analysis / Machine Learning / Data Visualization / Monte Carlo Simulation / R programing\n\n\nงานวิจัย\n\nPanidvadtana, P., Sujiva, S., & Srisuttiyakorn, S. (2021). A Comparison of the Accuracy of Multidimensional IRT equating methods for Mixed-Format Tests, Kasetsart Journal of Social Sciences, 42, 215-220. (Scopus)\nกนิษฐ์ ศรีเคลือบ, ณัฐพล แจ้งอักษร, สิวะโชติ ศรีสุทธิยากร, วาทินี อมรไพศาลเลิศ, ดารุณี ทิพยกุลไพโรจน์, สุขุมาลย์ หนกหลัง และอารี อิ่มสมบัติ. (2565). รายงานผลการจัดสรรความช่วยเหลือเพื่อลดปัญหาที่เป็น อุปสรรคต่อการเรียนรู้ของนักเรียนโรงเรียนนําร่องจังหวัดเชียงราย. กรุงเทพฯ: กองทุนเพื่อความเสมอภาค ทางการศึกษา (กสศ.)"
+  },
+  {
+    "objectID": "posts/2023-01-03-ML-WhatIsML.qmd/index.html",
+    "href": "posts/2023-01-03-ML-WhatIsML.qmd/index.html",
+    "title": "What’s Machine Learning?",
+    "section": "",
+    "text": "บทความนี้จะกล่าวถึงมโนทัศน์เบื้องต้นของการเรียนรู้ของเครื่อง (machine learning: ML) รายละเอียดมีดังนี้\n\nWhat’s ML?\nการเรียนรู้ของเครื่อง (ML) เป็นศาสตร์ย่อยแขนงหนึ่งภายใต้ศาสตร์ทางด้านสถิติและวิทยาการข้อมูล ซึ่งเกี่ยวข้องกับการใช้อัลกอริทึม (algorithms) ในการเรียนรู้/ค้นหาความรู้จากข้อมูล แล้วนำความรู้ที่ได้มาใช้งานตั้งแต่การบรรยายสภาพของข้อมูล (descriptive) การวินิจฉัย (diagnostic) เพื่อหาสาเหตุหรือปัจจัยที่ก่อให้เกิดผลลัพธ์ที่สนใจ การทำนาย (predictive) เพื่อสร้างโมเดลที่เรียนรู้ความสัมพันธ์ในข้อมูลเพื่อทำนายผลลัพธ์ของตัวแปรที่สนใจ ผลลัพธ์ที่ได้จากการทำนายนี้สามารถนำมาโมเดลเพื่อช่วยวางแผน/ตัดสินใจ (prescriptive) ดำเนินการเพื่อนำไปสู่ผลลัพธ์ที่คาดหวัง\n\n\nWhat’s algorithms?\nเทคนิคการเรียนรู้ของเครื่องต่าง ๆ ล้วนเป็นอัลกอริทึมที่ถูกออกแบบมาเพื่อวัตถุประสงค์ในการเรียนรู้/ค้นหาความรู้จากข้อมูล ดังนั้นผู้ที่ศึกษาทางด้านการเรียนรู้ของเครื่องจึงควรทราบความหมายของอัลกอริทึมในเบื้องต้นเอาไว้ด้วย\nอัลกอริทึม"
+  }
+]
