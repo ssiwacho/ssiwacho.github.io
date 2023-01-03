@@ -1,0 +1,17 @@
+project:
+  type: website
+
+website:
+  title: "Siwachoat-Blog"
+  navbar:
+    right:
+      - about.qmd
+      - icon: facebook
+        href: https://www.facebook.com/Siwachoat
+format:
+  html:
+    theme: sandstone
+    css: styles.css
+
+editor: visual
+
