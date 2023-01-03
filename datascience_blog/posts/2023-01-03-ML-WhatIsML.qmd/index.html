@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Siwachoat Srisuttiyakorn">
+<meta name="author" content="ผศ.ดร.สิวะโชติ ศรีสุทธิยากร">
 <meta name="dcterms.date" content="2023-01-03">
 
 <title>Siwachoat-Blog - What’s Machine Learning?</title>
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">ผศ.ดร.สิวะโชติ ศรีสุทธิยากร</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://www.facebook.com/Siwachoat"><i class="bi bi-facebook" role="img">
@@ -114,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Siwachoat Srisuttiyakorn </p>
+               <p>ผศ.ดร.สิวะโชติ ศรีสุทธิยากร </p>
             </div>
     </div>
       
@@ -132,7 +132,22 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#whats-ml" id="toc-whats-ml" class="nav-link active" data-scroll-target="#whats-ml">What’s ML?</a></li>
+  <li><a href="#whats-algorithms" id="toc-whats-algorithms" class="nav-link" data-scroll-target="#whats-algorithms">What’s algorithms?</a></li>
+  <li><a href="#ai-vs-ml-vs-dl" id="toc-ai-vs-ml-vs-dl" class="nav-link" data-scroll-target="#ai-vs-ml-vs-dl">AI vs ML vs DL</a></li>
+  <li><a href="#types-of-ml" id="toc-types-of-ml" class="nav-link" data-scroll-target="#types-of-ml">Types of ML</a>
+  <ul class="collapse">
+  <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning">Supervised Learning</a></li>
+  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning">Unsupervised Learning</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -147,9 +162,57 @@ ul.task-list li input[type="checkbox"] {
 <section id="whats-algorithms" class="level1">
 <h1>What’s algorithms?</h1>
 <p>เทคนิคการเรียนรู้ของเครื่องต่าง ๆ ล้วนเป็นอัลกอริทึมที่ถูกออกแบบมาเพื่อวัตถุประสงค์ในการเรียนรู้/ค้นหาความรู้จากข้อมูล ดังนั้นผู้ที่ศึกษาทางด้านการเรียนรู้ของเครื่องจึงควรทราบความหมายของอัลกอริทึมในเบื้องต้นเอาไว้ด้วย</p>
-<p>อัลกอริทึม</p>
+<p>อัลกอริทึมคือกระบวนการที่มีขั้นตอนการดำเนินงานที่ชัดเจน โดยมีวัตถุประสงค์เพื่อทำงาน/แก้ปัญหาที่กำหนดให้สำเร็จ การใช้งานอัลกอริทึมไม่ได้จำกัดเฉพาะงานทางการสถิติและวิทยาการข้อมูลเท่านั้น ในชีวิตประจำวันเราก็มีการใช้อัลกอริทึมเพื่อดำเนินการต่าง ๆ อยู่เป็นประจำโดยไม่รู้ตัว ยกตัวอย่างเช่น การเดินทางจากบ้านไปยังร้านขายของสะดวกซื้อ งานดังกล่าวสามารถเขียนแยกแยะออกมาเป็นขั้นตอนการเดินทางโดยอาจเริ่มตั้งแต่การออกประตูบ้าน เลี้ยวขวา เดินตรงไป เมื่อพบสามแยกให้เลี้ยวขวาอีกครั้งจะพบร้านสะดวกซื้อทางด้านซ้ายมือ ขั้นตอนดังกล่าวก็คืออัลกอริทึมเช่นเดียวกัน</p>
+<p>จากที่กล่าวไปแล้วว่าการเรียนรู้ของเครื่องมีวัตถุประสงค์หลักเพื่อเรียนรู้และสกัดความรู้ออกมาจากข้อมูล ซึ่งโดยทั่วไปหากจะใช้การเรียนรู้ของเครื่องในการทำงานแล้ว ข้อมูลดังกล่าวมักจะมีปริมาณมากพอสมควรไปจนถึงข้อมูลขนาดใหญ่ (big data) นอกจากปริมาณแล้วยังอาจมีความซับซ้อนในด้านของจำนวนตัวแปรและลักษณะของตัวแปรในข้อมูล อัลกอริทึมที่ใช้ในการเรียนรู้ของเครื่องนั้นย่อมต้องมีความซับซ้อนตามไปด้วย และการใช้คณิตศาสตร์เข้ามาเกี่ยวข้อง ซึ่งทำให้การดำเนินอัลกอริทึมดังกล่าวจะใช้การเขียนโปรแกรมเพื่อให้คอมพิวเตอร์ประมวลผลหรือเรียนรู้ข้อมูลด้วยอัลกอริทึมที่กำหนดแทนมนุษย์</p>
+</section>
+<section id="ai-vs-ml-vs-dl" class="level1">
+<h1>AI vs ML vs DL</h1>
+<p>บางทีเรามักพบว่ามีการใช้คำศัพท์ AI, ML หรือ DL ปะปนกันไปเหมือนกับว่าเป็นสิ่งเดียวกัน อย่างไรก็ตามคำศัพท์ทั้ง 3 คำนี้มีทั้งส่วนที่เหมือนและแตกต่างกัน รายละเอียดมีดังนี้</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1214824995.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">https://k21academy.com/datascience/deep-learning/dl-vs-ml/</figcaption><p></p>
+</figure>
+</div>
+<p><strong>AI ย่อมาจาก Artificial Intelligent</strong> เป็นเทคนิคหรือวิธีการที่นักวิทยาการข้อมูลใช้เพื่อพัฒนาโปรแกรมคอมพิวเตอร์ รวมถึงหุ่นยนต์หรือจักรกลที่สามารถเลียนแบบการทำงานต่าง ๆ ของมนุษย์ได้ AI จะมีความสามารถในการทำงานใกล้เคียงหรือดีกว่ามนุษย์ ทั้งความสามารถในการจดจำ จำแนก และตัดสินใจดำเนินงานเองโดยอาศัยข้อมูลที่เป็นไปได้ทั้งข้อมูลตัวเลข ข้อความ รูปภาพ และเสียง ตัวอย่างของ AI เช่น รถยนต์หรือยานพาหนะไร้คนขับ, AlphaGo - DeepMind, Chatgpt เป็นต้น</p>
+<p><strong>Machine Learning (ML)</strong> เป็นกลุ่มของเทคนิคหรือศาสตร์ย่อยแขนงนึงภายใต้ AI ที่เกี่ยวข้องกับการใช้ประยุกต์ใช้ทฤษฎีทางสถิติและคณิตศาสตร์เพื่อเรียนรู้หรือสกัดสารสนเทศจากข้อมูล สารสนเทศดังกล่าวสามารถนำมาใช้ได้หลายลักษณะ ทั้งการบรรยาย อธิบาย ทำนาย และตัดสินใจ ML ถือเป็นส่วนประกอบที่สำคัญที่สนับสนุนการทำงานของ AI</p>
+<p><strong>Deep Learning (DL)</strong> เป็นแขนงย่อย (subdivision) ของ ML ที่เกี่ยวข้องกับการใช้เทคนิคที่เรียกว่าเครือข่ายประสาทเทียม (artificial neural network: ANN) ที่มีความลึกของเครือข่ายหลายชั้นเพื่อเรียนรู้หรือสกัดสารสนเทศจากข้อมูล แต่ลักษณะเฉพาะตัวที่โดนเด่นของ DL คือเครือข่ายประสาทเทียมที่ใช้ในการเรียนรู้นั้นถูกพัฒนาขึ้นเลียนแบบการทำงานของเซลล์เครือข่ายสมองของมนุษย์ การเรียนรู้ของเครื่องที่ใช้ DL จึงสามารถเรียนรู้ข้อมูลที่มีความซับซ้อนเช่น ข้อความ ภาพ และเสียงได้มีประสิทธิภาพมากกว่าการใช้เทคนิค ML แบบปกติ</p>
+</section>
+<section id="types-of-ml" class="level1">
+<h1>Types of ML</h1>
+<p>เทคนิคการเรียนรู้ของเครื่องอาจจำแนกได้เป็น 3 ประเภท ได้แก่ การเรียนรู้ที่มีการชี้นำ (supervised learning) การเรียนรู้แบบไม่มีการชี้นำ (unsupervised learning) และการเรียนรู้แบบที่มีการเสริมแรง (reinforcement learning) รายละเอียดมีดังนี้</p>
+<section id="supervised-learning" class="level2">
+<h2 class="anchored" data-anchor-id="supervised-learning">Supervised Learning</h2>
+<p>Supervised learning เป็นการเรียนรู้ของเครื่องที่มีวัตถุประสงค์เพื่อพัฒนาโมเดลหรืออัลกอริทึมที่มีความสามารถในการทำนายค่าของตัวแปรตามของหน่วยข้อมูลที่สนใจด้วยข้อมูลของตัวแปรอิสระของหน่วยข้อมูลนั้น หากกล่าวให้เฉพาะเจาะจงขึ้น supervised learning เป็นกลุ่มของอัลกอริทึมที่จะเรียนรู้รูปแบบความสัมพันธ์ระหว่างตัวแปรอิสระกับตัวแปรตาม และใช้รูปแบบความสัมพันธ์ที่เรียนรู้จากข้อมูลในอดีตนี้ในการทำนายข้อมูลที่ไม่ทราบค่าที่จะเกิดขึ้นในอนาคต เช่น ผู้พัฒนาคอสเรียนออนไลน์ใช้ supervised learning เพื่อทำนายผลการเรียนของนักเรียน หรือแนวโน้มการ drop out ของนักเรียนในคอสเรียน โดยอิงจากพฤติกรรมการเรียนที่แสดงในระบบการเรียนรู้ออนไลน์</p>
+<p>ในเชิงเทคนิคเรียกชุดข้อมูลที่นำมาให้อัลกอริทึมเรียนรู้ว่า <strong>ชุดข้อมูลฝึกหัด (training dataset)</strong> และผลผลิตที่ได้จากการเรียนรู้ของอัลกอริทึมคือ โมเดลทำนาย (predictive model) ที่จะใช้เป็นเครื่องมือสำหรับทำนาย ผลลัพธ์ที่ได้จากการทำนายเรียกว่า ค่าทำนาย (predicted value) ทั้งนี้ค่าทำนายสามารถเป็นไปได้ทั้งตัวเลข และคุณลักษณะหรือประเภทของหน่วยข้อมูล รูปต่อไปนี้แสดงความสัมพันธ์ระหว่าง ชุดข้อมูลฝึกหัด อัลกอริทึม และโมเดลทำนาย</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-507788287.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">https://3.bp.blogspot.com/-occLtedKtRw/W8RVv5QyIlI/AAAAAAAAEBg/fdvwBPGxdfQ1izWa_l95-SW4kgYSMgAsgCLcBGAs/s1600/machine-learning-training-scoring.PNG</figcaption><p></p>
+</figure>
+</div>
+<p>และรูปต่อไปนี้แสดงความสัมพันธ์ระหว่างชุดข้อมูลในอนาคต (หรือ new data) กับโมเดลทำนาย และค่าทำนาย</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-409558684.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">https://3.bp.blogspot.com/-occLtedKtRw/W8RVv5QyIlI/AAAAAAAAEBg/fdvwBPGxdfQ1izWa_l95-SW4kgYSMgAsgCLcBGAs/s1600/machine-learning-training-scoring.PNG</figcaption><p></p>
+</figure>
+</div>
+<p>จากที่กล่าวในข้างต้นจะเห็นว่าหากผู้วิเคราะห์จะใช้ supervised learning สิ่งสำคัญที่จำเป็นจะต้องมีก่อนการดำเนินงานในขั้นตอนอื่น ๆ คือ ชุดข้อมุลฝึกหัด การได้มาซึ่งชุดข้อมูลนี้อาจจะต้องเริ่มจากการวิเคราะห์งานว่ามีตัวแปรตามอะไรบ้าง และตัวแปรอิสระที่จะสามารถทำนายตัวแปรตามดังกล่าวได้นั้นควรมีตัวแปรใดบ้าง</p>
+<p>ประเด็นถัดมาคือแหล่งข้อมูล หลายกรณีผู้วิเคราะห์สามารถเก็บรวบรวมข้อมูลได้ทั้งการเก็บรวบรวมข้อมูลเอง และการเก็บรวบรวมจากแหล่งข้อมูลทุติยภูมิไม่ว่าจะเป็นฐานข้อมูลที่เกี่ยวข้อง log file หรือการเก็บเกี่ยวข้อมูลจาก website ซึ่งการเก็บรวบรวมข้อมูลในลักษณะนี้บ่อยครั้งที่ผู้วิเคราะห์จำเป็นต้องดำเนินการกำหนด label ของตัวแปรตามเองด้วย ยกตัวอย่างเช่น การพัฒนาโมเดลเพื่อจำแนกอารมณ์ความรู้สึกจากใบหน้าของนักเรียนในชั้นเรียนออนไลน์ ในกรณีนี้ชุดข้อมูลฝึกหัดคือรูปภาพใบหน้าของนักเรียนจำนวนหนึ่งที่มีการแสดงอารมณ์หรือความรู้สึกที่หลากหลาย ซึ่งผู้วิเคราะห์จะต้องกำหนด label ให้กับใบหน้าในรูปแบบต่าง ๆ เองว่าการแสดงสีหน้าในแต่ละแบบนั้นหมายถึงความรู้สึกแบบใดตามขอบเขตของการดำเนินงาน</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1985165280.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">https://analyticsindiamag.com/face-emotion-recognizer-in-6-lines-of-code/</figcaption><p></p>
+</figure>
+</div>
+<p>ประเด็นที่เหลือเป็นเรื่องของอัลกอริทึมที่จะใช้ในการเรียนรู้ข้อมูล โดยปกติแล้วอัลกอริทึมแต่ละตัวจะมีจุดเด่นและข้อจำกัดที่แตกต่างกัน ส่งผลให้ประสิทธิภาพในการทำนายแตกต่างกันไปตามแต่ละสถานการณ์ การพัฒนาโมเดลทำนายจึงอาจต้องทดลองใช้อัลกอริทึมมากกว่าหนึ่งตัว และเรียนรู้ของอัลกอริทึมแต่ละตัวมักต้องเป็นกระบวนการทวนซ้ำ เพื่อที่จะสามารถปรับแต่งค่าพารามิเตอร์ของอัลกอริทึมให้เหมาะสม เพื่อให้อัลกริทึมดังกล่าวสามารถเรียนรู้ข้อมูลได้อย่างมีประสิทธิภาพสูงสุด ตัวอย่างอัลกอริทึมในกลุ่ม supervised learning เช่น regression, K-NN, decision tree, random forest, support vector machine หรือ neural network เป็นต้น</p>
+</section>
+<section id="unsupervised-learning" class="level2">
+<h2 class="anchored" data-anchor-id="unsupervised-learning">Unsupervised Learning</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

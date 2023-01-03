@@ -5,6 +5,7 @@ p {
 color: "#1A120B";
 font-family: Sarabun;
 font-size: 12pt;
+line-height: 1.6;
 }
 
 h1 {
@@ -12,4 +13,11 @@ color: "#1A120B";
 font-size: 18pt;
 font-weight: 800;
 }
+
+h2 {
+color: "#1A120B";
+font-size: 16pt;
+font-weight: 800;
+}
+
 
